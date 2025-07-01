@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Unique App</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f8;
+    }
+
+    .logo { color: yellow; font-size: 36px; font-weight: bold; }
+    .logo2 { color: white; font-size: 36px; font-weight: bold; }
+
+    .header {
+      background: linear-gradient(90deg, #3f2b96, #a8c0ff);
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 30px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-section {
+      display: flex;
+      justify-content: space-around;
+      background: white;
+      padding: 10px;
+      border-radius: 50px;
+      margin: 20px;
+    }
+
+    .nav-btn {
+      width: 100px;
+      height: 100px;
+      background: white;
+      color: red;
+      font-size: 20px;
+      border: none;
+      border-radius: 50%;
+      text-align: center;
+    }
+
+    .nav-btn:hover {
+      background: green;
+      color: cyan;
+    }
+
+    .navhr {
+      background: gray;
+      height: 10px;
+    }
+
+    .plusicon {
+      width: 70px;
+      height: 70px;
+      background: red;
+      color: white;
+      font-size: 50px;
+      border: none;
+      border-radius: 90px;
+      transition: all 0.3s ease;
+    }
+
+    .plusicon:hover {
+      background: lightgreen;
+      color: white;
+      height: 80px;
+      width: 80px;
+      font-size: 55px;
+      border: 5px solid red;
+    }
+   .profile{
+       width: 500px;
+       height: 500px;
+       border-radius: 50%;
+       border: 15px solid gray;
+       background: lightgreen;
+   }
+  .profilenav{
+      background: #8098ff6d;
+      border-radius: 20px;
+  }
+  #content{
+      padding: 30px;
+  }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <div class="logo">Asir<span class="logo2">Net</span></div>
+    
+
+<div style="text-align: center; color: red;">
+<a href="https://7930navid.github.io/Hafez-MD.AsirAbrarKhan/" >
+          <i>Builder and Developer: <b>Hafez Md. Asir Abrar Khan</b></i>
+          </a>
+</div>
+
+    <div>
+      <button onclick="addid()" class="plusicon">+</button>
+    </div>
+  </header>
+
+  <section class="nav-section">
+    <button onclick="location.reload()" class="nav-btn">🛖<br>HOME</button>
+    <button onclick="profile(); addidname()" class="nav-btn">👤<br>PROFILE</button>
+    <button onclick="setting()" class="nav-btn"><span style="font-size: 40px; color: lightgreen;">📦</span><br>MORE</button>
+  </section>
+
+  <hr class="navhr">
+  <br>
+    <div id="content"></div>
+
+<script>
+let idname = "";
+
+function profile() {
+  document.getElementById('content').innerHTML = `
+    <div class="profilenav">
+      <div style="text-align: center;">
+        <br>
+        <button class="profile"></button>
+      </div>
+      <br>
+      <div style="text-align: center; font-size: 60px; color: green; font-weight: bold;" id="idname"></div>
+      <br>
+    </div>
+    <hr class="navhr">
+  `;
+
+  // প্রোফাইল লোড হবার পর নাম বসাও
+  document.getElementById("idname").innerHTML = idname;
+}
+
+function addid() {
+  const nameInput = prompt("Enter Your ID Name...");
+  if (nameInput !== null && nameInput.trim() !== "") {
+    idname = nameInput;
+  }
+}
+
+function addidname() {
+  const idBox = document.getElementById("idname");
+  if (idBox) {
+    idBox.innerHTML = idname;
+  }
+}
+</script>
+</body>
+</html>
