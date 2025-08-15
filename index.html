@@ -730,7 +730,7 @@ async function showPostsByUser(userId){
     const output = document.getElementById('list');
 
     btn.addEventListener('click', () => {
-        fetch('http://localhost:3000/users')  // Server URL
+        fetch('https://asirnet-backend.onrender.com/')  // Server URL
             .then(response => response.json())
             .then(data => {
                 // data ধরা যাক এইরকম array: [{username: "abc"}, {username: "xyz"}]
