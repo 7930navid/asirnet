@@ -474,7 +474,7 @@ async function loginUser(){
         await fetchMe();
         document.getElementById('authWall').style.display='none';
         loadPosts();
-    } catch(e){ alert('Login failed: '+e.message);}
+    } catch(e){ alert('Login failed');}
 }
 async function fetchMe(){
     try{ currentUser=await api('/me'); renderProfile(); }
