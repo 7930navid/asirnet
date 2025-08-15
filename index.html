@@ -1,155 +1,752 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Unique App</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f4f8;
-    }
-
-    .logo { color: yellow; font-size: 36px; font-weight: bold; }
-    .logo2 { color: white; font-size: 36px; font-weight: bold; }
-
-    .header {
-      background: linear-gradient(90deg, #3f2b96, #a8c0ff);
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 30px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .nav-section {
-      display: flex;
-      justify-content: space-around;
-      background: white;
-      padding: 10px;
-      border-radius: 50px;
-      margin: 20px;
-    }
-
-    .nav-btn {
-      width: 100px;
-      height: 100px;
-      background: white;
-      color: red;
-      font-size: 20px;
-      border: none;
-      border-radius: 50%;
-      text-align: center;
-    }
-
-    .nav-btn:hover {
-      background: green;
-      color: cyan;
-    }
-
-    .navhr {
-      background: gray;
-      height: 10px;
-    }
-
-    .plusicon {
-      width: 70px;
-      height: 70px;
-      background: red;
-      color: white;
-      font-size: 50px;
-      border: none;
-      border-radius: 90px;
-      transition: all 0.3s ease;
-    }
-
-    .plusicon:hover {
-      background: lightgreen;
-      color: white;
-      height: 80px;
-      width: 80px;
-      font-size: 55px;
-      border: 5px solid red;
-    }
-   .profile{
-       width: 500px;
-       height: 500px;
-       border-radius: 50%;
-       border: 15px solid gray;
-       background: lightgreen;
-   }
-  .profilenav{
-      background: #8098ff6d;
-      border-radius: 20px;
-  }
-  #content{
-      padding: 30px;
-  }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+<title>AsirNet</title>
+<style>
+body { 
+       font-family: 
+       Arial; margin:0; 
+       background:#f0f0f0; 
+       }
+#header { 
+       top: 0px;
+       position: fixed;
+       display: flex; 
+       align-items:center; 
+       justify-content:space-between; 
+       padding:20px; 
+       background:lightyellow; 
+       border-bottom:5px solid green; 
+       z-index: 2;
+       width: 95%;
+       }
+#header img { 
+       width:100px; 
+       border-radius:15px; 
+       border:2px solid red; 
+       box-shadow:0 0 14px red; 
+       }
+#header h1 { 
+       margin:0; 
+       color:green; 
+       text-shadow:0 0 10px lightgreen; 
+       }
+#header h1 span { 
+       margin-left:5px; 
+       color:#ffe76ae7; 
+       text-shadow:0 0 5px green;
+       }
+#header p {
+       font-size: 10px;
+       }
+#header button { 
+       width:50px; 
+       height:50px; 
+       border:2px solid red; 
+       border-radius:8px; background:white; 
+       cursor:pointer; 
+       box-shadow:0 0 8px red; 
+       }
+#menuBtn hr {
+       background: red;
+       height: 1px;
+       width: 60%;
+       }
+#menuBtn:hover {
+       background: lightyellow;
+       }
+#menu { 
+       position: fixed; 
+       top:120px; 
+       right:10px; 
+       background:white; 
+       border-radius:10px; 
+       padding:10px 0; 
+       min-width:180px; 
+       display:none; 
+       text-align:left; 
+       z-index:9999; 
+       box-shadow:0 4px 10px rgba(0,0,0,0.2);
+       }
+#menu button { 
+       width:100%; 
+       padding:12px 16px; 
+       border:none; 
+       background:none; 
+       text-align:left; 
+       font-size:16px; 
+       color:#333; 
+       cursor:pointer; 
+       border-radius:10px;
+       }
+#menu button:hover { 
+       background:lightyellow; 
+       }
+.modal { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display:none; 
+       justify-content:center; 
+       align-items:center; 
+       z-index:10000; 
+       }
+.modal-box { 
+       background:white; 
+       padding:20px; 
+       border-radius:10px; 
+       width:90%; 
+       width:600px; 
+       height:50%; 
+       overflow:auto; 
+       text-align:center; 
+       }
+.modal-box input, .modal-box textarea { 
+       width:90%; 
+       padding:8px; 
+       margin:5px 0;
+       }
+.modal-box button { 
+       margin:5px 5px 0 0; 
+       padding:8px 12px; 
+       border:none; 
+       border-radius:5px; 
+       cursor:pointer; 
+       background:green; 
+       color:white; 
+       }
+.posts { 
+       width:700px; 
+       margin:20px auto; 
+       margin-top: 150px;
+       }
+.post { 
+       background:white; 
+       padding:10px; 
+       margin-bottom:10px; 
+       border-radius:8px;
+       box-shadow:0 0 5px rgba(0,0,0,0.2); 
+       position:relative; 
+       font-size: 20px;
+       }
+.post-user { 
+       font-weight:bold; 
+       color:green; 
+       margin-bottom:10px; 
+       font-size: 26px;
+       }
+.post-content { 
+       margin-left:20px; 
+       margin-right:20px; 
+       text-align: justify;
+       }
+.post .post-menu-btn { 
+       position:absolute; 
+       top:10px; 
+       right:10px; 
+       padding:2px 7px; 
+       font-size:20px; 
+       background:#eee; 
+       color:green; 
+       border:1px solid green; 
+       border-radius:5px; 
+       cursor:pointer; 
+       }
+.post .post-menu-btn:hover { 
+       background:#ddd; 
+       }
+.post .post-menu { 
+       position:absolute; 
+       top:36px; 
+       right:10px; 
+       background:white; 
+       border:1px solid #ccc; 
+       border-radius:8px; 
+       box-shadow:0 2px 8px rgba(0,0,0,0.15); 
+       display:none; 
+       z-index:50; 
+       }
+.post .post-menu button { 
+       display:block; 
+       width:140px; 
+       text-align:left; 
+       padding:8px 10px; 
+       background:white; 
+       border:none; 
+       cursor:pointer; 
+       font-size: 20px;
+       }
+.post .post-menu button:hover {
+       background:#f5f5f5; 
+       }
+.settings-box { 
+       display:flex; 
+       flex-direction:column; 
+       align-items:flex-start; 
+       }
+.settings-box label { 
+       margin:5px 0; 
+       }
+#authWall { 
+       position:fixed; 
+       inset:0; 
+       background:white; 
+       display:none; 
+       align-items:center; 
+       justify-content:center; 
+       z-index:20000; 
+       }
+#authWall .modal-box {
+        width:92%; 
+        max-width:460px; 
+        }
+.profile { 
+        position:fixed; 
+        top:0; left:0; 
+        width:100%; 
+        height:100%; 
+        background:rgba(0,0,0,0.5); 
+        display:none; 
+        justify-content:center; 
+        align-items:center; 
+        z-index:10000; 
+        }
+.setbtn {
+     width: 100%;
+ }
+ #table button{
+     width: 100%;
+     height: 50px;
+     font-size: 20px;
+     background: white;
+     color: black;
+     
+ }
+#table td{
+    padding: 5px;
+    font-size: 20px;
+}
+#f-logo{ 
+       margin:0; 
+       color:green; 
+       text-shadow:0 0 10px lightgreen; 
+       }
+#s-logo { 
+       margin-left:2px; 
+       color:#ffe76ae7; 
+       text-shadow:0 0 5px green;
+       }
+#userList {
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 50%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display:none; 
+       justify-content:center; 
+       align-items:center; 
+       z-index:10000; 
+       } 
+#users {
+       background:white; 
+       padding-left:50px; 
+       border-radius:10px; 
+       width:100%; 
+       height:100%; 
+       overflow:auto; 
+       text-align:left; 
+       padding: 0px;
+       border-right: 2px solid green;
+       }
+#users button {
+       background: white;
+       border-radius: 90px;
+       border: none;
+       height: 30px;
+       width: 30px;
+       } 
+     
+#searchBar {
+       border: 1px solid green;
+       font-size: 18px;
+       }
+</style>
 </head>
 <body>
 
-  <header class="header">
-    <div class="logo">Asir<span class="logo2">Net</span></div>
-    
-
-<div style="text-align: center; color: red;">
-<a href="https://7930navid.github.io/Hafez-MD.AsirAbrarKhan/" >
-          <i>Builder and Developer: <b>Hafez Md. Asir Abrar Khan</b></i>
-          </a>
+<div id="header">
+  <img src="/asirnetlogo.jpg" alt="Logo">
+  <h1>Asir<span>Net</span><p>is a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a></p></h1>
+  <button id="menuBtn" onclick="toggleMenu()"><hr><hr><hr></button>
+</div>
+<!-- Menu -->
+<div id="menu">
+  <button onclick="profile()">Profile</button>
+  <button onclick="showSettingsModal()">Settings</button>
+  <button onclick="userList()" id="loadBtn">User List</button>
+  <button onclick="about()">About</button>
 </div>
 
-    <div>
-      <button onclick="addid()" class="plusicon">+</button>
-    </div>
-  </header>
+<!-- User List -->
+<div id="userList">
+    <div id="users">
+          <div style="text-align:right;"><button onclick="closeModal('userList')" style="background: white; color: red; font-size: 40px; border: none;">×</button></div> 
+       <table border="0" cellpadding="7">
+           <tr>
+               <td>
+                   <input type="text" placeholder="Search here any account..." id="searchBar">
+               </td>
+               <td>
+                   <button onclick="searchId()">🔍</button>
+               </td>
+           </tr>
+       </table><hr>
+     <div id="list"></div>
+   </div>
+</div>
 
-  <section class="nav-section">
-    <button onclick="location.reload()" class="nav-btn">🛖<br>HOME</button>
-    <button onclick="profile(); addidname()" class="nav-btn">👤<br>PROFILE</button>
-    <button onclick="setting()" class="nav-btn"><span style="font-size: 40px; color: lightgreen;">📦</span><br>MORE</button>
-  </section>
+<!-- Profile -->
+<div id="profile" class="profile">
+ 
+      <div class="modal-box">
+          <div style="text-align:right;"><button onclick="closeModal('profile')" style="background: white; color: red; font-size: 40px;">×</button></div> 
+  <h2>Profile</h2>
+    <div id="profileInfo" style="margin-bottom:10px;"></div>
+      <button class="profbtn" onclick="showPostModal();closeModal('profile')">New Post</button>
+  
+ 
+  </div>
 
-  <hr class="navhr">
-  <br>
-    <div id="content"></div>
+</div>
+
+<!-- Profile Edit -->
+<div id="profileModal" class="modal">
+  <div class="modal-box">
+  <div style="text-align:right">
+    <button onclick="closeModal('profileModal');showSettingsModal()"  style="background: white; color: red; font-size: 40px;">×</button>
+   </div>
+    <h2>Edit Profile</h2>
+    <div id="profileInfo" style="margin-bottom:10px;"></div>
+    <input type="text" id="editName" placeholder="New name (optional)"><br>
+    <input type="password" id="editPassword" placeholder="New password (optional)"><br>
+    <button onclick="updateProfile()">Save</button>
+    <button onclick="deleteAccount();closeModal('profileModal')" style="background:red">Delete Account</button>
+
+  </div>
+</div>
+
+<!-- New Post Modal -->
+<div id="postModal" class="modal">
+  <div class="modal-box">
+      <div style="text-align:right;">    
+  <button onclick="closeModal('postModal'); profile();" style="background: white; color: red; font-size: 40px;">×</button>
+</div>
+    <h2>New Post</h2>
+    <textarea id="postContent" placeholder="Write something..." style="height:300px; border: 1px solid green"></textarea><br>
+  <div style="text-align: right">  <button onclick="createPost()">Post</button></div>
+  </div>
+</div>
+
+<!-- Settings Modal -->
+<div id="settingsModal" class="modal">
+  <div class="modal-box">
+         <div style="text-align: right"><button onclick="closeModal('settingsModal')" style="background: white; color: red; font-size: 40px;">×</button>
+</div> 
+    <h2>Settings</h2>
+    <div class="settings-box">
+      <table border="0" width="100%" id="table"><tr><td><hr>
+          Activate Dark Mode<hr>
+      </td><td>
+      <input type="checkbox" id="darkMode" onchange="toggleDarkMode()"> 
+      </td></tr>
+      <tr><td>
+          See your posts only<hr>
+      </td><td>
+      <input type="checkbox" id="showUserPosts" onchange="toggleShowUserPosts()"> 
+      </td>
+
+      </tr>
+      <tr><td colspan="2">
+      <button onclick="showProfileModal();closeModal('settingsModal')">Edit profile</button><hr>
+      </td></tr>
+      <tr>
+      <td colspan="2">
+<button onclick="Logout();closeModal('settingsModal')">Logout</button><hr>          
+    </td></tr>
+       </table>
+    </div><br><br><br><br>
+  </div>
+</div>
+
+<!-- Auth Wall -->
+<div id="authWall" class="singin">
+  <div class="modal-box">
+    <h2>Login / Register</h2>
+    <input type="text" id="authName" placeholder="Name"><br>
+    <input type="password" id="authPassword" placeholder="Password"><br>
+    <button onclick="registerUser();loginUser()">Register</button>
+    <button onclick="loginUser()">Login</button>
+  </div>
+</div>
+<!-- About -->
+<div id="about" class="modal">
+  <div class="modal-box">
+  
+          <div style="text-align: right"><button onclick="closeModal('about')" style="background: white; color: red; font-size: 40px;">×</button>
+</div> 
+ <div>
+     <img src="asirnetlogo.jpg" height="150px" width="230px"><br><br>
+     <p>
+<span id="f-logo">Asir</span><span id="s-logo">Net </span>is a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> under authority of Hafez Md. Asir Abrar Khan. <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> is a community of web-building, and web-devolvement.   
+     </p>
+ </div>
+  </div>
+</div>
+
+<div class="posts" id="postsContainer"></div>
 
 <script>
-let idname = "";
+const SERVER='http://localhost:3000';
+let token = localStorage.getItem('token')||'';
+let currentUser = null;
+let showOnlyUserPosts=false;
 
-function profile() {
-  document.getElementById('content').innerHTML = `
-    <div class="profilenav">
-      <div style="text-align: center;">
-        <br>
-        <button class="profile"></button>
-      </div>
-      <br>
-      <div style="text-align: center; font-size: 60px; color: green; font-weight: bold;" id="idname"></div>
-      <br>
-    </div>
-    <hr class="navhr">
-  `;
-
-  // প্রোফাইল লোড হবার পর নাম বসাও
-  document.getElementById("idname").innerHTML = idname;
+// ======== API helper ========
+async function api(path, opts={}) {
+    const res = await fetch(SERVER+path,{
+        ...opts,
+        headers: {
+            'Content-Type':'application/json',
+            ...(opts.headers||{}),
+            ...(token?{Authorization:'Bearer '+token}:{})
+        }
+    });
+    const text = await res.text();
+    let data;
+    try { data = JSON.parse(text); } catch(e){ throw new Error(text); }
+    if(!res.ok) throw new Error(data.error||data.message||('HTTP '+res.status));
+    return data;
 }
 
-function addid() {
-  const nameInput = prompt("Enter Your ID Name...");
-  if (nameInput !== null && nameInput.trim() !== "") {
-    idname = nameInput;
-  }
+// ======== UI ========
+function toggleMenu(){ const m=document.getElementById('menu'); m.style.display = m.style.display==='block'?'none':'block'; }
+document.addEventListener('click', e=>{
+  const menu=document.getElementById('menu');
+  if(!menu.contains(e.target)&&!document.getElementById('menuBtn').contains(e.target)) menu.style.display='none';
+  document.querySelectorAll('.post .post-menu').forEach(el=>{
+    if(!el.contains(e.target)&&el.previousElementSibling!==e.target) el.style.display='none';
+  });
+});
+function profile(){ guardAuth(()=>{ document.getElementById('profile').style.display='flex'; renderProfile(); }); }
+function about(){ guardAuth(()=>{ document.getElementById('about').style.display='flex'; }); }
+function userList(){ guardAuth(()=>{ document.getElementById('userList').style.display='flex'; }); }
+
+function showProfileModal(){ guardAuth(()=>{ document.getElementById('profileModal').style.display='flex'; renderProfile(); }); }
+function showPostModal(){ guardAuth(()=>{ document.getElementById('postModal').style.display='flex'; }); }
+function showSettingsModal(){ document.getElementById('settingsModal').style.display='flex'; }
+function closeModal(id){ document.getElementById(id).style.display='none'; }
+function toggleDarkMode(){ document.body.style.background=document.getElementById('darkMode').checked?'#222':'#f0f0f0'; }
+function toggleShowUserPosts(){ showOnlyUserPosts=document.getElementById('showUserPosts').checked; loadPosts(); }
+function guardAuth(fn){ if(!token) document.getElementById('authWall').style.display='flex'; else fn&&fn(); }
+
+// ======== Auth ========
+async function registerUser(){
+    const username=document.getElementById('authName').value.trim();
+    const password=document.getElementById('authPassword').value.trim();
+    if(!username||!password) return alert('Enter name and password');
+    try{ const data=await api('/register',{method:'POST',body:JSON.stringify({username,password})}); alert(data.message);} 
+    catch(e){ alert('Register failed: '+e.message);}
+}
+async function loginUser(){
+    const username=document.getElementById('authName').value.trim();
+    const password=document.getElementById('authPassword').value.trim();
+    if(!username||!password) return alert('Enter name and password');
+    try{
+        const data=await api('/login',{method:'POST',body:JSON.stringify({username,password})});
+        token=data.token;
+        localStorage.setItem('token',token);
+        await fetchMe();
+        document.getElementById('authWall').style.display='none';
+        loadPosts();
+    } catch(e){ alert('Login failed: '+e.message);}
+}
+async function fetchMe(){
+    try{ currentUser=await api('/me'); renderProfile(); }
+    catch{ token=''; localStorage.removeItem('token'); currentUser=null; document.getElementById('authWall').style.display='flex'; }
+}
+function logout(){ token=''; currentUser=null; localStorage.removeItem('token'); document.getElementById('authWall').style.display='flex'; loadPosts(); }
+
+// ======== Profile ========
+function renderProfile(){
+    const box=document.getElementById('profileInfo');
+    if(!currentUser){ box.innerHTML='<em>Not logged in</em>'; return;}
+    box.innerHTML=`<div><strong>ID:</strong>${currentUser.id}</div><div><strong>Name:</strong>${currentUser.username}</div>`;
 }
 
-function addidname() {
-  const idBox = document.getElementById("idname");
-  if (idBox) {
-    idBox.innerHTML = idname;
-  }
+async function updateProfile(){
+    if(!currentUser) return alert('Not logged in');
+    const name=document.getElementById('editName').value.trim();
+    const password=document.getElementById('editPassword').value.trim();
+    if(!name&&!password) return alert('Provide new name/password');
+    try{
+        await api(`/users/${currentUser.id}`,{method:'PUT',body:JSON.stringify({username:name||undefined,password:password||undefined})});
+        alert('Profile updated');
+        document.getElementById('editName').value=''; document.getElementById('editPassword').value='';
+        await fetchMe(); loadPosts();
+    } catch(e){ alert('Update failed: '+e.message);}
 }
+async function deleteAccount(){
+    if(!currentUser) return alert('Not logged in');
+    if(!confirm('Delete account?')) return;
+    try{ await api(`/users/${currentUser.id}`,{method:'DELETE'}); alert('Deleted'); logout(); } 
+    catch(e){ alert('Delete failed: '+e.message);}
+}
+
+// ======== Posts ========
+function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function togglePostMenu(btn){ const menu=btn.nextElementSibling; menu.style.display=(menu.style.display==='block')?'none':'block'; }
+
+async function loadPosts(){
+    try{
+        let posts = await api('/posts');
+        if(showOnlyUserPosts&&currentUser) posts=posts.filter(p=>p.userId===currentUser.id);
+        const container=document.getElementById('postsContainer');
+        container.innerHTML='';
+        posts.forEach(p=>{
+            const canEdit=currentUser && p.userId===currentUser.id;
+            const div=document.createElement('div');
+            div.className='post';
+            div.innerHTML=`<div class="post-user">${escapeHtml(p.username)}</div><hr><div class="post-content">${escapeHtml(p.content)}</div>
+            ${canEdit?`<button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
+            <div class="post-menu">
+                <button onclick="editPost('${p.id}')">Edit</button>
+                <button onclick="deletePost('${p.id}')">Delete</button>
+            </div>`:''}`;
+            container.appendChild(div);
+        });
+    } catch(e){ console.error('Posts load failed:', e.message);}
+}
+
+async function createPost(){
+    guardAuth(async()=>{
+        const content=document.getElementById('postContent').value.trim();
+        if(!content) return alert('Write something');
+        await api('/posts',{method:'POST',body:JSON.stringify({content})});
+        document.getElementById('postContent').value=''; closeModal('postModal'); loadPosts();
+    });
+}
+
+async function editPost(id){
+    guardAuth(()=>{
+        const postDiv = [...document.querySelectorAll('.post')].find(div=>{
+            const menuBtn = div.querySelector('.post-menu-btn');
+            return menuBtn && menuBtn.nextElementSibling.querySelector('button[onclick*="editPost(\''+id+'\')"]');
+        });
+        if(!postDiv) return;
+
+        const contentDiv = postDiv.querySelector('.post-content');
+        const oldContent = contentDiv.textContent;
+
+        // নতুন মডাল তৈরি
+        const modal = document.createElement('div');
+        modal.className = 'modal';
+        modal.style.display = 'flex';
+        modal.innerHTML = `
+            <div class="modal-box">
+                <h2>Edit Post</h2>
+                <textarea id="editPostContent" style="width:90%;height:100px;">${oldContent}</textarea><br>
+                <button id="saveEdit">Save</button>
+                <button id="cancelEdit">Cancel</button>
+            </div>
+        `;
+        document.body.appendChild(modal);
+
+        modal.querySelector('#cancelEdit').onclick = ()=>modal.remove();
+        modal.querySelector('#saveEdit').onclick = async ()=>{
+            const newContent = modal.querySelector('#editPostContent').value.trim();
+            if(!newContent) return alert('Content cannot be empty');
+            try{
+                await api(`/posts/${id}`, {method:'PUT', body: JSON.stringify({content:newContent})});
+                modal.remove();
+                loadPosts();
+            } catch(e){ alert('Edit failed: '+e.message);}
+        };
+    });
+}async function deletePost(id){
+    if(!confirm('Delete this post?')) return;
+    try{ await api(`/posts/${id}`,{method:'DELETE'}); loadPosts(); } 
+    catch(e){ alert('Delete failed: '+e.message);}
+}
+
+// ======== Init ========
+(async function(){ if(token) await fetchMe().catch(()=>{}); if(!token) document.getElementById('authWall').style.display='flex'; loadPosts(); })();
 </script>
+<script>
+  function Logout() {
+      if(confirm('Do you want to log out?')) {
+          logout();
+document.getElementById('authName').value = "";
+document.getElementById('authPassword').value = "";
+      }
+  }
+  
+  // ======== User Search & results rendering ========
+async function searchId(){
+    const q = document.getElementById('searchBar').value.trim();
+    if(!q) {
+        alert('Search field is empty');
+        return;
+    }
+
+    try{
+        // fetch all users from server (uses existing api helper)
+        const users = await api('/users');
+        const lq = q.toLowerCase();
+
+        // match by username contains OR exact id match
+        const results = users.filter(u => {
+            if(!u) return false;
+            const uname = (u.username||'').toString().toLowerCase();
+            const idstr = String(u.id||'');
+            return uname.includes(lq) || idstr === q;
+        });
+
+        renderUserSearchResults(results, q);
+    } catch(e){
+        console.error('User search failed:', e);
+        alert('Search failed: '+(e.message||e));
+    }
+}
+
+function renderUserSearchResults(results, query) {
+    // remove any previous results container
+    const existing = document.getElementById('searchResults');
+    if(existing) existing.remove();
+
+    const container = document.getElementById('users'); // existing element in HTML
+    // create a new results wrapper
+    const wrapper = document.createElement('div');
+    wrapper.id = 'searchResults';
+    wrapper.style.padding = '10px';
+
+    const heading = document.createElement('div');
+    heading.style.marginBottom = '8px';
+    heading.innerHTML = `<strong>Results for:</strong> "${escapeHtml(query)}" — ${results.length} found<hr>`;
+    wrapper.appendChild(heading);
+
+    if(results.length === 0){
+        const empty = document.createElement('div');
+        empty.innerText = 'No users found.';
+        wrapper.appendChild(empty);
+    } else {
+        results.forEach(u => {
+            const row = document.createElement('div');
+            row.style.display = 'flex';
+            row.style.alignItems = 'center';
+            row.style.justifyContent = 'space-between';
+            row.style.padding = '8px 0';
+            row.style.borderBottom = '1px dashed #ddd';
+
+            const info = document.createElement('div');
+            info.innerHTML = `<div><strong>${escapeHtml(u.username||'—')}</strong> <small>(ID: ${escapeHtml(String(u.id||''))})</small></div>`;
+
+            const actions = document.createElement('div');
+
+            const viewBtn = document.createElement('button');
+            viewBtn.innerText = 'View';
+            viewBtn.style.marginRight = '6px';
+            viewBtn.onclick = ()=> showUserProfileInPanel(u);
+
+            const postsBtn = document.createElement('button');
+            postsBtn.innerText = 'Show posts';
+            postsBtn.onclick = ()=> showPostsByUser(u.id);
+
+            actions.appendChild(viewBtn);
+            actions.appendChild(postsBtn);
+
+            row.appendChild(info);
+            row.appendChild(actions);
+            wrapper.appendChild(row);
+        });
+    }
+
+    // append results after the top search area (so existing close button and search row remain)
+    container.appendChild(wrapper);
+}
+
+// show simple profile info in the existing profileInfo area (doesn't change auth)
+function showUserProfileInPanel(user){
+    // make sure #profile modal is visible
+    document.getElementById('profile').style.display = 'flex';
+    const box = document.getElementById('profileInfo');
+    box.innerHTML = `<div><strong>ID:</strong> ${escapeHtml(String(user.id||''))}</div>
+                     <div><strong>Name:</strong> ${escapeHtml(user.username||'—')}</div>
+                     <div style="margin-top:8px;"><em>Public profile view</em></div>`;
+}
+
+// fetch posts and render only those of given user id
+async function showPostsByUser(userId){
+    try{
+        const posts = await api('/posts');
+        const filtered = posts.filter(p => String(p.userId) === String(userId));
+        const container = document.getElementById('postsContainer');
+        container.innerHTML = ''; // replace with selected user's posts
+
+        if(filtered.length === 0){
+            alert('No post by this user');
+            return;
+        }
+
+        filtered.forEach(p=>{
+            const canEdit = (currentUser && String(p.userId) === String(currentUser.id));
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.innerHTML = `<div class="post-user">${escapeHtml(p.username)}</div><hr><div class="post-content">${escapeHtml(p.content)}</div>
+                ${canEdit?`<button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
+                <div class="post-menu">
+                    <button onclick="editPost('${p.id}')">Edit</button>
+                    <button onclick="deletePost('${p.id}')">Delete</button>
+                </div>`:''}`;
+            container.appendChild(div);
+        });
+    } catch(e){
+        console.error('Load user posts failed:', e);
+        alert('Failed to load posts: '+(e.message||e));
+    }
+}  
+
+
+
+</script>
+
+<script>
+    const btn = document.getElementById('loadBtn');
+    const output = document.getElementById('list');
+
+    btn.addEventListener('click', () => {
+        fetch('http://localhost:3000/users')  // Server URL
+            .then(response => response.json())
+            .then(data => {
+                // data ধরা যাক এইরকম array: [{username: "abc"}, {username: "xyz"}]
+                output.innerHTML = ""; // পুরোনো content clear
+
+                data.forEach(user => {
+                    // প্রতিটা username <h3> tag এ এবং <hr> add
+                    output.innerHTML += `<p>${user.username}</p><hr>`;
+                });
+            })
+            .catch(err => {
+                output.innerHTML = "Error: " + err;
+            });
+    });
+</script>
+</script>
+
 </body>
 </html>
