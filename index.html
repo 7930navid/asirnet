@@ -101,8 +101,8 @@ body {
        padding:20px; 
        border-radius:10px; 
        width:90%; 
-       width:600px; 
-       height:50%; 
+       max-width:600px; 
+       max-height:80%; 
        overflow:auto; 
        text-align:center; 
        }
@@ -121,7 +121,8 @@ body {
        color:white; 
        }
 .posts { 
-       width:700px; 
+       width:90%; 
+       max-width:700px; 
        margin:20px auto; 
        margin-top: 150px;
        }
@@ -245,7 +246,7 @@ body {
        position:fixed; 
        top:0; 
        left:0; 
-       width: 50%; 
+       width: 100%; 
        height:100%; 
        background:rgba(0,0,0,0.5); 
        display:none; 
@@ -255,14 +256,13 @@ body {
        } 
 #users {
        background:white; 
-       padding-left:50px; 
        border-radius:10px; 
-       width:100%; 
-       height:100%; 
+       width:90%; 
+       max-width:500px;
+       height:80%; 
        overflow:auto; 
        text-align:left; 
-       padding: 0px;
-       border-right: 2px solid green;
+       padding: 10px;
        }
 #users button {
        background: white;
@@ -275,7 +275,14 @@ body {
 #searchBar {
        border: 1px solid green;
        font-size: 18px;
+       width: 80%;
        }
+.loading {
+    padding: 10px;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
 </style>
 </head>
 <body>
@@ -289,7 +296,7 @@ body {
 <div id="menu">
   <button onclick="profile()">Profile</button>
   <button onclick="showSettingsModal()">Settings</button>
-  <button onclick="userList()" id="loadBtn">User List</button>
+  <button onclick="loadUserList()" id="loadBtn">User List</button>
   <button onclick="about()">About</button>
 </div>
 
@@ -297,7 +304,7 @@ body {
 <div id="userList">
     <div id="users">
           <div style="text-align:right;"><button onclick="closeModal('userList')" style="background: white; color: red; font-size: 40px; border: none;">×</button></div> 
-       <table border="0" cellpadding="7">
+       <table border="0" cellpadding="7" width="100%">
            <tr>
                <td>
                    <input type="text" placeholder="Search here any account..." id="searchBar">
@@ -307,22 +314,18 @@ body {
                </td>
            </tr>
        </table><hr>
-     <div id="list"></div>
+     <div id="list" class="loading">Loading users...</div>
    </div>
 </div>
 
 <!-- Profile -->
 <div id="profile" class="profile">
- 
       <div class="modal-box">
           <div style="text-align:right;"><button onclick="closeModal('profile')" style="background: white; color: red; font-size: 40px;">×</button></div> 
-  <h2>Profile</h2>
-    <div id="profileInfo" style="margin-bottom:10px;"></div>
-      <button class="profbtn" onclick="showPostModal();closeModal('profile')">New Post</button>
-  
- 
-  </div>
-
+          <h2>Profile</h2>
+          <div id="profileInfo" style="margin-bottom:10px;"></div>
+          <button class="profbtn" onclick="showPostModal();closeModal('profile')">New Post</button>
+      </div>
 </div>
 
 <!-- Profile Edit -->
@@ -337,7 +340,6 @@ body {
     <input type="password" id="editPassword" placeholder="New password (optional)"><br>
     <button onclick="updateProfile()">Save</button>
     <button onclick="deleteAccount();closeModal('profileModal')" style="background:red">Delete Account</button>
-
   </div>
 </div>
 
@@ -345,42 +347,44 @@ body {
 <div id="postModal" class="modal">
   <div class="modal-box">
       <div style="text-align:right;">    
-  <button onclick="closeModal('postModal'); profile();" style="background: white; color: red; font-size: 40px;">×</button>
-</div>
-    <h2>New Post</h2>
-    <textarea id="postContent" placeholder="Write something..." style="height:300px; border: 1px solid green"></textarea><br>
-  <div style="text-align: right">  <button onclick="createPost()">Post</button></div>
+          <button onclick="closeModal('postModal')" style="background: white; color: red; font-size: 40px;">×</button>
+      </div>
+      <h2>New Post</h2>
+      <textarea id="postContent" placeholder="Write something..." style="height:300px; border: 1px solid green"></textarea><br>
+      <div style="text-align: right">
+          <button onclick="createPost()">Post</button>
+      </div>
   </div>
 </div>
 
 <!-- Settings Modal -->
 <div id="settingsModal" class="modal">
   <div class="modal-box">
-         <div style="text-align: right"><button onclick="closeModal('settingsModal')" style="background: white; color: red; font-size: 40px;">×</button>
-</div> 
+         <div style="text-align: right">
+             <button onclick="closeModal('settingsModal')" style="background: white; color: red; font-size: 40px;">×</button>
+         </div> 
     <h2>Settings</h2>
     <div class="settings-box">
-      <table border="0" width="100%" id="table"><tr><td><hr>
-          Activate Dark Mode<hr>
-      </td><td>
-      <input type="checkbox" id="darkMode" onchange="toggleDarkMode()"> 
-      </td></tr>
-      <tr><td>
-          See your posts only<hr>
-      </td><td>
-      <input type="checkbox" id="showUserPosts" onchange="toggleShowUserPosts()"> 
-      </td>
-
-      </tr>
-      <tr><td colspan="2">
-      <button onclick="showProfileModal();closeModal('settingsModal')">Edit profile</button><hr>
-      </td></tr>
-      <tr>
-      <td colspan="2">
-<button onclick="Logout();closeModal('settingsModal')">Logout</button><hr>          
-    </td></tr>
-       </table>
-    </div><br><br><br><br>
+      <table border="0" width="100%" id="table">
+          <tr><td><hr>
+              Activate Dark Mode<hr>
+          </td><td>
+          <input type="checkbox" id="darkMode" onchange="toggleDarkMode()"> 
+          </td></tr>
+          <tr><td>
+              See your posts only<hr>
+          </td><td>
+          <input type="checkbox" id="showUserPosts" onchange="toggleShowUserPosts()"> 
+          </td></tr>
+          <tr><td colspan="2">
+              <button onclick="showProfileModal();closeModal('settingsModal')">Edit profile</button><hr>
+          </td></tr>
+          <tr>
+          <td colspan="2">
+              <button onclick="Logout();closeModal('settingsModal')">Logout</button><hr>          
+          </td></tr>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -390,175 +394,384 @@ body {
     <h2>Login / Register</h2>
     <input type="text" id="authName" placeholder="Name"><br>
     <input type="password" id="authPassword" placeholder="Password"><br>
-    <button onclick="registerUser();loginUser()">Register</button>
+    <button onclick="registerUser()">Register</button>
     <button onclick="loginUser()">Login</button>
+    <div id="loading" class="loading"></div>
   </div>
 </div>
+
 <!-- About -->
 <div id="about" class="modal">
   <div class="modal-box">
-  
-          <div style="text-align: right"><button onclick="closeModal('about')" style="background: white; color: red; font-size: 40px;">×</button>
-</div> 
- <div>
-     <img src="asirnetlogo.jpg" height="150px" width="230px"><br><br>
-     <p>
-<span id="f-logo">Asir</span><span id="s-logo">Net </span>is a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> under authority of Hafez Md. Asir Abrar Khan. <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> is a community of web-building, and web-devolvement.   
-     </p>
- </div>
+      <div style="text-align: right">
+          <button onclick="closeModal('about')" style="background: white; color: red; font-size: 40px;">×</button>
+      </div> 
+      <div>
+          <img src="asirnetlogo.jpg" height="150px" width="230px"><br><br>
+          <p>
+              <span id="f-logo">Asir</span><span id="s-logo">Net </span>is a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> under authority of Hafez Md. Asir Abrar Khan. <a href="https://7930navid.github.io/W-deploy/">W-deploy</a> is a community of web-building, and web-devolvement.   
+          </p>
+      </div>
   </div>
 </div>
 
 <div class="posts" id="postsContainer"></div>
 
 <script>
-const SERVER='https://asirnet-backend.onrender.com/';
-let token = localStorage.getItem('token')||'';
+const SERVER = 'https://asirnet-backend.onrender.com';
+let token = localStorage.getItem('token') || '';
 let currentUser = null;
-let showOnlyUserPosts=false;
+let showOnlyUserPosts = false;
 
 // ======== API helper ========
-async function api(path, opts={}) {
-    const res = await fetch(SERVER+path,{
-        ...opts,
-        headers: {
-            'Content-Type':'application/json',
-            ...(opts.headers||{}),
-            ...(token?{Authorization:'Bearer '+token}:{})
+async function api(path, opts = {}) {
+    try {
+        const res = await fetch(SERVER + path, {
+            ...opts,
+            headers: {
+                'Content-Type': 'application/json',
+                ...(opts.headers || {}),
+                ...(token ? { Authorization: 'Bearer ' + token } : {})
+            }
+        });
+        
+        const text = await res.text();
+        let data;
+        try { 
+            data = JSON.parse(text); 
+        } catch(e) { 
+            throw new Error(text || 'Invalid response from server'); 
         }
+        
+        if (!res.ok) {
+            throw new Error(data.error || data.message || ('HTTP ' + res.status));
+        }
+        
+        return data;
+    } catch (e) {
+        console.error('API call failed:', e);
+        throw e;
+    }
+}
+
+// ======== UI Functions ========
+function toggleMenu() { 
+    const m = document.getElementById('menu'); 
+    m.style.display = m.style.display === 'block' ? 'none' : 'block'; 
+}
+
+function closeAllMenus() {
+    document.getElementById('menu').style.display = 'none';
+    document.querySelectorAll('.post .post-menu').forEach(el => {
+        el.style.display = 'none';
     });
-    const text = await res.text();
-    let data;
-    try { data = JSON.parse(text); } catch(e){ throw new Error(text); }
-    if(!res.ok) throw new Error(data.error||data.message||('HTTP '+res.status));
-    return data;
 }
 
-// ======== UI ========
-function toggleMenu(){ const m=document.getElementById('menu'); m.style.display = m.style.display==='block'?'none':'block'; }
-document.addEventListener('click', e=>{
-  const menu=document.getElementById('menu');
-  if(!menu.contains(e.target)&&!document.getElementById('menuBtn').contains(e.target)) menu.style.display='none';
-  document.querySelectorAll('.post .post-menu').forEach(el=>{
-    if(!el.contains(e.target)&&el.previousElementSibling!==e.target) el.style.display='none';
-  });
+document.addEventListener('click', e => {
+    if (!document.getElementById('menu').contains(e.target) && 
+        !document.getElementById('menuBtn').contains(e.target)) {
+        closeAllMenus();
+    }
 });
-function profile(){ guardAuth(()=>{ document.getElementById('profile').style.display='flex'; renderProfile(); }); }
-function about(){ guardAuth(()=>{ document.getElementById('about').style.display='flex'; }); }
-function userList(){ guardAuth(()=>{ document.getElementById('userList').style.display='flex'; }); }
 
-function showProfileModal(){ guardAuth(()=>{ document.getElementById('profileModal').style.display='flex'; renderProfile(); }); }
-function showPostModal(){ guardAuth(()=>{ document.getElementById('postModal').style.display='flex'; }); }
-function showSettingsModal(){ document.getElementById('settingsModal').style.display='flex'; }
-function closeModal(id){ document.getElementById(id).style.display='none'; }
-function toggleDarkMode(){ document.body.style.background=document.getElementById('darkMode').checked?'#222':'#f0f0f0'; }
-function toggleShowUserPosts(){ showOnlyUserPosts=document.getElementById('showUserPosts').checked; loadPosts(); }
-function guardAuth(fn){ if(!token) document.getElementById('authWall').style.display='flex'; else fn&&fn(); }
-
-// ======== Auth ========
-async function registerUser(){
-    const username=document.getElementById('authName').value.trim();
-    const password=document.getElementById('authPassword').value.trim();
-    if(!username||!password) return alert('Enter name and password');
-    try{ const data=await api('/register',{method:'POST',body:JSON.stringify({username,password})}); alert(data.message);} 
-    catch(e){ alert('Register failed: '+e.message);}
+function profile() { 
+    guardAuth(() => { 
+        document.getElementById('profile').style.display = 'flex'; 
+        renderProfile(); 
+    }); 
 }
-async function loginUser(){
-    const username=document.getElementById('authName').value.trim();
-    const password=document.getElementById('authPassword').value.trim();
-    if(!username||!password) return alert('Enter name and password');
-    try{
-        const data=await api('/login',{method:'POST',body:JSON.stringify({username,password})});
-        token=data.token;
-        localStorage.setItem('token',token);
+
+function about() { 
+    document.getElementById('about').style.display = 'flex'; 
+}
+
+function loadUserList() { 
+    guardAuth(() => { 
+        document.getElementById('userList').style.display = 'flex'; 
+        loadAllUsers();
+    }); 
+}
+
+function showProfileModal() { 
+    guardAuth(() => { 
+        document.getElementById('profileModal').style.display = 'flex'; 
+        renderProfile(); 
+    }); 
+}
+
+function showPostModal() { 
+    guardAuth(() => { 
+        document.getElementById('postModal').style.display = 'flex'; 
+    }); 
+}
+
+function showSettingsModal() { 
+    guardAuth(() => {
+        document.getElementById('settingsModal').style.display = 'flex'; 
+    }); 
+}
+
+function closeModal(id) { 
+    document.getElementById(id).style.display = 'none'; 
+}
+
+function toggleDarkMode() { 
+    const isDark = document.getElementById('darkMode').checked;
+    document.body.style.background = isDark ? '#222' : '#f0f0f0';
+    localStorage.setItem('darkMode', isDark);
+}
+
+function toggleShowUserPosts() { 
+    showOnlyUserPosts = document.getElementById('showUserPosts').checked; 
+    loadPosts(); 
+}
+
+function guardAuth(fn) { 
+    if (!token) {
+        document.getElementById('authWall').style.display = 'flex'; 
+    } else {
+        fn && fn();
+    }
+}
+
+function showLoading(show, elementId = 'loading') {
+    const el = document.getElementById(elementId);
+    if (el) {
+        el.innerHTML = show ? '<div>Loading...</div>' : '';
+    }
+}
+
+// ======== Auth Functions ========
+async function registerUser() {
+    const username = document.getElementById('authName').value.trim();
+    const password = document.getElementById('authPassword').value.trim();
+    
+    if (!username || !password) {
+        return alert('Enter name and password');
+    }
+    
+    showLoading(true);
+    
+    try { 
+        const data = await api('/register', {
+            method: 'POST',
+            body: JSON.stringify({ username, password })
+        }); 
+        alert(data.message);
+    } catch(e) { 
+        alert('Register failed: ' + e.message);
+    } finally {
+        showLoading(false);
+    }
+}
+
+async function loginUser() {
+    const username = document.getElementById('authName').value.trim();
+    const password = document.getElementById('authPassword').value.trim();
+    
+    if (!username || !password) {
+        return alert('Enter name and password');
+    }
+    
+    showLoading(true);
+    
+    try {
+        const data = await api('/login', {
+            method: 'POST',
+            body: JSON.stringify({ username, password })
+        });
+        
+        token = data.token;
+        localStorage.setItem('token', token);
         await fetchMe();
-        document.getElementById('authWall').style.display='none';
+        document.getElementById('authWall').style.display = 'none';
         loadPosts();
-    } catch(e){ alert('Login failed');}
-}
-async function fetchMe(){
-    try{ currentUser=await api('/me'); renderProfile(); }
-    catch{ token=''; localStorage.removeItem('token'); currentUser=null; document.getElementById('authWall').style.display='flex'; }
-}
-function logout(){ token=''; currentUser=null; localStorage.removeItem('token'); document.getElementById('authWall').style.display='flex'; loadPosts(); }
-
-// ======== Profile ========
-function renderProfile(){
-    const box=document.getElementById('profileInfo');
-    if(!currentUser){ box.innerHTML='<em>Not logged in</em>'; return;}
-    box.innerHTML=`<div><strong>ID:</strong>${currentUser.id}</div><div><strong>Name:</strong>${currentUser.username}</div>`;
+    } catch(e) { 
+        alert('Login failed: ' + e.message);
+    } finally {
+        showLoading(false);
+    }
 }
 
-async function updateProfile(){
-    if(!currentUser) return alert('Not logged in');
-    const name=document.getElementById('editName').value.trim();
-    const password=document.getElementById('editPassword').value.trim();
-    if(!name&&!password) return alert('Provide new name/password');
-    try{
-        await api(`/users/${currentUser.id}`,{method:'PUT',body:JSON.stringify({username:name||undefined,password:password||undefined})});
+async function fetchMe() {
+    try { 
+        currentUser = await api('/me'); 
+        renderProfile(); 
+    } catch(e) { 
+        token = ''; 
+        localStorage.removeItem('token'); 
+        currentUser = null; 
+        document.getElementById('authWall').style.display = 'flex'; 
+    }
+}
+
+function logout() { 
+    token = ''; 
+    currentUser = null; 
+    localStorage.removeItem('token'); 
+    document.getElementById('authWall').style.display = 'flex'; 
+    loadPosts();
+    document.getElementById('authName').value = '';
+    document.getElementById('authPassword').value = '';
+}
+
+// ======== Profile Functions ========
+function renderProfile() {
+    const box = document.getElementById('profileInfo');
+    if (!currentUser) { 
+        box.innerHTML = '<em>Not logged in</em>'; 
+        return;
+    }
+    
+    box.innerHTML = `
+        <div><strong>ID:</strong> ${currentUser.id}</div>
+        <div><strong>Name:</strong> ${currentUser.username}</div>
+    `;
+}
+
+async function updateProfile() {
+    if (!currentUser) return alert('Not logged in');
+    
+    const name = document.getElementById('editName').value.trim();
+    const password = document.getElementById('editPassword').value.trim();
+    
+    if (!name && !password) {
+        return alert('Provide new name/password');
+    }
+    
+    try {
+        await api(`/users/${currentUser.id}`, {
+            method: 'PUT',
+            body: JSON.stringify({
+                username: name || undefined,
+                password: password || undefined
+            })
+        });
+        
         alert('Profile updated');
-        document.getElementById('editName').value=''; document.getElementById('editPassword').value='';
-        await fetchMe(); loadPosts();
-    } catch(e){ alert('Update failed: '+e.message);}
-}
-async function deleteAccount(){
-    if(!currentUser) return alert('Not logged in');
-    if(!confirm('Delete account?')) return;
-    try{ await api(`/users/${currentUser.id}`,{method:'DELETE'}); alert('Deleted'); logout(); } 
-    catch(e){ alert('Delete failed: '+e.message);}
+        document.getElementById('editName').value = ''; 
+        document.getElementById('editPassword').value = '';
+        await fetchMe(); 
+        loadPosts();
+    } catch(e) { 
+        alert('Update failed: ' + e.message);
+    }
 }
 
-// ======== Posts ========
-function escapeHtml(s){ return s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function togglePostMenu(btn){ const menu=btn.nextElementSibling; menu.style.display=(menu.style.display==='block')?'none':'block'; }
+async function deleteAccount() {
+    if (!currentUser) return alert('Not logged in');
+    if (!confirm('Delete account?')) return;
+    
+    try { 
+        await api(`/users/${currentUser.id}`, { method: 'DELETE' }); 
+        alert('Account deleted'); 
+        logout(); 
+    } catch(e) { 
+        alert('Delete failed: ' + e.message);
+    }
+}
 
-async function loadPosts(){
-    try{
+// ======== Post Functions ========
+function escapeHtml(s) { 
+    return s.replace(/[&<>"']/g, c => 
+        ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c])
+    ); 
+}
+
+function togglePostMenu(btn) { 
+    const menu = btn.nextElementSibling; 
+    menu.style.display = (menu.style.display === 'block') ? 'none' : 'block'; 
+}
+
+async function loadPosts() {
+    try {
+        showLoading(true, 'postsContainer');
+        
         let posts = await api('/posts');
-        if(showOnlyUserPosts&&currentUser) posts=posts.filter(p=>p.userId===currentUser.id);
-        const container=document.getElementById('postsContainer');
-        container.innerHTML='';
-        posts.forEach(p=>{
-            const canEdit=currentUser && p.userId===currentUser.id;
-            const div=document.createElement('div');
-            div.className='post';
-            div.innerHTML=`<div class="post-user">${escapeHtml(p.username)}</div><hr><div class="post-content">${escapeHtml(p.content)}</div>
-            ${canEdit?`<button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
-            <div class="post-menu">
-                <button onclick="editPost('${p.id}')">Edit</button>
-                <button onclick="deletePost('${p.id}')">Delete</button>
-            </div>`:''}`;
+        if (showOnlyUserPosts && currentUser) {
+            posts = posts.filter(p => p.userId === currentUser.id);
+        }
+        
+        const container = document.getElementById('postsContainer');
+        container.innerHTML = '';
+        
+        if (posts.length === 0) {
+            container.innerHTML = '<div class="post">No posts found</div>';
+            return;
+        }
+        
+        posts.forEach(p => {
+            const canEdit = currentUser && p.userId === currentUser.id;
+            const div = document.createElement('div');
+            div.className = 'post';
+            div.innerHTML = `
+                <div class="post-user">${escapeHtml(p.username)}</div>
+                <hr>
+                <div class="post-content">${escapeHtml(p.content)}</div>
+                ${canEdit ? `
+                    <button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
+                    <div class="post-menu">
+                        <button onclick="editPost('${p.id}')">Edit</button>
+                        <button onclick="deletePost('${p.id}')">Delete</button>
+                    </div>
+                ` : ''}
+            `;
             container.appendChild(div);
         });
-    } catch(e){ console.error('Posts load failed:', e.message);}
+    } catch(e) { 
+        console.error('Posts load failed:', e.message);
+        document.getElementById('postsContainer').innerHTML = 
+            '<div class="post">Error loading posts</div>';
+    } finally {
+        showLoading(false, 'postsContainer');
+    }
 }
 
-async function createPost(){
-    guardAuth(async()=>{
-        const content=document.getElementById('postContent').value.trim();
-        if(!content) return alert('Write something');
-        await api('/posts',{method:'POST',body:JSON.stringify({content})});
-        document.getElementById('postContent').value=''; closeModal('postModal'); loadPosts();
+async function createPost() {
+    guardAuth(async () => {
+        const content = document.getElementById('postContent').value.trim();
+        if (!content) return alert('Write something');
+        
+        showLoading(true);
+        
+        try {
+            await api('/posts', {
+                method: 'POST',
+                body: JSON.stringify({ content })
+            });
+            
+            document.getElementById('postContent').value = ''; 
+            closeModal('postModal'); 
+            loadPosts();
+        } catch(e) {
+            alert('Failed to create post: ' + e.message);
+        } finally {
+            showLoading(false);
+        }
     });
 }
 
-async function editPost(id){
-    guardAuth(()=>{
-        const postDiv = [...document.querySelectorAll('.post')].find(div=>{
+async function editPost(id) {
+    guardAuth(async () => {
+        const postDiv = [...document.querySelectorAll('.post')].find(div => {
             const menuBtn = div.querySelector('.post-menu-btn');
-            return menuBtn && menuBtn.nextElementSibling.querySelector('button[onclick*="editPost(\''+id+'\')"]');
+            return menuBtn && menuBtn.nextElementSibling.querySelector(`button[onclick*="editPost('${id}')"]`);
         });
-        if(!postDiv) return;
+        
+        if (!postDiv) return;
 
         const contentDiv = postDiv.querySelector('.post-content');
         const oldContent = contentDiv.textContent;
 
-        // নতুন মডাল তৈরি
+        // Create edit modal
         const modal = document.createElement('div');
         modal.className = 'modal';
         modal.style.display = 'flex';
         modal.innerHTML = `
             <div class="modal-box">
+                <div style="text-align:right;">
+                    <button onclick="this.closest('.modal').remove()" style="background: white; color: red; font-size: 40px;">×</button>
+                </div>
                 <h2>Edit Post</h2>
                 <textarea id="editPostContent" style="width:90%;height:100px;">${oldContent}</textarea><br>
                 <button id="saveEdit">Save</button>
@@ -567,186 +780,229 @@ async function editPost(id){
         `;
         document.body.appendChild(modal);
 
-        modal.querySelector('#cancelEdit').onclick = ()=>modal.remove();
-        modal.querySelector('#saveEdit').onclick = async ()=>{
+        modal.querySelector('#cancelEdit').onclick = () => modal.remove();
+        
+        modal.querySelector('#saveEdit').onclick = async () => {
             const newContent = modal.querySelector('#editPostContent').value.trim();
-            if(!newContent) return alert('Content cannot be empty');
-            try{
-                await api(`/posts/${id}`, {method:'PUT', body: JSON.stringify({content:newContent})});
+            if (!newContent) return alert('Content cannot be empty');
+            
+            showLoading(true);
+            
+            try {
+                await api(`/posts/${id}`, {
+                    method: 'PUT',
+                    body: JSON.stringify({ content: newContent })
+                });
+                
                 modal.remove();
                 loadPosts();
-            } catch(e){ alert('Edit failed: '+e.message);}
+            } catch(e) {
+                alert('Edit failed: ' + e.message);
+            } finally {
+                showLoading(false);
+            }
         };
     });
-}async function deletePost(id){
-    if(!confirm('Delete this post?')) return;
-    try{ await api(`/posts/${id}`,{method:'DELETE'}); loadPosts(); } 
-    catch(e){ alert('Delete failed: '+e.message);}
 }
 
-// ======== Init ========
-(async function(){ if(token) await fetchMe().catch(()=>{}); if(!token) document.getElementById('authWall').style.display='flex'; loadPosts(); })();
-</script>
-<script>
-  function Logout() {
-      if(confirm('Do you want to log out?')) {
-          logout();
-document.getElementById('authName').value = "";
-document.getElementById('authPassword').value = "";
-      }
-  }
-  
-  // ======== User Search & results rendering ========
-async function searchId(){
+async function deletePost(id) {
+    if (!confirm('Delete this post?')) return;
+    
+    showLoading(true);
+    
+    try { 
+        await api(`/posts/${id}`, { method: 'DELETE' }); 
+        loadPosts(); 
+    } catch(e) { 
+        alert('Delete failed: ' + e.message);
+    } finally {
+        showLoading(false);
+    }
+}
+
+// ======== User List Functions ========
+async function loadAllUsers() {
+    try {
+        showLoading(true, 'list');
+        
+        const users = await api('/users');
+        document.getElementById('list').innerHTML = '';
+        
+        if (users.length === 0) {
+            document.getElementById('list').innerHTML = '<div>No users found</div>';
+            return;
+        }
+        
+        users.forEach(user => {
+            const userDiv = document.createElement('div');
+            userDiv.style.padding = '8px 0';
+            userDiv.style.borderBottom = '1px solid #eee';
+            userDiv.innerHTML = `
+                <strong>${escapeHtml(user.username || '—')}</strong>
+                <small>(ID: ${escapeHtml(String(user.id || ''))}</small>
+                <button onclick="showUserPosts('${user.id}', '${escapeHtml(user.username)}')" 
+                    style="float:right; background:green; color:white; border:none; padding:2px 8px; border-radius:4px;">
+                    View Posts
+                </button>
+            `;
+            document.getElementById('list').appendChild(userDiv);
+        });
+    } catch(e) {
+        console.error('Failed to load users:', e);
+        document.getElementById('list').innerHTML = '<div>Error loading users</div>';
+    } finally {
+        showLoading(false, 'list');
+    }
+}
+
+async function searchId() {
     const q = document.getElementById('searchBar').value.trim();
-    if(!q) {
+    if (!q) {
         alert('Search field is empty');
         return;
     }
 
-    try{
-        // fetch all users from server (uses existing api helper)
+    showLoading(true, 'list');
+    
+    try {
         const users = await api('/users');
         const lq = q.toLowerCase();
 
-        // match by username contains OR exact id match
         const results = users.filter(u => {
-            if(!u) return false;
-            const uname = (u.username||'').toString().toLowerCase();
-            const idstr = String(u.id||'');
+            if (!u) return false;
+            const uname = (u.username || '').toString().toLowerCase();
+            const idstr = String(u.id || '');
             return uname.includes(lq) || idstr === q;
         });
 
         renderUserSearchResults(results, q);
-    } catch(e){
+    } catch(e) {
         console.error('User search failed:', e);
-        alert('Search failed: '+(e.message||e));
+        alert('Search failed: ' + (e.message || e));
+    } finally {
+        showLoading(false, 'list');
     }
 }
 
 function renderUserSearchResults(results, query) {
-    // remove any previous results container
-    const existing = document.getElementById('searchResults');
-    if(existing) existing.remove();
+    const container = document.getElementById('list');
+    container.innerHTML = '';
 
-    const container = document.getElementById('users'); // existing element in HTML
-    // create a new results wrapper
-    const wrapper = document.createElement('div');
-    wrapper.id = 'searchResults';
-    wrapper.style.padding = '10px';
-
-    const heading = document.createElement('div');
-    heading.style.marginBottom = '8px';
-    heading.innerHTML = `<strong>Results for:</strong> "${escapeHtml(query)}" — ${results.length} found<hr>`;
-    wrapper.appendChild(heading);
-
-    if(results.length === 0){
-        const empty = document.createElement('div');
-        empty.innerText = 'No users found.';
-        wrapper.appendChild(empty);
-    } else {
-        results.forEach(u => {
-            const row = document.createElement('div');
-            row.style.display = 'flex';
-            row.style.alignItems = 'center';
-            row.style.justifyContent = 'space-between';
-            row.style.padding = '8px 0';
-            row.style.borderBottom = '1px dashed #ddd';
-
-            const info = document.createElement('div');
-            info.innerHTML = `<div><strong>${escapeHtml(u.username||'—')}</strong> <small>(ID: ${escapeHtml(String(u.id||''))})</small></div>`;
-
-            const actions = document.createElement('div');
-
-            const viewBtn = document.createElement('button');
-            viewBtn.innerText = 'View';
-            viewBtn.style.marginRight = '6px';
-            viewBtn.onclick = ()=> showUserProfileInPanel(u);
-
-            const postsBtn = document.createElement('button');
-            postsBtn.innerText = 'Show posts';
-            postsBtn.onclick = ()=> showPostsByUser(u.id);
-
-            actions.appendChild(viewBtn);
-            actions.appendChild(postsBtn);
-
-            row.appendChild(info);
-            row.appendChild(actions);
-            wrapper.appendChild(row);
-        });
+    if (results.length === 0) {
+        container.innerHTML = '<div>No users found matching your search</div>';
+        return;
     }
 
-    // append results after the top search area (so existing close button and search row remain)
-    container.appendChild(wrapper);
+    results.forEach(u => {
+        const row = document.createElement('div');
+        row.style.display = 'flex';
+        row.style.alignItems = 'center';
+        row.style.justifyContent = 'space-between';
+        row.style.padding = '8px 0';
+        row.style.borderBottom = '1px dashed #ddd';
+
+        const info = document.createElement('div');
+        info.innerHTML = `
+            <div>
+                <strong>${escapeHtml(u.username || '—')}</strong>
+                <small>(ID: ${escapeHtml(String(u.id || ''))})</small>
+            </div>
+        `;
+
+        const actions = document.createElement('div');
+        const postsBtn = document.createElement('button');
+        postsBtn.innerText = 'Show posts';
+        postsBtn.style.marginLeft = '6px';
+        postsBtn.onclick = () => showPostsByUser(u.id);
+
+        actions.appendChild(postsBtn);
+        row.appendChild(info);
+        row.appendChild(actions);
+        container.appendChild(row);
+    });
 }
 
-// show simple profile info in the existing profileInfo area (doesn't change auth)
-function showUserProfileInPanel(user){
-    // make sure #profile modal is visible
-    document.getElementById('profile').style.display = 'flex';
-    const box = document.getElementById('profileInfo');
-    box.innerHTML = `<div><strong>ID:</strong> ${escapeHtml(String(user.id||''))}</div>
-                     <div><strong>Name:</strong> ${escapeHtml(user.username||'—')}</div>
-                     <div style="margin-top:8px;"><em>Public profile view</em></div>`;
-}
-
-// fetch posts and render only those of given user id
-async function showPostsByUser(userId){
-    try{
+async function showPostsByUser(userId) {
+    try {
+        showLoading(true, 'postsContainer');
+        
         const posts = await api('/posts');
         const filtered = posts.filter(p => String(p.userId) === String(userId));
         const container = document.getElementById('postsContainer');
-        container.innerHTML = ''; // replace with selected user's posts
+        container.innerHTML = '';
 
-        if(filtered.length === 0){
-            alert('No post by this user');
+        if (filtered.length === 0) {
+            container.innerHTML = '<div class="post">No posts by this user</div>';
             return;
         }
 
-        filtered.forEach(p=>{
+        filtered.forEach(p => {
             const canEdit = (currentUser && String(p.userId) === String(currentUser.id));
             const div = document.createElement('div');
             div.className = 'post';
-            div.innerHTML = `<div class="post-user">${escapeHtml(p.username)}</div><hr><div class="post-content">${escapeHtml(p.content)}</div>
-                ${canEdit?`<button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
-                <div class="post-menu">
-                    <button onclick="editPost('${p.id}')">Edit</button>
-                    <button onclick="deletePost('${p.id}')">Delete</button>
-                </div>`:''}`;
+            div.innerHTML = `
+                <div class="post-user">${escapeHtml(p.username)}</div>
+                <hr>
+                <div class="post-content">${escapeHtml(p.content)}</div>
+                ${canEdit ? `
+                    <button class="post-menu-btn" onclick="togglePostMenu(this)">⋯</button>
+                    <div class="post-menu">
+                        <button onclick="editPost('${p.id}')">Edit</button>
+                        <button onclick="deletePost('${p.id}')">Delete</button>
+                    </div>
+                ` : ''}
+            `;
             container.appendChild(div);
         });
-    } catch(e){
+        
+        closeModal('userList');
+    } catch(e) {
         console.error('Load user posts failed:', e);
-        alert('Failed to load posts: '+(e.message||e));
+        alert('Failed to load posts: ' + (e.message || e));
+    } finally {
+        showLoading(false, 'postsContainer');
     }
-}  
+}
 
+function showUserProfileInPanel(user) {
+    document.getElementById('profile').style.display = 'flex';
+    const box = document.getElementById('profileInfo');
+    box.innerHTML = `
+        <div><strong>ID:</strong> ${escapeHtml(String(user.id || ''))}</div>
+        <div><strong>Name:</strong> ${escapeHtml(user.username || '—')}</div>
+        <div style="margin-top:8px;"><em>Public profile view</em></div>
+    `;
+}
 
+// ======== Initialization ========
+async function initializeApp() {
+    // Check for saved dark mode preference
+    const darkMode = localStorage.getItem('darkMode') === 'true';
+    document.getElementById('darkMode').checked = darkMode;
+    toggleDarkMode();
+    
+    // Load user if token exists
+    if (token) {
+        try {
+            await fetchMe();
+            loadPosts();
+        } catch(e) {
+            console.error('Initialization error:', e);
+            logout();
+        }
+    } else {
+        document.getElementById('authWall').style.display = 'flex';
+    }
+}
 
+function Logout() {
+    if (confirm('Do you want to log out?')) {
+        logout();
+    }
+}
+
+// Start the app
+initializeApp();
 </script>
-
-<script>
-    const btn = document.getElementById('loadBtn');
-    const output = document.getElementById('list');
-
-    btn.addEventListener('click', () => {
-        fetch('https://asirnet-backend.onrender.com/')  // Server URL
-            .then(response => response.json())
-            .then(data => {
-                // data ধরা যাক এইরকম array: [{username: "abc"}, {username: "xyz"}]
-                output.innerHTML = ""; // পুরোনো content clear
-
-                data.forEach(user => {
-                    // প্রতিটা username <h3> tag এ এবং <hr> add
-                    output.innerHTML += `<p>${user.username}</p><hr>`;
-                });
-            })
-            .catch(err => {
-                output.innerHTML = "Error: " + err;
-            });
-    });
-</script>
-</script>
-
 </body>
 </html>
