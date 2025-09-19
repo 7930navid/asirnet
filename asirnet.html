@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <title>Page title</title>
+    <style>
+body {
+    background: #f0f0f0;
+}
+#header { 
+       display:flex; 
+       align-items:center; 
+       justify-content:space-between; 
+       padding:20px; 
+       background:lightyellow; 
+       border-bottom:5px solid green; 
+       position: fixed;
+       z-index: 1000;
+       top: 0;
+       left: 0;
+       right: 0;
+       }
+
+#header h1 { 
+       margin:0; 
+       color:green; 
+       text-shadow:0 0 10px lightgreen; 
+       }
+#header h1 span { 
+       margin-left:5px; 
+       color:#ffe76ae7; 
+       text-shadow:0 0 5px green;
+       }
+#header p {
+       font-size: 10px;
+       }
+#header h5 {
+    color: red;
+    padding: 10px;
+    border: 2px solid red;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 0 10px red;
+    
+}
+#header button { 
+       width:50px; 
+       height:50px; 
+       border:2px solid purple; 
+       border-radius:8px; background:white; 
+       cursor:pointer; 
+       box-shadow:0 0 8px purple; 
+       }
+#menuBtn hr {
+       background: purple;
+       height: 1px;
+       width: 60%;
+       }
+#modal { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       padding: 20px; 
+       }
+.innerdiv{
+    background: white;
+    border-radius: 10px;
+    padding: 20px;
+    width: 200px;
+    height: 200px;
+       }     
+.innerdiv button {
+    font-size: 26px;
+    background: none;
+    border: none;
+}
+#program {
+    background: white;
+    border-radius : 20px;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    width: 95%;
+    height: 70%;
+    }
+#progname{
+    color: green;
+}
+#progdiv {
+    background: lightyellow;
+    padding: 10px;
+    padding-left: 30px;
+    border-top-left-radius: 60px;
+    border-top-right-radius: 60px;
+    border-bottom: 5px solid green;
+    position: fixed;
+    z-index: 1000;
+    width: 690px;
+}
+
+#btnlist div{
+    margin: 20px;
+    width: 35%;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    border: 3px solid blue;
+}
+#btnlist button{
+    background: none;
+    border: none;
+    font-size: 24px;
+}
+
+.cut {
+    background: none;
+    border: none;
+    font-size: 40px;
+    color: red;
+}
+
+#bio {
+    padding-top: 140px;
+}
+#displayprofile1,#displayprofile2 {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+    background: white;
+    border-radius: 90px;
+}
+#post {
+    width: 550px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    border: 1px solid black;
+    background: white;
+}
+#displayprofile {
+    margin-right: 20px;
+    margin-left: 20px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    border: 1px solid black;
+    background: none;
+    
+}
+#searchpad { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       padding: 30px; 
+       } 
+#search {
+    height: 60px;
+    width: 77%;
+    border-radius: 90px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    border-right: 1px solid black;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    color: red;
+}
+#btnsearch {
+    height: 80px;
+    border-radius: 90px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border: none;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    
+}
+#show {
+    display: none;
+    background: white;
+    border-radius: 20px;
+    width: 93%;
+    height: 70%;
+    margin-top: 40px;
+}
+#showheader h2 {
+    color: green;
+}
+#showheader {
+    width: 700px;
+    height: 80px;
+    border: none;
+    border-bottom: 2px solid green;
+    padding-left: 20px;
+}
+#searchresult {
+    padding: 20px;
+}
+#close {
+    background: red;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    color: white;
+    border: none;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 15px;
+    
+}
+#postpage { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       justify-content:center; 
+       padding: 10px; 
+       } 
+#postpad {
+    height: 80%;
+    width: 650px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+#nameplate {
+    width: 100%;
+    border-bottom: 2px solid green;
+}
+#nameplate button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: red;
+}
+#submit {
+    width: 20%;
+    background: lightyellow;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 2px solid green;
+    color: green;
+    margin-top: 20px;
+}
+#clear {
+    width: 20%;
+    background: lightpink;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 2px solid red;
+    color: red;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+#postword {
+    width: 600px;
+    margin-top: 20px;
+    border: 1px solid green;
+    border-radius: 20px;
+    height: 500px;
+    padding: 20px;
+    font-size: 30px;
+    color: blue;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+}
+.postshow {
+    padding: 20px;
+    text-align: justify;
+    margin: 25px;
+    border-radius: 20px;
+    background: white;
+    min-height: 100px;
+    width: 90%;
+    box-shadow: 0 0 5px gray;
+}
+.postshow h2{
+    color: green;
+}
+.postshow hr{
+    background: green;
+}
+.postshow p{
+    font-size: 16px;
+}
+#progcontent {
+    padding: 25px;
+    padding-top: 120px;
+}
+#progcontent button {
+    padding-right: 450px;
+    font-size: 30px;
+    background: none;
+    border: none;
+}
+#progcontent button p {
+    text-shadow: 0 0 50px soild red;
+ 
+}
+#userprofile {
+    background: linear-gradient(to left, white, lightyellow, white);
+    box-shadow: 0 0 10px green;
+    text-align: center;
+    padding: 20px;
+    border-radius: 40px;
+    border-left: 50px solid green;
+    border-top: 5px solid green;
+    border-bottom: 5px solid green;
+    border-right: 50px solid green;
+}
+#userprofile h1 {
+    color: green;
+} 
+#userprofile p span {
+    color: blue;
+} 
+#userprofile i {
+    color: red;
+    font-size: 16px;
+    
+} 
+
+#manageprofile button {
+    width: 100%;
+    background: #c9c9c9;
+    border: none;
+    border-radius: 20px;
+    padding: 10px;
+    font-size: 14px;
+}
+#editprofile {
+    display: flex;
+} 
+#editprofile button {
+    background: lightyellow;
+    padding: 10px;
+    font-size: 16px;
+    color: white;
+    font-weight: bold;
+    border: none;
+    border-radius: 20px;
+    width: 200px;
+    margin: 15px;
+}
+#editprofile input {
+    width: 300px;
+    margin: 10px;
+    border: 1px solid green;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 5px green;
+    background: lightcyan;
+    font-size: 16px;
+    color: red;
+}
+#editprofile textarea {
+    width: 280px;
+    height: 90px;
+    margin: 10px;
+    border: 1px solid green;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 5px green;
+    background: lightcyan;
+    font-size: 16px;
+    color: red;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+}
+#backbtn button {
+    background: none;
+    font-size: 40px;
+    border: none;
+    color: brown;
+}
+
+#defaultprog div{
+    margin-top: 30px;
+    background: lightyellow;
+    padding: 40px;
+    color: green;
+    font-size: 130px;
+    border-radius: 30px;
+    box-shadow: 0 0 10px green;
+    text-shadow: 0 0 5px green;
+}
+#defaultprog div span {
+    color: yellow;
+}
+
+#tablebtn button {
+    width: 200px;
+    background: lightgreen;
+    color: red;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 30px;
+    border: 5px solid cyan;
+    border-left: 15px solid cyan;
+    border-right: 15px solid cyan;
+    box-shadow: 0 0 10px red;
+}
+
+    </style>
+</head>
+<body id="body">
+<div id="header">
+     <h1>Asir<span>Net</span><p> a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a></p></h1><h5 id="headername"></h5>
+  <button id="menuBtn" onclick="toggleMenu()"><hr><hr><hr></button>
+</div>
+        
+<div id="modal">
+<div style="background: none; width: 100%;">
+    <div id="btnlist">
+        <div>
+  <button onclick="profile()" id="prof">Profile</button><hr>
+  <button onclick="setting()" id="sett">Setting</button><hr>
+  <button onclick="about()" id="abou">About</button><hr></div>
+    </div>
+      
+          <div id="program">
+          <div id="progdiv">
+           <table border="0" style="width: 100%;"><tr><td style="width: 500px;">
+              <h2 id="progname">AsirNet</h2>
+              </td> <td align="right" style="width: 100px;">              
+              <div id="backbtn"></div>
+              </td><td align="right">
+              <button onclick="closealert('modal')" class="cut">×</button></td></tr></table>
+          </div>
+           <div id="progcontent">
+               <div id="defaultprog">
+      <div>Asir<span>Net</span></div>             
+               </div>
+               <div id="tablebtn">
+                   <br><br><br>
+<button onclick="profile()">Profile</button>
+<button onclick="setting()">Setting</button>
+<button onclick="about()">About</button>
+               </div>
+           </div>
+ </div>
+</div>
+</div>
+
+<div id="bio">
+    <table border="0" align="center">
+        <tr>
+            <td>
+                <button onclick="toggleMenu(); profile();closebtnlist();loadProfilePosts() " id="displayprofile1">👤</button>
+            </td>
+            <td>
+            <button onclick="createpost()" id="post" >
+            Write here your mind...
+            </button>
+       </td>           
+        <td>
+                <button onclick="searchpad()" id="displayprofile2">🔍</button>
+            </td>
+</tr>
+    </table>
+</div>
+<div id="searchpad">
+<div style="background: none; width: 100%;">
+    <div style="text-align: right; padding-right: 70px;">
+        <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
+    </div>
+    <input type="text" id="search" placeholder="Search here.."/>
+    <button onclick="pad();" id="btnsearch">🔍</button>  
+   
+          <div id="show">
+              <div>
+              <div id="showheader">
+              <h2>
+                 Search Result
+              </h2>
+              </div>
+              <div id="searchresult"></div>
+          </div>
+          </div>
+
+ </div>
+    </div>
+ 
+ <div id="postpage">
+ <div id="postpad">
+      <table border="0" id="nameplate"><tr><td><h2 style="text-align: left; color: green;">Create your mind here..</h2>
+ </td><td>
+      <div style="text-align: right">
+          <button onclick="closealert('postpage')">×</button>
+      </div> 
+      </td> 
+      </tr>
+      </table>
+      <div>         
+      <textarea id="postword" placeholder="What's on your mind?"></textarea>
+
+          <div style="text-align: right;">
+              <button onclick="clearpost()" id="clear">Clear </button>
+               <button onclick="postsubmit()" id="submit">Post </button>
+         </div>
+      </div>
+ </div>
+ </div> 
+ <div id="content"></div>    
+
+<script>
+function closebtnlist() {
+    document.getElementById('btnlist').style.display = 'none';
+    document.getElementById('progcontent').style.marginTop = '260px';
+}
+
+function toggleMenu() {
+    document.getElementById('progcontent').style.marginTop = '20px';
+    document.getElementById('btnlist').style.display = 'flex';
+    const modal = document.getElementById('modal');
+    modal.style.display = (modal.style.display === 'flex') ? 'none' : 'flex';
+}
+
+function closealert(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function profile() {
+    document.getElementById('prof').style.borderLeft = '5px solid blue';
+    document.getElementById('abou').style.borderLeft = 'none';
+    document.getElementById('sett').style.borderLeft = 'none';
+    document.getElementById('progname').innerHTML = "Profile"; 
+    document.getElementById('progcontent').innerHTML = `<div id="profilecontent"></div>`;
+    loadProfile();
+}
+
+function setting() {
+    document.getElementById('sett').style.borderLeft = '5px solid blue';
+    document.getElementById('abou').style.borderLeft = 'none';
+    document.getElementById('prof').style.borderLeft = 'none';
+    document.getElementById('progname').innerHTML = "Setting";       
+    document.getElementById('progcontent').innerHTML =`
+        <button onclick="logout()">Log out </button><hr>
+    `;
+}
+
+function about() {
+    document.getElementById('abou').style.borderLeft = '5px solid blue';
+    document.getElementById('prof').style.borderLeft = 'none';
+    document.getElementById('sett').style.borderLeft = 'none';
+    document.getElementById('progname').innerHTML = "About";       
+    document.getElementById('progcontent').innerHTML = `
+       <h2>About AsirNet</h2>
+      <p>
+        <b>AsirNet</b> is a user-friendly and interactive platform designed to simplify daily thoughts, posts, and profile management. 
+        Developed in collaboration with <a href="https://7930navid.github.io/W-deploy/" target="_blank"><b>W-deploy</b></a>, 
+        it provides a smooth, responsive, and modern web experience.
+      </p>
+      <p>
+        Our mission is to create a safe, easy-to-use, and engaging online community where users can freely share their ideas, 
+        express themselves, and connect with others. Whether you want to post your thoughts, discover content, or interact 
+        with like-minded people, AsirNet offers all the necessary tools in one platform.
+      </p>
+      <p>
+        Key features include:
+        <ul>
+          <li>Profile management for personal customization.</li>
+          <li>Posting and sharing thoughts instantly.</li>
+          <li>Search functionality to discover posts and users.</li>
+          <li>Responsive and modern interface for smooth browsing.</li>
+        </ul>
+      </p>
+      <p>
+        With the collaboration of <a href="https://7930navid.github.io/W-deploy/" target="_blank"><b>W-deploy</b></a>, 
+        we ensure that AsirNet remains reliable, secure, and continuously improving. Our vision is to expand this community 
+        further, empowering users to express themselves and stay connected in a meaningful way.
+      </p>
+      <p>
+        Join AsirNet today, share your thoughts, connect with others, and be a part of a growing, interactive community!
+      </p>
+   `;
+}
+
+function searchpad() {
+    document.getElementById('searchpad').style.display = 'flex';  
+}
+
+async function pad() {
+    let search = document.getElementById('search').value;
+    if(!search) {
+        document.getElementById("show").style.display = 'none';  
+        alert('Please search anything before');
+    } else {
+        document.getElementById('show').style.display = 'flex'; 
+        
+    
+    const search = document.getElementById('search').value.trim().toLowerCase();
+    const showDiv = document.getElementById("searchresult");
+
+    // সার্চ খালি না হলে এই ফাংশন চালানো যাবে
+    try {
+        // সার্ভার থেকে ইউজার গুলো আনছে
+        const res = await fetch("http://localhost:3000/users");
+        const users = await res.json();
+
+        // শুধু ID বা email দিয়ে filter
+        const results = users.filter(u => u.username.toLowerCase().includes(search));
+
+        if (results.length === 0) {
+            showDiv.style.display = 'flex';
+            showDiv.innerHTML = `<p style=" color:red">No user found for "<b>${search}</b>"</p>`;
+        } else {
+            showDiv.style.display = 'flex';
+            showDiv.innerHTML = results.map(u => `
+                <div style="border:none; margin:5px; padding:10px; color: green; width: 700px;">
+                    ${u.username} <br><hr>
+                </div>
+            `).join("");
+      }  
+    } catch (err) {
+        alert("Server error: " + err.message);
+    }
+}
+          
+    }
+
+
+function createpost() {
+    document.getElementById('postpage').style.display = 'flex';   
+} 
+
+function clearpost() {
+    document.getElementById('postword').value = "";    
+} 
+
+async function postsubmit() {
+    const text = document.getElementById('postword').value;
+    if(!text) return alert("Please write something!");
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if(!user) return alert("User not found!");
+
+    try {
+        const res = await fetch("http://localhost:3000/post", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({ user: user.username, text })
+        });
+        const data = await res.json();
+
+        if(res.ok) {
+            const div = document.createElement('div');
+            div.className = "postshow";
+            div.innerHTML = `<h2>${user.username}</h2><hr><p>${text}</p>`;
+            document.getElementById('content').appendChild(div);
+            document.getElementById('postword').value = "";
+            closealert('postpage');
+        } else {
+            alert(data.message || "Error posting!");
+        }
+    } catch(err) {
+        alert("Server error: " + err.message);
+    }
+}
+
+async function loadPosts() {
+    try {
+        const res = await fetch("http://localhost:3000/post");
+        const data = await res.json();
+
+        if (res.ok) {
+            const contentDiv = document.getElementById("content");
+            contentDiv.innerHTML = "";
+
+            data.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "postshow";
+                div.innerHTML = `<h2>${post.username}</h2><hr><p>${post.text}</p>`;
+                contentDiv.appendChild(div);
+            });
+        } else {
+            alert(data.message || "Error loading posts!");
+        }
+    } catch (err) {
+        alert("Server error: " + err.message);
+    }
+}
+
+function loadProfile() {
+    const user = localStorage.getItem("user");
+    if(user) {
+        const u = JSON.parse(user);
+        const profileDiv = document.getElementById("profilecontent");
+        if(profileDiv) {
+            profileDiv.innerHTML = `
+                <div id="manageprofile">
+                    <div id="userprofile">
+                        <h1>${u.username}</h1>
+                        <b><p>on <span>${u.email}</span></p></b>
+                        <u style="color:red;"><i>${u.bio}</i></u>            
+                    </div><br>
+                    <button onclick="editprofile()">Edit Profile</button>
+                    <div id="postofuser"></div>
+                </div>
+            `;
+        }
+    }
+}
+
+function editprofile() {
+    document.querySelector('#manageprofile').innerHTML = `
+        <div id="editprofile">
+            <table border="0" style="width: 700px;">
+                <tr>
+                    <td>
+                        <input type="text" id="editname" placeholder="your new name.."><br>
+                        <input type="password" id="editpass" placeholder="your new access word.."><br>
+                    </td>
+                    <td>
+                        <textarea id="editbio" placeholder="your new focus.."></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="right">
+                        <button onclick="deletethisprofile()" style="color: red; border: 2px solid red;">Delete Account</button>
+                    </td>
+                    <td>
+                        <button onclick="editthisprofile()" style="color: green; border: 2px solid green;">Edit Profile</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    `;
+    document.querySelector('#progname').innerHTML = 'Edit Profile';
+    document.querySelector('#backbtn').innerHTML = `<button onclick="backtoprofile();" class="backbtn"><</button>`;
+}
+
+function backtoprofile() {
+    profile();
+    document.querySelector('#backbtn').innerHTML = "";
+}
+
+function logout() {
+    if(confirm('Do you want to Log out ?')) {
+        localStorage.removeItem("user");
+        alert("Logged out!");
+        location.href = "/asirnet.login.html";
+    }
+}
+
+async function editthisprofile() {
+    let username = document.getElementById('editname').value;   
+    let password = document.getElementById('editpass').value; 
+    let bio = document.getElementById("editbio").value;
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.email) {
+        alert("No logged in user found!");
+        return;
+    }
+
+    if (username && password && bio) {
+        try {
+            const res = await fetch("http://localhost:3000/editprofile", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email: user.email, username, password, bio })
+            });
+
+            const data = await res.json();
+            if (res.ok) {
+                alert(data.message || "Profile updated!");
+                localStorage.setItem("user", JSON.stringify({ ...user, username, password, bio }));
+                profile();
+            } else {
+                alert(data.message || "Update failed!");
+            }
+        } catch (err) {
+            alert("Server error: " + err.message);
+        }
+    } else {
+        alert("Please fill the gaps first");
+    }
+}
+
+async function deletethisprofile() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.email) {
+        alert("No user logged in!");
+        return;
+    }
+
+    if (!confirm("Are you sure you want to delete this account?")) {
+        return;
+    }
+
+    try {
+        const res = await fetch(`http://localhost:3000/deleteuser/${user.email}`, {
+            method: "DELETE"
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+            alert(data.message || "Account deleted successfully");
+            localStorage.removeItem("user");
+            location.href = "/index.html";
+        } else {
+            alert(data.message || "Error deleting account");
+        }
+    } catch (err) {
+        alert("Server error: " + err.message);
+    }
+}
+
+window.onload = function() {
+    const user = localStorage.getItem("user");
+    if(!user) {
+        alert("Please login first!");
+        location.href = "/index.html";
+    } else {
+        const u = JSON.parse(user);
+        document.getElementById('headername').innerHTML = `${u.username}`;
+        loadProfile();
+        loadPosts();
+    }
+}
+
+async function loadProfilePosts() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+
+    const res = await fetch("http://localhost:3000/post");
+    const allPosts = await res.json();
+
+    // শুধু current user এর post filter
+    const userPosts = allPosts.filter(p => p.email === user.email);
+
+    const profileDiv = document.getElementById("postofuser");
+    profileDiv.innerHTML = `<div id="userposts"></div>`;
+    const postsDiv = document.getElementById("userposts");
+
+    userPosts.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "postshow";
+        div.innerHTML = `
+            <div style="position: relative;">
+                <h3>${user.username}</h3>
+                <p id="posttext${i}">${p.text}</p>
+                <button onclick="toggleDropdown('menu${i}')" style="position: absolute; right: 0; top: 0;">⋮</button>
+                <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 25px; border:1px solid #ccc; background:#fff;">
+                    <button onclick="editPost(${i})">Edit</button>
+                    <button onclick="deletePost(${i})">Delete</button>
+                </div>
+            </div>
+        `;
+        postsDiv.appendChild(div);
+    });
+}
+
+function toggleDropdown(id) {
+    const menu = document.getElementById(id);
+    menu.style.display = menu.style.display === "block" ? "none" : "block";
+}
+
+async function deletePost(index) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!confirm("Are you sure to delete this post?")) return;
+
+    const res = await fetch(`http://localhost:3000/post/${user.email}/${index}`, { method: "DELETE" });
+    const data = await res.json();
+    alert(data.message);
+    loadProfilePosts();
+}
+
+function editPost(index) {
+    const textareaId = `editpost${index}`;
+    const postText = document.getElementById(`posttext${index}`).innerText;
+
+    document.getElementById(`posttext${index}`).outerHTML = `
+        <textarea id="${textareaId}">${postText}</textarea>
+        <button onclick="savePost(${index})">Save</button>
+        <button onclick="loadProfilePosts()">Cancel</button>
+    `;
+}
+
+async function savePost(index) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const newText = document.getElementById(`editpost${index}`).value;
+
+    const res = await fetch(`http://localhost:3000/post/${user.email}/${index}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ text: newText })
+    });
+    const data = await res.json();
+    alert(data.message);
+    loadProfilePosts();
+}
+</script>
+</body>
+</html>
