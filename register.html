@@ -357,7 +357,7 @@ async function Login() {
 }
 </script>
     
-        <script>
+    <script>
 async function testRegister() {
     const testData = {
         username: "Md. Asir Abrar Khan",
@@ -373,53 +373,26 @@ async function testRegister() {
             body: JSON.stringify(testData)
         });
 
+        let text = await res.text(); // প্রথমে plain text read
         let data;
         try {
-            data = await res.json(); // JSON parse
+            data = JSON.parse(text); // JSON parse চেষ্টা
         } catch (e) {
-            alert("Server did not return valid JSON. Status: " + res.status + "\nResponse text: " + await res.text());
+            console.log("Server did not return valid JSON. Status:", res.status);
+            console.log("Response text:", text);
             return;
         }
 
-        alert("Register Response:\n" + JSON.stringify(data, null, 2));
+        console.log("Register Response:", data);
+        alert("Check console for register response");
     } catch (err) {
-        alert("Error connecting to server: " + err.message);
-    }
-}
-
-async function testLogin() {
-    const loginData = {
-        email: "navidabid92@gmail.com",
-        password: "7930"
-    };
-
-    try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(loginData)
-        });
-
-        let data;
-        try {
-            data = await res.json();
-        } catch (e) {
-            alert("Server did not return valid JSON. Status: " + res.status + "\nResponse text: " + await res.text());
-            return;
-        }
-
-        alert("Login Response:\n" + JSON.stringify(data, null, 2));
-    } catch (err) {
-        alert("Error connecting to server: " + err.message);
+        console.log("Error connecting to server:", err.message);
+        alert("Error connecting to server. Check console.");
     }
 }
 
 // 🔹 Run register test
-testRegister(); 
-
-// যদি register success হয়, uncomment করে login test করো
-// testLogin();
-</script>
-  
+testRegister();
+    </script>  
 </body>
 </html>
