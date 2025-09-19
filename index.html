@@ -816,7 +816,7 @@ async function deletethisprofile() {
         if (res.ok) {
             alert(data.message || "Account deleted successfully");
             localStorage.removeItem("user");
-            location.href = "/register.html";
+            location.href = "https://7930navid.github.io/asirnet/register.html";
         } else {
             alert(data.message || "Error deleting account");
         }
@@ -829,7 +829,7 @@ window.onload = function() {
     const user = localStorage.getItem("user");
     if(!user) {
         alert("Please login first!");
-        location.href = "/register.html";
+        location.href = "https://7930navid.github.io/asirnet/register.html";
     } else {
         const u = JSON.parse(user);
         document.getElementById('headername').innerHTML = `${u.username}`;
