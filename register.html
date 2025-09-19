@@ -356,5 +356,70 @@ async function Login() {
     }
 }
 </script>
+    
+        <script>
+async function testRegister() {
+    const testData = {
+        username: "Md. Asir Abrar Khan",
+        email: "navidabid92@gmail.com",
+        password: "7930",
+        bio: "~The Author of AsirNet~"
+    };
+
+    try {
+        const res = await fetch("https://order-backend-nxon.onrender.com/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(testData)
+        });
+
+        let data;
+        try {
+            data = await res.json(); // JSON parse
+        } catch (e) {
+            alert("Server did not return valid JSON. Status: " + res.status + "\nResponse text: " + await res.text());
+            return;
+        }
+
+        alert("Register Response:\n" + JSON.stringify(data, null, 2));
+    } catch (err) {
+        alert("Error connecting to server: " + err.message);
+    }
+}
+
+async function testLogin() {
+    const loginData = {
+        email: "navidabid92@gmail.com",
+        password: "7930"
+    };
+
+    try {
+        const res = await fetch("https://order-backend-nxon.onrender.com/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(loginData)
+        });
+
+        let data;
+        try {
+            data = await res.json();
+        } catch (e) {
+            alert("Server did not return valid JSON. Status: " + res.status + "\nResponse text: " + await res.text());
+            return;
+        }
+
+        alert("Login Response:\n" + JSON.stringify(data, null, 2));
+    } catch (err) {
+        alert("Error connecting to server: " + err.message);
+    }
+}
+
+// 🔹 Run register test
+testRegister(); 
+
+// যদি register success হয়, uncomment করে login test করো
+// testLogin();
+</script>
+  
 </body>
 </html>
