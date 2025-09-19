@@ -274,7 +274,7 @@ async function Login() {
 
   if (loginemail && loginpass) {
     try {
-      const res = await fetch("http://localhost:3000/login", {
+      const res = await fetch("https://order-backend-nxon.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginemail, password: loginpass })
@@ -306,7 +306,7 @@ async function register() {
 
   if (username && useremail && password && bio) {
     try {
-      const res = await fetch("http://localhost:3000/register", {
+      const res = await fetch("https://order-backend-nxon.onrender.com", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email: useremail, password, bio})
