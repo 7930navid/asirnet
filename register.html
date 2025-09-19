@@ -266,133 +266,18 @@ document.getElementById('loginemail').value = "" ;
 document.getElementById('loginpass').value = "" ;   
  }       
    </script>
-<script>
-    // 🔹 Login function
-async function Login() {
-  const loginemail = document.getElementById('loginemail').value;
-  const loginpass = document.getElementById('loginpass').value;
-
-  if (!loginemail || !loginpass) {
-    alert("Please fill the gaps first");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://order-backend-nxon.onrender.com/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email: loginemail, password: loginpass })
-    });
-
-    const data = await res.json(); // JSON parse
-    if (res.ok) {
-      alert(data.message);
-      // ✅ localStorage-এ user data রাখা
-      localStorage.setItem("user", JSON.stringify(data.user));
-      location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
-    } else {
-      alert(data.message);
-    }
-  } catch (err) {
-    alert("Server error: " + err.message);
-  }
-}
-
-// 🔹 Register function
-async function register() {
-  const username = document.getElementById('username').value;
-  const useremail = document.getElementById('useremail').value;
-  const password = document.getElementById('password').value;
-  const bio = document.getElementById('bio').value;
-
-  if (!username || !useremail || !password || !bio) {
-    alert("Please fill the gaps first");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://order-backend-nxon.onrender.com/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email: useremail, password, bio })
-    });
-
-    const data = await res.json(); // JSON parse
-    if (res.ok) {
-      alert(data.message);
-      location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
-    } else {
-      alert(data.message);
-    }
-  } catch (err) {
-    alert("Server error: " + err.message);
-  }
-}
-</script>
     <script>
-function customalert() {
-    document.getElementById("alert").style.display = 'flex';   
-}
-function closealert(alert) {
-    document.getElementById(alert).style.display = 'none';   
-}
-function clearinfolog() {
-    document.getElementById('username').value = "" ;   
-    document.getElementById('useremail').value = "" ;   
-    document.getElementById('password').value = "" ;   
-    document.getElementById('bio').value = "" ;   
-}       
-function clearinfo() {
-    document.getElementById('loginemail').value = "" ;   
-    document.getElementById('loginpass').value = "" ;   
-}
 
-// 🔹 Login function
-async function Login() {
-    const loginemail = document.getElementById('loginemail').value;
-    const loginpass = document.getElementById('loginpass').value;
-
-    if (!loginemail || !loginpass) {
-        alert("Please fill the gaps first");
-        return;
-    }
-
-    try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: loginemail, password: loginpass })
-        });
-
-        let data;
-        try {
-            data = await res.json(); // JSON parse
-        } catch (e) {
-            alert("Server did not return valid JSON. Status: " + res.status);
-            return;
-        }
-
-        if (res.ok) {
-            alert(data.message);
-            localStorage.setItem("user", JSON.stringify(data.user));
-            location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
-        } else {
-            alert(data.message || "Login failed");
-        }
-    } catch (err) {
-        alert("Server error: " + err.message);
-    }
-}
 
 // 🔹 Register function
 async function register() {
-    const username = document.getElementById('username').value;
-    const useremail = document.getElementById('useremail').value;
-    const password = document.getElementById('password').value;
-    const bio = document.getElementById('bio').value;
+    const username = document.getElementById('username').value.trim();
+    const useremail = document.getElementById('useremail').value.trim();
+    const password = document.getElementById('password').value.trim();
+    const bio = document.getElementById('bio').value.trim();
 
     if (!username || !useremail || !password || !bio) {
-        alert("Please fill the gaps first");
+        alert("Please fill all fields first");
         return;
     }
 
@@ -403,24 +288,73 @@ async function register() {
             body: JSON.stringify({ username, email: useremail, password, bio })
         });
 
+        // যদি response ok না হয়, raw text দেখাও
+        if (!res.ok) {
+            const text = await res.text();
+            alert(`Error ${res.status}: ${text}`);
+            return;
+        }
+
+        // JSON parse
         let data;
         try {
-            data = await res.json(); // JSON parse
+            data = await res.json();
         } catch (e) {
             alert("Server did not return valid JSON. Status: " + res.status);
             return;
         }
 
-        if (res.ok) {
-            alert(data.message);
-            location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
-        } else {
-            alert(data.message || "Registration failed");
-        }
+        alert(data.message);
+        // Success হলে localStorage রাখো
+        localStorage.setItem("user", JSON.stringify({ username, email: useremail }));
+        location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
+
     } catch (err) {
         alert("Server error: " + err.message);
     }
 }
-    </script>
+
+// 🔹 Login function
+async function Login() {
+    const loginemail = document.getElementById('loginemail').value.trim();
+    const loginpass = document.getElementById('loginpass').value.trim();
+
+    if (!loginemail || !loginpass) {
+        alert("Please fill all fields first");
+        return;
+    }
+
+    try {
+        const res = await fetch("https://order-backend-nxon.onrender.com/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email: loginemail, password: loginpass })
+        });
+
+        // যদি response ok না হয়, raw text দেখাও
+        if (!res.ok) {
+            const text = await res.text();
+            alert(`Error ${res.status}: ${text}`);
+            return;
+        }
+
+        // JSON parse
+        let data;
+        try {
+            data = await res.json();
+        } catch (e) {
+            alert("Server did not return valid JSON. Status: " + res.status);
+            return;
+        }
+
+        alert(data.message);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
+
+    } catch (err) {
+        alert("Server error: " + err.message);
+    }
+}
+</script>
 </body>
 </html>
