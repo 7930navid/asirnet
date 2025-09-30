@@ -282,7 +282,7 @@ async function register() {
     }
 
     try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/register", {
+        const res = await fetch("https://order-backend-nxon.onrender.com/signup/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email: useremail, password, bio })
@@ -325,7 +325,7 @@ async function Login() {
     }
 
     try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/login", {
+        const res = await fetch("https://order-backend-nxon.onrender.com/signin/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: loginemail, password: loginpass })
@@ -367,7 +367,7 @@ async function testRegister() {
     };
 
     try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/register", {
+        const res = await fetch("https://order-backend-nxon.onrender.com/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(testData)
