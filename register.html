@@ -188,7 +188,7 @@ h2 {
     <header>
         <div id="logo">
             <p style="color: blue;">Welcome <br> To The <p style="color: red;">Compound <br> Of</p></p>
-            <p style="background: lightyellow; padding: 10px; border-radius: 50px; box-shadow: 0 0 20px yellow; ">Asir<span>Net</span><br><sub> test-version</sub></p>
+            <p style="background: lightyellow; padding: 10px; border-radius: 50px; box-shadow: 0 0 20px yellow; ">Asir<span>Net</span><br><sub> test version</sub></p>
         </div>
     </header>
     <table border="0" style="width: 100%;">
@@ -360,7 +360,7 @@ async function Login() {
 <script>
 async function checkServer() {
   try {
-    const response = await fetch("https://order-backend-nxon.onrender.com/connect/");
+    const response = await fetch("https://asirnet-backend.onrender.com/connect");
     if (!response.ok) throw new Error("Server Error: " + response.status);
     const data = await response.text();
     alert(data);
