@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
     <title>Page title</title>
     <style>
 body {
@@ -426,7 +426,7 @@ body {
      <h1>Asir<span>Net</span><p> a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a></p></h1><h5 id="headername"></h5>
   <button id="menuBtn" onclick="toggleMenu()"><hr><hr><hr></button>
 </div>
-        
+      
 <div id="modal">
 <div style="background: none; width: 100%;">
     <div id="btnlist">
@@ -438,7 +438,7 @@ body {
       
           <div id="program">
           <div id="progdiv">
-           <table border="0" style="width: 100%;"><tr><td style="width: 500px;">
+           <table border="0" style="width: 100%;"><tr><td style="width: 100%;">
               <h2 id="progname">AsirNet</h2>
               </td> <td align="right" style="width: 100px;">              
               <div id="backbtn"></div>
@@ -468,7 +468,7 @@ body {
             </td>
             <td>
             <button onclick="createpost()" id="post" >
-            Write here your mind...
+            Share your mind here...
             </button>
        </td>           
         <td>
@@ -519,8 +519,10 @@ body {
       </div>
  </div>
  </div> 
- <div id="content"></div>    
-
+<div id="homePosts">
+    <br><br>
+<p style="color: gray; text-align: center;"><i>Loading...</i> </p>
+</div>
 <script>
 function closebtnlist() {
     document.getElementById('btnlist').style.display = 'none';
@@ -543,7 +545,9 @@ function profile() {
     document.getElementById('abou').style.borderLeft = 'none';
     document.getElementById('sett').style.borderLeft = 'none';
     document.getElementById('progname').innerHTML = "Profile"; 
-    document.getElementById('progcontent').innerHTML = `<div id="profilecontent"></div>`;
+    document.getElementById('progcontent').innerHTML = `<div id="profilecontent">
+ 
+    </div>`;
     loadProfile();
 }
 
@@ -563,35 +567,43 @@ function about() {
     document.getElementById('sett').style.borderLeft = 'none';
     document.getElementById('progname').innerHTML = "About";       
     document.getElementById('progcontent').innerHTML = `
-       <h2>About AsirNet</h2>
-      <p>
-        <b>AsirNet</b> is a user-friendly and interactive platform designed to simplify daily thoughts, posts, and profile management. 
-        Developed in collaboration with <a href="https://7930navid.github.io/W-deploy/" target="_blank"><b>W-deploy</b></a>, 
-        it provides a smooth, responsive, and modern web experience.
-      </p>
-      <p>
-        Our mission is to create a safe, easy-to-use, and engaging online community where users can freely share their ideas, 
-        express themselves, and connect with others. Whether you want to post your thoughts, discover content, or interact 
-        with like-minded people, AsirNet offers all the necessary tools in one platform.
-      </p>
-      <p>
-        Key features include:
-        <ul>
-          <li>Profile management for personal customization.</li>
-          <li>Posting and sharing thoughts instantly.</li>
-          <li>Search functionality to discover posts and users.</li>
-          <li>Responsive and modern interface for smooth browsing.</li>
-        </ul>
-      </p>
-      <p>
-        With the collaboration of <a href="https://7930navid.github.io/W-deploy/" target="_blank"><b>W-deploy</b></a>, 
-        we ensure that AsirNet remains reliable, secure, and continuously improving. Our vision is to expand this community 
-        further, empowering users to express themselves and stay connected in a meaningful way.
-      </p>
-      <p>
-        Join AsirNet today, share your thoughts, connect with others, and be a part of a growing, interactive community!
-      </p>
-   `;
+ <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; line-height: 1.8; max-width: 950px; margin: 30px auto; padding: 30px;  border-radius: 15px;">
+  
+  <h2 style="text-align: center; font-size: 36px; background: linear-gradient(90deg, #e67e22, #f39c12); -webkit-background-clip: text; color: transparent; margin-bottom: 25px;">
+    About <span style="color:#e74c3c;">AsirNet</span>
+  </h2>
+
+  <p style="font-size: 17px; margin-bottom: 20px;">
+    <b style="color: #d35400;">AsirNet</b> is an <span style="color: #2980b9; font-weight: bold;">innovative</span> and <span style="color: #27ae60; font-weight: bold;">interactive</span> platform designed to simplify the way you share ideas, manage your profile, and connect with others. Developed in collaboration with 
+    <a href="https://7930navid.github.io/W-deploy/" target="_blank" style="color: #8e44ad; text-decoration: none;"><b>W-deploy</b></a>, 
+    AsirNet ensures a <span style="color: #16a085; font-weight: bold;">smooth, fast, and modern</span> experience across all devices.
+  </p>
+
+  <p style="font-size: 17px; margin-bottom: 20px;">
+    Our <span style="color: #c0392b; font-weight: bold;">mission</span> is to create a <span style="color: #d35400;">safe</span>, <span style="color: #27ae60;">easy-to-use</span>, and <span style="color: #2980b9;">engaging</span> online environment where users can freely <span style="color: #8e44ad;">express themselves</span>, share ideas, and connect with a vibrant community. Whether you want to post thoughts, explore new content, or interact with like-minded people, <b>AsirNet</b> provides all the tools you need in one platform.
+  </p>
+
+  <p style="font-size: 17px; margin-bottom: 20px;">
+    <b style="color: #e67e22;">Key Features:</b>
+    <ul style="margin: 12px 0 15px 25px; padding: 0; color: #2c3e50; font-size: 16px;">
+      <li style="margin-bottom: 8px;"><span style="color:#27ae60; font-weight:bold;">Customizable Profiles:</span> Personalize your profile with unique themes, images, and details.</li>
+      <li style="margin-bottom: 8px;"><span style="color:#2980b9; font-weight:bold;">Instant Posting:</span> Share thoughts, updates, or media instantly with your followers.</li>
+      <li style="margin-bottom: 8px;"><span style="color:#c0392b; font-weight:bold;">Advanced Search:</span> Discover posts, trending content, and new friends quickly.</li>
+      <li style="margin-bottom: 8px;"><span style="color:#8e44ad; font-weight:bold;">Responsive Design:</span> Enjoy a seamless experience on mobile, tablet, and desktop.</li>
+      <li style="margin-bottom: 8px;"><span style="color:#16a085; font-weight:bold;">Secure & Reliable:</span> Continuous improvements and strong security measures for peace of mind.</li>
+    </ul>
+  </p>
+
+  <p style="font-size: 17px; margin-bottom: 20px;">
+    In partnership with <a href="https://7930navid.github.io/W-deploy/" target="_blank" style="color: #8e44ad; text-decoration: none;"><b>W-deploy</b></a>, 
+    <b>AsirNet</b> remains <span style="color: #27ae60; font-weight: bold;">trustworthy</span>, <span style="color: #2980b9; font-weight: bold;">fast</span>, and <span style="color: #d35400; font-weight: bold;">constantly evolving</span>. Our vision is to grow this interactive community, empowering users to express themselves freely while staying meaningfully connected.
+  </p>
+
+  <p style="font-size: 18px; text-align: center; margin-top: 25px;">
+    Join <b style="color: #e74c3c;">AsirNet</b> today, <span style="color:#27ae60; font-weight:bold;">share your thoughts</span>, <span style="color:#2980b9; font-weight:bold;">connect with others</span>, and become part of a <span style="color:#e67e22; font-weight:bold;">thriving interactive community</span>! <span style="color: #8e44ad; font-weight: bold;">Your voice matters here!</span>
+  </p>
+
+</div>   `;
 }
 
 function searchpad() {
@@ -631,7 +643,7 @@ async function pad() {
             `).join("");
       }  
     } catch (err) {
-        alert("Server error: " + err.message);
+        alert("Check your network connection please!!");
     }
 }
           
@@ -672,8 +684,7 @@ async function postsubmit() {
             alert(data.message || "Error posting!");
         }
     } catch(err) {
-        alert("Server error: " + err.message);
-    }
+ alert("Check your network connection please!!");    }
 }
 
 async function loadPosts() {
@@ -682,7 +693,7 @@ async function loadPosts() {
         const data = await res.json();
 
         if (res.ok) {
-            const contentDiv = document.getElementById("content");
+            const contentDiv = document.getElementById("homePosts");
             contentDiv.innerHTML = "";
 
             data.forEach(post => {
@@ -695,8 +706,7 @@ async function loadPosts() {
             alert(data.message || "Error loading posts!");
         }
     } catch (err) {
-        alert("Server error: " + err.message);
-    }
+ alert("Check your network connection please!!");    }
 }
 
 function loadProfile() {
@@ -713,7 +723,10 @@ function loadProfile() {
                         <u style="color:red;"><i>${u.bio}</i></u>            
                     </div><br>
                     <button onclick="editprofile()">Edit Profile</button>
-                    <div id="postofuser"></div>
+                    <div id="postofuser">
+                                   <br><br>
+<p style="color: gray; text-align: center;"><i>Loading...</i> </p>
+                    </div>
                 </div>
             `;
         }
@@ -789,8 +802,7 @@ async function editthisprofile() {
                 alert(data.message || "Update failed!");
             }
         } catch (err) {
-            alert("Server error: " + err.message);
-        }
+ alert("Check your network connection please!!");        }
     } else {
         alert("Please fill the gaps first");
     }
@@ -821,8 +833,7 @@ async function deletethisprofile() {
             alert(data.message || "Error deleting account");
         }
     } catch (err) {
-        alert("Server error: " + err.message);
-    }
+ alert("Check your network connection please!!");    }
 }
 
 window.onload = function() {
@@ -860,9 +871,9 @@ async function loadProfilePosts() {
             <div style="position: relative;">
                 <table border="0" style="width: 100%;"><tr><td>
             <h3 style="color: green">${user.username}</h3>  </td>  <td>
-    <div style="text-align: right;"> <button onclick="toggleDropdown('menu${i}')" style="width: 20px; background: none; border: none; height: 40px; color: green;">⋮</button></div></td></tr></table><hr>
+    <div style="text-align: right;"> <button onclick="toggleDropdown('menu${i}')" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 30px;">⋮</button></div></td></tr></table><hr>
                 <p id="posttext${i}">${p.text}</p>
-                <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 60px; border:1px solid gray; background:white; border-radius: 10px; padding: 5px;">
+                <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 70px; border:1px solid gray; background:white; border-radius: 10px; padding: 5px;">
                     <button style="background: none; border-bottom: 1px solid gray; border-radius: 0px;" onclick="editPost(${i})">Edit</button>
                     <button style="color: red; background: none;"  onclick="deletePost(${i})">Delete</button>
                 </div>
@@ -872,6 +883,7 @@ async function loadProfilePosts() {
     });
         
 }
+
 
 function toggleDropdown(id) {
     const menu = document.getElementById(id);
