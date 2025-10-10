@@ -357,42 +357,20 @@ async function Login() {
 }
 </script>
     
-    <script>
-async function testRegister() {
-    const testData = {
-        username: "Md. Asir Abrar Khan",
-        email: "navidabid92@gmail.com",
-        password: "7930",
-        bio: "~The Author of AsirNet~"
-    };
-
-    try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/signup", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(testData)
-        });
-
-        let text = await res.text(); // প্রথমে plain text read
-        let data;
-        try {
-            data = JSON.parse(text); // JSON parse চেষ্টা
-        } catch (e) {
-            console.log("Server did not return valid JSON. Status:", res.status);
-            console.log("Response text:", text);
-            return;
-        }
-
-        console.log("Register Response:", data);
-        alert("Check console for register response");
-    } catch (err) {
-        console.log("Error connecting to server:", err.message);
-        alert("Error connecting to server. Check console.");
-    }
+<script>
+async function checkServer() {
+  try {
+    const response = await fetch("http://localhost:3000/connect/");
+    if (!response.ok) throw new Error("Server Error: " + response.status);
+    const data = await response.text();
+    alert(data);
+    return data;
+  } catch (err) {
+    console.error("Connection failed:", err.message);
+    return null;
+  }
 }
-
-// 🔹 Run register test
-testRegister();
-    </script>  
+checkServer();
+</script>  
 </body>
 </html>
