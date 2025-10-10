@@ -360,7 +360,7 @@ async function Login() {
 <script>
 async function checkServer() {
   try {
-    const response = await fetch("http://localhost:3000/connect/");
+    const response = await fetch("https://order-backend-nxon.onrender.com/connect/");
     if (!response.ok) throw new Error("Server Error: " + response.status);
     const data = await response.text();
     alert(data);
