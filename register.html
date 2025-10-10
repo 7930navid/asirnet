@@ -188,7 +188,7 @@ h2 {
     <header>
         <div id="logo">
             <p style="color: blue;">Welcome <br> To The <p style="color: red;">Compound <br> Of</p></p>
-            <p style="background: lightyellow; padding: 10px; border-radius: 50px; box-shadow: 0 0 20px yellow; ">Asir<span>Net</span><br><sub> test version</sub></p>
+            <p style="background: lightyellow; padding: 10px; border-radius: 50px; box-shadow: 0 0 20px yellow; ">Asir<span>Net</span></p>
         </div>
     </header>
     <table border="0" style="width: 100%;">
@@ -282,7 +282,7 @@ async function register() {
     }
 
     try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/signup/", {
+        const res = await fetch("https://asirnet-backend.onrender.com/signup/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ username, email: useremail, password, bio })
@@ -325,7 +325,7 @@ async function Login() {
     }
 
     try {
-        const res = await fetch("https://order-backend-nxon.onrender.com/signin/", {
+        const res = await fetch("https://asirnet-backend.onrender.com/signin/", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email: loginemail, password: loginpass })
