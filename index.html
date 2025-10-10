@@ -431,7 +431,7 @@ body {
 <div style="background: none; width: 100%;">
     <div id="btnlist">
         <div>
-  <button onclick="profile()" id="prof">Profile</button><hr>
+  <button onclick="profile();loadProfilePosts()" id="prof">Profile</button><hr>
   <button onclick="setting()" id="sett">Setting</button><hr>
   <button onclick="about()" id="abou">About</button><hr></div>
     </div>
@@ -451,7 +451,7 @@ body {
                </div>
                <div id="tablebtn">
                    <br><br><br>
-<button onclick="profile()">Profile</button>
+<button onclick="profile();loadProfilePosts()">Profile</button>
 <button onclick="setting()">Setting</button>
 <button onclick="about()">About</button>
                </div>
@@ -856,18 +856,21 @@ async function loadProfilePosts() {
         const div = document.createElement("div");
         div.className = "postshow";
         div.innerHTML = `
+        
             <div style="position: relative;">
-                <h3>${user.username}</h3>
+                <table border="0" style="width: 100%;"><tr><td>
+            <h3 style="color: green">${user.username}</h3>  </td>  <td>
+    <div style="text-align: right;"> <button onclick="toggleDropdown('menu${i}')" style="width: 20px; background: none; border: none; height: 40px; color: green;">⋮</button></div></td></tr></table><hr>
                 <p id="posttext${i}">${p.text}</p>
-                <button onclick="toggleDropdown('menu${i}')" style="position: absolute; right: 0; top: 0;">⋮</button>
-                <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 25px; border:1px solid #ccc; background:#fff;">
-                    <button onclick="editPost(${i})">Edit</button>
-                    <button onclick="deletePost(${i})">Delete</button>
+                <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 60px; border:1px solid gray; background:white; border-radius: 10px; padding: 5px;">
+                    <button style="background: none; border-bottom: 1px solid gray; border-radius: 0px;" onclick="editPost(${i})">Edit</button>
+                    <button style="color: red; background: none;"  onclick="deletePost(${i})">Delete</button>
                 </div>
             </div>
         `;
         postsDiv.appendChild(div);
     });
+        
 }
 
 function toggleDropdown(id) {
@@ -890,9 +893,39 @@ function editPost(index) {
     const postText = document.getElementById(`posttext${index}`).innerText;
 
     document.getElementById(`posttext${index}`).outerHTML = `
-        <textarea id="${textareaId}">${postText}</textarea>
-        <button onclick="savePost(${index})">Save</button>
-        <button onclick="loadProfilePosts()">Cancel</button>
+ <table style="width: 100%;"><tr><td>
+ 
+        <textarea style="   
+    width: 80%;
+    margin-top: 20px;
+    border: 1px solid green;
+    border-radius: 10px;
+    height: 100px;
+    padding: 20px;
+    font-size: 16px;
+    color: red;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+" 
+id="${textareaId}">${postText}</textarea>
+</td><td>
+        <button style="
+        background: white;
+        width: 100px;
+        height: 50px;
+        border: 1px solid green;
+        border-radius: 10px;
+        color: green;
+        margin-bottom: 20px;
+        " onclick="savePost(${index})">Save</button>
+      <br><button style="
+        background: white;
+        width: 100px;
+        height: 50px;
+        border: 1px solid red;
+        border-radius: 10px;
+        color: red;
+        "  onclick="loadProfilePosts()">Cancel</button>
+        </td></tr></table>
     `;
 }
 
