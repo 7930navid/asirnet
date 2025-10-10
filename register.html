@@ -195,11 +195,11 @@ h2 {
         <tr>
             <td style="padding-left: 100px;">
             <button onclick="reg()">
-                Sing Up
+                Sign Up
             </button></td>
             <td>
            <button onclick="login()">
-                Sing In
+                Sign In
             </button></td>
         </tr>
     </table>
@@ -356,21 +356,5 @@ async function Login() {
     }
 }
 </script>
-    
-<script>
-async function checkServer() {
-  try {
-    const response = await fetch("https://asirnet-backend.onrender.com/connect");
-    if (!response.ok) throw new Error("Server Error: " + response.status);
-    const data = await response.text();
-    alert(data);
-    return data;
-  } catch (err) {
-    alert("Connection failed:", err.message);
-    return null;
-  }
-}
-checkServer();
-</script>  
 </body>
 </html>
