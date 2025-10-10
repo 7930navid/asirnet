@@ -613,7 +613,7 @@ async function pad() {
     // সার্চ খালি না হলে এই ফাংশন চালানো যাবে
     try {
         // সার্ভার থেকে ইউজার গুলো আনছে
-        const res = await fetch("http://localhost:3000/users");
+        const res = await fetch("https://asirnet-backend.onrender.com/users");
         const users = await res.json();
 
         // শুধু ID বা email দিয়ে filter
@@ -654,7 +654,7 @@ async function postsubmit() {
     if(!user) return alert("User not found!");
 
     try {
-        const res = await fetch("http://localhost:3000/post", {
+        const res = await fetch("https://asirnet-backend.onrender.com/post", {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify({ user: user.username, text })
@@ -678,7 +678,7 @@ async function postsubmit() {
 
 async function loadPosts() {
     try {
-        const res = await fetch("http://localhost:3000/post");
+        const res = await fetch("https://asirnet-backend.onrender.com/post");
         const data = await res.json();
 
         if (res.ok) {
@@ -757,7 +757,7 @@ function logout() {
     if(confirm('Do you want to Log out ?')) {
         localStorage.removeItem("user");
         alert("Logged out!");
-        location.href = "/asirnet.login.html";
+        location.href = "https://7930navid.github.io/asirnet/register.html";
     }
 }
 
@@ -774,7 +774,7 @@ async function editthisprofile() {
 
     if (username && password && bio) {
         try {
-            const res = await fetch("http://localhost:3000/editprofile", {
+            const res = await fetch("https://asirnet-backend.onrender.com/editprofile", {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email: user.email, username, password, bio })
@@ -808,7 +808,7 @@ async function deletethisprofile() {
     }
 
     try {
-        const res = await fetch(`http://localhost:3000/deleteuser/${user.email}`, {
+        const res = await fetch(`https://asirnet-backend.onrender.com/deleteuser/${user.email}`, {
             method: "DELETE"
         });
         const data = await res.json();
@@ -842,7 +842,7 @@ async function loadProfilePosts() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
-    const res = await fetch("http://localhost:3000/post");
+    const res = await fetch("https://asirnet-backend.onrender.com/post");
     const allPosts = await res.json();
 
     // শুধু current user এর post filter
@@ -879,7 +879,7 @@ async function deletePost(index) {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!confirm("Are you sure to delete this post?")) return;
 
-    const res = await fetch(`http://localhost:3000/post/${user.email}/${index}`, { method: "DELETE" });
+    const res = await fetch(`https://asirnet-backend.onrender.com/post/${user.email}/${index}`, { method: "DELETE" });
     const data = await res.json();
     alert(data.message);
     loadProfilePosts();
@@ -900,7 +900,7 @@ async function savePost(index) {
     const user = JSON.parse(localStorage.getItem("user"));
     const newText = document.getElementById(`editpost${index}`).value;
 
-    const res = await fetch(`http://localhost:3000/post/${user.email}/${index}`, {
+    const res = await fetch(`https://asirnet-backend.onrender.com/post/${user.email}/${index}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text: newText })
@@ -909,6 +909,8 @@ async function savePost(index) {
     alert(data.message);
     loadProfilePosts();
 }
+
+   alert("Updated version: 1.0");
 </script>
 </body>
 </html>
