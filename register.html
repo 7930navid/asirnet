@@ -307,7 +307,7 @@ async function register() {
         alert(data.message);
         // Success হলে localStorage রাখো
         localStorage.setItem("user", JSON.stringify({ username, email: useremail }));
-        location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
+        location.href = 'https://7930navid.github.io/asirnet/';
 
     } catch (err) {
         alert("Server error: " + err.message);
@@ -349,7 +349,7 @@ async function Login() {
 
         alert(data.message);
         localStorage.setItem("user", JSON.stringify(data.user));
-        location.href = 'https://7930navid.github.io/asirnet/asirnet.html';
+        location.href = 'https://7930navid.github.io/asirnet/';
 
     } catch (err) {
         alert("Server error: " + err.message);
