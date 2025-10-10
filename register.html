@@ -366,7 +366,7 @@ async function checkServer() {
     alert(data);
     return data;
   } catch (err) {
-    console.error("Connection failed:", err.message);
+    alert("Connection failed:", err.message);
     return null;
   }
 }
