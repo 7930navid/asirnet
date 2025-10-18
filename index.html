@@ -87,6 +87,7 @@ body {
     border-top-right-radius: 60px;
     width: 95%;
     height: 70%;
+    overflow: auto;
     }
 #progname{
     color: green;
@@ -100,7 +101,7 @@ body {
     border-bottom: 5px solid green;
     position: fixed;
     z-index: 1000;
-    width: 690px;
+    width: 706px;
 }
 
 #btnlist div{
@@ -445,7 +446,7 @@ body {
               </td><td align="right">
               <button onclick="closealert('modal')" class="cut">×</button></td></tr></table>
           </div>
-           <div id="progcontent">
+           <div id="progcontent" style="position: relative">
                <div id="defaultprog">
       <div>Asir<span>Net</span></div>             
                </div>
@@ -526,9 +527,8 @@ body {
 <script>
 function closebtnlist() {
     document.getElementById('btnlist').style.display = 'none';
-    document.getElementById('progcontent').style.marginTop = '260px';
+    document.getElementById('progcontent').style.marginTop = '0px';
 }
-
 function toggleMenu() {
     document.getElementById('progcontent').style.marginTop = '20px';
     document.getElementById('btnlist').style.display = 'flex';
@@ -567,7 +567,7 @@ function about() {
     document.getElementById('sett').style.borderLeft = 'none';
     document.getElementById('progname').innerHTML = "About";       
     document.getElementById('progcontent').innerHTML = `
- <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; line-height: 1.8; max-width: 950px; margin: 30px auto; padding: 30px;  border-radius: 15px;">
+ <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #2c3e50; line-height: 1.8; max-width: 950px; margin: 30px auto; padding: 30px;  border-radius: 15px; position: relative">
   
   <h2 style="text-align: center; font-size: 36px; background: linear-gradient(90deg, #e67e22, #f39c12); -webkit-background-clip: text; color: transparent; margin-bottom: 25px;">
     About <span style="color:#e74c3c;">AsirNet</span>
@@ -680,11 +680,11 @@ async function postsubmit() {
             document.getElementById('content').appendChild(div);
             document.getElementById('postword').value = "";
             closealert('postpage');
+            alert("posted successfully ")
         } else {
             alert(data.message || "Error posting!");
         }
-    } catch(err) {
- console.error("Check your network connection please!!");    }
+    } catch(err) {    }
 }
 
 async function loadPosts() {
