@@ -684,7 +684,7 @@ async function postsubmit() {
             alert(data.message || "Error posting!");
         }
     } catch(err) {
- alert("Check your network connection please!!");    }
+ console.error("Check your network connection please!!");    }
 }
 
 async function loadPosts() {
