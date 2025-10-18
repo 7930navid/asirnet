@@ -699,7 +699,9 @@ async function loadPosts() {
             data.forEach(post => {
                 const div = document.createElement("div");
                 div.className = "postshow";
-                div.innerHTML = `<h2>${post.username}</h2><hr><p>${post.text}</p>`;
+                div.innerHTML = `<h2>${post.username}</h2><hr>
+    
+    <p>${post.text.replace(/\n/g, "<br>")}</p>`;
                 contentDiv.appendChild(div);
             });
         } else {
@@ -723,7 +725,7 @@ function loadProfile() {
                         <u style="color:red;"><i>${u.bio}</i></u>            
                     </div><br>
                     <button onclick="editprofile()">Edit Profile</button>
-                    <div id="postofuser">
+                    <div id="postofuser" style="position: relative;">
                                    <br><br>
 <p style="color: gray; text-align: center;"><i>Loading...</i> </p>
                     </div>
@@ -872,7 +874,7 @@ async function loadProfilePosts() {
                 <table border="0" style="width: 100%;"><tr><td>
             <h3 style="color: green">${user.username}</h3>  </td>  <td>
     <div style="text-align: right;"> <button onclick="toggleDropdown('menu${i}')" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 30px;">⋮</button></div></td></tr></table><hr>
-                <p id="posttext${i}">${p.text}</p>
+                <p id="posttext${i}">${p.text.replace(/\n/g, "<br>")}</p>
                 <div id="menu${i}" style="display:none; position: absolute; right: 0; top: 70px; border:1px solid gray; background:white; border-radius: 10px; padding: 5px;">
                     <button style="background: none; border-bottom: 1px solid gray; border-radius: 0px;" onclick="editPost(${i})">Edit</button>
                     <button style="color: red; background: none;"  onclick="deletePost(${i})">Delete</button>
