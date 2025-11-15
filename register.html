@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Page title</title>
+    <meta charset="UTF-8">    
+         <meta name="viewport" content="width=device-width, initial-scale=0.4, user-scalable=no">
+   <title>Page title</title>
     <style>
 body {
     background: white;
@@ -12,23 +13,11 @@ body {
        align-items:center; 
        justify-content:space-between; 
        padding:20px; 
-       background:lightyellow; 
-       border-bottom:5px solid green; 
-       width: 100%;
+       background:white; 
+       border-bottom:3px solid green; 
+       width: 920px;
        }
-#header h1 { 
-       margin:0; 
-       color:green; 
-       text-shadow:0 0 10px lightgreen; 
-       }
-#header h1 span { 
-       margin-left:5px; 
-       color:#ffe76ae7; 
-       text-shadow:0 0 5px green;
-       }
-#header p {
-       font-size: 10px;
-       }
+       
 #header button { 
        width:50px; 
        height:50px; 
@@ -40,36 +29,73 @@ body {
        font-size: 30px;
        }
 
-#logo {
-    margin-top: 100px;
-    background: #35d2c9;
-    border: 30px solid lightgreen;
-    margin: 30px;
-    padding: 20px;
-    border-radius: 60px;
-    box-shadow: 0 0 30px green;
+/* Overall container */
+#change {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+  font-family: "Poppins", sans-serif;
 }
-#logo p { 
-       margin:0; 
-       color:green; 
-       text-shadow:0 0 10px lightgreen; 
-       font-size: 100px;
-       text-align: center;
-           }
-#logo p span { 
-       margin-left:5px; 
-       color:#ffe76ae7; 
-       text-shadow:0 0 5px green;
-       }
-table button {
-    width: 250px;
-    height: 150px;
-    font-size: 30px;
-    border-radius: 90%;
-    background: lightyellow;
-    border: 5px solid red;
-    font-weight: bold;
-    color: red;
+
+/* Buttons wrapper */
+#regbtns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 600px;
+}
+
+/* Main buttons */
+#regbtns button {
+  width: 80%;
+  max-width: 500px;
+  height: 90px;
+  font-size: 32px;
+  border-radius: 50px;
+  background: linear-gradient(90deg, #00bcd4, #0097a7);
+  border: none;
+  color: white;
+  margin: 20px 0;
+  padding: 20px;
+  cursor: pointer;
+  font-weight: 600;
+  letter-spacing: 1px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+/* Hover effect */
+#regbtns button:hover {
+  transform: scale(1.05);
+  background: linear-gradient(90deg, #0097a7, #00796b);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Guest button container */
+.guest-container {
+  width: 100%;
+  text-align: right;
+  padding-right: 40px;
+}
+
+/* Guest button */
+#guest {
+  font-size: 20px;
+  border-radius: 40px 0 0 40px;
+  background: #e53935;
+  border: none;
+  color: white;
+  padding: 12px 28px;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 5px 10px rgba(229, 57, 53, 0.4);
+  transition: all 0.3s ease;
+}
+
+/* Guest hover */
+#guest:hover {
+  background: #c62828;
+  transform: translateX(240px);
 }
 #change {
     padding: 20px;
@@ -166,43 +192,90 @@ h2 {
 }
 #bio {
     width: 300px;
-    margin-top: 20px;
+    margin-top: 7px;
     border: 1px solid green;
     border-radius: 20px;
-    height: 190px;
+    height: 100px;
     padding: 20px;
     font-size: 20px;
     color: red;
     font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
   
 }
+#addAvattar{
+    display: flex;
+    background: lightcyan;
+    border: 2px solid green;
+    border-radius: 20px;
+    padding: 0px;
+    margin-top: 20px;
+}
+#addAvattar div{
+    height: 0px;
+    width:  80%;
+    color: green;
+    border: none;
+    margin: 10px;
+}
+#addAvattar button {
+    background: none;
+    padding: none;
+    border: none;    
+    border-left: 1px solid green;
+    border-radius: 0px;
+    height: 100%;
+    width: 20%;
+    font-size: 30px;
+}
+#listofavatar {
+    display: none;
+    position: absolute;
+    z-index:1000;
+    background: white;
+    border: 1px solid black;
+    border-radius: 20px;
+    padding: 20px;
+    overflow: auto;
+    height: 300px;
+    top: 500px;
+    left: 450px;
+}
+#listofavatar table{
+    background: none;
+    position: relative;
+}
+#listofavatar button{
+    background: rgba(255,150,150,0.3);
+    border: none;
+    border-radius: 20px;
+    height: 70px;
+    width: 70px;
+    margin: 10px;
+    font-size: 30px;
+}
+
+
+
     </style>
 </head>
-<body>
-    <div id="header">
-     <h1>Asir<span>Net</span><p> a product of <a href="https://7930navid.github.io/W-deploy/">W-deploy</a></p></h1>
-  <button id="menuBtn" onclick="customalert()">?</button>
+<body id="body">
+ <div id="header">
+<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a><h5 id="headername"></h5>
+  <button onclick="customalert()">?</button>
 </div>
 
-<div id="change"> 
-    <header>
-        <div id="logo">
-            <p style="color: blue;">Welcome <br> To The <p style="color: red;">Compound <br> Of</p></p>
-            <p style="background: lightyellow; padding: 10px; border-radius: 50px; box-shadow: 0 0 20px yellow; ">Asir<span>Net</span></p>
-        </div>
-    </header>
-    <table border="0" style="width: 100%;">
-        <tr>
-            <td style="padding-left: 100px;">
+<div id="change">
+    <div id="regbtns"> 
             <button onclick="reg()">
-                Sign Up
-            </button></td>
-            <td>
+                Sing Up
+            </button><br>
            <button onclick="login()">
-                Sign In
-            </button></td>
-        </tr>
-    </table>
+                Sing In
+            </button></div>
+            <div style="text-align: right;">
+      <button onclick="" id="guest">
+          Visit as guest ->
+      </button></div>    
     </div>
     
   <div id="alert">
@@ -212,6 +285,183 @@ h2 {
  </section><h1 style="color: green;">Help</h1> <hr>  
       </div>
   </div>
+  
+ <div id="listofavatar">
+<div style="text-align: right;"><button onclick="closealert('listofavatar')" class="crossbtn" style="background: none;">×</button></div>
+     <br>
+    <table>
+        <tr>
+            <td><button onclick="appendAvatar('😀')">😀</button></td>
+            <td><button onclick="appendAvatar('😎')">😎</button></td>
+            <td><button onclick="appendAvatar('🤩')">🤩</button></td>
+            <td><button onclick="appendAvatar('😇')">😇</button></td>
+            <td><button onclick="appendAvatar('🥳')">🥳</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="appendAvatar('😋')">😋</button></td>
+            <td><button onclick="appendAvatar('🤓')">🤓</button></td>
+            <td><button onclick="appendAvatar('😜')">😜</button></td>
+            <td><button onclick="appendAvatar('🤔')">🤔</button></td>
+            <td><button onclick="appendAvatar('😏')">😏</button></td>
+        </tr>
+        <tr>
+            <td><button onclick="appendAvatar('😴')">😴</button></td>
+            <td><button onclick="appendAvatar('🥺')">🥺</button></td>
+            <td><button onclick="appendAvatar('😡')">😡</button></td>
+            <td><button onclick="appendAvatar('🤯')">🤯</button></td>
+            <td><button onclick="appendAvatar('🤗')">🤗</button></td>
+        </tr>
+
+<tr>
+    <td><button onclick="appendAvatar('😱')">😱</button></td>
+    <td><button onclick="appendAvatar('😈')">😈</button></td>
+    <td><button onclick="appendAvatar('👻')">👻</button></td>
+    <td><button onclick="appendAvatar('🌟')">🌟</button></td>
+    <td><button onclick="appendAvatar('🤡')">🤡</button></td>
+</tr>
+
+<tr>
+    <td><button onclick="appendAvatar('😺')">😺</button></td>
+    <td><button onclick="appendAvatar('😸')">😸</button></td>
+    <td><button onclick="appendAvatar('😹')">😹</button></td>
+    <td><button onclick="appendAvatar('😻')">😻</button></td>
+    <td><button onclick="appendAvatar('😼')">😼</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('😽')">😽</button></td>
+    <td><button onclick="appendAvatar('🙀')">🙀</button></td>
+    <td><button onclick="appendAvatar('😿')">😿</button></td>
+    <td><button onclick="appendAvatar('😾')">😾</button></td>
+    <td><button onclick="appendAvatar('🤑')">🤑</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🤠')">🤠</button></td>
+    <td><button onclick="appendAvatar('🥴')">🥴</button></td>
+    <td><button onclick="appendAvatar('🤢')">🤢</button></td>
+    <td><button onclick="appendAvatar('🤮')">🤮</button></td>
+    <td><button onclick="appendAvatar('🤧')">🤧</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🥵')">🥵</button></td>
+    <td><button onclick="appendAvatar('🥶')">🥶</button></td>
+    <td><button onclick="appendAvatar('🥷')">🥷</button></td>
+    <td><button onclick="appendAvatar('🦸')">🦸</button></td>
+    <td><button onclick="appendAvatar('🦹')">🦹</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🧙')">🧙</button></td>
+    <td><button onclick="appendAvatar('🧚')">🧚</button></td>
+    <td><button onclick="appendAvatar('🧛')">🧛</button></td>
+    <td><button onclick="appendAvatar('🧜')">🧜</button></td>
+    <td><button onclick="appendAvatar('🧝')">🧝</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🧞')">🧞</button></td>
+    <td><button onclick="appendAvatar('🧟')">🧟</button></td>
+    <td><button onclick="appendAvatar('🧖')">🧖</button></td>
+    <td><button onclick="appendAvatar('🧗')">🧗</button></td>
+    <td><button onclick="appendAvatar('🧘')">🧘</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🛸')">🛸</button></td>
+    <td><button onclick="appendAvatar('🛷')">🛷</button></td>
+    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
+    <td><button onclick="appendAvatar('🛼')">🛼</button></td>
+    <td><button onclick="appendAvatar('🛶')">🛶</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎃')">🎃</button></td>
+    <td><button onclick="appendAvatar('🎄')">🎄</button></td>
+    <td><button onclick="appendAvatar('🎆')">🎆</button></td>
+    <td><button onclick="appendAvatar('🎇')">🎇</button></td>
+    <td><button onclick="appendAvatar('🎈')">🎈</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎉')">🎉</button></td>
+    <td><button onclick="appendAvatar('🎊')">🎊</button></td>
+    <td><button onclick="appendAvatar('🎋')">🎋</button></td>
+    <td><button onclick="appendAvatar('🎍')">🎍</button></td>
+    <td><button onclick="appendAvatar('🎎')">🎎</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎏')">🎏</button></td>
+    <td><button onclick="appendAvatar('🎐')">🎐</button></td>
+    <td><button onclick="appendAvatar('🎑')">🎑</button></td>
+    <td><button onclick="appendAvatar('🎀')">🎀</button></td>
+    <td><button onclick="appendAvatar('🎁')">🎁</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎓')">🎓</button></td>
+    <td><button onclick="appendAvatar('🎮')">🎮</button></td>
+    <td><button onclick="appendAvatar('🎯')">🎯</button></td>
+    <td><button onclick="appendAvatar('🎰')">🎰</button></td>
+    <td><button onclick="appendAvatar('🎱')">🎱</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎲')">🎲</button></td>
+    <td><button onclick="appendAvatar('🎳')">🎳</button></td>
+    <td><button onclick="appendAvatar('🎴')">🎴</button></td>
+    <td><button onclick="appendAvatar('🎵')">🎵</button></td>
+    <td><button onclick="appendAvatar('🎶')">🎶</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🎷')">🎷</button></td>
+    <td><button onclick="appendAvatar('🎸')">🎸</button></td>
+    <td><button onclick="appendAvatar('🎹')">🎹</button></td>
+    <td><button onclick="appendAvatar('🎺')">🎺</button></td>
+    <td><button onclick="appendAvatar('🎻')">🎻</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🥁')">🥁</button></td>
+    <td><button onclick="appendAvatar('🪕')">🪕</button></td>
+    <td><button onclick="appendAvatar('🪗')">🪗</button></td>
+    <td><button onclick="appendAvatar('🪘')">🪘</button></td>
+    <td><button onclick="appendAvatar('🪇')">🪇</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🧸')">🧸</button></td>
+    <td><button onclick="appendAvatar('🪅')">🪅</button></td>
+    <td><button onclick="appendAvatar('🪆')">🪆</button></td>
+    <td><button onclick="appendAvatar('🪃')">🪃</button></td>
+    <td><button onclick="appendAvatar('🪁')">🪁</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
+    <td><button onclick="appendAvatar('🛶')">🛶</button></td>
+    <td><button onclick="appendAvatar('🛴')">🛴</button></td>
+    <td><button onclick="appendAvatar('🛵')">🛵</button></td>
+    <td><button onclick="appendAvatar('🚲')">🚲</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🚗')">🚗</button></td>
+    <td><button onclick="appendAvatar('🚕')">🚕</button></td>
+    <td><button onclick="appendAvatar('🚙')">🚙</button></td>
+    <td><button onclick="appendAvatar('🚌')">🚌</button></td>
+    <td><button onclick="appendAvatar('🚎')">🚎</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🏎️')">🏎️</button></td>
+    <td><button onclick="appendAvatar('🚓')">🚓</button></td>
+    <td><button onclick="appendAvatar('🚑')">🚑</button></td>
+    <td><button onclick="appendAvatar('🚒')">🚒</button></td>
+    <td><button onclick="appendAvatar('🚐')">🚐</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🛻')">🛻</button></td>
+    <td><button onclick="appendAvatar('🚚')">🚚</button></td>
+    <td><button onclick="appendAvatar('🚛')">🚛</button></td>
+    <td><button onclick="appendAvatar('🚜')">🚜</button></td>
+    <td><button onclick="appendAvatar('🦽')">🦽</button></td>
+</tr>
+<tr>
+    <td><button onclick="appendAvatar('🛺')">🛺</button></td>
+    <td><button onclick="appendAvatar('🏍️')">🏍️</button></td>
+    <td><button onclick="appendAvatar('🛵')">🛵</button></td>
+    <td><button onclick="appendAvatar('🛴')">🛴</button></td>
+    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
+</tr>    </table>
+</div> 
+  
    <script> 
  function reg() {
  document.getElementById("change").innerHTML = `
@@ -226,7 +476,12 @@ h2 {
  
    </td>
    <td>
-       <textarea id="bio" placeholder="Add a focus or goal"></textarea>  
+       <textarea id="bio" placeholder="Add a focus or goal"></textarea> <br>
+       <div id="addAvattar">
+          <div id="addAvatar">Choose an Avatar..</div>
+           
+          <button onclick="progileAvatar()"> ▼</button>
+       </div> 
  
    </td>
    </tr></table>
@@ -235,7 +490,15 @@ h2 {
               <button onclick="clearinfolog()" id="clear">Clear </button>
               <button onclick="register()" id="submit">Submit </button>
          </div>   `;   
- }        
+ }  
+ function progileAvatar() {
+ document.querySelector("#listofavatar").style.display = 'block'; 
+ } 
+ function appendAvatar(avatar) {
+     document.getElementById('addAvatar').innerHTML = avatar;
+     closealert('listofavatar');
+ }
+      
  function login() {
  document.getElementById("change").innerHTML = `<div style="text-align: right;">
      <button onclick="location.reload()" class="crossbtn">×</button>
@@ -259,102 +522,76 @@ document.getElementById(alert).style.display = 'none';
 document.getElementById('username').value = "" ;   
 document.getElementById('useremail').value = "" ;   
 document.getElementById('password').value = "" ;   
-document.getElementById('bio').value = "" ;   
+document.getElementById('bio').value = "" ;
+document.getElementById('addAvatar').innerHTML = "Choose an Avatar.." ; 
  }       
  function clearinfo() {
 document.getElementById('loginemail').value = "" ;   
 document.getElementById('loginpass').value = "" ;   
  }       
    </script>
-    <script>
-
-
-// 🔹 Register function
-async function register() {
-    const username = document.getElementById('username').value.trim();
-    const useremail = document.getElementById('useremail').value.trim();
-    const password = document.getElementById('password').value.trim();
-    const bio = document.getElementById('bio').value.trim();
-
-    if (!username || !useremail || !password || !bio) {
-        alert("Please fill all fields first");
-        return;
-    }
-
-    try {
-        const res = await fetch("https://asirnet-backend.onrender.com/signup/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email: useremail, password, bio })
-        });
-
-        // যদি response ok না হয়, raw text দেখাও
-        if (!res.ok) {
-            const text = await res.text();
-            alert(`Error ${res.status}: ${text}`);
-            return;
-        }
-
-        // JSON parse
-        let data;
-        try {
-            data = await res.json();
-        } catch (e) {
-            alert("Server did not return valid JSON. Status: " + res.status);
-            return;
-        }
-
-        alert(data.message);
-        // Success হলে localStorage রাখো
-        localStorage.setItem("user", JSON.stringify({ username, email: useremail }));
-        location.href = 'https://7930navid.github.io/asirnet/';
-
-    } catch (err) {
-        alert("Server error: " + err.message);
-    }
-}
-
-// 🔹 Login function
+<script>
+    
 async function Login() {
-    const loginemail = document.getElementById('loginemail').value.trim();
-    const loginpass = document.getElementById('loginpass').value.trim();
+  let loginemail = document.getElementById('loginemail').value;   
+  let loginpass = document.getElementById('loginpass').value;   
 
-    if (!loginemail || !loginpass) {
-        alert("Please fill all fields first");
-        return;
-    }
-
+  if (loginemail && loginpass) {
     try {
-        const res = await fetch("https://asirnet-backend.onrender.com/signin/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email: loginemail, password: loginpass })
-        });
+      const res = await fetch("https://server-asirnet.onrender.com/signin", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email: loginemail, password: loginpass })
+      });
 
-        // যদি response ok না হয়, raw text দেখাও
-        if (!res.ok) {
-            const text = await res.text();
-            alert(`Error ${res.status}: ${text}`);
-            return;
-        }
-
-        // JSON parse
-        let data;
-        try {
-            data = await res.json();
-        } catch (e) {
-            alert("Server did not return valid JSON. Status: " + res.status);
-            return;
-        }
-
+      const data = await res.json();
+      if (res.ok) {
         alert(data.message);
+        // ✅ এখানে চাইলে localStorage এ user data রাখতে পারো
         localStorage.setItem("user", JSON.stringify(data.user));
-        location.href = 'https://7930navid.github.io/asirnet/';
-
+        location.href = '/asirnet.html';
+      } else {
+        alert(data.message);
+      }
     } catch (err) {
-        alert("Server error: " + err.message);
+      alert("Server error: " + err.message);
     }
+  } else {
+    alert("Please fill the gaps first");
+  }
 }
-</script>
-</body>
+
+async function register() {
+  let username = document.getElementById('username').value.trim();
+  let useremail = document.getElementById('useremail').value.trim();
+  let password = document.getElementById('password').value.trim();
+  let bio = document.getElementById("bio").value.trim();
+  let avatar = document.getElementById("addAvatar").textContent.trim();
+
+  if (!username || !useremail || !password || !bio || avatar === "" || avatar === "Choose an Avatar..") {
+    alert("Please fill all fields correctly");
+    return;
+  }
+  
+  try {
+    const res = await fetch("https://server-asirnet.onrender.com/signup", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username, email: useremail, password, bio, avatar })
+    });
+
+    const data = await res.json();
+    console.log("Signup response:", data); // 🔹 Debug: server থেকে আসা response
+
+    if (res.ok) {
+      alert(data.message);
+      location.href = '/asirnet.html';
+    } else {
+      alert(data.message + (data.error ? "\nDetails: " + data.error : ""));
+    }
+  } catch (err) {
+    alert("Server error: " + err.message);
+  }
+}
+</script></body>
 </html>
