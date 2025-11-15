@@ -1,0 +1,979 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
+    <title>Page title</title>
+    <style>
+body {
+    background: white;
+    }
+#content {
+    margin-bottom: 500px;
+
+}
+#header { 
+       display:flex; 
+       align-items:center; 
+       justify-content:space-between; 
+       padding:20px; 
+       background: white; 
+       border-bottom:5px solid green; 
+       position: fixed;
+       z-index: 1000;
+       top: 0;
+       left: 0;
+       right: 0;
+       }
+
+#header h1 { 
+       margin:0; 
+       color:green; 
+       text-shadow:0 0 20px lightgreen; 
+       }
+#profPicture {
+       background: none;
+       height: 45px;
+       width: 45px;
+       border: none;
+       border-radius: 90px;
+       padding: 0;
+       }
+
+#bio {
+    padding-top: 140px;
+}
+#post {
+    width: 550px;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    border: 1px solid black;
+    background: white;
+}
+#searchpad { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       padding: 30px; 
+       } 
+#search {
+    height: 60px;
+    width: 77%;
+    border-radius: 90px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    border-right: 1px solid black;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    color: red;
+}
+#btnsearch {
+    height: 80px;
+    border-radius: 90px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border: none;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    
+}
+#show {
+    display: none;
+    background: white;
+    border-radius: 20px;
+    width: 93%;
+    height: 70%;
+    margin-top: 40px;
+}
+#showheader h2 {
+    color: green;
+}
+#showheader {
+    width: 700px;
+    height: 80px;
+    border: none;
+    border-bottom: 2px solid green;
+    padding-left: 20px;
+}
+#searchresult {
+    padding: 20px;
+}
+#close {
+    background: red;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    color: white;
+    border: none;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 15px;
+    
+}
+#postpage { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       justify-content:center; 
+       padding: 10px; 
+       } 
+#postpad {
+    height: 80%;
+    width: 650px;
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+}
+#nameplate {
+    width: 100%;
+    border-bottom: 2px solid green;
+}
+#nameplate button {
+    background: none;
+    border: none;
+    font-size: 30px;
+    color: red;
+}
+#postsubmit {
+    background: lightyellow;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: 2px solid green;
+    color: green;
+    margin-top: 20px;
+}
+#clear {
+    width: 20%;
+    background: lightpink;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 2px solid red;
+    color: red;
+    margin-top: 20px;
+    margin-right: 20px;
+}
+#postword {
+    width: 600px;
+    margin-top: 20px;
+    border: 1px solid green;
+    border-radius: 20px;
+    height: 500px;
+    padding: 20px;
+    font-size: 30px;
+    color: blue;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+}
+.postshow {
+    padding: 20px;
+    text-align: justify;
+    margin: 25px;
+    border-radius: 20px;
+    background: white;
+    min-height: 100px;
+    width: 90%;
+    box-shadow: 0 0 5px gray;
+}
+.postshow h2{
+    color: green;
+}
+.postshow hr{
+    background: green;
+}
+.postshow p{
+    font-size: 25px;
+}
+
+
+#footer {
+    background: white;
+    border: none;
+    border-top: 3px solid green;
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    min-height: 70px;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+}
+#footerBtn {
+    width: 90%;
+}
+#footerBtn td{
+    text-align: center;
+}
+#footerBtn button {
+    width: 110px;
+    height: 80px;
+    border: none;
+    background: none;
+    border-radius: 20px;
+    font-size: 25px;
+
+}
+#footerBtn button:hover {
+    background: rgba(0,100,255,0.1);
+
+}
+#specialBtn {
+    width: 110px;
+    height: 110px;
+    border: 2px solid black;
+    background: none;
+    border-radius: 90px;
+    font-size: 35px;
+    padding: 5px;
+}
+#profdiv p{
+    font-size: 50px;
+    font-weight: bold;
+    color: green;
+}
+#profdiv h5{
+    color: red;
+}
+#profdiv hr{
+    height: 15px;
+    background: rgba(150,150,150,0.3);
+}
+#editbtn {
+    position: absolute;
+    z-index: 1000;
+    top: 330px;
+    left: 260px;
+}
+#editbtn button{
+    border: none;
+    height: 60px;
+    width: 60px;
+    border-radius: 90px;
+    box-shadow: 0 0 3px gray;
+    font-size: 20px;
+}
+#profPic {
+    background: rgba(255,255,0,0.1);
+    height: 230px;    
+    width: 230px;
+    border: 10px solid rgba(0,0,0,0.2);
+    border-radius: 360px;
+    font-size: 150px;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+.settBtn {
+    width: 100%;
+    border: none;
+    font-size: 30px;
+    padding-top: none;
+    padding-bottom: none;
+    padding-left: none;
+    background: none;
+}
+.settBtn:hover {
+  background: rgba(200,200,200,0.3);
+  transition: all 0.3s ease;
+}
+
+.settBtn div{
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+}
+#reactPanal {
+    display: flex;
+    padding: 10px;
+    border: 1px solid green;
+    border-radius: 20px;
+    text-align: center;
+    width: 70%;
+    margin-left: 15%;
+}
+#reactPanal button{
+    border: none;
+    width: 33%;
+    font-size: 20px;
+    border-left: 1px solid green;
+    background: none;
+    }
+.appearFlex {
+    position: fixed;
+    z-index: 1000;
+    bottom: 140px;
+    left: 0;
+    margin-bottom: 10px;
+    display: none;
+    overflow: auto;
+    padding-left: 20px;
+}
+.appearFlex button {
+    padding: 10px;
+    font-size: 25px;
+    border: none;
+    border-radius: 20px;
+    min-width: 70px;
+    margin: 10px;
+    background: none;
+    box-shadow: 0 0 3px gray;
+}
+.appearFlex button:hover {
+    transform: scale(1.25);
+    transition: all 0.3s ease;
+}
+#modal {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+}
+#modal div {
+    padding: 20px;
+    padding-top: 10px;
+    width: 50%;
+    background: white;
+    border-radius: 20px;
+    border: 3px solid red;
+    box-shadow: 0 0 5px white;
+}
+#modal p {
+    color: red;
+    font-size: 15px;
+}
+#modal input {
+    width: 90%;
+    margin-top: 15px;
+    border: none;
+    border-bottom: 3px solid rgba(0,0,0,0.2);
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
+    color: red;
+}
+#modal button {
+    margin: 15px;
+    padding: 10px;
+    width: 20%;
+    border: 2px solid red;
+    border-radius: 10px;
+    background: lightyellow;
+    color: red;
+    font-size: 14px;
+}
+.crossBtn {
+    background: none;
+    border: none;
+}
+#alert {
+    color: red;
+    font-size: 15px;
+    margin: 10px;
+}
+#likeCommentContainer {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+}
+#Display {
+    height: 70%;
+    width: 90%;
+    box-shadow: 0 0 10px gray;
+    border-radius: 20px;
+    background: white;
+    padding: 20px;
+    overflow: auto;
+}
+#Display hr {
+    background: green;
+}
+#Display h1 {
+    color: green;
+}
+#Display div p{
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 0 5px gray;
+    margin: 20px;
+    padding: 20px;
+    width: 50%;
+    text-align: justify;
+    font-size: 20px;
+}
+
+
+
+
+
+
+    </style>
+</head>
+<body id="body">
+<div id="header">
+<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
+  <h1 id="profPicture"></h1>
+</div>
+      
+
+<div id="bio"></div>
+
+<div id="searchpad">
+<div style="background: none; width: 100%;">
+    <div style="text-align: right; padding-right: 70px;">
+        <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
+    </div>
+    <input type="text" id="search" placeholder="Search here.."/>
+    <button onclick="pad();" id="btnsearch">🔍</button>  
+   
+          <div id="show">
+              <div>
+              <div id="showheader">
+              <h2>
+                 Search Result
+              </h2>
+              </div>
+              <div id="searchresult"></div>
+          </div>
+          </div>
+
+ </div>
+    </div>
+ 
+ <div id="postpage">
+ <div id="postpad">
+      <table border="0" id="nameplate"><tr><td><h2 style="text-align: left; color: green;">Create your mind here..</h2>
+ </td><td>
+      <div style="text-align: right">
+          <button onclick="closealert('postpage')">×</button>
+      </div> 
+      </td> 
+      </tr>
+      </table>
+                <div style="text-align: right;">
+               <button onclick="postsubmit()" id="postsubmit">Post </button>
+         </div>
+
+      <div>         
+      <textarea id="postword" placeholder="What's on your mind?"></textarea>
+
+      </div>
+ </div>
+ </div> 
+<div id="content">
+    <br><br>
+<p style="color: gray; text-align: center;"><i>Loading...</i> </p>
+</div>
+<div id="appearFlex">
+</div>
+<footer id="footer">
+    <div>
+        <table id="footerBtn">
+            <tr>
+<td><button onclick="location.reload()">🏠</button></td>
+<td><button onclick="profile();loadProfile();">👤</button></td>
+<td><button onclick="createpost()" style="    
+    width: 90px;
+    height: 90px;
+    border: 2px solid green;
+    background: none;
+    border-radius: 90px;
+    font-size: 40px;
+    padding: 5px;
+    color: green;
+">+</button></td>
+<td><button onclick="setting();">⚙️</button></td>
+<td><button onclick="searchpad();">🔍</button></td>
+            </tr>
+        </table>
+    </div>
+</footer>
+
+<div id="modal">
+    <div>
+     <section style="text-align: right">
+         <button onclick="closealert('modal')" style="                
+    background: none;
+    border: none;
+    font-size: 30px;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom: 10px;
+">×</button>
+     </section>
+        <p>Enter here your access key to verify that it's you...</p>
+        <input type="password" id="checkPassword" placeholder="Enter here.." ><br>
+  <section id="alert"></section><br>
+        <section style="text-align: right;">
+        <button onclick="authenticationCheck()">OK</button>
+        </section>
+    </div>
+</div>
+
+
+
+
+<div id="likeCommentContainer">
+    <div id="Display">
+        <h1 id="reactName">comments</h1>
+        <hr>
+        
+        <div>
+            
+            
+           <p> This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.<p>
+            
+        </div>
+        
+    </div>
+</div>
+
+<script>
+    
+    
+    
+function toggleMenu() {
+}
+
+function closealert(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+function profile() {
+const u = JSON.parse(localStorage.getItem("user"));
+    document.getElementById('content').innerHTML =`
+ <div id="profdiv">
+     <table align="center"><tr><td width="270">
+     <div id="profPic"></div></td><td width="400">
+     <p id="userName"></p>
+     <h5><i id="profileBio"></i></h5>
+  </td></tr></table>
+  <div id="editbtn">
+  <button onclick="usercheck()">✏️</button>
+  </div> <br><br><br><hr></div>
+ 
+ <div id="ownerPosts"></div>   
+    
+    `;
+
+document.getElementById('profPic').innerHTML = `${u.avatar}`;       
+document.getElementById('userName').innerHTML = `${u.username}`;       
+document.getElementById('profileBio').innerHTML = `${u.bio}`;       
+loadProfilePosts();
+}
+
+
+function setting() {
+    document.getElementById('content').innerHTML =`
+        <button onclick="logout()" class="settBtn"><div>Log out</div> </button><hr>
+        <button onclick="about()" class="settBtn"><div>About </div></button><hr>
+    `;
+}
+
+function about() {
+location.href = "about.html";
+    }
+
+function searchpad() {
+    document.getElementById('searchpad').style.display = 'flex';  
+}
+
+async function pad() {
+    let search = document.getElementById('search').value;
+    if(!search) {
+        document.getElementById("show").style.display = 'none';  
+        alert('Please search anything before');
+    } else {
+        document.getElementById('show').style.display = 'flex'; 
+        
+    
+    const search = document.getElementById('search').value.trim().toLowerCase();
+    const showDiv = document.getElementById("searchresult");
+
+    // সার্চ খালি না হলে এই ফাংশন চালানো যাবে
+    try {
+        // সার্ভার থেকে ইউজার গুলো আনছে
+        const res = await fetch("https://server-asirnet.onrender.com/users");
+        const users = await res.json();
+
+        // শুধু ID বা email দিয়ে filter
+        const results = users.filter(u => u.username.toLowerCase().includes(search));
+
+        if (results.length === 0) {
+            showDiv.style.display = 'flex';
+            showDiv.innerHTML = `<p style=" color:red">No user found for "<b>${search}</b>"</p>`;
+        } else {
+            showDiv.style.display = 'flex';
+            showDiv.innerHTML = results.map(u => `
+                <div style="border:none; margin:5px; padding:10px; color: green; width: 700px;">
+                    ${u.username} <br><hr>
+                </div>
+            `).join("");
+      }  
+    } catch (err) {
+        alert("Check your network connection please!!");
+    }
+}
+          
+    }
+
+
+function createpost() {
+    document.getElementById('postpage').style.display = 'flex';   
+} 
+
+function clearpost() {
+    document.getElementById('postword').value = "";    
+} 
+
+async function postsubmit() {
+  const text = document.getElementById('postword').value;
+  if (!text) return alert("Please write something!");
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user) return alert("User not found!");
+
+  try {
+    const res = await fetch("https://server-asirnet.onrender.com/post", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user: user.username,
+        text,
+        avatar: user.avatar
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      const div = document.createElement('div');
+      div.className = "postshow";
+      div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${user.avatar} </span>${user.username}</h2><hr><p>${text}</p>`;
+      document.getElementById('content').appendChild(div);
+      document.getElementById('postword').value = "";
+      closealert('postpage');
+      alert("Posted successfully!");
+    } else {
+      alert(data.message || "Error posting!");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error while posting!");
+  }
+}
+async function loadPosts() {
+    try {
+        const res = await fetch("https://server-asirnet.onrender.com/post");
+        const data = await res.json();
+
+        if (res.ok) {
+            const contentDiv = document.getElementById("content");
+            contentDiv.innerHTML = "";
+
+            data.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "postshow";
+                div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}</h2><hr>
+    
+    <p>${post.text.replace(/\n/g, "<br>")}</p>
+    
+    <div id="reactPanal">
+<button onclick="appImoji(${post.id})" style="border-left: none;"
+ id="react${post.id}">👍</button>
+<button onclick="appComSec()">💬</button>
+<button onclick="appLink(${post.id})">🔗</button>
+    </div>
+    <div id="appearFlex${post.id}" class='appearFlex'>
+<button onclick="reactAppear(${post.id},'👍')">👍</button>
+<button onclick="reactAppear(${post.id},'♥️')">♥️</button>
+<button onclick="reactAppear(${post.id},'🤣')">🤣</button>
+<button onclick="reactAppear(${post.id},'😁')">😁</button>
+<button onclick="reactAppear(${post.id},'🤔')">🤔</button>
+<button onclick="reactAppear(${post.id},'🥰')">🥰</button>
+<button onclick="reactAppear(${post.id},'😥')">😥</button>
+<button onclick="reactAppear(${post.id},'😡')">😡</button>
+</div>
+
+
+    `;
+                contentDiv.appendChild(div);
+            });
+        } else {
+            alert(data.message || "Error loading posts!");
+        }
+    } catch (err) {
+ }
+}
+
+function loadProfile() {
+    const user = localStorage.getItem("user");
+    if(user) {
+        const u = JSON.parse(user);
+document.getElementById("userName").innerHTML = u.username;
+document.getElementById("profileBio").innerHTML = u.bio;
+
+    }
+    
+}
+
+function backtoprofile() {
+    profile();
+    document.querySelector('#backbtn').innerHTML = "";
+}
+
+function logout() {
+    if(confirm('Do you want to Log out ?')) {
+        localStorage.removeItem("user");
+        alert("Logged out!");
+        location.href = "register.html";
+    }
+}
+
+
+// 🔹 Load Current User Posts
+async function loadProfilePosts() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user) return;
+
+    const res = await fetch("https://server-asirnet.onrender.com/post");
+    const allPosts = await res.json();
+
+    // শুধু current user-এর post filter
+    const userPosts = allPosts.filter(p => p.email === user.email);
+
+    const profileDiv = document.getElementById("ownerPosts");
+    profileDiv.innerHTML = `<div id="userposts"></div>`;
+    const postsDiv = document.getElementById("userposts");
+
+    userPosts.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "postshow";
+        div.innerHTML = `
+            <div style="position: relative;">
+                <table border="0" style="width: 100%;">
+                    <tr>
+                        <td><h3 style="color: green"><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${user.avatar} </span>${user.username}</h3></td>
+                        <td style="text-align: right;">
+                            <button 
+                                id="dropdownBtn${p.id}" 
+                                style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 30px;"
+                            >⋮</button>
+                        </td>
+                    </tr>
+                </table>
+                <hr>
+                <p id="posttext${p.id}">${p.text.replace(/\n/g, "<br>")}</p>
+                <div id="menu${p.id}" 
+                    style="display:none; position: absolute; right: 0; top: 70px; border:1px solid gray; background:white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                    <button style="background: none; border: none; border-bottom: 1px solid gray; border-radius: 0; width: 100%;" onclick="editPost(${p.id}); closealert('menu${p.id}');">Edit</button><br>
+                    <button style="color: red; background: none; border: none; border-radius: 0; margin-top: 10px; width: 100%;" onclick="deletePost(${p.id}); closealert('menu${p.id}');">Delete</button>
+                </div>
+            </div>
+        `;
+        postsDiv.appendChild(div);
+
+        // 🎯 Dropdown toggle system
+        const dropdownBtn = div.querySelector(`#dropdownBtn${p.id}`);
+        const menu = div.querySelector(`#menu${p.id}`);
+
+        dropdownBtn.addEventListener("click", (e) => {
+            e.stopPropagation(); // prevent document click from closing instantly
+            const isOpen = menu.style.display === "block";
+            document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none"); // close all
+            menu.style.display = isOpen ? "none" : "block"; // toggle current one
+        });
+    });
+
+    // 🧠 Global click listener — close dropdown if click outside
+    document.addEventListener("click", (e) => {
+        document.querySelectorAll("[id^='menu']").forEach(menu => {
+            if (!menu.contains(e.target)) {
+                menu.style.display = "none";
+            }
+        });
+    });
+}
+
+// 🔹 Edit Post
+function editPost(id) {
+    const el = document.getElementById(`posttext${id}`);
+    if (!el) {
+        console.error("Element not found for id:", id);
+        return;
+    }
+    const textareaId = `editpost${id}`;
+    const postText = el.innerText;
+
+    el.outerHTML = `
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <textarea id="${textareaId}" style="width: 80%; margin-top: 20px; border: 1px solid green; border-radius: 10px; height: 100px; padding: 20px; font-size: 16px; color: red;">${postText}</textarea>
+                </td>
+                <td>
+                    <button onclick="savePost(${id})" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
+                    <br>
+                    <button onclick="loadProfilePosts()" style="background:white;width:100px;height:50px;border:1px solid red;border-radius:10px;color:red;">Cancel</button>
+                </td>
+            </tr>
+        </table>
+    `;
+}
+
+// 🔹 Save Post (PUT)
+async function savePost(id) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const newText = document.getElementById(`editpost${id}`).value;
+
+    try {
+        const res = await fetch(`https://server-asirnet.onrender.com/post/${user.email}/${id}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ text: newText })
+        });
+        const data = await res.json();
+        alert(data.message);
+        loadProfilePosts();
+    } catch(err) {
+        console.error("Error saving post:", err);
+        alert("Failed to save post.");
+    }
+}
+
+// 🔹 Delete Post
+async function deletePost(id) {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!confirm("Are you sure to delete this post?")) return;
+
+    try {
+        const res = await fetch(`https://server-asirnet.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
+        const data = await res.json();
+        alert(data.message);
+        loadProfilePosts();
+    } catch(err) {
+        console.error("Error deleting post:", err);
+        alert("Failed to delete post.");
+    }
+}
+
+// 🔹 Close dropdown
+function closealert(menuId) {
+    const el = document.getElementById(menuId);
+    if(el) el.style.display = "none";
+}
+
+
+let closePlace = document.querySelector('#body');
+
+
+function appImoji(id) {
+document.getElementById(`appearFlex${id}`).style.display ='flex';
+}
+
+function closeImoji(id) {
+    document.getElementById(`appearFlex${id}`).style.display ='none';
+}
+
+function reactAppear(postId, imoji) {
+    // 1️⃣ UI আপডেট
+    document.getElementById(`react${postId}`).innerHTML = imoji;
+
+    // 2️⃣ Close বাটনের listener
+    closePlace.addEventListener('click', () => closeImoji(postId));
+
+    // 3️⃣ Server-এ reaction পাঠানো
+    fetch('server-asirnet.onrender.com/reaction', {
+        method: 'POST', // POST method ব্যবহার করা হচ্ছে
+        headers: {
+            'Content-Type': 'application/json', // JSON পাঠাচ্ছি
+        },
+        body: JSON.stringify({
+            postId: postId,
+            reaction: imoji
+        })
+    })
+    .then(response => response.json()) // server থেকে JSON response আসা
+    .then(data => {
+        console.log('Reaction has saveed:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+function appLink(postId) {
+  const postUrl = `${window.location.origin}/post/${postId}`;
+  navigator.clipboard.writeText(postUrl);
+}
+function usercheck() {
+document.getElementById("modal").style.display = "flex";        
+}
+
+
+function authenticationCheck() {
+let check = document.getElementById('checkPassword').value;
+let u = JSON.parse(localStorage.getItem('user'));
+    if(!check) {
+document.getElementById("alert").innerHTML = "⚠ Please Insert your Password!";           
+document.getElementById("alert").style.color = "#b87100";        
+    } else {
+let uPass = u.password;
+        if(check == uPass) {
+            location.href = "profileEdit.html";
+        }else {
+document.getElementById("alert").innerHTML = "⚠ Wrong Password!";           
+document.getElementById("alert").style.color = "red";        
+        }       
+    }
+    
+}
+</script>
+<script>
+    window.onload = function() {
+    const user = localStorage.getItem("user");
+    if(!user) {
+        alert("Please login first!");
+        location.href = "register.html";
+    } else {
+        const u = JSON.parse(user);
+        document.getElementById('profPicture').innerHTML = `${u.avatar}`; 
+  loadPosts();
+    }
+}
+</script>
+<script src="check.js"></script>
+
+</body>
+</html>
