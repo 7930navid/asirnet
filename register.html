@@ -549,7 +549,7 @@ async function Login() {
         alert(data.message);
         // ✅ এখানে চাইলে localStorage এ user data রাখতে পারো
         localStorage.setItem("user", JSON.stringify(data.user));
-        location.href = '/asirnet.html';
+        location.href = 'asirnet.html';
       } else {
         alert(data.message);
       }
@@ -585,7 +585,7 @@ async function register() {
 
     if (res.ok) {
       alert(data.message);
-      location.href = '/asirnet.html';
+      location.href = 'asirnet.html';
     } else {
       alert(data.message + (data.error ? "\nDetails: " + data.error : ""));
     }
