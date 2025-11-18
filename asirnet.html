@@ -432,7 +432,9 @@ body {
     text-align: justify;
     font-size: 20px;
 }
-
+.reactShow {
+    font-size: 10px;
+}
 
 
 
@@ -708,6 +710,10 @@ async function loadPosts() {
                 div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}</h2><hr>
     
     <p>${post.text.replace(/\n/g, "<br>")}</p>
+    <div style="text-align: right; ">
+        <p id="likeShow${post.id}" style="font-size: 14px; color: gray;">Loading..</p>
+        <p id="comShow${post.id}" style="font-size: 14px; color: gray;">Loading..</p>
+    </div>
     
     <div id="reactPanal">
 <button onclick="appImoji(${post.id})" style="border-left: none;"
@@ -730,6 +736,7 @@ async function loadPosts() {
     `;
                 contentDiv.appendChild(div);
             });
+   appearReactQuan(postId);
         } else {
             alert(data.message || "Error loading posts!");
         }
@@ -914,7 +921,7 @@ function reactAppear(postId, imoji) {
     closePlace.addEventListener('click', () => closeImoji(postId));
 
     // 3️⃣ Server-এ reaction পাঠানো
-    fetch('server-asirnet.onrender.com/reaction', {
+    fetch('https://server-asirnet.onrender.com/react', {
         method: 'POST', // POST method ব্যবহার করা হচ্ছে
         headers: {
             'Content-Type': 'application/json', // JSON পাঠাচ্ছি
@@ -931,6 +938,20 @@ function reactAppear(postId, imoji) {
     .catch(error => {
         console.error('Error:', error);
     });
+}
+
+async function appearReactQuan(postId) {
+    try {
+        const res = await fetch(`https://server-asirnet.onrender.com/QuanOfReact?postId=${postId}`);
+        const data = await res.json();
+
+        document.getElementById(`likeShow${postId}`).innerText = `❤️ Reactions: ${data.likes}`;
+        document.getElementById(`comShow${postId}`).innerText = `💬 Comments: ${data.comments}`;
+    } catch (err) {
+        console.error("Error:", err);
+        document.getElementById(`likeShow${postId}`).innerText = `❤️ Reactions: 0`;
+        documents .getElementById(`comShow${postId}`).innerText = `💬 Comments: 0`;
+    }
 }
 
 function appLink(postId) {
@@ -970,10 +991,11 @@ document.getElementById("alert").style.color = "red";
         const u = JSON.parse(user);
         document.getElementById('profPicture').innerHTML = `${u.avatar}`; 
   loadPosts();
+  
     }
 }
 </script>
 <script src="check.js"></script>
 
 </body>
-</html>
+    </html>
