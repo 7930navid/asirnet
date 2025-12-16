@@ -569,7 +569,7 @@ document.getElementById("alert").style.color = "#b87100";
     } else {
 let uPass = u.password;
         if(check == uPass) {
-            location.href = "profileEdit.html";
+         document.getElementById('modal').style.display = 'flex';
         }else {
 document.getElementById("alert").innerHTML = "⚠ Wrong Password!";           
 document.getElementById("alert").style.color = "red";        
