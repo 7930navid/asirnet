@@ -230,7 +230,7 @@ input:focus {
  
     <br>
  <div style="text-align: right;">
-        <button onclick="usertest()" id="delete">Delete Account </button>
+        <button onclick="deletethisprofile()" id="delete">Delete Account </button>
               <button onclick="checking()" id="submit">Submit </button>
        
 </div>
@@ -410,27 +410,18 @@ input:focus {
 </tr>    </table>
 </div> 
 
-
 <div id="modal">
     <div>
-     <section style="text-align: right">
-         <button onclick="closealert('modal');" style="                
-    background: none;
-    border: none;
-    font-size: 30px;
-    padding: 0px;
-    margin: 0px;
-    margin-bottom: 10px;
-">×</button>
-     </section>
-        <p>Enter here <span id="nameOfUser"></span>...</p>
-        <input type="text" id="checkUser" placeholder="Enter here.." ><br>
+        <p>Enter here your access key to verify that it's you...</p>
+        <input type="password" id="checkPassword" placeholder="Enter here.." ><br>
   <section id="alert"></section><br>
         <section style="text-align: right;">
         <button onclick="authenticationCheck()">OK</button>
         </section>
     </div>
 </div>
+
+
 
         
 <script>
@@ -447,29 +438,6 @@ input:focus {
  function closealert(alertId) {  
    document.getElementById(alertId).style.display = 'none';
  }
- function usertest() {
-const u = JSON.parse(localStorage.getItem("user"));
- document.getElementById('modal').style.display = 'flex';        
- document.getElementById('nameOfUser').innerHTML = `${u.username} `;        
- }
-function authenticationCheck() {
-let check = document.getElementById('checkUser').value;
-    if(!check) {
-document.getElementById("alert").innerHTML = "⚠ Please Insert Your Account Name!";           
-document.getElementById("alert").style.color = "#b87100";        
-    } else {
-let User = document.getElementById('nameOfUser');
-        if(User.innerHTML == check) {
-         deletethisprofile() ;
-        }else {
-        alert(User.innerHTML);
-document.getElementById("alert").innerHTML = "⚠ Hasn't matched to username!!";  
-document.getElementById("alert").style.color = "red";        
-        }       
-    }
-
-} 
-
 async function deletethisprofile() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.email) {
@@ -586,11 +554,33 @@ let alertpass = document.getElementById('alertpass');
      alert("Error updating profile!");
    }
  }
+function usercheck() {
+document.getElementById("modal").style.display = "flex";        
+}
+
+usercheck() ;
+
+function authenticationCheck() {
+let check = document.getElementById('checkPassword').value;
+let u = JSON.parse(localStorage.getItem('user'));
+    if(!check) {
+document.getElementById("alert").innerHTML = "⚠ Please Insert your Password!";           
+document.getElementById("alert").style.color = "#b87100";        
+    } else {
+let uPass = u.password;
+        if(check == uPass) {
+            location.href = "profileEdit.html";
+        }else {
+document.getElementById("alert").innerHTML = "⚠ Wrong Password!";           
+document.getElementById("alert").style.color = "red";        
+        }       
+    }
+    
+}
  
  
 </script>
 </body>
 </html>
-
 
 
