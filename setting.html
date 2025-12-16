@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Page title</title>
+    <style>
+  hr{
+    background: green;
+}
+      
+.settBtn {
+    width: 100%;
+    border: none;
+    font-size: 30px;
+    padding-top: none;
+    padding-bottom: none;
+    padding-left: none;
+    background: none;
+}
+.settBtn:hover {
+  background: rgba(200,200,200,0.3);
+  transition: all 0.3s ease;
+}
+.settBtn hr{
+    background: gray;
+}
+
+.settBtn div{
+    width: 100%;
+    height: 100%;
+    border: none;
+    font-size: 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    text-align: left;
+}
+#header { 
+       display:flex; 
+       align-items:center; 
+       justify-content:space-between; 
+       padding:20px; 
+       background:white; 
+       border-bottom:3px solid green; 
+       width: 940px;
+       position: fixed;
+       z-index: 1000;
+       top: 0;
+       left: 0;
+       }
+       
+#header button { 
+       width:50px; 
+       height:50px; 
+       border:2px solid red; 
+       border-radius:8px; background:white; 
+       cursor:pointer; 
+       box-shadow:0 0 8px red; 
+       color: red;
+       font-size: 30px;
+       }
+#special button {
+    height: 100px;
+    width: 250px;
+    background: lightyellow;
+    border: 2px solid red;
+    border-radius : 20px;
+    font-size: 35px;
+    color: red;
+    
+}
+#special button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+
+}
+h2{
+    color: green;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+.crossbtn {
+    background: none;
+    padding: 10px;
+    font-size: 50px;
+    border-radius: 90px;
+    color: red;
+    border: none;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 15px;
+    margin-right: 20px;
+
+}
+.first {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 10px gray;
+}
+.none{
+    background: none;
+    border: none;
+}
+.second{
+    height: 400px;
+    width: 200px;
+    border-radius: 20px;
+    padding: 10px;
+}
+.third {
+    background: white;
+    width: 80%;
+    height: 10%;
+    box-shadow: 0 0 10px white;
+    border-radius: 8px;
+    margin: 10px;
+}
+.fourth {
+    background: white;
+    width: 60%;
+    height: 10%;
+    box-shadow: 0 0 10px white;
+    border-radius: 8px;
+    margin: 10px;
+}
+    </style>
+</head>
+<body>
+     <div id="header">
+<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
+  <a href="/asirnet.html"><button>×</button></a>
+</div>
+    <div style="margin-top: 100px"></div>
+    <div id="content">
+
+<div id="special">
+    <table border="0" align="center" cellpadding="30">
+        <tr>
+            <td>
+<button onclick="theme()">Themes </button>                
+            </td>
+            <td>
+        <a href="/about.html">
+        <button>About</button></a>
+            </td>
+        </tr>
+    </table>
+</div>
+    <div style="margin-top: 40px"></div><hr>
+        <button onclick="logout()" class="settBtn"><div>Log out</div> </button><hr>
+        </div>
+        
+  <script>
+      function logout() {
+    if(confirm('Do you want to Log out ?')) {
+        localStorage.removeItem("user");
+        alert("Logged out!");
+        location.href = "register.html";
+    }
+}
+function theme() {
+document.getElementById("content").innerHTML =`
+<div style="text-align: right">
+   <button onclick="location.reload()" class="crossbtn">×</button>
+    
+</div>
+<h2><i>Themes:</i></h2>
+<hr>
+
+<table align="center" cellpadding="40">
+  <tr>
+    <td>
+      <button class="none" onclick="saveTheme('skyblue')">
+        <div class="first">
+          <div class="second" style="background: blue;">
+            <div class="third" style="background:#64b5f6;"></div>
+            <div class="fourth" style="background:#bbdefb;"></div>
+          </div>
+          <h1>Blue</h1>
+        </div>
+      </button>
+    </td>
+
+    <td>
+      <button class="none" onclick="saveTheme('lightgreen')">
+        <div class="first">
+          <div class="second" style="background: green;">
+            <div class="third" style="background:#81c784;"></div>
+            <div class="fourth" style="background:#c8e6c9;"></div>
+          </div>
+          <h1>Green</h1>
+        </div>
+      </button>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <button class="none" onclick="saveTheme('#ff5589')">
+        <div class="first">
+          <div class="second" style="background: red;">
+            <div class="third" style="background:#e57373;"></div>
+            <div class="fourth" style="background:#ffcdd2;"></div>
+          </div>
+          <h1>Red</h1>
+        </div>
+      </button>
+    </td>
+
+    <td>
+      <button class="none" onclick="saveTheme('#af6aff')">
+        <div class="first">
+          <div class="second" style="background: purple;">
+            <div class="third" style="background:#ba68c8;"></div>
+            <div class="fourth" style="background:#e1bee7;"></div>
+          </div>
+          <h1>Purple</h1>
+        </div>
+      </button>
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <button class="none" onclick="saveTheme('dark')">
+        <div class="first">
+          <div class="second" style="background: black;">
+            <div class="third" style="background:#616161;"></div>
+            <div class="fourth" style="background:#9e9e9e;"></div>
+          </div>
+          <h1>Dark</h1>
+        </div>
+      </button>
+    </td>
+
+    <td>
+      <button class="none" onclick="saveTheme('orange')">
+        <div class="first">
+          <div class="second" style="background: orange;">
+            <div class="third" style="background:#ffb74d;"></div>
+            <div class="fourth" style="background:#ffe0b2;"></div>
+          </div>
+          <h1>Orange</h1>
+        </div>
+      </button>
+    </td>
+  </tr>
+</table>
+
+`;
+    
+}
+
+
+  </script>
+  <script>
+function saveTheme(color) {
+  if(confirm(`Do you want to change your theme to "${color}"?`));
+      const style = {
+          background: color
+      };
+  localStorage.setItem("style", JSON.stringify(style));
+  alert(`Sucseed to change theme to "${color}"`);
+}
+  </script>
+</body>
+</html>
