@@ -458,7 +458,7 @@ async function deletethisprofile() {
         if (res.ok) {
             alert(data.message || "Account deleted successfully");
             localStorage.removeItem("user");
-            location.href = "register.html";
+            location.href = 'register.html';
         } else {
             alert(data.message || "Error deleting account");
         }
