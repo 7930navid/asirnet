@@ -26,7 +26,7 @@
        top: 0;
        left: 0;
        }
-       
+
 #header button { 
        width:50px; 
        height:50px; 
@@ -50,7 +50,7 @@
     font-size: 20px;
     color: black;
     font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
-  
+
 }
       input {
             padding: 15px;
@@ -214,25 +214,25 @@ input:focus {
 <h3>Your New Name..</h3><hr>
  <input type="text" placeholder="Enter your name..." id="username"/><br>
  <div id="alertname" class="alert"></div>
- 
+
 <h3>Your New access key..</h3><hr>
  <input type="password" placeholder="Enter your access key..." id="password"/><br>
  <div id="alertpass" class="alert"></div>
- 
+
  <h3>Your New Focus..</h3><hr>
        <textarea id="bio" placeholder="Add a focus or goal"></textarea> <br>
  <h3>Your New Avatar..</h3><hr>
        <div id="addAvattar">
           <div id="addAvatar">Choose an Avatar..</div>
-           
+
           <button onclick="progileAvatar()"> ▼</button>
        </div> 
- 
+
     <br>
  <div style="text-align: right;">
         <button onclick="deletethisprofile()" id="delete">Delete Account </button>
               <button onclick="checking()" id="submit">Submit </button>
-       
+
 </div>
   <div id="listofavatar">
 <div style="text-align: right;"><button onclick="closealert('listofavatar')" class="crossbtn" style="background: none; color: red; font-size: 25px;">×</button></div>
@@ -423,9 +423,9 @@ input:focus {
 
 
 
-        
+
 <script>
- 
+
  function progileAvatar() {
    document.querySelector("#listofavatar").style.display = 'block'; 
  } 
@@ -470,7 +470,7 @@ async function deletethisprofile() {
 </script>
 
 <script>
-  
+
  // Load user info from localStorage
  const u = JSON.parse(localStorage.getItem("user"));
  if (u) {
@@ -512,7 +512,7 @@ let alertpass = document.getElementById('alertpass');
      await editthisprofile(username, password, bio, avatar);
    } 
  }
- 
+
 
  // ✅ Fixed version
  async function editthisprofile(username, password, bio, avatar) {
@@ -555,32 +555,40 @@ let alertpass = document.getElementById('alertpass');
    }
  }
 function usercheck() {
-document.getElementById("modal").style.display = "flex";        
+    document.getElementById("modal").style.display = "flex";        
 }
 
-usercheck() ;
+usercheck();
 
 function authenticationCheck() {
-let check = document.getElementById('checkPassword').value;
-let u = JSON.parse(localStorage.getItem('user'));
-    if(!check) {
-document.getElementById("alert").innerHTML = "⚠ Please Insert your Password!";           
-document.getElementById("alert").style.color = "#b87100";        
-    } else {
-let uPass = u.password;
-        if(check == uPass) {
-         document.getElementById('modal').style.display = 'flex';
-        }else {
-document.getElementById("alert").innerHTML = "⚠ Wrong Password!";           
-document.getElementById("alert").style.color = "red";        
-        }       
+    let check = document.getElementById('checkPassword').value;
+    let u = JSON.parse(localStorage.getItem('user'));
+    let alertBox = document.getElementById("alert");
+
+    // password input empty
+    if (!check) {
+        alertBox.innerHTML = "⚠ Please insert your password!";
+        alertBox.style.color = "#b87100";
+        return;
     }
-    
+
+    // user not found in localStorage
+    if (!u || !u.password) {
+        alertBox.innerHTML = "⚠ No user found!";
+        alertBox.style.color = "red";
+        return;
+    }
+
+    // password check
+    if (check === u.password) {
+        alertBox.innerHTML = "✅ permission granted !";
+        alertBox.style.color = "green";
+        document.getElementById("modal").style.display = "none";
+    } else {
+        alertBox.innerHTML = "⚠ Wrong password!";
+        alertBox.style.color = "red";
+    }
 }
- 
- 
 </script>
 </body>
 </html>
-
-
