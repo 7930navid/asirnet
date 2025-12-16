@@ -545,12 +545,23 @@ async function Login() {
       });
 
       const data = await res.json();
-      if (res.ok) {
-        alert(data.message);
-        // ✅ এখানে চাইলে localStorage এ user data রাখতে পারো
-        localStorage.setItem("user", JSON.stringify(data.user));
-        location.href = 'asirnet.html';
-      } else {
+if (res.ok) {
+    alert(data.message);
+
+    // ✅ localStorage-এ user data রাখা
+localStorage.setItem("user", JSON.stringify(data.user));
+
+// object console-এ nicely দেখাতে
+console.log("User data:", JSON.stringify(data.user, null, 2));
+    // ✅ default style save করা
+    const style = {
+        background: "white"
+    };
+    localStorage.setItem("style", JSON.stringify(style));
+
+    // ✅ পেজ redirect করা
+    location.href = '/asirnet.html';
+} else {
         alert(data.message);
       }
     } catch (err) {
@@ -559,7 +570,9 @@ async function Login() {
   } else {
     alert("Please fill the gaps first");
   }
+  
 }
+
 
 async function register() {
   let username = document.getElementById('username').value.trim();
