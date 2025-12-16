@@ -207,7 +207,7 @@ input:focus {
 <body>
  <div id="header">
 <a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
-  <a href="asirnet.html"><button>×</button></a>
+  <a href="/AsirNet.html"><button>×</button></a>
 </div>
 
 
@@ -560,32 +560,49 @@ function usercheck() {
 
 usercheck();
 
-function authenticationCheck() {
-    let check = document.getElementById('checkPassword').value;
-    let u = JSON.parse(localStorage.getItem('user'));
-    let alertBox = document.getElementById("alert");
+async function authenticationCheck() {
+    const check = document.getElementById('checkPassword').value;
+    const alertBox = document.getElementById("alert");
+    const u = JSON.parse(localStorage.getItem("user"));
 
-    // password input empty
     if (!check) {
         alertBox.innerHTML = "⚠ Please insert your password!";
         alertBox.style.color = "#b87100";
         return;
     }
 
-    // user not found in localStorage
-    if (!u || !u.password) {
+    if (!u || !u.email) {
         alertBox.innerHTML = "⚠ No user found!";
         alertBox.style.color = "red";
         return;
     }
 
-    // password check
-    if (check === u.password) {
-        alertBox.innerHTML = "✅ permission granted !";
-        alertBox.style.color = "green";
-        document.getElementById("modal").style.display = "none";
-    } else {
-        alertBox.innerHTML = "⚠ Wrong password!";
+    try {
+        const res = await fetch(
+          "https://asirnet-backend.onrender.com/verify-password",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: u.email,
+              password: check
+            })
+          }
+        );
+
+        const data = await res.json();
+
+        if (res.ok) {
+            alertBox.innerHTML = "✅ Verified!";
+            alertBox.style.color = "green";
+            document.getElementById("modal").style.display = "none";
+        } else {
+            alertBox.innerHTML = "⚠ " + data.message;
+            alertBox.style.color = "red";
+        }
+
+    } catch (err) {
+        alertBox.innerHTML = "⚠ Server error!";
         alertBox.style.color = "red";
     }
 }
