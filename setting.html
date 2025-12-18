@@ -127,7 +127,7 @@ h2{
 <body>
      <div id="header">
 <a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
-  <a href="/asirnet.html"><button>×</button></a>
+  <a href='asirnet.html'><button>×</button></a>
 </div>
     <div style="margin-top: 100px"></div>
     <div id="content">
@@ -154,8 +154,7 @@ h2{
     if(confirm('Do you want to Log out ?')) {
         localStorage.removeItem("user");
         alert("Logged out!");
-        location.href = "register.html";
-    }
+        location.href = 'register.html';     }
 }
 function theme() {
 document.getElementById("content").innerHTML =`
