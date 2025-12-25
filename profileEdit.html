@@ -495,6 +495,8 @@ input:focus {
  function closealert(alertId) {  
    document.getElementById(alertId).style.display = 'none';
  }
+
+
 async function deletethisprofile() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.email) {
@@ -532,7 +534,7 @@ async function deletethisprofile() {
  const u = JSON.parse(localStorage.getItem("user"));
  if (u) {
    document.getElementById('username').value = u.username || "";   
-   document.getElementById('password').value = u.password || "";   
+   document.getElementById('password').value = u.password || "no pass";   
    document.getElementById('bio').value = u.bio || "";
    document.getElementById('addAvatar').innerHTML = u.avatar || "Choose an Avatar..";
  }
@@ -572,101 +574,123 @@ let alertpass = document.getElementById('alertpass');
  }
 
 
- // ✅ Fixed version
- async function editthisprofile(username, password, bio, avatar) {
-   const user = JSON.parse(localStorage.getItem("user"));
-   if (!user || !user.email) {
-     alert("No logged in user found!");
-     return;
-   }
-   
-  loading();  
-   try {
-     const res = await fetch("https://users-server-xyvg.onrender.com/editprofile", {
-       method: "PUT",
-       headers: { "Content-Type": "application/json" },
-       body: JSON.stringify({
-         email: user.email,
-         username,
-         password,
-         bio,
-         avatar
-       })
-     });
-     
+ 
+async function editthisprofile(username, password, bio, avatar) {
+  const user = JSON.parse(localStorage.getItem("user"));
+  if (!user || !user.email) {
+    alert("No logged in user found!");
+    return;
+  }
 
-     const data = await res.json();
-     if (res.ok) {
-       alert(data.message || "Profile updated successfully!");
-       localStorage.setItem("user", JSON.stringify({
-         ...user,
-         username,
-         password,
-         bio,
-         avatar
-       }));
-       location.href = "asirnet.html";
-     } else {
-       alert(data.message || "Update failed!");
-     }
-   } catch (err) {
-     console.error("Error:", err);
-     alert("Error updating profile!");
-     location.reload();
-   }
- }
+  loading();
+
+  // 🔹 payload বানানো (password optional)
+  const payload = {
+    email: user.email,
+    username,
+    bio,
+    avatar
+  };
+
+  if (password && password.trim() !== "") {
+    payload.password = password;
+  }
+
+  try {
+    // 🔹 1️⃣ Update user profile
+    const res = await fetch(
+      "https://users-server-xyvg.onrender.com/editprofile",
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message || "Profile update failed!");
+      location.reload();
+      return;
+    }
+
+    // 🔹 2️⃣ Sync posts (username & avatar) in postsDB
+    const syncRes = await fetch(
+      `https://posts-server-xyvg.onrender.com/edituserposts/${user.email}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, avatar })
+      }
+    );
+
+    const syncData = await syncRes.json();
+    if (!syncRes.ok) {
+      console.warn("Posts sync failed:", syncData.message);
+      // এখানে চাইলে alert দিতে পারো, কিন্তু profile update হয়েছে
+    }
+
+    // 🔹 3️⃣ localStorage update
+    const updatedUser = {
+      ...user,
+      username,
+      bio,
+      avatar
+    };
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+
+    alert(data.message || "Profile updated successfully!");
+    location.href = "asirnet.html";
+
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    alert("Network / server error!");
+    location.reload();
+  }
+}
+
 function usercheck() {
     document.getElementById("modal").style.display = "flex";        
 }
 
+usercheck();
 
-
-async function authenticationCheck() {
+function authenticationCheck() {
     const check = document.getElementById('checkPassword').value;
     const alertBox = document.getElementById("alert");
     const u = JSON.parse(localStorage.getItem("user"));
 
+    // ❌ Empty password
     if (!check) {
         alertBox.innerHTML = "⚠ Please insert your password!";
         alertBox.style.color = "#b87100";
         return;
     }
 
-    if (!u || !u.email) {
+    // ❌ No user
+    if (!u || !u.password) {
         alertBox.innerHTML = "⚠ No user found!";
         alertBox.style.color = "red";
         return;
     }
 
-    try {
-        const res = await fetch(
-          "https://asirnet-backend.onrender.com/verify-password",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              email: u.email,
-              password: check
-            })
-          }
-        );
+    // ✅ Password check (browser only)
+    if (check === u.password) {
+        alertBox.innerHTML = "✅ Verified!";
+        alertBox.style.color = "green";
 
-        const data = await res.json();
+        // modal থাকলে বন্ধ হবে
+        const modal = document.getElementById("modal");
+        if (modal) modal.style.display = "none";
 
-        if (res.ok) {
-            alertBox.innerHTML = "✅ Verified!";
-            alertBox.style.color = "green";
-            document.getElementById("modal").style.display = "none";
-        } else {
-            alertBox.innerHTML = "⚠ " + data.message;
-            alertBox.style.color = "red";
-        }
-
-    } catch (err) {
-        alertBox.innerHTML = "⚠ Server error!";
+    } else {
+        alertBox.innerHTML = "⚠ Wrong password!";
         alertBox.style.color = "red";
     }
 }
+
+
 </script>
 <script>
     const ball =`
