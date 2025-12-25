@@ -326,7 +326,7 @@ h2 {
                 Sing In
             </button></div>
             <div style="text-align: right;">
-      <button onclick="accountforguest()" id="guest">
+      <button onclick="guest()" id="guest">
           Visit as guest ->
       </button></div>    
     </div>
@@ -590,18 +590,17 @@ document.getElementById('loginpass').value = "" ;
     
 async function Login() {
 
-
   let loginemail = document.getElementById('loginemail').value;   
   let loginpass = document.getElementById('loginpass').value;   
 
   if (loginemail && loginpass) {
-  document.getElementById('signin').innerHTML = `
-${ball}
-`;
-  document.getElementById('back').innerHTML = `
-      <button class="cancelling" onclick='login()'>Cancel Processing</button>
-`;
-   try {
+
+    document.getElementById('signin').innerHTML = ball;
+    document.getElementById('back').innerHTML = `
+      <button class="cancelling" onclick='Login()'>Cancel Processing</button>
+    `;
+
+    try {
       const res = await fetch("https://users-server-xyvg.onrender.com/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -609,29 +608,35 @@ ${ball}
       });
 
       const data = await res.json();
-if (res.ok) {
-    alert(data.message);
 
-    // ✅ localStorage-এ user data রাখা
-localStorage.setItem("user", JSON.stringify(data.user));
+      if (res.ok) {
+        alert(data.message);
 
-// object console-এ nicely দেখাতে
-console.log("User data:", JSON.stringify(data.user, null, 2));
-    // ✅ পেজ redirect করা
-    location.href = 'asirnet.html';
-} else {
+        // 🔐 frontend থেকেই password যোগ করা
+        const user = {
+          ...data.user,
+          password: loginpass
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+        console.log("User data saved:", user);
+
+        location.href = 'asirnet.html';
+
+      } else {
         alert(data.message);
       }
+
     } catch (err) {
       alert("Server error: " + err.message);
-      login();
+      Login();
     }
+
   } else {
     alert("Please fill the gaps first");
   }
-  
 }
-
 async function register() {
   let username = document.getElementById('username').value.trim();
   let useremail = document.getElementById('useremail').value.trim();
@@ -661,7 +666,7 @@ ${ball}
     });
 
     const data = await res.json();
-    console.log("Signup response:", data); // 🔹 Debug: server response
+    console.log("Signup response:", data);
 
     if (res.ok) {
       alert(data.message);
@@ -683,7 +688,7 @@ ${ball}
   }
 }
 
-function accountforguest() {
+function guest() {
     location.href = 'guest.html';
 }
 </script>
