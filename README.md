@@ -37,4 +37,3 @@ This project is built mainly for **learning purposes** and **real-world backend 
 
 ---
 
-## 📂 Project Structure
