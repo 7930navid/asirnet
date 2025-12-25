@@ -1,77 +1,147 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>interface</title>
-    <style>
-#prepear {
-    position: fixed;
-    background:  linear-gradient(135deg, #e0f7fa, #b2ebf2);
-    height: 100%;
-    width: 100%;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-#main {
-    background: white;
-    padding: 10px;
-    padding-right: 25px;
-    padding-left: 25px;
-    border-radius: 30px;
-    border: 4px solid skyblue;
-    box-shadow: 0 0 15px skyblue;
-}
-#main p {
-    text-align: center;
-    display: block;
-    font-size: 10px;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AsirNet</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-/* 🔹 Initially hidden */
-#base {
-    opacity: 0;
-    transition: opacity 0.5s ease-in;
+body{
+    background: linear-gradient(135deg,#e0f7fa,#b2ebf2);
 }
 
-/* 🔹 When visible */
-#base.show {
-    opacity: 1;
+/* Splash Container */
+#prepear{
+    position:fixed;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
 }
-    </style>
+
+/* Card */
+#main{
+    background:#ffffff;
+    padding:30px 35px;
+    border-radius:30px;
+    text-align:center;
+    border:4px solid skyblue;
+    box-shadow:0 0 25px rgba(0,191,255,0.6);
+    animation: pop 1s ease;
+}
+
+@keyframes pop{
+    0%{transform:scale(0.8);opacity:0}
+    100%{transform:scale(1);opacity:1}
+}
+
+/* Logo */
+#main img.main-logo{
+    width:180px;
+    border-radius:20px;
+    animation: float 2.5s infinite ease-in-out;
+}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-10px)}
+}
+
+/* Text */
+#base{
+    opacity:0;
+    margin-top:15px;
+    font-size:18px;
+    color:#333;
+    transition:opacity .6s ease;
+}
+
+#base.show{
+    opacity:1;
+}
+
+/* Sub logo */
+#base img{
+    width:40px;
+    border-radius:50%;
+    vertical-align:middle;
+}
+
+/* Progress bar */
+.loader{
+    margin-top:20px;
+    width:100%;
+    height:6px;
+    background:#e0e0e0;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.loader span{
+    display:block;
+    height:100%;
+    width:0%;
+    background:linear-gradient(90deg,#00bcd4,#2196f3);
+    animation: load 5s linear forwards;
+}
+
+@keyframes load{
+    to{width:100%}
+}
+
+/* Footer text */
+.tagline{
+    margin-top:12px;
+    font-size:14px;
+    color:#666;
+}
+</style>
 </head>
-<body>
-    <div id="prepear">
-    <div id="main">
-        <marquee align="center" direction="up" behavior="slide" scrollamount="10px" width="100%">
-            <div style="text-align: center;">
-                <a href="https://7930navid.github.io/">
-                    <img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px">
-                </a>
-            </div>
-        </marquee>
 
+<body>
+
+<div id="prepear">
+    <div id="main">
+
+        <!-- Main Logo (kept) -->
+        <a href="https://7930navid.github.io/">
+            <img class="main-logo"
+            src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg">
+        </a>
+
+        <!-- Loading bar -->
+        <div class="loader"><span></span></div>
+
+        <p class="tagline">Initializing AsirNet...</p>
+
+        <!-- Product info (kept logo) -->
         <p id="base">
-            a product of W-deploy 
-            <sub><a href="https://7930navid.github.io/W-deploy"><img src="https://i.ibb.co.com/gLJK4m8w/IMG-20251108-062250.jpg" alt="logo" width="16" style="border-radius: 90px; borde: none;"></a></sub>
+            A product of <strong>W-deploy</strong>
+            <a href="https://7930navid.github.io/W-deploy">
+                <img src="https://i.ibb.co.com/gLJK4m8w/IMG-20251108-062250.jpg">
+            </a>
         </p>
+
     </div>
 </div>
-    <script>
 
-        setTimeout(() => {
-document.getElementById('base').classList.add('show');
-        }, 1500);
+<script>
+setTimeout(()=>{
+    document.getElementById("base").classList.add("show");
+},1800);
 
-        setTimeout(() => {
-    location.href = 'asirnet.html';
-        }, 5000);
-  
-    
-    </script>
+setTimeout(()=>{
+    location.href="AsirNet.html";
+},5000);
+</script>
+
 </body>
 </html>
