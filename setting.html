@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Page title</title>
+    <title>Settings</title>
     <style>
   hr{
     background: green;
@@ -122,12 +122,19 @@ h2{
     border-radius: 8px;
     margin: 10px;
 }
+.none:hover{
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    border-radius: 30px;
+
+}
+
     </style>
 </head>
 <body>
      <div id="header">
-<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
-  <a href='asirnet.html'><button>×</button></a>
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px">
+  <a href="/asirnet.html"><button>×</button></a>
 </div>
     <div style="margin-top: 100px"></div>
     <div id="content">
@@ -139,7 +146,7 @@ h2{
 <button onclick="theme()">Themes </button>                
             </td>
             <td>
-        <a href="about.html">
+        <a href="/about.html">
         <button>About</button></a>
             </td>
         </tr>
@@ -154,7 +161,8 @@ h2{
     if(confirm('Do you want to Log out ?')) {
         localStorage.removeItem("user");
         alert("Logged out!");
-        location.href = 'register.html';     }
+        location.href = "register.html";
+    }
 }
 function theme() {
 document.getElementById("content").innerHTML =`
@@ -194,7 +202,7 @@ document.getElementById("content").innerHTML =`
 
   <tr>
     <td>
-      <button class="none" onclick="saveTheme('#ff5589')">
+      <button class="none" onclick="saveTheme('red')">
         <div class="first">
           <div class="second" style="background: red;">
             <div class="third" style="background:#e57373;"></div>
@@ -206,13 +214,13 @@ document.getElementById("content").innerHTML =`
     </td>
 
     <td>
-      <button class="none" onclick="saveTheme('#af6aff')">
+      <button class="none" onclick="saveTheme('cyan')">
         <div class="first">
-          <div class="second" style="background: purple;">
-            <div class="third" style="background:#ba68c8;"></div>
-            <div class="fourth" style="background:#e1bee7;"></div>
+          <div class="second" style="background: cyan;">
+            <div class="third" style="background:#55acffc4;"></div>
+            <div class="fourth" style="background:#55acff99;"></div>
           </div>
-          <h1>Purple</h1>
+          <h1>Cyan</h1>
         </div>
       </button>
     </td>
@@ -220,7 +228,7 @@ document.getElementById("content").innerHTML =`
 
   <tr>
     <td>
-      <button class="none" onclick="saveTheme('dark')">
+      <button class="none" onclick="saveTheme('black')">
         <div class="first">
           <div class="second" style="background: black;">
             <div class="third" style="background:#616161;"></div>
@@ -253,12 +261,14 @@ document.getElementById("content").innerHTML =`
   </script>
   <script>
 function saveTheme(color) {
-  if(confirm(`Do you want to change your theme to "${color}"?`));
+  if(confirm(`Do you want to change your theme to "${color}"?`)) {
       const style = {
           background: color
       };
   localStorage.setItem("style", JSON.stringify(style));
   alert(`Sucseed to change theme to "${color}"`);
+  location.href = 'asirnet.html';
+}
 }
   </script>
 </body>
