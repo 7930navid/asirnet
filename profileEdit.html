@@ -616,7 +616,7 @@ async function editthisprofile(username, password, bio, avatar) {
     }
 
     // 🔹 2️⃣ Sync posts (username & avatar) in postsDB
-    const syncRes = await fetch(
+    const syncPostsRes = await fetch(
       `https://posts-server-plog.onrender.com/edituserposts/${user.email}`,
       {
         method: "PUT",
@@ -625,13 +625,27 @@ async function editthisprofile(username, password, bio, avatar) {
       }
     );
 
-    const syncData = await syncRes.json();
-    if (!syncRes.ok) {
-      console.warn("Posts sync failed:", syncData.message);
-      // এখানে চাইলে alert দিতে পারো, কিন্তু profile update হয়েছে
+    const syncPostsData = await syncPostsRes.json();
+    if (!syncPostsRes.ok) {
+      console.warn("Posts sync failed:", syncPostsData.message);
     }
 
-    // 🔹 3️⃣ localStorage update
+    // 🔹 3️⃣ Sync comments (username & avatar) in interactDB
+    const syncCommentsRes = await fetch(
+      `https://interact-server-xyz.onrender.com/editusercomments/${user.email}`,
+      {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, avatar })
+      }
+    );
+
+    const syncCommentsData = await syncCommentsRes.json();
+    if (!syncCommentsRes.ok) {
+      console.warn("Comments sync failed:", syncCommentsData.message);
+    }
+
+    // 🔹 4️⃣ localStorage update
     const updatedUser = {
       ...user,
       username,
@@ -649,6 +663,7 @@ async function editthisprofile(username, password, bio, avatar) {
     location.reload();
   }
 }
+
 
 function usercheck() {
     document.getElementById("modal").style.display = "flex";        
