@@ -632,7 +632,7 @@ async function editthisprofile(username, password, bio, avatar) {
 
     // 🔹 3️⃣ Sync comments (username & avatar) in interactDB
     const syncCommentsRes = await fetch(
-      `https://interacts_server.onrender.com/editusercomments/${user.email}`,
+      `https://interacts-server.onrender.com/editusercomments/${user.email}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
