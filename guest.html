@@ -1,1 +1,528 @@
-under constraction!
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
+    <title>Guest Account</title>
+    <style>
+ 
+  .loading-template {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;
+  }
+
+  /* নতুন image class */
+  .loading-template .loading-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #f0f4f8;
+    border: 2px solid #3498db;
+  }
+
+  .loading-template .loading-image img {
+    width: 80%;
+    height: 80%;
+    object-fit: cover;
+  }
+
+  .loading-template .loading-text {
+    font-size: 0.9em;
+    font-weight: 500;
+    color: #555;
+  }
+
+  .loading-template .loader {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+  }
+
+  .loading-template .dot {
+    width: 6px;
+    height: 6px;
+    background-color: #3498db;
+    border-radius: 50%;
+    animation: wave 0.8s infinite;
+  }
+
+  .loading-template .dot:nth-child(1) { animation-delay: 0s; }
+  .loading-template .dot:nth-child(2) { animation-delay: 0.1s; }
+  .loading-template .dot:nth-child(3) { animation-delay: 0.2s; }
+  .loading-template .dot:nth-child(4) { animation-delay: 0.3s; }
+  .loading-template .dot:nth-child(5) { animation-delay: 0.4s; }
+  .loading-template .dot:nth-child(6) { animation-delay: 0.5s; }
+
+  @keyframes wave {
+    0%, 60%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+  }
+
+  /* রেস্পন্সিভ */
+  @media (max-width: 400px) {
+    .loading-template .loading-image { width: 40px; height: 40px; }
+    .loading-template .dot { width: 5px; height: 5px; }
+    .loading-template .loading-text { font-size: 0.8em; }
+  }
+</style>
+
+
+
+    <style>
+body {
+    background: white;
+    }
+#content {
+    margin-bottom: 500px;
+    min-height: 3000px;
+
+}
+#header { 
+       display:flex; 
+       align-items:center; 
+       justify-content:space-between; 
+       padding:20px; 
+       background: white; 
+       border-bottom:5px solid green; 
+       position: fixed;
+       z-index: 1000;
+       top: 0;
+       left: 0;
+       right: 0;
+       }
+
+#header h1 { 
+       margin:0; 
+       color:green; 
+       text-shadow:0 0 20px lightgreen; 
+       }
+#bio {
+    padding-top: 100px;
+}
+#searchpad { 
+       position:fixed; 
+       top:0; 
+       left:0; 
+       width: 100%; 
+       height:100%; 
+       background:rgba(0,0,0,0.5); 
+       display: none; 
+       z-index:10000;
+       padding: 30px; 
+       } 
+#search {
+    height: 60px;
+    width: 77%;
+    border-radius: 90px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: none;
+    border-right: 1px solid black;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    color: red;
+}
+#btnsearch {
+    height: 80px;
+    border-radius: 90px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    border: none;
+    background: white;
+    padding: 10px;
+    padding-left: 30px;
+    font-size: 25px;
+    
+}
+#show {
+    display: none;
+    background: white;
+    border-radius: 20px;
+    width: 93%;
+    height: 70%;
+    margin-top: 40px;
+}
+#showheader h2 {
+    color: green;
+}
+#showheader {
+    width: 700px;
+    height: 80px;
+    border: none;
+    border-bottom: 2px solid green;
+    padding-left: 20px;
+}
+#searchresult {
+    padding: 20px;
+}
+#close {
+    background: red;
+    padding: 10px;
+    font-size: 20px;
+    border-radius: 90px;
+    color: white;
+    border: none;
+    height: 50px;
+    width: 50px;
+    margin-bottom: 15px;
+    
+}
+.postshow {
+    padding: 20px;
+    text-align: justify;
+    margin: 25px;
+    border-radius: 20px;
+    background: white;
+    min-height: 100px;
+    width: 90%;
+    box-shadow: 0 0 5px gray;
+}
+.postshow h2{
+    color: green;
+}
+.postshow hr{
+    background: green;
+}
+.postshow p{
+    font-size: 25px;
+}
+
+
+#footer {
+    background: white;
+    border: none;
+    border-top: 3px solid green;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    min-height: 70px;
+    bottom: 0;
+    left: 0;
+    padding: 20px;
+}
+#footerBtn {
+    width: 90%;
+}
+#footerBtn td{
+    text-align: center;
+}
+#footerBtn button {
+    width: 110px;
+    height: 80px;
+    border: none;
+    background: none;
+    border-radius: 20px;
+    font-size: 25px;
+
+}
+#footerBtn button:hover {
+    background: rgba(0,100,255,0.1);
+
+}
+#specialBtn {
+    width: 110px;
+    height: 110px;
+    border: 2px solid black;
+    background: none;
+    border-radius: 90px;
+    font-size: 35px;
+    padding: 5px;
+}
+#reactPanal {
+    display: flex;
+    padding: 10px;
+    border: 1px solid green;
+    border-radius: 20px;
+    text-align: center;
+    width: 70%;
+    margin-left: 15%;
+}
+#reactPanal button{
+    border: none;
+    width: 33%;
+    font-size: 20px;
+    border-left: 1px solid green;
+    background: none;
+    }
+#modal {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+}
+#modal div {
+    padding: 20px;
+    padding-top: 10px;
+    width: 50%;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 0 5px white;
+}
+#modal h1 {
+    color: black;
+    font-size: 20px;
+    text-align: center;
+}
+#modal button {
+    margin: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    border: none;
+    font-weight: bold;
+    color: white;
+}
+.crossBtn {
+    background: none;
+    border: none;
+}
+#alert {
+    color: red;
+    font-size: 15px;
+    margin: 10px;
+}
+#likeCommentContainer {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+}
+#Display {
+    height: 70%;
+    width: 90%;
+    box-shadow: 0 0 10px gray;
+    border-radius: 20px;
+    background: white;
+    padding: 20px;
+    overflow: auto;
+}
+#Display hr {
+    background: green;
+}
+#Display h1 {
+    color: green;
+}
+#Display div p{
+    background: rgba(240,240,240);
+    border-radius: 10px;
+    box-shadow: 0 0 5px gray;
+    margin: 20px;
+    padding: 20px;
+    width: 50%;
+    text-align: justify;
+    font-size: 20px;
+}
+
+#Display section {
+    background: rgba(0,0,0,0.1);
+    padding: 2px;
+    border: 5px solid rgba(0,0,0,0.2);
+    border-radius: 90px;
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+
+
+    </style>
+</head>
+<body id="body">
+<div id="header">
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px">
+  <img src="https://i.ibb.co.com/wFkmngNv/guest.png"  width="50" style="border-radius:90px;">
+</div>
+
+<div id="modal">
+    <div>
+    <table align="center" width="200">
+<tr><td colspan="2">        
+   <img src="https://i.ibb.co.com/wFkmngNv/guest.png" 
+ width="300" style="border-radius: 10px; margin-top: 40px;"></td></tr>
+   <tr><td colspan="2">
+   <h1>You are now on a guest account. Please Log In First To Get This Feature!!</h1>
+   </td></tr>
+        <tr>
+            <td>
+<button onclick="closealert('modal')" style="background: red; box-shadow: 0 0 10px red;">Later</button>
+            </td>
+            <td>
+<button onclick="Go()" style="background: green; box-shadow: 0 0 10px green;">Get Now</button>
+            </td>
+        </tr>
+    </table>
+       
+    </div>
+</div>
+      
+
+<div id="bio"></div>
+
+<div id="searchpad">
+<div style="background: none; width: 100%;">
+    <div style="text-align: right; padding-right: 70px;">
+        <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
+    </div>
+    <input type="text" id="search" placeholder="Search here.."/>
+    <button onclick="pad();" id="btnsearch">🔍</button>  
+   
+          <div id="show">
+              <div>
+              <div id="showheader">
+              <h2>
+                 Search Result
+              </h2>
+              </div>
+              <div id="searchresult"></div>
+          </div>
+          </div>
+
+ </div>
+    </div>
+ 
+ <div id="content">
+    <br><br>
+</div>
+<div id="appearFlex">
+</div>
+<footer id="footer">
+    <div>
+        <table id="footerBtn">
+            <tr>
+<td><button onclick="location.reload()">🏠</button></td>
+<td><button onclick="warning();">👤</button></td>
+<td><button onclick="warning()" style="    
+    width: 90px;
+    height: 90px;
+    border: 2px solid green;
+    background: none;
+    border-radius: 90px;
+    font-size: 40px;
+    padding: 5px;
+    color: green;
+">+</button></td>
+<td><button onclick="warning();">⚙️</button></td>
+<td><button onclick="warning();">🔍</button></td>
+            </tr>
+        </table>
+    </div>
+</footer>
+
+
+
+
+
+<script>
+    
+    
+    
+
+function closealert(id) {
+    document.getElementById(id).style.display = 'none';
+}
+
+
+
+
+async function loadPosts() {
+    try {
+        const res = await fetch("https://posts-server.onrender.com/post");
+        const data = await res.json();
+
+        if (res.ok) {
+            const contentDiv = document.getElementById("content");
+            contentDiv.innerHTML = "";
+
+            data.forEach(post => {
+                const div = document.createElement("div");
+                div.className = "postshow";
+                div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}</h2><hr>
+    
+    <p>${post.text.replace(/\n/g, "<br>")}</p>
+    
+    <div id="reactPanal">
+<button onclick="warning()" style="border-left: none;"
+ id="react${post.id}">👍</button>
+<button onclick="warning()">💬</button>
+<button onclick="warning()">🔗</button>
+
+    `;
+            });
+        } else {
+            alert(data.message || "Error loading posts!");
+        }
+    } catch (err) {
+ }
+}
+function warning() {
+ document.getElementById('modal').style.display = 'flex'; 
+}
+
+function Go() {
+    location.href = 'register.html'
+}
+
+</script>
+<script>
+  loadPosts();
+
+
+
+const styleString = localStorage.getItem('style');
+if (styleString) {
+    const s = JSON.parse(styleString);
+    document.getElementById('body').style.backgroundColor = s.background;
+}
+
+
+    const loading =`
+
+<!-- 🍁🍁 Loading -->
+<div style="width: 100%; text-align: center; margin-top: 20px;">
+  <div class="loading-template">
+    <div class="loading-image">
+      <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" >
+    </div>
+    <div class="loading-text">Please wait...</div>
+    <div class="loader">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+  </div>
+</div>
+`;
+
+    document.getElementById('content').innerHTML = loading;
+
+ </script>
+</body>
+</html>
