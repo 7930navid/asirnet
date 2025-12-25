@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
-    <title>Page title</title>
+    <title>AsirNet</title>
     <style>
-  /* Loading wrapper, যেকোন জায়গায় বসানো যাবে */
+        
   .loading-template {
     display: inline-flex;
     flex-direction: column;
@@ -19,7 +19,7 @@
     text-align: center;
   }
 
-  /* নতুন image class */
+ 
   .loading-template .loading-image {
     width: 50px;
     height: 50px;
@@ -70,7 +70,6 @@
     30% { transform: translateY(-6px); }
   }
 
-  /* রেস্পন্সিভ */
   @media (max-width: 400px) {
     .loading-template .loading-image { width: 40px; height: 40px; }
     .loading-template .dot { width: 5px; height: 5px; }
@@ -284,7 +283,7 @@ body {
     border: none;
     border-top: 3px solid green;
     position: fixed;
-    z-index: 1000;
+    z-index: 100;
     width: 100%;
     min-height: 70px;
     bottom: 0;
@@ -322,7 +321,9 @@ body {
 #profdiv {
     background: white;
     padding: 20px;
-    
+    margin: 20px;
+    border: none;
+    border-radius: 20px;
 }
 #profdiv p{
     font-size: 50px;
@@ -338,7 +339,7 @@ body {
 }
 #editbtn {
     position: absolute;
-    z-index: 1000;
+    z-index: 100;
     top: 330px;
     left: 260px;
 }
@@ -482,7 +483,7 @@ body {
     color: green;
 }
 #Display div p{
-    background: white;
+    background: rgba(240,240,240);
     border-radius: 10px;
     box-shadow: 0 0 5px gray;
     margin: 20px;
@@ -492,8 +493,14 @@ body {
     font-size: 20px;
 }
 
-
-
+#Display section {
+    background: rgba(0,0,0,0.1);
+    padding: 2px;
+    border: 5px solid rgba(0,0,0,0.2);
+    border-radius: 90px;
+    font-size: 20px;
+    margin-top: 20px;
+}
 
 
 
@@ -501,7 +508,7 @@ body {
 </head>
 <body id="body">
 <div id="header">
-<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px">
   <h1 id="profPicture"></h1>
 </div>
       
@@ -583,15 +590,21 @@ body {
 
 <div id="likeCommentContainer">
     <div id="Display">
-        <h1 id="reactName">comments</h1>
+  <table style="width: 100%;"><tr><td>      
+          <h1 id="reactName">comments</h1></td><td>
+    <div style="text-align: right;">
+        <button style="color: red; font-size: 30px; border: none; background: none;">×</button>
+        </div>
+      </td></tr></table>
         <hr>
         
-        <div>
+<table><tr><td valign="top">   
+ <section>😁</section></td>
+ 
+ <td>
+          <div><p> This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in.<p></div>
             
-            
-           <p> This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.<p>
-            
-        </div>
+        </td></tr></table>
         
     </div>
 </div>
@@ -609,6 +622,8 @@ function closealert(id) {
 
 function profile() {
 const u = JSON.parse(localStorage.getItem("user"));
+const s = JSON.parse(styleString);
+
     document.getElementById('content').innerHTML =`
  <div id="profdiv">
      <table align="center"><tr><td width="270">
@@ -627,14 +642,18 @@ const u = JSON.parse(localStorage.getItem("user"));
 document.getElementById('profPic').innerHTML = `${u.avatar}`;       
 document.getElementById('userName').innerHTML = `${u.username}`;       
 document.getElementById('profileBio').innerHTML = `${u.bio}`;       
+document.getElementById('ownerPosts').innerHTML = `${loading}`;       
 loadProfilePosts();
+
+
 }
 
 
 function setting() {
 location.href = 'setting.html';
- 
- }
+  }
+  
+  
 
 function searchpad() {
     document.getElementById('searchpad').style.display = 'flex';  
@@ -655,7 +674,7 @@ async function pad() {
     // সার্চ খালি না হলে এই ফাংশন চালানো যাবে
     try {
         // সার্ভার থেকে ইউজার গুলো আনছে
-        const res = await fetch("https://server-asirnet.onrender.com/users");
+        const res = await fetch("https://users-server-xyvg.onrender.com/users");
         const users = await res.json();
 
         // শুধু ID বা email দিয়ে filter
@@ -689,44 +708,86 @@ function clearpost() {
 } 
 
 async function postsubmit() {
-  const text = document.getElementById('postword').value;
-  if (!text) return alert("Please write something!");
+  const input = document.getElementById('postword');
+  const text = input.value.trim();
+
+  if (!text) {
+    alert("Please write something!");
+    return;
+  }
 
   const user = JSON.parse(localStorage.getItem("user"));
-  if (!user) return alert("User not found!");
+  if (!user || !user.username) {
+    alert("User not found!");
+    return;
+  }
+
+  const btn = document.getElementById("postbtn");
+  if (btn) btn.disabled = true;
 
   try {
-    const res = await fetch("https://server-asirnet.onrender.com/post", {
+    const res = await fetch("https://posts-server-plog.onrender.com/post", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user: user.username,
-        text,
-        avatar: user.avatar
+        text: text,
+        avatar: user.avatar || "🙂"
       })
     });
 
+    // ❌ Server responded with error (4xx or 5xx)
+    if (!res.ok) {
+      let serverData = {};
+      try {
+        serverData = await res.json();
+      } catch (e) {
+        console.error("Error parsing server response:", e);
+      }
+
+      // Pretty print server error
+      console.error(
+        `Server Error Response (status: ${res.status} ${res.statusText}):\n`,
+        JSON.stringify(serverData, null, 2)
+      );
+
+      alert("Server error. Please try again.");
+      return;
+    }
+
+    // ✅ Success
     const data = await res.json();
 
-    if (res.ok) {
-      const div = document.createElement('div');
-      div.className = "postshow";
-      div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${user.avatar} </span>${user.username}</h2><hr><p>${text}</p>`;
-      document.getElementById('content').appendChild(div);
-      document.getElementById('postword').value = "";
-      closealert('postpage');
-      alert("Posted successfully!");
-    } else {
-      alert(data.message || "Error posting!");
-    }
+    const div = document.createElement('div');
+    div.className = "postshow";
+
+    const h2 = document.createElement("h2");
+    h2.textContent = `${user.avatar || "🙂"} ${user.username}`;
+
+    const p = document.createElement("p");
+    p.textContent = text; // safe from XSS
+
+    div.appendChild(h2);
+    div.appendChild(document.createElement("hr"));
+    div.appendChild(p);
+
+    document.getElementById('content').appendChild(div);
+    input.value = "";
+    closealert('postpage');
+
+    alert("Posted successfully!");
+
   } catch (err) {
-    console.error(err);
-    alert("Network error while posting!");
+    // ❌ Network / JS error
+    console.error("Network / JS Error:", err);
+    alert("Something went wrong. Please try again.");
+  } finally {
+    if (btn) btn.disabled = false;
   }
 }
 async function loadPosts() {
     try {
-        const res = await fetch("https://server-asirnet.onrender.com/post");
+        const res = await fetch("https://posts-server-plog.onrender.com/post");
         const data = await res.json();
 
         if (res.ok) {
@@ -791,7 +852,7 @@ async function loadProfilePosts() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
-    const res = await fetch("https://server-asirnet.onrender.com/post");
+    const res = await fetch("https://posts-server-plog.onrender.com/post");
     const allPosts = await res.json();
 
     // শুধু current user-এর post filter
@@ -882,7 +943,7 @@ async function savePost(id) {
     const newText = document.getElementById(`editpost${id}`).value;
 
     try {
-        const res = await fetch(`https://server-asirnet.onrender.com/post/${user.email}/${id}`, {
+        const res = await fetch(`https://posts-server-plog.onrender.com/post/${user.email}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: newText })
@@ -902,7 +963,7 @@ async function deletePost(id) {
     if (!confirm("Are you sure to delete this post?")) return;
 
     try {
-        const res = await fetch(`https://server-asirnet.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://posts-server-plog.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
         const data = await res.json();
         alert(data.message);
         loadProfilePosts();
@@ -938,7 +999,7 @@ function reactAppear(postId, imoji) {
     closePlace.addEventListener('click', () => closeImoji(postId));
 
     // 3️⃣ Server-এ reaction পাঠানো
-    fetch('https://server-asirnet.onrender.com/react/', {
+    fetch('https://reactions-server.onrender.com/react/', {
         method: 'POST', // POST method ব্যবহার করা হচ্ছে
         headers: {
             'Content-Type': 'application/json', // JSON পাঠাচ্ছি
@@ -989,7 +1050,7 @@ if (styleString) {
 <div style="width: 100%; text-align: center; margin-top: 20px;">
   <div class="loading-template">
     <div class="loading-image">
-      <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="Logo">
+      <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" >
     </div>
     <div class="loading-text">Please wait...</div>
     <div class="loader">
