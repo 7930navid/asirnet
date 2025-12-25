@@ -3,7 +3,59 @@
 <head>
     <meta charset="UTF-8">    
          <meta name="viewport" content="width=device-width, initial-scale=0.4, user-scalable=no">
-   <title>Page title</title>
+   <title>Register Page</title>
+   <style>
+       
+ .ballContainer{
+    border: none;
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+    background-color: none;
+    margin-top: 20px;
+     
+ }
+  .cancelling{
+      color: red;
+      border: none;
+      background: none;
+      font-size: 20px;
+      width: 200px;
+  }
+ .ball {
+    display: block; 
+    position: absolute;
+    background-color: none;
+    border-radius: 20px;
+    top: 455px;
+    left: 730px;
+    height: 50px;
+    width: 200px;
+    z-index: 100000;
+    border: none;
+    text-align: center;
+  }
+
+ .ball div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgba(0,0,0,0.0);
+    border-top: 3px solid green;
+    border-radius: 90%;
+    width: 25px;
+    height: 25px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg);}
+    100% { transform: translate(-50%, -50%) rotate(360deg);}
+  }
+
+   </style>
     <style>
 body {
     background: white;
@@ -28,6 +80,7 @@ body {
        color: red;
        font-size: 30px;
        }
+
 
 /* Overall container */
 #change {
@@ -260,7 +313,7 @@ h2 {
 </head>
 <body id="body">
  <div id="header">
-<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a><h5 id="headername"></h5>
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px"><h5 id="headername"></h5>
   <button onclick="customalert()">?</button>
 </div>
 
@@ -273,7 +326,7 @@ h2 {
                 Sing In
             </button></div>
             <div style="text-align: right;">
-      <button onclick="" id="guest">
+      <button onclick="guest()" id="guest">
           Visit as guest ->
       </button></div>    
     </div>
@@ -485,11 +538,11 @@ h2 {
  
    </td>
    </tr></table>
-    <br>
+    <br><div id="signup">
  <div style="text-align: right;">
               <button onclick="clearinfolog()" id="clear">Clear </button>
               <button onclick="register()" id="submit">Submit </button>
-         </div>   `;   
+         </div></div>  `;   
  }  
  function progileAvatar() {
  document.querySelector("#listofavatar").style.display = 'block'; 
@@ -506,11 +559,14 @@ h2 {
  <hr>
  <input type="text" placeholder="Enter your email..." id="loginemail"/><br>
     <input type="password" placeholder="Enter your access key..." id="loginpass"/>
-    <br>
+    <br><div id="signin">
  <div style="text-align: right;">
               <button onclick="clearinfo()" id="clear">Clear </button>
-               <button onclick="Login()" id="submit">Submit </button>
+               <button onclick="Login()" id="submit">Submit </button></div></div>
 `;   
+
+
+
  } 
  function customalert() {
 document.getElementById("alert").style.display = 'flex';   
@@ -533,12 +589,20 @@ document.getElementById('loginpass').value = "" ;
 <script>
     
 async function Login() {
+
+
   let loginemail = document.getElementById('loginemail').value;   
   let loginpass = document.getElementById('loginpass').value;   
 
   if (loginemail && loginpass) {
-    try {
-      const res = await fetch("https://server-asirnet.onrender.com/signin", {
+  document.getElementById('signin').innerHTML = `
+${ball}
+`;
+  document.getElementById('back').innerHTML = `
+      <button class="cancelling" onclick='login()'>Cancel Processing</button>
+`;
+   try {
+      const res = await fetch("https://users-server-xyvg.onrender.com/signin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email: loginemail, password: loginpass })
@@ -553,26 +617,20 @@ localStorage.setItem("user", JSON.stringify(data.user));
 
 // object console-এ nicely দেখাতে
 console.log("User data:", JSON.stringify(data.user, null, 2));
-    // ✅ default style save করা
-    const style = {
-        background: "white"
-    };
-    localStorage.setItem("style", JSON.stringify(style));
-
     // ✅ পেজ redirect করা
-    location.href = '/asirnet.html';
+    location.href = 'asirnet.html';
 } else {
         alert(data.message);
       }
     } catch (err) {
       alert("Server error: " + err.message);
+      login();
     }
   } else {
     alert("Please fill the gaps first");
   }
   
 }
-
 
 async function register() {
   let username = document.getElementById('username').value.trim();
@@ -586,25 +644,60 @@ async function register() {
     return;
   }
   
+    document.getElementById('signup').innerHTML = `
+${ball}
+`;
+  document.getElementById('back').innerHTML = `
+      <button class="cancelling" onclick='reg()'>Cancel Processing</button>
+`;
+ document.querySelector(".ball").style.marginTop = '120px';
+
+  
   try {
-    const res = await fetch("https://server-asirnet.onrender.com/signup", {
+    const res = await fetch("https://users-server-xyvg.onrender.com/signup", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ username, email: useremail, password, bio, avatar })
     });
 
     const data = await res.json();
-    console.log("Signup response:", data); // 🔹 Debug: server থেকে আসা response
+    console.log("Signup response:", data); // 🔹 Debug: server response
 
     if (res.ok) {
       alert(data.message);
       location.href = 'asirnet.html';
+      
+
+    const style = {
+        background: "white"
+    };
+    localStorage.setItem("style", JSON.stringify(style));
+
+
     } else {
       alert(data.message + (data.error ? "\nDetails: " + data.error : ""));
     }
   } catch (err) {
     alert("Server error: " + err.message);
+    reg();
   }
 }
-</script></body>
+
+function guest() {
+    location.href = 'guest.html';
+}
+</script>
+<script>
+    const ball =`
+    <div style="margin-left: 550px;">
+    <div class="ballContainer"><div id="back"></div>
+    </div>
+    </div>
+    <div class="ball">
+    <div></div>
+    </div>
+
+`;
+</script>
+</body>
 </html>
