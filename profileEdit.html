@@ -2,7 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Page title</title>
+    <title>Profile/Edit</title>
+      <style>
+       
+ .ballContainer{
+    border: none;
+    text-align: center;
+    height: 50px;
+    width: 200px;
+    border-radius: 20px;
+    background-color: none;
+    margin-top: 20px;
+     
+ }
+  .cancelling{
+      color: red;
+      border: none;
+      background: none;
+      font-size: 20px;
+      width: 200px;
+  }
+ .ball {
+    display: block; 
+    position: absolute;
+    background-color: none;
+    border-radius: 20px;
+    top: 800px;
+    left: 730px;
+    height: 50px;
+    width: 200px;
+    z-index: 100000;
+    border: none;
+    text-align: center;
+  }
+
+ .ball div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 3px solid rgba(0,0,0,0.0);
+    border-top: 3px solid green;
+    border-radius: 90%;
+    width: 25px;
+    height: 25px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg);}
+    100% { transform: translate(-50%, -50%) rotate(360deg);}
+  }
+
+   </style>
+
     <style>
         body {
             padding: 20px;
@@ -22,7 +75,7 @@
        border-bottom:3px solid green; 
        width: 940px;
        position: fixed;
-       z-index: 1000;
+       z-index: 1000000;
        top: 0;
        left: 0;
        }
@@ -206,8 +259,8 @@ input:focus {
 </head>
 <body>
  <div id="header">
-<a href="https://ibb.co.com/PZ1vZJyp"><img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" alt="Logo" width="200px"></a>
-  <a hrefton onclick='asirnet.html'><button>×</button></a>
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px">
+  <a href="/AsirNet.html"><button>×</button></a>
 </div>
 
 
@@ -229,11 +282,15 @@ input:focus {
        </div> 
 
     <br>
+    <div id="edit">
  <div style="text-align: right;">
         <button onclick="deletethisprofile()" id="delete">Delete Account </button>
-              <button onclick="checking()" id="submit">Submit </button>
+              <button onclick="checking();" id="submit">Submit </button>
 
 </div>
+</div>
+ 
+ 
   <div id="listofavatar">
 <div style="text-align: right;"><button onclick="closealert('listofavatar')" class="crossbtn" style="background: none; color: red; font-size: 25px;">×</button></div>
      <br>
@@ -458,7 +515,7 @@ async function deletethisprofile() {
         if (res.ok) {
             alert(data.message || "Account deleted successfully");
             localStorage.removeItem("user");
-            location.href = 'register.html';
+            location.href = "register.html";
         } else {
             alert(data.message || "Error deleting account");
         }
@@ -481,6 +538,7 @@ async function deletethisprofile() {
  }
 
  async function checking() {
+ 
    const usernameEl = document.getElementById('username');
    const passwordEl = document.getElementById('password');
    const bioEl = document.getElementById('bio');
@@ -521,9 +579,10 @@ let alertpass = document.getElementById('alertpass');
      alert("No logged in user found!");
      return;
    }
-
+   
+  loading();  
    try {
-     const res = await fetch("https://server-asirnet.onrender.com/editprofile", {
+     const res = await fetch("https://users-server-xyvg.onrender.com/editprofile", {
        method: "PUT",
        headers: { "Content-Type": "application/json" },
        body: JSON.stringify({
@@ -534,6 +593,7 @@ let alertpass = document.getElementById('alertpass');
          avatar
        })
      });
+     
 
      const data = await res.json();
      if (res.ok) {
@@ -552,13 +612,14 @@ let alertpass = document.getElementById('alertpass');
    } catch (err) {
      console.error("Error:", err);
      alert("Error updating profile!");
+     location.reload();
    }
  }
 function usercheck() {
     document.getElementById("modal").style.display = "flex";        
 }
 
-usercheck();
+
 
 async function authenticationCheck() {
     const check = document.getElementById('checkPassword').value;
@@ -605,6 +666,28 @@ async function authenticationCheck() {
         alertBox.innerHTML = "⚠ Server error!";
         alertBox.style.color = "red";
     }
+}
+</script>
+<script>
+    const ball =`
+    <div style="margin-left: 500px;">
+    <div class="ballContainer"><div id="back"></div>
+    </div>
+    </div>
+    <div class="ball">
+    <div></div>
+    </div>
+
+`;
+
+function loading() {
+    document.getElementById('edit').innerHTML = `
+${ball}
+`;
+  document.getElementById('back').innerHTML = `
+      <button class="cancelling" onclick='location.reload()'>Cancel Processing</button>
+`;
+ 
 }
 </script>
 </body>
