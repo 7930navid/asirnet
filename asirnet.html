@@ -478,18 +478,7 @@ body {
     font-size: 15px;
     margin: 10px;
 }
-.likeCommentContainer {
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.4);
-}
+
 .Display {
     height: 70%;
     width: 90%;
@@ -592,8 +581,10 @@ body {
     margin-left: 150px;
 }
 
-#countReactions p{
+#countReactions button{
     font-size: 15px;
+    background: none;
+    border: none;
 }
 
     </style>
@@ -678,26 +669,6 @@ body {
 </footer>
 
 
-<div class="likeCommentContainer">
-    <div class="Display">
-  <table style="width: 100%;"><tr><td>      
-          <h1 id="reactName">comments</h1></td><td>
-    <div style="text-align: right;">
-        <button style="color: red; font-size: 30px; border: none; background: none;">×</button>
-        </div>
-      </td></tr></table>
-        <hr>
-        
-<table><tr><td valign="top">   
- <section>😁</section></td>
- 
- <td>
-          <div><p> This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in the whole world and enlighten whole world. So I help from you all by every means in your range. This is test post.This is a web platform based HTML, CSS, JS in frontend and Node.js in backend, named AsirNet, made by Hafez Md. Asir Abrar Khan. Now on test in future it will shine in.<p></div>
-            
-        </td></tr></table>
-        
-    </div>
-</div>
 
     
 
@@ -706,8 +677,6 @@ body {
     
     
     
-function toggleMenu() {
-}
 
 function closealert(id) {
     document.getElementById(id).style.display = 'none';
@@ -914,15 +883,15 @@ async function loadPosts() {
     
     <div id="countReactions">
    <div id="countByOrder${post.id}" style="text-align: right">
- <p id="likeCount${post.id}">170 likes</p>      
- <p id="commentCount${post.id}">30 comments</p>      
+ <button id="likeCount${post.id}"></button> <br>     
+ <button id="commentCount${post.id}" onclick="appContainer(${post.id}); comText(${post.id})"></button>      
    </div>
      </div>
     
     <div id="reactPanal">
 <button onclick="appImoji(${post.id})" style="border-left: none;"
  id="react${post.id}">👍</button>
-<button onclick="comSec(${post.id}, \`${post.text}\`)"     id="comSec${post.id}">💬</button>
+<button onclick="comSec(${post.id})" id="comSec${post.id}">💬</button>
 <button onclick="appLink(${post.id})">📤</button>
     </div>
     
@@ -937,7 +906,7 @@ async function loadPosts() {
 <button onclick="reactAppear(${post.id},'😡')">😡</button>
 </div>
 
-<div id="comPen${post.id}" style="display:none; position: fixed; z-index: 100; height: 100%; width: 100%; background: rgba(0,0,0,0.5); top:0; left: 0; justify-content: center;align-items: center;">
+<div id="comPen${post.id}" style="display:none; position: fixed; z-index: 100; height: 100%; width: 100%; background: rgba(0,0,0,0.3); top:0; left: 0; justify-content: center;align-items: center;">
     
     <div class="comSecDiv">
   <table>
@@ -964,6 +933,40 @@ Write a comment here about this post..
   
  </div>   
 
+
+<div id="commentContainer${post.id}" style="   
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+">
+    <div class="Display">
+  <table style="width: 100%;"><tr><td>      
+          <h1 id="reactName">comments</h1></td><td>
+    <div style="text-align: right;">
+<button 
+    style="
+        color: red; 
+        font-size: 30px; 
+        border: none; 
+        background: none; 
+        cursor: pointer;" 
+    onclick="closeContainer(${post.id})"
+>
+    × </button>  
+     </div>
+      </td></tr></table>
+        <hr>
+ <div id="comText${post.id}"></div>       
+    </div>
+</div>
+
     `;
     
        // let displayText = postText.length > 5 ? postText.slice(0, 5) + "..." : postText;
@@ -979,7 +982,58 @@ Write a comment here about this post..
  }
 }
 
+function comSec(appear) {
+   document.getElementById(`comPen${appear}`).style.display  = 'flex';
+}
 
+async function comText(postId) {
+    const box = document.getElementById(`comText${postId}`);
+    box.innerHTML = "Loading comments...";
+
+    try {
+        const res = await fetch(
+          `https://interacts-server.onrender.com/comments/${postId}`
+        );
+        const comments = await res.json();
+
+        if (comments.length === 0) {
+            box.innerHTML = "<p style='color: red;'>No comments yet</p>";
+            return;
+        }
+
+        box.innerHTML = "";
+
+        comments.forEach(c => {
+            box.innerHTML += `
+              <div>
+<table style="margin-bottom: 30px;">
+    <tr>
+    <td valign="top"> <h1>${c.avatar}</h1></td>
+    <td>
+        <div style="
+    background: rgba(0,0,0,0.1);   
+    padding: 10px; 
+    border-radius: 10px;
+    width: 500px;
+    margin-left: 30px;
+    border-left: 5px solid gray;
+        ">
+        <h3 style="color: green; margin: 0;">${c.username}</h3>
+        <hr style="background: green;">
+        <p style="text-align: justify; font-size: 18px; background: none; padding: 0; margin:0; box-shadow: none; width: 100%;">${c.comment}</p>
+        </div>
+        
+        </td>
+    </tr>
+</table>                  
+              </div>
+            `;
+        });
+
+    } catch (err) {
+        box.innerHTML = "<p style='color:red'>Failed to load comments</p>";
+    }
+}
 async function updateCounts(postId) {
     const likeEl = document.getElementById(`likeCount${postId}`);
     const commentEl = document.getElementById(`commentCount${postId}`);
@@ -999,9 +1053,6 @@ async function updateCounts(postId) {
     }
 }
 
-function comSec(id) {
-   document.getElementById(`comPen${id}`).style.display  = 'flex';
-}
 
 async function sendCom(postId) {
     const overlay = document.getElementById(`comPen${postId}`);
@@ -1259,11 +1310,19 @@ function appImoji(id) {
 document.getElementById(`appearFlex${id}`).style.display ='flex';
 }
 
+
+
 function closeImoji(id) {
     document.getElementById(`appearFlex${id}`).style.display ='none';
 }
 
+function closeContainer(container){
+    document.getElementById(`commentContainer${container}`).style.display = 'none';
+}
 
+function appContainer(container) {
+document.getElementById(`commentContainer${container}`).style.display ='flex';
+}
 
 
 function appLink(postId) {
@@ -1272,6 +1331,8 @@ alert('😥 under contraction!');
 //  navigator.clipboard.writeText(postUrl);
 }
 </script>
+
+
 <script>
 window.onload = function() {
     const user = localStorage.getItem("user");
