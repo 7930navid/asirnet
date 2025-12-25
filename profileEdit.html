@@ -617,7 +617,7 @@ async function editthisprofile(username, password, bio, avatar) {
 
     // 🔹 2️⃣ Sync posts (username & avatar) in postsDB
     const syncRes = await fetch(
-      `https://posts-server-xyvg.onrender.com/edituserposts/${user.email}`,
+      `https://posts-server-plog.onrender.com/edituserposts/${user.email}`,
       {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
