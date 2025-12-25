@@ -729,12 +729,16 @@ async function postsubmit() {
     const res = await fetch("https://posts-server-plog.onrender.com/post", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        user: user.username,
-        text: text,
-        avatar: user.avatar || "🙂"
-      })
-    });
+body: JSON.stringify({
+  user: {
+    username: user.username,
+    email: user.email
+  },
+  text: text,
+  avatar: user.avatar 
+})    
+
+});
 
     // ❌ Server responded with error (4xx or 5xx)
     if (!res.ok) {
@@ -785,6 +789,7 @@ async function postsubmit() {
     if (btn) btn.disabled = false;
   }
 }
+
 async function loadPosts() {
     try {
         const res = await fetch("https://posts-server-plog.onrender.com/post");
