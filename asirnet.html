@@ -618,28 +618,6 @@ body {
            margin: 5px;
            background: none;
        }
-#otherProf{
-
-}
-#otherProf section {
-}
-#otherProf h2{
-}
-#otherProf hr{
-}
-
-#otherProfdiv {
-}
-#otherProfdiv p{
-}
-#otherProfdiv h5{
-}
-#profdiv hr{
-}
-#otherProfPic {
-}
-
-
 
     </style>
 </head>
@@ -657,7 +635,7 @@ body {
     <div style="text-align: right; padding-right: 70px;">
         <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
     </div>
-    <input type="text" id="search" placeholder="Search here.."/>
+    <input type="text" id="search" placeholder="Search here for any ID.."/>
     <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="25"></button>  
    
           <div id="show">
@@ -747,18 +725,18 @@ body {
     position:relative;
     overflow: auto;
 ">
-        <table style="width: 100%;"><tr><td>
+        <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>
   <h2 style="color: green;width: 600px;" id="headerName"></h2>  
   </td>
  <td><button onclick="closealert('otherProf')" style="background: none; border: none; font-size: 40px; color: red;">
      ×
  </button></td> 
-  </tr></table><hr style="background: green;
-"> 
+  </tr><tr><td colspan="2"><hr style="background: green;"></td></tr></table> 
  <div id="otherProfdiv" style="   
     background: white;
     padding: 20px;
     margin: 20px;
+    margin-top: 100px;
     border: none;
     border-radius: 20px;
 ">
@@ -781,7 +759,7 @@ body {
     font-weight: bold;
     color: green;
 "></p>
-     <h4 style="color: red;"><i id="otherProfileBio"></i></h4>
+     <h4 style="color: red;"><u><i id="otherProfileBio"></i></u></h4>
   </td></tr></table>
  <br><br><br><hr style="background: rgba(0,0,0,0.1); height: 10px;"></div>
  
@@ -823,7 +801,7 @@ async function showOtherProf(email) {
         nameEl.innerText = user.username || "Unknown";
         bioEl.innerText = user.bio || "No bio";
         picEl.innerText = user.avatar || "N";
-        headerName.innerText = `Profile of ${user.username}`;
+        headerName.innerText = `Profile of "${user.username}"`;
 
         /* 🔹 Fetch posts */
         const postRes = await fetch(
@@ -961,9 +939,10 @@ async function pad() {
         } else {
             showDiv.style.display = 'flex';
             showDiv.innerHTML = results.map(u => `
-                <div style="border:none; margin:5px; padding:10px; color: green; width: 700px;">
-                    ${u.username} <br><hr>
-                </div>
+  <button onclick="closealert('searchpad'); showOtherProf('${u.email}')" style="background: none; width: 70%; border: none;">                
+                <div style="border:none; margin:5px; padding:10px; color: green; width: 100%; text-align: left;">
+                    ${u.username} <br><hr style="background: green; height: 2px;">
+                </div></button>
             `).join("");
       }  
     } catch (err) {
