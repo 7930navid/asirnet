@@ -478,8 +478,8 @@ body {
         <table id="footerBtn">
             <tr>
 <td><button onclick="location.reload()">🏠</button></td>
-<td><button onclick="warning();">👤</button></td>
-<td><button onclick="warning()" style="    
+<td><button onclick="guestWarning();">👤</button></td>
+<td><button onclick="guestWarning()" style="    
     width: 90px;
     height: 90px;
     border: 2px solid green;
@@ -489,8 +489,8 @@ body {
     padding: 5px;
     color: green;
 ">+</button></td>
-<td><button onclick="warning();">⚙️</button></td>
-<td><button onclick="warning();">🔍</button></td>
+<td><button onclick="guestWarning();">⚙️</button></td>
+<td><button onclick="guestWarning();">🔍</button></td>
             </tr>
         </table>
     </div>
@@ -539,10 +539,10 @@ async function loadPosts() {
      </div>
     
     <div id="reactPanal">
-<button onclick="warning()" style="border-left: none;"
+<button onclick="guestWarning()" style="border-left: none;"
  id="react${post.id}">👍</button>
-<button onclick="warning()" id="comSec${post.id}">💬</button>
-<button onclick="warning()">📤</button>
+<button onclick="guestWarning()" id="comSec${post.id}">💬</button>
+<button onclick="guestWarning()">📤</button>
     </div>
     
     
@@ -689,7 +689,7 @@ async function updateCounts(postId) {
 
 
 
-function warning() {
+function guestWarning() {
  document.getElementById('modal').style.display = 'flex'; 
 }
 
