@@ -586,6 +586,37 @@ body {
     background: none;
     border: none;
 }
+       .likeAppear {
+           width: 100%;
+           border: none;
+           border-bottom: 1px solid black;
+           border-top: 1px solid black;
+       }
+       .likeAppear div {
+           font-size: 40px;
+           border-right: 1px solid black;
+           margin: 5px;
+           width: 70px;
+       }
+       .likeAppear h1 {
+           color: green;
+       }
+       .likeAppear p {
+           color: blue;
+           font-size: 20px;
+           box-shadow: 0;
+       }
+       .likeAppear section {
+           font-size: 40px;
+           padding: 5px;
+           border: 1px solid green;
+           border-radius: 5px;
+           box-shadow: 0 0 4px lightgreen;
+           width: 60px;
+           margin: 5px;
+           background: none;
+       }
+
 
     </style>
 </head>
@@ -604,7 +635,7 @@ body {
         <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
     </div>
     <input type="text" id="search" placeholder="Search here.."/>
-    <button onclick="pad();" id="btnsearch">🔍</button>  
+    <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="25"></button>  
    
           <div id="show">
               <div>
@@ -649,20 +680,20 @@ body {
     <div>
         <table id="footerBtn">
             <tr>
-<td><button onclick="location.reload()">🏠</button></td>
-<td><button onclick="profile();loadProfile();">👤</button></td>
+<td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="home" border="0" width="40"></button></td>
+<td><button onclick="profile();loadProfile();"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="user" border="0" width="40"></button></td>
 <td><button onclick="createpost()" style="    
     width: 90px;
     height: 90px;
-    border: 2px solid green;
+    border: 2px solid black;
     background: none;
     border-radius: 90px;
     font-size: 40px;
     padding: 5px;
-    color: green;
+    color: black;
 ">+</button></td>
-<td><button onclick="setting();">⚙️</button></td>
-<td><button onclick="searchpad();">🔍</button></td>
+<td><button onclick="setting();"><img src="https://i.ibb.co.com/F4RcTPbR/setting.png" alt="setting" border="0" width="40"></button></td>
+<td><button onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="40"></button></td>
             </tr>
         </table>
     </div>
@@ -883,16 +914,17 @@ async function loadPosts() {
     
     <div id="countReactions">
    <div id="countByOrder${post.id}" style="text-align: right">
- <button id="likeCount${post.id}"></button> <br>     
+ <button id="likeCount${post.id}" onclick="likeContainer(${post.id}); reactors(${post.id})"></button> <br>     
  <button id="commentCount${post.id}" onclick="appContainer(${post.id}); comText(${post.id})"></button>      
    </div>
      </div>
     
     <div id="reactPanal">
 <button onclick="appImoji(${post.id})" style="border-left: none;"
- id="react${post.id}">👍</button>
-<button onclick="comSec(${post.id})" id="comSec${post.id}">💬</button>
-<button onclick="appLink(${post.id})">📤</button>
+ id="react${post.id}">
+ <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="like" border="0" width="40"></button>
+<button onclick="comSec(${post.id})" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
+<button onclick="appLink(${post.id})"><img src="https://i.ibb.co.com/dsY2VXG0/share.png" alt="share" border="0" width="40"></button>
     </div>
     
     <div id="appearFlex${post.id}" class='appearFlex'>
@@ -948,7 +980,7 @@ Write a comment here about this post..
 ">
     <div class="Display">
   <table style="width: 100%;"><tr><td>      
-          <h1 id="reactName">comments</h1></td><td>
+          <h1 id="reactName">Comments</h1></td><td>
     <div style="text-align: right;">
 <button 
     style="
@@ -967,6 +999,40 @@ Write a comment here about this post..
     </div>
 </div>
 
+
+<div id="likeContainer${post.id}" style="   
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4);
+">
+    <div class="Display">
+  <table style="width: 100%;"><tr><td>      
+          <h1 id="reactName">Reactions</h1></td><td>
+    <div style="text-align: right;">
+<button 
+    style="
+        color: red; 
+        font-size: 30px; 
+        border: none; 
+        background: none; 
+        cursor: pointer;" 
+    onclick="closeLikeContainer(${post.id})"
+>
+    × </button>  
+     </div>
+      </td></tr></table>
+        <hr>
+ <div id="reactors${post.id}" style="position: relative"></div>       
+    </div>
+</div>
+
     `;
     
        // let displayText = postText.length > 5 ? postText.slice(0, 5) + "..." : postText;
@@ -980,6 +1046,53 @@ Write a comment here about this post..
         }
     } catch (err) {
  }
+}
+
+
+async function reactors(postId) {
+  try {
+    const res = await fetch(
+      `https://interacts-server.onrender.com/likes/${postId}`
+    );
+    const data = await res.json();
+
+    const container = document.getElementById(`reactors${postId}`);
+    container.innerHTML = ""; // clear previous
+
+    if (!data.likes || data.likes.length === 0) {
+      container.innerHTML = "No likes yet 😐";
+      return;
+    }
+
+    // 🔹 Map likes to HTML
+    const listHTML = data.likes
+      .map(l => {
+        return `
+          <table class="likeAppear">
+            <tr>
+              <td>
+                <div>${l.avatar || "🙂"}</div>
+              </td>
+              <td>
+                <h1>${l.username}</h1>
+              </td>
+              <td><p style="box-shadow:0 0 0px white; padding: 0; margin:0; background: none; width: 150px;">
+                reacted with
+              </p></td>
+              <td style="font-size:20px"><section>
+                ${l.reaction}</section>
+              </td>
+            </tr>
+          </table>
+        `;
+      })
+      .join("");
+
+    container.innerHTML = listHTML;
+
+  } catch (err) {
+    console.error("Reactors fetch error:", err);
+  }
 }
 
 function comSec(appear) {
@@ -1090,12 +1203,12 @@ async function updateCounts(postId) {
         if (!res.ok) throw new Error("Failed to fetch counts");
 
         const data = await res.json();
-        if (likeEl) likeEl.textContent = `${data.likes} likes`;
+        if (likeEl) likeEl.textContent = `${data.likes} reactions`;
         if (commentEl) commentEl.textContent = `${data.comments} comments`;
 
     } catch (err) {
         console.error(`Error updating counts for post ${postId}:`, err);
-        if (likeEl) likeEl.textContent = "– likes";
+        if (likeEl) likeEl.textContent = "– reactions";
         if (commentEl) commentEl.textContent = "– comments";
     }
 }
@@ -1156,45 +1269,47 @@ async function sendCom(postId) {
 }
 
 async function reactAppear(postId, emoji) {
-document.getElementById(`appearFlex${postId}`).style.display = "none";
+  document.getElementById(`appearFlex${postId}`).style.display = "none";
 
+  try {
+    const user = JSON.parse(localStorage.getItem("user"));
 
-
-
-    try {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (!user || !user.email) {
-            alert("You must be logged in to react!");
-            return;
-        }
-
-        const res = await fetch("https://interacts-server.onrender.com/react", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                postId: postId,
-                email: user.email,
-                reaction: emoji
-            })
-        });
-
-        const data = await res.json();
-
-        if (res.ok) {
-            document.getElementById(`react${postId}`).innerHTML = emoji;
-          
-        } else {
-          
-            alert(data.message || "You have already reacted!");
-        }
-    } catch (err) {
-        console.error("Error sending reaction:", err);
-        alert("Something went wrong while sending your reaction.");
+    if (!user || !user.email || !user.username) {
+      alert("You must be logged in to react!");
+      return;
     }
-}
 
+    const res = await fetch(
+      "https://interacts-server.onrender.com/react",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          postId: postId,
+          email: user.email,
+          username: user.username,
+          avatar: user.avatar,
+          reaction: emoji
+        })
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      // UI update
+      document.getElementById(`react${postId}`).innerHTML = emoji;
+    } else {
+      alert(data.message || "You have already reacted!");
+    }
+
+  } catch (err) {
+    console.error("Error sending reaction:", err);
+    alert("Something went wrong while sending your reaction.");
+  }
+}
 
 
 
@@ -1335,7 +1450,7 @@ async function deletePost(id) {
     if (!confirm("Are you sure to delete this post?")) return;
 
     try {
-        const res = await fetch(`https://interacts-server.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://posts-server-plog.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
         const data = await res.json();
         alert(data.message);
         loadProfilePosts();
@@ -1459,6 +1574,15 @@ function closeContainer(container){
 function appContainer(container) {
 document.getElementById(`commentContainer${container}`).style.display ='flex';
 }
+
+function likeContainer(container) {
+document.getElementById(`likeContainer${container}`).style.display ='flex';
+}
+
+function closeLikeContainer(container){
+    document.getElementById(`likeContainer${container}`).style.display = 'none';
+}
+
 
 
 function appLink(postId) {
