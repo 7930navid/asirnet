@@ -351,7 +351,7 @@ body {
     font-weight: bold;
     color: green;
 }
-#profdiv h5{
+#profdiv h3{
     color: red;
 }
 #profdiv hr{
@@ -413,12 +413,12 @@ body {
 .appearFlex button {
     padding: 10px;
     font-size: 25px;
-    border: none;
+    border: 2px solid red;
     border-radius: 20px;
     min-width: 70px;
     margin: 10px;
     background: white;
-    box-shadow: 0 0 3px gray;
+    box-shadow: 0 0 6px red;
 }
 .appearFlex button:hover {
     transform: scale(1.25);
@@ -892,7 +892,7 @@ const s = JSON.parse(styleString);
      <table align="center"><tr><td width="270">
      <div id="profPic"></div></td><td width="400">
      <p id="userName"></p>
-     <h5><i id="profileBio"></i></h5>
+     <h3><u><i id="profileBio" ></i></u></h3>
   </td></tr></table>
   <div id="editbtn"><a href="profileEdit.html">
   <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="edit" border="0" width="30"></button>
@@ -1163,7 +1163,7 @@ Write a comment here about this post..
     background: rgba(0,0,0,0.4);
 ">
     <div class="Display">
-  <table style="width: 100%;"><tr><td>      
+  <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>      
           <h1 id="reactName">Comments</h1></td><td>
     <div style="text-align: right;">
 <button 
@@ -1177,9 +1177,11 @@ Write a comment here about this post..
 >
     × </button>  
      </div>
-      </td></tr></table>
-        <hr>
- <div id="comText${post.id}" style="position: relative"></div>       
+      </td></tr>
+ <tr><td colspan="2"><hr></td></tr>     
+      </table>
+        
+ <div id="comText${post.id}" style="position: relative; margin-top: 140px"></div>       
     </div>
 </div>
 
@@ -1197,7 +1199,7 @@ Write a comment here about this post..
     background: rgba(0,0,0,0.4);
 ">
     <div class="Display">
-  <table style="width: 100%;"><tr><td>      
+  <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>      
           <h1 id="reactName">Reactions</h1></td><td>
     <div style="text-align: right;">
 <button 
@@ -1211,9 +1213,11 @@ Write a comment here about this post..
 >
     × </button>  
      </div>
-      </td></tr></table>
-        <hr>
- <div id="reactors${post.id}" style="position: relative"></div>       
+      </td>
+      <tr><td colspan="2"> <hr></td></tr>
+      </tr></table>
+     
+ <div id="reactors${post.id}" style="position: relative; margin-top: 140px;"></div>       
     </div>
 </div>
 
@@ -1338,16 +1342,16 @@ async function comText(postId) {
                         border-left: 5px solid gray;">
                       <table>
                         <tr>
-                          <td><h3 style="color: green; margin: 0;">${c.username}</h3></td>
+                          <td><h3 style="color: green; margin: 0; width: 470px;">${c.username}</h3></td>
                           <td>
-                            ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 360px">⋮</button>` : ""}
+                            ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
                           </td>
                         </tr>
                       </table>
                       <hr style="background: green;">
                       
    <div id="commentText${c.id}">                   
-                      <p style="text-align: justify; font-size: 18px; margin:0; box-shadow: none; background: 0; padding: 0; width: 100%;">${c.comment}</p>
+                      <p style="text-align: justify; font-size: 18px; margin:0; box-shadow: none; background: 0; padding: 0; width: 100%;">${c.comment.replace(/\n/g, "<br>")}</p>
                       ${menuHTML}
                     </div>
                   </td>
@@ -1544,17 +1548,17 @@ async function loadProfilePosts() {
             <div style="position: relative;">
                 <table border="0" style="width: 100%;">
                     <tr>
-                        <td><h3 style="color: green"><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${user.avatar} </span>${user.username}</h3></td>
+                        <td><h3 style="color: green"><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 50px;">${user.avatar} </span><span style="font-size: 50px; text-align: left;">${user.username}</span></h3></td>
                         <td style="text-align: right;">
                             <button 
                                 id="dropdownBtn${p.id}" 
-                                style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 30px;"
+                                style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 50px;"
                             >⋮</button>
                         </td>
                     </tr>
                 </table>
                 <hr>
-                <p id="posttext${p.id}">${p.text.replace(/\n/g, "<br>")}</p>
+                <p id="posttext${p.id}" style="font-size: 30px;">${p.text.replace(/\n/g, "<br>")}</p>
                 
                 
                 <div id="menu${p.id}" 
