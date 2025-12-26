@@ -665,7 +665,9 @@ ${ball}
 
     if (res.ok) {
       alert(data.message);
-      location.href = 'asirnet.html';
+if(confirm('Do You Want To Log In Now?')){
+      login();
+}
       
 
     const style = {
