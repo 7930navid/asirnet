@@ -304,7 +304,7 @@ body {
     border: none;
     border-top: 3px solid green;
     position: fixed;
-    z-index: 100;
+    z-index: 10000;
     width: 100%;
     min-height: 70px;
     bottom: 0;
@@ -618,6 +618,27 @@ body {
            margin: 5px;
            background: none;
        }
+#otherProf{
+
+}
+#otherProf section {
+}
+#otherProf h2{
+}
+#otherProf hr{
+}
+
+#otherProfdiv {
+}
+#otherProfdiv p{
+}
+#otherProfdiv h5{
+}
+#profdiv hr{
+}
+#otherProfPic {
+}
+
 
 
     </style>
@@ -703,6 +724,70 @@ body {
 
 
 
+
+<div id="otherProf"  style="
+    background: rgba(0,0,0,0.2);
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    top:0;
+    left:0;
+    position: fixed;
+    display: none;
+    justify-content: center;
+    align-items: center;
+
+ ">
+    <section style="
+    background: white;
+    height: 77%;
+    width: 90%;
+    border-radius: 20px;
+    padding: 20px;
+    position:relative;
+    overflow: auto;
+">
+        <table style="width: 100%;"><tr><td>
+  <h2 style="color: green;width: 600px;" id="headerName"></h2>  
+  </td>
+ <td><button onclick="closealert('otherProf')" style="background: none; border: none; font-size: 40px; color: red;">
+     ×
+ </button></td> 
+  </tr></table><hr style="background: green;
+"> 
+ <div id="otherProfdiv" style="   
+    background: white;
+    padding: 20px;
+    margin: 20px;
+    border: none;
+    border-radius: 20px;
+">
+
+     <table align="center"><tr>
+     <td width="270">
+     <div id="otherProfPic" style="
+    background: rgba(255,255,0,0.1);
+    height: 230px;    
+    width: 230px;
+    border: 10px solid rgba(0,0,0,0.2);
+    border-radius: 360px;
+    font-size: 150px;
+    padding-top: 20px;
+    padding-left: 20px;
+"></div></td>
+     <td width="400">
+     <p id="idName" style="   
+    font-size: 50px;
+    font-weight: bold;
+    color: green;
+"></p>
+     <h4 style="color: red;"><i id="otherProfileBio"></i></h4>
+  </td></tr></table>
+ <br><br><br><hr style="background: rgba(0,0,0,0.1); height: 10px;"></div>
+ 
+ <div id="otherPosts" style="position:relative; overflow: auto; padding: 10px"></div>   
+    </section>
+</div>
     
 
 
@@ -714,6 +799,89 @@ body {
 function closealert(id) {
     document.getElementById(id).style.display = 'none';
 }
+
+
+async function showOtherProf(email) {
+    const overlay = document.getElementById("otherProf");
+    const nameEl = document.getElementById("idName");
+    const headerName = document.getElementById("headerName");
+    const bioEl = document.getElementById("otherProfileBio");
+    const picEl = document.getElementById("otherProfPic");
+    const postsDiv = document.getElementById("otherPosts");
+
+    overlay.style.display = "flex";
+    postsDiv.innerHTML = "<p>Loading posts...</p>";
+
+    try {
+        /* 🔹 Fetch profile */
+        const userRes = await fetch(
+          `https://users-server-xyvg.onrender.com/public-profile?email=${encodeURIComponent(email)}`
+        );
+        if (!userRes.ok) throw new Error("Profile not found");
+        const user = await userRes.json();
+
+        nameEl.innerText = user.username || "Unknown";
+        bioEl.innerText = user.bio || "No bio";
+        picEl.innerText = user.avatar || "N";
+        headerName.innerText = `Profile of ${user.username}`;
+
+        /* 🔹 Fetch posts */
+        const postRes = await fetch(
+          `https://posts-server-plog.onrender.com/posts?email=${encodeURIComponent(email)}`
+        );
+        if (!postRes.ok) throw new Error("Posts not found");
+        const posts = await postRes.json();
+
+        postsDiv.innerHTML = "";
+
+        if (posts.length === 0) {
+            postsDiv.innerHTML = "<p style='text-align:center;'>No posts yet</p>";
+            return;
+        }
+
+posts.forEach(post => {
+    const div = document.createElement("div");
+    div.style.cssText = `
+        position: relative;
+        background: white;
+        margin: 15px;
+        padding: 15px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        box-sizing: border-box;
+    `;
+
+    div.innerHTML = `
+        <h2 style="word-break: break-word;">
+            <span style="padding: 10px; border-right: 1px solid gray; margin-right: 10px;">
+                ${post.avatar}
+            </span>
+            <span style="color: green;">${post.username}</span>
+        </h2>
+        <hr style="background: green; height: 1px;">
+        <p style="font-size:25px; word-break: break-word;">
+            ${post.text.replace(/\n/g, "<br>")}
+        </p>
+    `;
+
+    postsDiv.appendChild(div);
+});
+
+
+    } catch (err) {
+        console.error(err);
+        postsDiv.innerHTML = "<p style='color:red;'>Failed to load posts</p>";
+    }
+}
+
+
+function closealert(id) {
+    document.getElementById(id).style.display = "none";
+}
+
 
 function profile() {
 const u = JSON.parse(localStorage.getItem("user"));
@@ -907,12 +1075,19 @@ async function loadPosts() {
             const contentDiv = document.getElementById("content");
             contentDiv.innerHTML = "";
 
-            data.forEach(post => {
-       
+            data.forEach(post => {      
                 const div = document.createElement("div");
                 div.className = "postshow";
-                div.innerHTML = `<table><tr><td style="width: 650px"><h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}<span style="text-align: right;">
-</span></h2></td><td><button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}"><img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30"></button>
+                div.innerHTML = `<table><tr><td style="width: 650px">
+  <h2>
+      <button onclick="showOtherProf('${post.email}')" style="background: none; border:none; font-size: 25px; font-weight: bold; color: green;">
+          <span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}</button>
+          <span style="text-align: right;"></span>
+          </h2></td>
+          <td>
+     <button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
+         <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30">
+         </button>
 </td></tr></table><hr>
                 
     
