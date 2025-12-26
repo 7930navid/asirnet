@@ -402,7 +402,7 @@ body {
 
 .appearFlex {
     position: fixed;
-    z-index: 1000;
+    z-index: 90;
     bottom: 140px;
     left: 0;
     margin-bottom: 10px;
@@ -417,7 +417,7 @@ body {
     border-radius: 20px;
     min-width: 70px;
     margin: 10px;
-    background: none;
+    background: white;
     box-shadow: 0 0 3px gray;
 }
 .appearFlex button:hover {
@@ -546,18 +546,19 @@ body {
 .combutton {
     border: 2px solid black;
     border-radius: 10px;
-    padding: 10px;    
     font-size: 20px;
     background: rgba(0,0,0,0.1);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px); 
-    color: black;
     position: fixed;
     z-index: 1000;
     bottom: 880px;    
     right: 110px;     
     cursor: pointer;
     transition: all 0.3s ease;
+    width: 50px;
+    height: 50px;
+    padding-top: 5px;
 }
 
 
@@ -598,8 +599,9 @@ body {
            margin: 5px;
            width: 70px;
        }
-       .likeAppear h1 {
+       .likeAppear h2 {
            color: green;
+           width: 150px;
        }
        .likeAppear p {
            color: blue;
@@ -725,7 +727,7 @@ const s = JSON.parse(styleString);
      <h5><i id="profileBio"></i></h5>
   </td></tr></table>
   <div id="editbtn"><a href="profileEdit.html">
-  <button>✏️</button>
+  <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="edit" border="0" width="30"></button>
   </a></div> <br><br><br><hr></div>
  
  <div id="ownerPosts"></div>   
@@ -871,7 +873,7 @@ body: JSON.stringify({
     div.className = "postshow";
 
     const h2 = document.createElement("h2");
-    h2.textContent = `${user.avatar || "🙂"} ${user.username}`;
+    h2.textContent = `${user.avatar} ${user.username}`;
 
     const p = document.createElement("p");
     p.textContent = text; // safe from XSS
@@ -906,9 +908,13 @@ async function loadPosts() {
             contentDiv.innerHTML = "";
 
             data.forEach(post => {
+       
                 const div = document.createElement("div");
                 div.className = "postshow";
-                div.innerHTML = `<h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}</h2><hr>
+                div.innerHTML = `<table><tr><td style="width: 650px"><h2><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px;">${post.avatar} </span>${post.username}<span style="text-align: right;">
+</span></h2></td><td><button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}"><img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30"></button>
+</td></tr></table><hr>
+                
     
     <p>${post.text.replace(/\n/g, "<br>")}</p>
     
@@ -924,8 +930,9 @@ async function loadPosts() {
  id="react${post.id}">
  <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="like" border="0" width="40"></button>
 <button onclick="comSec(${post.id})" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
-<button onclick="appLink(${post.id})"><img src="https://i.ibb.co.com/dsY2VXG0/share.png" alt="share" border="0" width="40"></button>
-    </div>
+<button>
+  <img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" alt="share (1)" border="0" width="30"></button>
+</div>
     
     <div id="appearFlex${post.id}" class='appearFlex'>
 <button onclick="reactAppear(${post.id},'👍')">👍</button>
@@ -958,7 +965,7 @@ Write a comment here about this post..
   <hr> 
      <textarea class="comWord" placeholder="Enter here your comment..."></textarea>   
      <button onclick="sendCom(${post.id})" class="combutton">
-         Send 
+         <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="send" border="0" width="30">
      </button>      
    
     </div>
@@ -1037,6 +1044,12 @@ Write a comment here about this post..
     
        // let displayText = postText.length > 5 ? postText.slice(0, 5) + "..." : postText;
 
+document.addEventListener("click", e => {
+  const btn = e.target.closest(".copyBtn");
+  if (!btn) return;
+
+  navigator.clipboard.writeText(btn.dataset.text);
+});
 
                 contentDiv.appendChild(div);
                 updateCounts(post.id);
@@ -1060,7 +1073,7 @@ async function reactors(postId) {
     container.innerHTML = ""; // clear previous
 
     if (!data.likes || data.likes.length === 0) {
-      container.innerHTML = "No likes yet 😐";
+      container.innerHTML = `<p>No likes yet 😐</p>`;
       return;
     }
 
@@ -1071,10 +1084,10 @@ async function reactors(postId) {
           <table class="likeAppear">
             <tr>
               <td>
-                <div>${l.avatar || "🙂"}</div>
+                <div>${l.avatar}</div>
               </td>
               <td>
-                <h1>${l.username}</h1>
+                <h2>${l.username}</h2>
               </td>
               <td><p style="box-shadow:0 0 0px white; padding: 0; margin:0; background: none; width: 150px;">
                 reacted with
@@ -1412,7 +1425,8 @@ function editPost(id) {
         <table style="width: 100%;">
             <tr>
                 <td>
-                    <textarea id="${textareaId}" style="width: 80%; margin-top: 20px; border: 1px solid green; border-radius: 10px; height: 100px; padding: 20px; font-size: 16px; color: red;">${postText}</textarea>
+                    <textarea id="${textareaId}" style="width: 80%; margin-top: 20px; border: 1px solid green; border-radius: 10px; height: 100px; padding: 20px; font-size: 16px; color: red;    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+">${postText}</textarea>
                 </td>
                 <td>
                     <button onclick="savePost(${id})" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
@@ -1470,7 +1484,8 @@ function editCom(comId, postId, encodedText) {
     const currentText = decodeURIComponent(encodedText);
 
     commentDiv.innerHTML = `
-        <textarea id="editArea${comId}" style="width:80%; height:80px; margin: 20px; border: 2px solid green; border-radius: 20px; box-shadow: 0 0 5px lightgreen; color: green; padding: 10px;">${currentText}</textarea>
+        <textarea id="editArea${comId}" style="width:80%; height:80px; margin: 20px; border: 2px solid green; border-radius: 20px; box-shadow: 0 0 5px lightgreen; color: green; padding: 10px;    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+">${currentText}</textarea>
         <br>
         <div style="text-align:right;">
         <button id="saveBtn${comId}" style="border: none; border-radius: 5px; background: rgb(0,200,0); color: rgb(255,255,255); padding: 4px;width: 100px;">Save</button>
@@ -1587,10 +1602,17 @@ function closeLikeContainer(container){
 
 function appLink(postId) {
 alert('😥 under contraction!');
-//  const postUrl = `${window.location.origin}/post/${postId}`;
-//  navigator.clipboard.writeText(postUrl);
 }
-</script>
+
+function copyPost(postWord) {
+ 
+  const cleanText = postWord
+    .replace(/<br\s*\/?>/gi, "\n");
+
+  navigator.clipboard.writeText(cleanText)
+    .then(() => alert("Post copied ✅"))
+    .catch(() => alert("Copy failed ❌"));
+}</script>
 
 
 <script>
