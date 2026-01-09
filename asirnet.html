@@ -618,6 +618,107 @@ body {
            margin: 5px;
            background: none;
        }
+       
+/* Story container */
+.story-container{
+  display:flex;
+  gap:12px;
+  padding:15px;
+  overflow-x:auto;
+  scroll-snap-type:x mandatory;
+  -webkit-overflow-scrolling:touch;
+}
+
+/* Hide scrollbar */
+.story-container::-webkit-scrollbar{
+  display:none;
+}
+
+/* Each story */
+.story{
+  min-width:200px;
+  height:350px;
+  background:#fff;
+  border-radius:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+  position:relative;
+  overflow:hidden;
+}
+
+.story-inner{
+  width:92%;
+  height:92%;
+  background:linear-gradient(160deg,#ff3d71,#ff9a9e);
+  border-radius:14px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:10px;
+  transition:transform 0.25s ease;
+}
+
+.story img{
+  width:110px;
+  height:auto;
+  filter:drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+}
+
+.story-title{
+  color:white;
+  font-size:20px;
+  font-weight:600;
+  letter-spacing:0.4px;
+  opacity:0.95;
+  background: rgba(255,130,130, 0.5);
+  padding: 10px;
+  border-radius: 90px;
+  text-align: center;
+}
+
+#stryPort{
+    background: rgba(0,0,0,0.3);
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content:center;
+    align-items:center;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+#stryPort div{
+    width: 90%;
+    height: 80%;
+    background: white;
+    border-radius: 20px;
+}
+.videoBtn{
+    padding: 20px;
+    border-radius: 90px;
+    font-size: 30px;
+    margin: 30px;
+    border: none;
+    background: #305ac1;
+    color: white;
+}
+#showingStory{
+    display: flex;
+}
+#showingStory div {
+    width: 200px;
+    height: 320px;
+    padding: 10px;
+    box-shadow: 10 10 10px black;
+}
+#showingStory video {
+    height: 320px;
+    border-radius: 20px;
+}
 
     </style>
 </head>
@@ -672,9 +773,113 @@ body {
       </div>
  </div>
  </div> 
-<div id="content">
-    <br><br>
+<div id="allChange">
+ 
+ <h3 style="padding-left:15px;">Stories</h3>
+
+<div class="story-container">
+<div class="story">
+  <div class="story-inner">
+
+    <h1 style="position: absolute; z-index: 50; top: 0px; right: 0px; background: #ff3d71;border: 5px solid #ff3d71; border-radius: 90px;" id="storyProf">
+    </h1>
+
+    <!-- hidden gallery input -->
+
+
+    <button
+      style="background: pink; border: none; border-radius: 90px; padding: 10px; box-shadow: 0 0 10px white;"
+      onclick="openStoryPort(); appClsBtn()"
+    >
+          <img 
+        id="storyImg"
+        src="https://i.ibb.co.com/CsX8QXq1/love-books.png"
+        alt="Love Books"
+        width="120"
+      >
+
+    </button>
+
+    <div class="story-title">Art your mind</div>
+
+  </div>
 </div>
+  <div id="showingStory"></div>
+</div>
+
+<br><br><br>
+
+    <br><br>
+<div id="content"></div>
+</div>
+<div id="stryPort">
+    <div>       
+        
+ <div style="background: white; height: 97%; width: 94%; margin: 20px; display: flex; justify-content:center; align-items:center;" class="showHere">
+
+<div style="text-align: right;" id="clsBtnDo">
+    <button onclick="closealert('stryPort')" style="display: flex; justify-content:center; align-items:center; padding: 20px; font-size: 30px; color: white; border: none; border-radius: 90px; width: 50px;height: 50px; background: red;">
+        ×
+    </button>
+</div>
+   
+<input 
+    type="file" 
+    id="storyFile" 
+    accept="image/*,video/*" 
+    style="display:none"
+    onchange="loadFromGallery(event)"
+  >
+     <section style="position: fixed; z-index: 10000; top:100px; display: none;" id="storyChange">
+ <table align="center">
+     <tr>
+<td><button onclick="closeStryPort()" class="videoBtn">Close</button></td>             
+<td><button onclick="openGallery()" class="videoBtn">Change</button></td>
+<td><button onclick="sendStory()" class="videoBtn">Create</button></td>
+     </tr>
+ </table>
+    </section>
+
+
+  <button onclick="openGallery()" 
+  id="plusBtn"
+  style="
+      font-size: 30px;
+      width: 400px;
+      height: 200px;
+      background: linear-gradient(30deg,cyan,lightgreen);
+      border: none;
+      border-radius: 20px;
+      display: block;
+      color:red;
+      box-shadow: 0 0 30px green;
+      cursor:pointer;
+      position:absolute;
+      z-index:50;
+    ">
+    + Create Your Story
+  </button>
+
+  <video id="storyVideo" controls style="
+      max-width:100%;
+      max-height:90%;
+      border-radius:20px;
+      display:none;
+  "></video>
+
+  <img id="storyImg" src="" style="
+      max-width:90%;
+      max-height:90%;
+      border-radius:20px;
+      display:none;
+  ">
+        
+    </div>
+    </div>
+</div>
+
+
+
 <div id="appearFlex">
 </div>
 <footer id="footer">
@@ -770,9 +975,350 @@ body {
 
 
 <script>
-    
-    
-    
+let selectedVideoFile = null;
+let selectedVideoSrc = "";
+
+/* ---------- Helpers ---------- */
+const $ = id => document.getElementById(id);
+const qs = sel => document.querySelector(sel);
+
+/* ---------- Open / Close ---------- */
+function openGallery(){ $("storyFile").click(); }
+function openStoryPort(){ $("stryPort").style.display = "flex"; }
+function closeStryPort(){
+  if(!confirm("Are you sure you want to close the story?")) return;
+
+  const video = $("storyVideo");
+  if(video){ video.pause(); video.currentTime=0; }
+  $("stryPort").style.display = "none";
+}
+
+/* ---------- Load video from gallery ---------- */
+function loadFromGallery(e){
+  const file = e.target.files[0];
+  if(!file) return;
+
+  if(!file.type.startsWith("video")){
+    alert("Only video is supported");
+    return;
+  }
+
+  selectedVideoFile = file;
+  selectedVideoSrc = URL.createObjectURL(file);
+
+  $("clsBtnDo").style.display = "none";
+  const video = $("storyVideo");
+  video.src = selectedVideoSrc;
+  video.style.display = "block";
+
+  $("plusBtn").style.display = "none";
+  $("storyChange").style.display = "block";
+  qs(".showHere").style.background = "black";
+
+  setTimeout(()=>video.play().catch(()=>{}),150);
+}
+
+/* ---------- Reset / Close story prep ---------- */
+function appClsBtn(){
+qs(".showHere").style.background = "transparent";  qs(".showHere").innerHTML = `
+<div style="text-align: right;" id="clsBtnDo">
+  <button onclick="closealert('stryPort')" style="display:flex;justify-content:center;align-items:center;padding:20px;font-size:30px;color:white;border:none;border-radius:90px;width:50px;height:50px;background:red;">×</button>
+</div>
+<input type="file" id="storyFile" accept="image/*,video/*" style="display:none" onchange="loadFromGallery(event)">
+<section style="position:fixed;top:100px;z-index:10000;display:none;" id="storyChange">
+  <table align="center">
+    <tr>
+      <td><button onclick="closeStryPort()" class="videoBtn">Close</button></td>
+      <td><button onclick="openGallery()" class="videoBtn">Change</button></td>
+      <td><button onclick="prepearStory()" class="videoBtn">Create</button></td>
+    </tr>
+  </table>
+</section>
+<button onclick="openGallery()" id="plusBtn" style="font-size:30px;width:400px;height:200px;background:linear-gradient(30deg,cyan,lightgreen);border:none;border-radius:20px;color:red;box-shadow:0 0 30px green;cursor:pointer;position:absolute;z-index:50;">
+  Create Your Story
+</button>
+<video id="storyVideo" controls style="max-width:100%;max-height:90%;border-radius:20px;display:none"></video>
+<img id="storyImg" src="" style="max-width:90%;max-height:90%;border-radius:20px;display:none">
+  `;
+}
+
+/* ---------- Prepare story screen ---------- */
+function prepearStory(){
+  if(!selectedVideoFile) return alert("Please select a video first!");
+
+  const box = qs(".showHere");
+  box.style.background = "white";
+
+  box.innerHTML = `
+<div style="height:100%;width:100%;">
+  <div style="text-align:right">
+    <button onclick="appClsBtn()" style="background:none;border:none;color:red;font-size:40px;">×</button>
+  </div>
+  <div style="position:fixed;top:250px;width:600px;">
+    <video id="prepearVideo" muted style="max-width:100%;max-height:300px;border-radius:20px;"></video>
+    <hr>
+    <textarea id="storyCaption" placeholder="Write something about this video..."
+      style="height:300px;width:500px;border:none;padding:20px;font-size:30px;border-radius:20px;"></textarea>
+    <hr>
+    <div style="text-align:right">
+      <button onclick="sendStory()" style="background:red;padding:20px;border:none;border-radius:10px;color:white;">
+        Post
+      </button>
+    </div>
+  </div>
+</div>`;
+
+  const pv = $("prepearVideo");
+  pv.src = selectedVideoSrc;
+  pv.currentTime = 0;
+  pv.play();
+  setTimeout(()=>pv.pause(),1000);
+}
+
+/* ---------- Send story to backend ---------- */
+function sendStory(){
+  if(!selectedVideoFile) return alert("No video selected");
+
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  const fd = new FormData();
+  fd.append("storyVideo", selectedVideoFile);
+  fd.append("caption", $("storyCaption")?.value || "");
+  fd.append("username", user.username || "");
+  fd.append("email", user.email || "");
+  fd.append("avatar", user.avatar || "");
+
+  fetch("https://story-server-9d2k.onrender.com/upload-story",{
+    method:"POST",
+    body:fd
+  })
+  .then(r=>r.json())
+  .then(()=>{ alert("Story uploaded ✅"); closeStryPort(); })
+  .catch(console.error);
+}
+
+
+/* ---------- Fetch and show all stories ---------- */
+async function loadAllStories() {
+  const container = document.getElementById("showingStory");
+  container.innerHTML = "Loading stories...";
+
+  try {
+    const res = await fetch("https://story-server-9d2k.onrender.com/stories");
+    const stories = await res.json();
+
+    if (!stories.length) {
+      container.innerHTML = "<p>No stories yet.</p>";
+      return;
+    }
+
+    container.innerHTML = "";
+
+    stories.forEach(story => {
+
+      /* ---------- Story Card ---------- */
+      const btn = document.createElement("button");
+      btn.style = `
+        width:220px;
+        height:330px;
+        margin:10px;
+        border-radius:12px;
+        overflow:hidden;
+        border:none;
+        cursor:pointer;
+        position:relative;
+        background:black;
+        box-shadow: 10px 10px 20px rgba(128,128,128,0.6);
+      `;
+
+      /* ---------- Video thumbnail ---------- */
+      const video = document.createElement("video");
+      video.src = story.videoURL;
+      video.muted = true;
+      video.preload = "metadata";
+      video.playsInline = true;
+      video.style = `
+        width:100%;
+        height:100%;
+        object-fit:cover;
+        pointer-events:none;
+      `;
+      video.onloadeddata = () => video.pause();
+
+      /* ---------- Avatar ---------- */
+      const avatar = document.createElement("p");
+      avatar.innerText = story.avatar;
+      avatar.style = `
+        position:absolute;
+        top:0px;
+        right:8px;
+        width:34px;
+        height:34px;
+        font-size:30px;
+        border-radius:50%;
+        border: none;
+        background: none;
+        z-index: 100;
+      `;
+
+      /* ---------- Username ---------- */
+      const username = document.createElement("div");
+      username.innerText = story.username || "Anonymous";
+      username.style = `
+        position:absolute;
+        bottom:0;
+        left:0;
+        width:50%;
+        padding:10px;
+        font-size:20px;
+        font-weight : bold;
+        color:white;
+        text-align:left;
+        background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      `;
+
+      /* ---------- Assemble ---------- */
+      btn.appendChild(video);
+      btn.appendChild(avatar);
+      btn.appendChild(username);
+
+      /* ---------- Click action ---------- */
+      btn.onclick = () => showStoryModal(story);
+
+      container.appendChild(btn);
+    });
+
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "<p>Failed to load stories.</p>";
+  }
+}
+
+
+/* ---------- Custom modal ---------- */
+function showStoryModal(story) {
+
+  // remove old modal if exists
+  const old = document.getElementById("storyModalOverlay");
+  if (old) old.remove();
+
+  /* ---------- Overlay ---------- */
+  const overlay = document.createElement("div");
+  overlay.id = "storyModalOverlay";
+  overlay.style = `
+    position:fixed;
+    inset:0;
+    background:black;
+    z-index:10000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+  `;
+
+  /* ---------- Story Box ---------- */
+  const box = document.createElement("div");
+  box.style = `
+    position:relative;
+    width:100%;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  `;
+
+  /* ---------- Header (avatar + name) ---------- */
+  const header = document.createElement("div");
+  header.style = `
+    position:absolute;
+    top:15px;
+    left:15px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    z-index:2;
+  `;
+
+  const avatar = document.createElement("p");
+  avatar.innerText = story.avatar;
+  avatar.style = `
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    border:2px solid white;
+    font-size: 30px;
+  `;
+
+  const username = document.createElement("span");
+  username.innerText = story.username || "Anonymous";
+  username.style = `
+    color:white;
+    font-size:30px;
+    font-weight:600;
+  `;
+
+  header.appendChild(avatar);
+  header.appendChild(username);
+
+  /* ---------- Close button ---------- */
+  const closeBtn = document.createElement("button");
+  closeBtn.innerHTML = "×";
+  closeBtn.style = `
+    position:absolute;
+    top:10px;
+    right:15px;
+    font-size:42px;
+    color:white;
+    background:none;
+    border:none;
+    cursor:pointer;
+    z-index:2;
+  `;
+  closeBtn.onclick = () => overlay.remove();
+
+  /* ---------- Video ---------- */
+  const video = document.createElement("video");
+  video.src = story.videoURL;
+  video.controls = true;
+  video.autoplay = true;
+  video.playsInline = true;
+  video.style = `
+    max-width:100%;
+    max-height:100%;
+    margin:auto;
+  `;
+
+  /* ---------- Caption ---------- */
+  const caption = document.createElement("div");
+  caption.innerText = story.caption || "";
+  caption.style = `
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:20px;
+    color:white;
+    font-size:18px;
+    text-align:center;
+    background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    z-index:2;
+  `;
+
+  /* ---------- Assemble ---------- */
+  box.appendChild(header);
+  box.appendChild(closeBtn);
+  box.appendChild(video);
+  box.appendChild(caption);
+
+  overlay.appendChild(box);
+  document.body.appendChild(overlay);
+}
+
+
+/* ---------- Call on page load ---------- */
+window.addEventListener("load", loadAllStories);
+
+
+
 
 function closealert(id) {
     document.getElementById(id).style.display = 'none';
@@ -805,7 +1351,7 @@ async function showOtherProf(email) {
 
         /* 🔹 Fetch posts */
         const postRes = await fetch(
-          `https://posts-server-plog.onrender.com/posts?email=${encodeURIComponent(email)}`
+          `https://posts-server-kmha.onrender.com/posts?email=${encodeURIComponent(email)}`
         );
         if (!postRes.ok) throw new Error("Posts not found");
         const posts = await postRes.json();
@@ -865,7 +1411,7 @@ function profile() {
 const u = JSON.parse(localStorage.getItem("user"));
 const s = JSON.parse(styleString);
 
-    document.getElementById('content').innerHTML =`
+    document.getElementById('allChange').innerHTML =`
  <div id="profdiv">
      <table align="center"><tr><td width="270">
      <div id="profPic"></div></td><td width="400">
@@ -980,7 +1526,7 @@ async function postsubmit() {
   if (btn) btn.disabled = true;
 
   try {
-    const res = await fetch("https://posts-server-plog.onrender.com/post", {
+    const res = await fetch("https://posts-server-kmha.onrender.com/post", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
 body: JSON.stringify({
@@ -1047,7 +1593,7 @@ body: JSON.stringify({
 async function loadPosts() {
 
     try {
-        const res = await fetch("https://posts-server-plog.onrender.com/post");
+        const res = await fetch("https://posts-server-kmha.onrender.com/post");
         const data = await res.json();
 
         if (res.ok) {
@@ -1057,7 +1603,7 @@ async function loadPosts() {
             data.forEach(post => {      
                 const div = document.createElement("div");
                 div.className = "postshow";
-                div.innerHTML = `<table><tr><td>
+                div.innerHTML += `<table><tr><td>
         
            <span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 40px;">${post.avatar} </span></td> <td style="width: 650px">
   <h2>
@@ -1225,7 +1771,7 @@ document.addEventListener("click", e => {
 async function reactors(postId) {
   try {
     const res = await fetch(
-      `https://interacts-server.onrender.com/likes/${postId}`
+      `https://interacts-server-xpbo.onrender.com/likes/${postId}`
     );
     const data = await res.json();
 
@@ -1277,7 +1823,7 @@ async function comText(postId) {
     box.innerHTML = "Loading comments...";
 
     try {
-        const res = await fetch(`https://interacts-server.onrender.com/comments/${postId}`);
+        const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
         const comments = await res.json();
 
         if (!comments || comments.length === 0) {
@@ -1372,7 +1918,7 @@ async function updateCounts(postId) {
     const commentEl = document.getElementById(`commentCount${postId}`);
 
     try {
-        const res = await fetch(`https://interacts-server.onrender.com/api/counts/${postId}`);
+        const res = await fetch(`https://interacts-server-xpbo.onrender.com/api/counts/${postId}`);
         if (!res.ok) throw new Error("Failed to fetch counts");
 
         const data = await res.json();
@@ -1407,7 +1953,7 @@ async function sendCom(postId) {
     btn.disabled = true;
 
     try {
-        const res = await fetch("https://interacts-server.onrender.com/comment", {
+        const res = await fetch("https://interacts-server-xpbo.onrender.com/comment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -1453,7 +1999,7 @@ async function reactAppear(postId, emoji) {
     }
 
     const res = await fetch(
-      "https://interacts-server.onrender.com/react",
+      "https://interacts-server-xpbo.onrender.com/react",
       {
         method: "POST",
         headers: {
@@ -1510,7 +2056,7 @@ async function loadProfilePosts() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
-    const res = await fetch("https://posts-server-plog.onrender.com/post");
+    const res = await fetch("https://posts-server-kmha.onrender.com/post");
     const allPosts = await res.json();
 
     // শুধু current user-এর post filter
@@ -1604,7 +2150,7 @@ async function savePost(id) {
     const newText = document.getElementById(`editpost${id}`).value;
 
     try {
-        const res = await fetch(`https://posts-server-plog.onrender.com/post/${user.email}/${id}`, {
+        const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ text: newText })
@@ -1624,7 +2170,7 @@ async function deletePost(id) {
     if (!confirm("Are you sure to delete this post?")) return;
 
     try {
-        const res = await fetch(`https://posts-server-plog.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
+        const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
         const data = await res.json();
         alert(data.message);
         loadProfilePosts();
@@ -1660,7 +2206,7 @@ function editCom(comId, postId, encodedText) {
         if (!newComment) return alert("Comment cannot be empty!");
 
         try {
-            const res = await fetch(`https://interacts-server.onrender.com/comment/${user.email}/${comId}`, {
+            const res = await fetch(`https://interacts-server-xpbo.onrender.com/comment/${user.email}/${comId}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ newComment })
@@ -1694,7 +2240,7 @@ async function deleteCom(commentId, postId) {
 
     try {
         const res = await fetch(
-            `https://interacts-server.onrender.com/comment/${user.email}/${commentId}`,
+            `https://interacts-server-xpbo.onrender.com/comment/${user.email}/${commentId}`,
             { method: "DELETE" }
         );
 
@@ -1780,10 +2326,11 @@ window.onload = function() {
     const user = localStorage.getItem("user");
     if(!user) {
         alert("Please login first!");
-        location.href = "sign_in.html";
+        location.href = "register.html";
     } else {
         const u = JSON.parse(user);
         document.getElementById('profPicture').innerHTML = `${u.avatar}`; 
+        document.getElementById('storyProf').innerHTML = `${u.avatar}`; 
         loadPosts();
     }
 }
@@ -1872,8 +2419,7 @@ function warning(func, interval = 3000, duration = 0, delay = 3000) {
     return timeoutId;
 }
 
-
-showLoader("content", "Loading posts...");
+showLoader("ownerPosts", "Loading Owner's posts...");
 
 warning(
     () => showWarning(".warn", "⚠ Network seems slow!", () => {
@@ -1883,6 +2429,7 @@ warning(
     0,
     3000
 );
+
 
 
 </script></body>
