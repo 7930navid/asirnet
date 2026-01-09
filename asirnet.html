@@ -1190,7 +1190,7 @@ async function loadAllStories() {
 
   } catch (err) {
     console.error(err);
-    container.innerHTML = "<p>Failed to load stories.</p>";
+    container.innerHTML = "<p>Network error</p>";
   }
 }
 
@@ -1282,9 +1282,9 @@ function showStoryModal(story) {
   video.autoplay = true;
   video.playsInline = true;
   video.style = `
-    max-width:100%;
-    max-height:100%;
+    height: 1300px;
     margin:auto;
+    border-radius: 20px;
   `;
 
   /* ---------- Caption ---------- */
@@ -1297,8 +1297,8 @@ function showStoryModal(story) {
     width:100%;
     padding:20px;
     color:white;
-    font-size:18px;
-    text-align:center;
+    font-size:30px;
+    text-align:left;
     background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
     z-index:2;
   `;
@@ -1560,27 +1560,8 @@ body: JSON.stringify({
     }
 
     // ✅ Success
-    const data = await res.json();
-
-    const div = document.createElement('div');
-    div.className = "postshow";
-
-    const h2 = document.createElement("h2");
-    h2.textContent = `${user.avatar} ${user.username}`;
-
-    const p = document.createElement("p");
-    p.textContent = text; // safe from XSS
-
-    div.appendChild(h2);
-    div.appendChild(document.createElement("hr"));
-    div.appendChild(p);
-
-    document.getElementById('content').appendChild(div);
-    input.value = "";
-    closealert('postpage');
-
-    alert("Posted successfully!");
-
+    alert('Posted successfully');
+    location.reload();
   } catch (err) {
     // ❌ Network / JS error
     console.error("Network / JS Error:", err);
@@ -1605,14 +1586,14 @@ async function loadPosts() {
                 div.className = "postshow";
                 div.innerHTML += `<table><tr><td>
         
-           <span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 40px;">${post.avatar} </span></td> <td style="width: 650px">
+           <span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 60px;">${post.avatar} </span></td> <td style="width: 650px">
   <h2>
       <button onclick="showOtherProf('${post.email}')" style="background: none; border:none; font-size: 25px; font-weight: bold; color: green;">
-<div style="font-size: 40px; text-align: left;">${post.username}</div></button>
+<div style="font-size: 50px; text-align: left;">${post.username}</div></button>
           <span style="text-align: right;"></span>
           </h2></td>
           <td>
-     <button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
+     <button style="background: none; border: none; font-size: 30px;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
          <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30">
          </button>
 </td></tr></table><hr>
