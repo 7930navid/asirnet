@@ -719,6 +719,13 @@ body {
     height: 320px;
     border-radius: 20px;
 }
+#postsubmit:hover {
+    background: green;
+    color: white;
+}
+#submitpost:hover {
+    background: green;
+}
 
     </style>
 </head>
@@ -764,7 +771,7 @@ body {
       </tr>
       </table>
                 <div style="text-align: right;">
-               <button onclick="postsubmit()" id="postsubmit">Post </button>
+               <button onclick="postsubmit()" id="postsubmit" style="transition: 0.3s;">Post </button>
          </div>
 
       <div>         
@@ -792,7 +799,7 @@ body {
       onclick="openStoryPort(); appClsBtn()"
     >
           <img 
-        id="storyImg"
+        id="ImgofStory"
         src="https://i.ibb.co.com/CsX8QXq1/love-books.png"
         alt="Love Books"
         width="120"
@@ -1036,7 +1043,7 @@ qs(".showHere").style.background = "transparent";  qs(".showHere").innerHTML = `
   Create Your Story
 </button>
 <video id="storyVideo" controls style="max-width:100%;max-height:90%;border-radius:20px;display:none"></video>
-<img id="storyImg" src="" style="max-width:90%;max-height:90%;border-radius:20px;display:none">
+<img id="storyOfImg" src="" style="max-width:90%;max-height:90%;border-radius:20px;display:none">
   `;
 }
 
@@ -1060,10 +1067,11 @@ function prepearStory(){
 "></textarea>
     <hr>
     <div style="text-align:right">
-      <button onclick="sendStory()" style="background:red;padding:20px;border:none;border-radius:10px;color:white;">
-        Post
-      </button>
-    </div>
+<button id="submitpost" onclick="sendStory()" 
+    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s;">
+    Post
+</button>
+ </div>
   </div>
 </div>`;
 
