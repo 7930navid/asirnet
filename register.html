@@ -1,705 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">    
-         <meta name="viewport" content="width=device-width, initial-scale=0.4, user-scalable=yes""
-   <title>Register Page</title>
-   <style>
-       
- .ballContainer{
-    border: none;
-    text-align: center;
-    height: 50px;
-    width: 200px;
-    border-radius: 20px;
-    background-color: none;
-    margin-top: 20px;
-     
- }
-  .cancelling{
-      color: red;
-      border: none;
-      background: none;
-      font-size: 20px;
-      width: 200px;
-  }
- .ball {
-    display: block; 
-    position: absolute;
-    background-color: none;
-    border-radius: 20px;
-    top: 455px;
-    left: 730px;
-    height: 50px;
-    width: 200px;
-    z-index: 100000;
-    border: none;
-    text-align: center;
-  }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.7">
+<title>Register</title>
 
- .ball div {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: 3px solid rgba(0,0,0,0.0);
-    border-top: 3px solid green;
-    border-radius: 90%;
-    width: 25px;
-    height: 25px;
-    animation: spin 1s linear infinite;
-  }
-
-  @keyframes spin {
-    0% { transform: translate(-50%, -50%) rotate(0deg);}
-    100% { transform: translate(-50%, -50%) rotate(360deg);}
-  }
-
-   </style>
-    <style>
-body {
-    background: white;
-}
-#header { 
-       display:flex; 
-       align-items:center; 
-       justify-content:space-between; 
-       padding:20px; 
-       background:white; 
-       border-bottom:3px solid green; 
-       width: 920px;
-       }
-       
-#header button { 
-       width:50px; 
-       height:50px; 
-       border:2px solid red; 
-       border-radius:8px; background:white; 
-       cursor:pointer; 
-       box-shadow:0 0 8px red; 
-       color: red;
-       font-size: 30px;
-       }
-
-
-/* Overall container */
-#change {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
-  font-family: "Poppins", sans-serif;
+<style>
+:root{
+    --green:#1f8f3a;
+    --light:#eafff0;
 }
 
-/* Buttons wrapper */
-#regbtns {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding-top: 600px;
+*{
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* Main buttons */
-#regbtns button {
-  width: 80%;
-  max-width: 500px;
-  height: 90px;
-  font-size: 32px;
-  border-radius: 50px;
-  background: linear-gradient(90deg, #00bcd4, #0097a7);
-  border: none;
-  color: white;
-  margin: 20px 0;
-  padding: 20px;
-  cursor: pointer;
-  font-weight: 600;
-  letter-spacing: 1px;
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
+body{
+    margin:0;
+    background:#f6fff9;
 }
 
-/* Hover effect */
-#regbtns button:hover {
-  transform: scale(1.05);
-  background: linear-gradient(90deg, #0097a7, #00796b);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+/* HEADER */
+header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:15px 20px;
+    border-bottom:3px solid var(--green);
+    background:white;
 }
 
-/* Guest button container */
-.guest-container {
-  width: 100%;
-  text-align: right;
-  padding-right: 40px;
+header h2{
+    color:var(--green);
 }
 
-/* Guest button */
-#guest {
-  font-size: 20px;
-  border-radius: 40px 0 0 40px;
-  background: #e53935;
-  border: none;
-  color: white;
-  padding: 12px 28px;
-  cursor: pointer;
-  font-weight: 500;
-  box-shadow: 0 5px 10px rgba(229, 57, 53, 0.4);
-  transition: all 0.3s ease;
+/* CONTAINER */
+.container{
+    max-width:550px;
+    margin:40px auto;
+    background:white;
+    padding:30px;
+    border-radius:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    text-align:center;
 }
 
-#change {
-    padding: 20px;
+/* INPUTS */
+input, textarea{
+    width:100%;
+    padding:15px;
+    margin-top:15px;
+    border-radius:18px;
+    border:2px solid var(--green);
+    font-size:16px;
+    background:var(--light);
+    outline:none;
 }
-input {
-            padding: 15px;
-            margin: 15px;
-            color: red;
-            font-size: 14px;
-            background: lightcyan;
-            border: 2px solid green;
-            width: 500px;
-            border-radius: 20px;
-        }
-input:focus {
-            box-shadow : 0 0 10px green;
-        }
-#submit {
-    width: 20%;
-    background: lightyellow;
-    padding: 15px;
-    font-size: 30px;
-    border-radius: 20px;
-    border: 2px solid green;
-    color: green;
-    margin-top: 20px;
-}
-#clear {
-    width: 20%;
-    background: lightpink;
-    padding: 15px;
-    font-size: 30px;
-    border-radius: 20px;
-    border: 2px solid red;
-    color: red;
-    margin-top: 20px;
-    margin-right: 20px;
-}
-hr {
-    background: green;
-    height: 2px;
-}
-h2 {
-    color: green;
-}
-.crossbtn {
-    background: none;
-    padding: 10px;
-    font-size: 50px;
-    border-radius: 90px;
-    color: red;
-    border: none;
-    height: 50px;
-    width: 50px;
-    margin-bottom: 15px;
 
+input:focus, textarea:focus{
+    border-color:#0c5;
 }
-#alert { 
-       position:fixed; 
-       top:0; 
-       left:0; 
-       width: 100%; 
-       height:100%; 
-       background:rgba(0,0,0,0.5); 
-       display: none; 
-       z-index:10000; 
-       } 
-#alert div {
-    width: 80%;
-    height: 80%;
-    background: white;
-    margin: 90px;
-    padding: 30px;
-    border-radius: 20px;
-}
-#focus { 
-       position:fixed; 
-       top:0; 
-       left:0; 
-       width: 100%; 
-       height:100%; 
-       background:rgba(0,0,0,0.5); 
-       display: none; 
-       z-index:10000; 
-       } 
 
-#focus div {
-    width: 80%;
-    height: 70%;
-    background: white;
-    margin: 90px;
-    padding: 30px;
-    border-radius: 20px;
+textarea{
+    height:110px;
+    resize:none;
 }
-#bio {
-    width: 300px;
-    margin-top: 7px;
-    border: 1px solid green;
-    border-radius: 20px;
-    height: 100px;
-    padding: 20px;
-    font-size: 20px;
-    color: red;
-    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
-  
-}
-#addAvattar{
-    display: flex;
-    background: lightcyan;
-    border: 2px solid green;
-    border-radius: 20px;
-    padding: 0px;
-    margin-top: 20px;
-}
-#addAvattar div{
-    height: 0px;
-    width:  80%;
-    color: green;
-    border: none;
-    margin: 10px;
-}
-#addAvattar button {
-    background: none;
-    padding: none;
-    border: none;    
-    border-left: 1px solid green;
-    border-radius: 0px;
-    height: 100%;
-    width: 20%;
-    font-size: 30px;
-}
-#listofavatar {
-    display: none;
-    position: absolute;
-    z-index:1000;
-    background: white;
-    border: 1px solid black;
-    border-radius: 20px;
-    padding: 20px;
-    overflow: auto;
-    height: 300px;
-    top: 500px;
-    left: 450px;
-}
-#listofavatar table{
-    background: none;
+
+/* AVATAR */
+.avatar-box{
+    display:flex;
+    align-items:center;
+    margin-top:15px;
+    border:2px solid var(--green);
+    border-radius:18px;
+    background:var(--light);
+    cursor:pointer;
     position: relative;
 }
-#listofavatar button{
-    background: rgba(255,150,150,0.3);
-    border: none;
-    border-radius: 20px;
-    height: 70px;
-    width: 70px;
-    margin: 10px;
-    font-size: 30px;
+
+.avatar-text{
+    flex:1;
+    padding:15px;
+    font-size:20px;
 }
 
+.avatar-btn{
+    padding:15px 18px;
+    font-size:20px;
+    background:none;
+    border-left:2px solid var(--green);
+}
 
+/* BUTTON */
+button{
+    margin-top:25px;
+    padding:15px;
+    width:100%;
+    font-size:18px;
+    border-radius:20px;
+    border:none;
+    cursor:pointer;
+}
 
-    </style>
+#submit{
+    background:var(--green);
+    color:white;
+}
+
+#submit:hover{
+    background:#15752d;
+}
+
+/* AVATAR MODAL */
+#avatarModal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+}
+
+#avatarModal .box{
+    background:white;
+    width:90%;
+    max-width:600px;
+    margin:50px auto;
+    padding:25px;
+    border-radius:25px;
+    text-align:center;
+}
+
+.avatar-list button{
+    width:60px;
+    height:60px;
+    font-size:26px;
+    margin:6px;
+    border:none;
+    border-radius:15px;
+    background:#e6f6ea;
+}
+
+.close{
+    float:right;
+    font-size:28px;
+    background:none;
+    color: red;
+}
+</style>
 </head>
-<body id="body">
- <div id="header">
-<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px"><h5 id="headername"></h5>
-  <button onclick="customalert()">?</button>
+
+<body>
+
+<header>
+    <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg" width="130">
+</header>
+
+<div class="container">
+
+    <input id="username" placeholder="Full Name">
+    <input id="useremail" type="email" placeholder="Email Address">
+    <input id="password" type="password" placeholder="Password">
+
+    <textarea id="bio" placeholder="Your goal / focus"></textarea>
+
+    <div class="avatar-box" onclick="openAvatar()">
+        <div id="avatarText" class="avatar-text">Choose an Avatar</div>
+        <div class="avatar-btn">▼</div>
+    </div>
+ 
+<p style="font-size: 20px; color: red;" id="alert"></p>
+
+    <button id="submit" onclick="register()">Create Account</button>
 </div>
 
-<div id="change">
-    <div id="regbtns"> 
-            <button onclick="reg()">
-                Sing Up
-            </button><br>
-           <button onclick="login()">
-                Sing In
-            </button></div>
-            <div style="text-align: right;">
-      <button onclick="guest()" id="guest">
-          Visit as guest ->
-      </button></div>    
+<!-- AVATAR MODAL -->
+<div id="avatarModal">
+    <div class="box" style="position:relative">
+        <button class="close" onclick="closeAvatar()">×</button>
+        <h3>Select Avatar</h3>
+
+        <div class="avatar-list" style="position:relative">
+<button onclick="setAvatar('😀')">😀</button>
+<button onclick="setAvatar('😃')">😃</button>
+<button onclick="setAvatar('😄')">😄</button>
+<button onclick="setAvatar('😁')">😁</button>
+<button onclick="setAvatar('😆')">😆</button>
+<button onclick="setAvatar('😅')">😅</button>
+<button onclick="setAvatar('😂')">😂</button>
+<button onclick="setAvatar('🤣')">🤣</button>
+<button onclick="setAvatar('😊')">😊</button>
+<button onclick="setAvatar('😇')">😇</button>
+
+<button onclick="setAvatar('🙂')">🙂</button>
+<button onclick="setAvatar('😉')">😉</button>
+<button onclick="setAvatar('😌')">😌</button>
+<button onclick="setAvatar('😍')">😍</button>
+<button onclick="setAvatar('🥰')">🥰</button>
+<button onclick="setAvatar('😘')">😘</button>
+<button onclick="setAvatar('😎')">😎</button>
+<button onclick="setAvatar('🤓')">🤓</button>
+<button onclick="setAvatar('🧐')">🧐</button>
+<button onclick="setAvatar('🤩')">🤩</button>
+
+<button onclick="setAvatar('🥳')">🥳</button>
+<button onclick="setAvatar('😜')">😜</button>
+<button onclick="setAvatar('🤪')">🤪</button>
+<button onclick="setAvatar('😝')">😝</button>
+<button onclick="setAvatar('🤔')">🤔</button>
+<button onclick="setAvatar('😴')">😴</button>
+<button onclick="setAvatar('😐')">😐</button>
+<button onclick="setAvatar('😶')">😶</button>
+<button onclick="setAvatar('🙄')">🙄</button>
+<button onclick="setAvatar('😏')">😏</button>
+
+<button onclick="setAvatar('🦸')">🦸</button>
+<button onclick="setAvatar('🦹')">🦹</button>
+<button onclick="setAvatar('🧙')">🧙</button>
+<button onclick="setAvatar('🧑‍🎓')">🧑‍🎓</button>
+<button onclick="setAvatar('👨‍💻')">👨‍💻</button>
+<button onclick="setAvatar('👩‍💻')">👩‍💻</button>
+<button onclick="setAvatar('🧠')">🧠</button>
+<button onclick="setAvatar('🎓')">🎓</button>
+<button onclick="setAvatar('🎯')">🎯</button>
+<button onclick="setAvatar('🚀')">🚀</button>
+        </div>
     </div>
-    
-  <div id="alert">
-      <div>
-       <section style="text-align: right;">
-     <button onclick="closealert('alert')" class="crossbtn">×</button>
- </section><h1 style="color: green;">Help</h1> <hr>  
-      </div>
-  </div>
-  
- <div id="listofavatar">
-<div style="text-align: right;"><button onclick="closealert('listofavatar')" class="crossbtn" style="background: none;">×</button></div>
-     <br>
-    <table>
-        <tr>
-            <td><button onclick="appendAvatar('😀')">😀</button></td>
-            <td><button onclick="appendAvatar('😎')">😎</button></td>
-            <td><button onclick="appendAvatar('🤩')">🤩</button></td>
-            <td><button onclick="appendAvatar('😇')">😇</button></td>
-            <td><button onclick="appendAvatar('🥳')">🥳</button></td>
-        </tr>
-        <tr>
-            <td><button onclick="appendAvatar('😋')">😋</button></td>
-            <td><button onclick="appendAvatar('🤓')">🤓</button></td>
-            <td><button onclick="appendAvatar('😜')">😜</button></td>
-            <td><button onclick="appendAvatar('🤔')">🤔</button></td>
-            <td><button onclick="appendAvatar('😏')">😏</button></td>
-        </tr>
-        <tr>
-            <td><button onclick="appendAvatar('😴')">😴</button></td>
-            <td><button onclick="appendAvatar('🥺')">🥺</button></td>
-            <td><button onclick="appendAvatar('😡')">😡</button></td>
-            <td><button onclick="appendAvatar('🤯')">🤯</button></td>
-            <td><button onclick="appendAvatar('🤗')">🤗</button></td>
-        </tr>
+</div>
 
-<tr>
-    <td><button onclick="appendAvatar('😱')">😱</button></td>
-    <td><button onclick="appendAvatar('😈')">😈</button></td>
-    <td><button onclick="appendAvatar('👻')">👻</button></td>
-    <td><button onclick="appendAvatar('🌟')">🌟</button></td>
-    <td><button onclick="appendAvatar('🤡')">🤡</button></td>
-</tr>
-
-<tr>
-    <td><button onclick="appendAvatar('😺')">😺</button></td>
-    <td><button onclick="appendAvatar('😸')">😸</button></td>
-    <td><button onclick="appendAvatar('😹')">😹</button></td>
-    <td><button onclick="appendAvatar('😻')">😻</button></td>
-    <td><button onclick="appendAvatar('😼')">😼</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('😽')">😽</button></td>
-    <td><button onclick="appendAvatar('🙀')">🙀</button></td>
-    <td><button onclick="appendAvatar('😿')">😿</button></td>
-    <td><button onclick="appendAvatar('😾')">😾</button></td>
-    <td><button onclick="appendAvatar('🤑')">🤑</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🤠')">🤠</button></td>
-    <td><button onclick="appendAvatar('🥴')">🥴</button></td>
-    <td><button onclick="appendAvatar('🤢')">🤢</button></td>
-    <td><button onclick="appendAvatar('🤮')">🤮</button></td>
-    <td><button onclick="appendAvatar('🤧')">🤧</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🥵')">🥵</button></td>
-    <td><button onclick="appendAvatar('🥶')">🥶</button></td>
-    <td><button onclick="appendAvatar('🥷')">🥷</button></td>
-    <td><button onclick="appendAvatar('🦸')">🦸</button></td>
-    <td><button onclick="appendAvatar('🦹')">🦹</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🧙')">🧙</button></td>
-    <td><button onclick="appendAvatar('🧚')">🧚</button></td>
-    <td><button onclick="appendAvatar('🧛')">🧛</button></td>
-    <td><button onclick="appendAvatar('🧜')">🧜</button></td>
-    <td><button onclick="appendAvatar('🧝')">🧝</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🧞')">🧞</button></td>
-    <td><button onclick="appendAvatar('🧟')">🧟</button></td>
-    <td><button onclick="appendAvatar('🧖')">🧖</button></td>
-    <td><button onclick="appendAvatar('🧗')">🧗</button></td>
-    <td><button onclick="appendAvatar('🧘')">🧘</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🛸')">🛸</button></td>
-    <td><button onclick="appendAvatar('🛷')">🛷</button></td>
-    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
-    <td><button onclick="appendAvatar('🛼')">🛼</button></td>
-    <td><button onclick="appendAvatar('🛶')">🛶</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎃')">🎃</button></td>
-    <td><button onclick="appendAvatar('🎄')">🎄</button></td>
-    <td><button onclick="appendAvatar('🎆')">🎆</button></td>
-    <td><button onclick="appendAvatar('🎇')">🎇</button></td>
-    <td><button onclick="appendAvatar('🎈')">🎈</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎉')">🎉</button></td>
-    <td><button onclick="appendAvatar('🎊')">🎊</button></td>
-    <td><button onclick="appendAvatar('🎋')">🎋</button></td>
-    <td><button onclick="appendAvatar('🎍')">🎍</button></td>
-    <td><button onclick="appendAvatar('🎎')">🎎</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎏')">🎏</button></td>
-    <td><button onclick="appendAvatar('🎐')">🎐</button></td>
-    <td><button onclick="appendAvatar('🎑')">🎑</button></td>
-    <td><button onclick="appendAvatar('🎀')">🎀</button></td>
-    <td><button onclick="appendAvatar('🎁')">🎁</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎓')">🎓</button></td>
-    <td><button onclick="appendAvatar('🎮')">🎮</button></td>
-    <td><button onclick="appendAvatar('🎯')">🎯</button></td>
-    <td><button onclick="appendAvatar('🎰')">🎰</button></td>
-    <td><button onclick="appendAvatar('🎱')">🎱</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎲')">🎲</button></td>
-    <td><button onclick="appendAvatar('🎳')">🎳</button></td>
-    <td><button onclick="appendAvatar('🎴')">🎴</button></td>
-    <td><button onclick="appendAvatar('🎵')">🎵</button></td>
-    <td><button onclick="appendAvatar('🎶')">🎶</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🎷')">🎷</button></td>
-    <td><button onclick="appendAvatar('🎸')">🎸</button></td>
-    <td><button onclick="appendAvatar('🎹')">🎹</button></td>
-    <td><button onclick="appendAvatar('🎺')">🎺</button></td>
-    <td><button onclick="appendAvatar('🎻')">🎻</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🥁')">🥁</button></td>
-    <td><button onclick="appendAvatar('🪕')">🪕</button></td>
-    <td><button onclick="appendAvatar('🪗')">🪗</button></td>
-    <td><button onclick="appendAvatar('🪘')">🪘</button></td>
-    <td><button onclick="appendAvatar('🪇')">🪇</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🧸')">🧸</button></td>
-    <td><button onclick="appendAvatar('🪅')">🪅</button></td>
-    <td><button onclick="appendAvatar('🪆')">🪆</button></td>
-    <td><button onclick="appendAvatar('🪃')">🪃</button></td>
-    <td><button onclick="appendAvatar('🪁')">🪁</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
-    <td><button onclick="appendAvatar('🛶')">🛶</button></td>
-    <td><button onclick="appendAvatar('🛴')">🛴</button></td>
-    <td><button onclick="appendAvatar('🛵')">🛵</button></td>
-    <td><button onclick="appendAvatar('🚲')">🚲</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🚗')">🚗</button></td>
-    <td><button onclick="appendAvatar('🚕')">🚕</button></td>
-    <td><button onclick="appendAvatar('🚙')">🚙</button></td>
-    <td><button onclick="appendAvatar('🚌')">🚌</button></td>
-    <td><button onclick="appendAvatar('🚎')">🚎</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🏎️')">🏎️</button></td>
-    <td><button onclick="appendAvatar('🚓')">🚓</button></td>
-    <td><button onclick="appendAvatar('🚑')">🚑</button></td>
-    <td><button onclick="appendAvatar('🚒')">🚒</button></td>
-    <td><button onclick="appendAvatar('🚐')">🚐</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🛻')">🛻</button></td>
-    <td><button onclick="appendAvatar('🚚')">🚚</button></td>
-    <td><button onclick="appendAvatar('🚛')">🚛</button></td>
-    <td><button onclick="appendAvatar('🚜')">🚜</button></td>
-    <td><button onclick="appendAvatar('🦽')">🦽</button></td>
-</tr>
-<tr>
-    <td><button onclick="appendAvatar('🛺')">🛺</button></td>
-    <td><button onclick="appendAvatar('🏍️')">🏍️</button></td>
-    <td><button onclick="appendAvatar('🛵')">🛵</button></td>
-    <td><button onclick="appendAvatar('🛴')">🛴</button></td>
-    <td><button onclick="appendAvatar('🛹')">🛹</button></td>
-</tr>    </table>
-</div> 
-  
-   <script> 
- function reg() {
- document.getElementById("change").innerHTML = `
-<div style="text-align: right;">
-     <button onclick="location.reload()" class="crossbtn">×</button>
- </div> <h2><i>Sing Up</i></h2>
- <hr>
- <table border="0" style="width: 100%;"><tr><td>
- <input type="text" placeholder="Enter your name..." id="username"/><br>
- <input type="text" placeholder="Enter your email..." id="useremail"/><br>
-    <input type="password" placeholder="Enter your access key..." id="password"/>
- 
-   </td>
-   <td>
-       <textarea id="bio" placeholder="Add a focus or goal"></textarea> <br>
-       <div id="addAvattar">
-          <div id="addAvatar">Choose an Avatar..</div>
-           
-          <button onclick="progileAvatar()"> ▼</button>
-       </div> 
- 
-   </td>
-   </tr></table>
-    <br><div id="signup">
- <div style="text-align: right;">
-              <button onclick="clearinfolog()" id="clear">Clear </button>
-              <button onclick="register()" id="submit">Submit </button>
-         </div></div>  `;   
- }  
- function progileAvatar() {
- document.querySelector("#listofavatar").style.display = 'block'; 
- } 
- function appendAvatar(avatar) {
-     document.getElementById('addAvatar').innerHTML = avatar;
-     closealert('listofavatar');
- }
-      
- function login() {
- document.getElementById("change").innerHTML = `<div style="text-align: right;">
-     <button onclick="location.reload()" class="crossbtn">×</button>
- </div> <h2><i>Sing In</i></h2>
- <hr>
- <input type="text" placeholder="Enter your email..." id="loginemail"/><br>
-    <input type="password" placeholder="Enter your access key..." id="loginpass"/>
-    <br><div id="signin">
- <div style="text-align: right;">
-              <button onclick="clearinfo()" id="clear">Clear </button>
-               <button onclick="Login()" id="submit">Submit </button></div></div>
-`;   
-
-
-
- } 
- function customalert() {
-document.getElementById("alert").style.display = 'flex';   
- }
- function closealert(alert) {
-document.getElementById(alert).style.display = 'none';   
- }
- function clearinfolog() {
-document.getElementById('username').value = "" ;   
-document.getElementById('useremail').value = "" ;   
-document.getElementById('password').value = "" ;   
-document.getElementById('bio').value = "" ;
-document.getElementById('addAvatar').innerHTML = "Choose an Avatar.." ; 
- }       
- function clearinfo() {
-document.getElementById('loginemail').value = "" ;   
-document.getElementById('loginpass').value = "" ;   
- }       
-   </script>
 <script>
-    
-async function Login() {
+const alertBox = document.getElementById('alert');
+const avatarModal = document.getElementById("avatarModal");
+const avatarText = document.getElementById("avatarText");
 
-  let loginemail = document.getElementById('loginemail').value;   
-  let loginpass = document.getElementById('loginpass').value;   
+function openAvatar(){
+    avatarModal.style.display="block";
+}
+function closeAvatar(){
+    avatarModal.style.display="none";
+}
+function setAvatar(a){
+    avatarText.innerText = a;
+    closeAvatar();
+}
 
-  if (loginemail && loginpass) {
+avatarModal.addEventListener("click", e=>{
+    if(e.target === avatarModal) closeAvatar();
+});
 
-    document.getElementById('signin').innerHTML = ball;
-    document.getElementById('back').innerHTML = `
-      <button class="cancelling" onclick='Login()'>Cancel Processing</button>
-    `;
+async function register(){
+    alertBox.innerHTML = "";
 
-    try {
-      const res = await fetch("https://users-server-xyvg.onrender.com/signin", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginemail, password: loginpass })
-      });
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("useremail").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const bio = document.getElementById("bio").value.trim();
+    const avatar = avatarText.innerText;
 
-      const data = await res.json();
-
-      if (res.ok) {
-        alert(data.message);
-
-        // 🔐 frontend থেকেই password যোগ করা
-        const user = {
-          ...data.user,
-          password: loginpass
-        };
-
-        localStorage.setItem("user", JSON.stringify(user));
-
-        console.log("User data saved:", user);
-
-        location.href = 'asirnet.html';
-
-      } else {
-        alert(data.message);
-      }
-
-    } catch (err) {
-      alert("Server error: " + err.message);
-      Login();
+    if(!username || !email || !password || !bio || avatar==="Choose an Avatar"){
+        alertBox.innerHTML = "⚠ Please fill all fields";
+        return;
     }
 
-  } else {
-    alert("Please fill the gaps first");
-  }
-}
-async function register() {
-  let username = document.getElementById('username').value.trim();
-  let useremail = document.getElementById('useremail').value.trim();
-  let password = document.getElementById('password').value.trim();
-  let bio = document.getElementById("bio").value.trim();
-  let avatar = document.getElementById("addAvatar").textContent.trim();
-
-  if (!username || !useremail || !password || !bio || avatar === "" || avatar === "Choose an Avatar..") {
-    alert("Please fill all fields correctly");
-    return;
-  }
-  
-    document.getElementById('signup').innerHTML = `
-${ball}
-`;
-  document.getElementById('back').innerHTML = `
-      <button class="cancelling" onclick='reg()'>Cancel Processing</button>
-`;
- document.querySelector(".ball").style.marginTop = '120px';
-
-  
-  try {
-    const res = await fetch("https://users-server-xyvg.onrender.com/signup", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ username, email: useremail, password, bio, avatar })
-    });
-
-    const data = await res.json();
-    console.log("Signup response:", data);
-
-    if (res.ok) {
-      alert(data.message);
-if(confirm('Do You Want To Log In Now?')){
-      login();
-}
-      
-
-    const style = {
-        background: "white"
-    };
-    localStorage.setItem("style", JSON.stringify(style));
-
-
-    } else {
-      alert(data.message + (data.error ? "\nDetails: " + data.error : ""));
+    if(password.length < 6){
+        alertBox.innerHTML = "⚠ Password must be at least 6 characters";
+        return;
     }
-  } catch (err) {
-    alert("Server error: " + err.message);
-    reg();
-  }
-}
 
-function guest() {
-    location.href = 'guest.html';
+    try{
+        const res = await fetch("https://users-server-xyvg.onrender.com/signup",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ username, email, password, bio, avatar })
+        });
+
+        const data = await res.json();
+
+        if(res.ok){
+
+            /* ✅ SAVE ALL DATA LOCALLY */
+            const userData = {
+                username: username,
+                email: email,
+                avatar: avatar,
+                bio: bio,
+                password: password
+                 };
+
+            localStorage.setItem("user", JSON.stringify(userData));
+
+            /* ✅ REDIRECT */
+            location.href = "asirnet.html";
+
+        }else{
+            alertBox.innerHTML = data.message;
+        }
+    }catch{
+        alertBox.innerHTML = "❌ Server error. Try again.";
+    }
 }
 </script>
-<script>
-    const ball =`
-    <div style="margin-left: 550px;">
-    <div class="ballContainer"><div id="back"></div>
-    </div>
-    </div>
-    <div class="ball">
-    <div></div>
-    </div>
 
-`;
-</script>
 </body>
 </html>
