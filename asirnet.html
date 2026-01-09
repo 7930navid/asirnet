@@ -1780,7 +1780,7 @@ window.onload = function() {
     const user = localStorage.getItem("user");
     if(!user) {
         alert("Please login first!");
-        location.href = "sign_up.html";
+        location.href = "sign_in.html";
     } else {
         const u = JSON.parse(user);
         document.getElementById('profPicture').innerHTML = `${u.avatar}`; 
