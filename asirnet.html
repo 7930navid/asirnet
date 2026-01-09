@@ -775,7 +775,7 @@ body {
  </div> 
 <div id="allChange">
  
- <h3 style="padding-left:15px;">Stories</h3>
+ <h2 style="padding-left:15px;">Stories</h2><hr>
 
 <div class="story-container">
 <div class="story">
@@ -807,9 +807,7 @@ body {
   <div id="showingStory"></div>
 </div>
 
-<br><br><br>
-
-    <br><br>
+<hr>
 <div id="content"></div>
 </div>
 <div id="stryPort">
@@ -1047,7 +1045,7 @@ function prepearStory(){
   if(!selectedVideoFile) return alert("Please select a video first!");
 
   const box = qs(".showHere");
-  box.style.background = "white";
+  box.style.background = "transparent";
 
   box.innerHTML = `
 <div style="height:100%;width:100%;">
@@ -1058,7 +1056,8 @@ function prepearStory(){
     <video id="prepearVideo" muted style="max-width:100%;max-height:300px;border-radius:20px;"></video>
     <hr>
     <textarea id="storyCaption" placeholder="Write something about this video..."
-      style="height:300px;width:500px;border:none;padding:20px;font-size:30px;border-radius:20px;"></textarea>
+      style="height:300px;width:500px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+"></textarea>
     <hr>
     <div style="text-align:right">
       <button onclick="sendStory()" style="background:red;padding:20px;border:none;border-radius:10px;color:white;">
@@ -1190,7 +1189,7 @@ async function loadAllStories() {
 
   } catch (err) {
     console.error(err);
-    container.innerHTML = "<p>Network error</p>";
+    container.innerHTML = '<p style="color:red;">Network error</p>';
   }
 }
 
@@ -1593,13 +1592,13 @@ async function loadPosts() {
           <span style="text-align: right;"></span>
           </h2></td>
           <td>
-     <button style="background: none; border: none; font-size: 30px;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
+     <button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
          <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30">
          </button>
 </td></tr></table><hr>
                 
     
-    <p>${post.text.replace(/\n/g, "<br>")}</p>
+<p style="font-size: 30px;">${post.text.replace(/\n/g, "<br>")}</p>
     
     <div id="countReactions">
    <div id="countByOrder${post.id}" style="text-align: right">
@@ -1609,7 +1608,7 @@ async function loadPosts() {
      </div>
     
     <div id="reactPanal">
-<button onclick="appImoji(${post.id})" style="border-left: none;"
+<button onclick="appImoji(${post.id})" style="border-left: none; font-size: 30px;"
  id="react${post.id}">
  <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="like" border="0" width="40"></button>
 <button onclick="comSec(${post.id})" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
@@ -2001,6 +2000,7 @@ async function reactAppear(postId, emoji) {
     if (res.ok) {
       // UI update
       document.getElementById(`react${postId}`).innerHTML = emoji;
+      return;
     } else {
       alert(data.message || "You have already reacted!");
     }
@@ -2371,7 +2371,7 @@ function showWarning(targetSelector = ".warn", message = "⚠ Check Your Network
                 retryFunc(); // user-defined function call
             } else {
                 console.log("No retry function provided, default reload");
-                location.reload(); // fallback
+                
             }
         });
     }
@@ -2400,7 +2400,7 @@ function warning(func, interval = 3000, duration = 0, delay = 3000) {
     return timeoutId;
 }
 
-showLoader("ownerPosts", "Loading Owner's posts...");
+showLoader("content", "Loading posts...");
 
 warning(
     () => showWarning(".warn", "⚠ Network seems slow!", () => {
@@ -2410,8 +2410,6 @@ warning(
     0,
     3000
 );
-
-
 
 </script></body>
 </html>
