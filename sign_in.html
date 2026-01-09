@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=0.5">
+<title>Sign In</title>
+
+<style>
+body{
+    background:white;
+    padding: 100px;
+    padding-top:200px;
+    font-family: Arial, sans-serif;
+}
+
+#header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px;
+    background:white;
+    border-bottom:3px solid green;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+}
+
+.log{
+    width:400px;
+    height:60px;
+    margin:15px;
+    border:1px solid #000;
+    border-radius:5px;
+    padding:15px;
+    font-size:20px;
+}
+
+.sign{
+    margin-right:50px;
+    padding:15px 40px;
+    background:black;
+    color:white;
+    border:none;
+    font-size:18px;
+    cursor:pointer;
+}
+
+.sign:disabled{
+    background:gray;
+    cursor:not-allowed;
+}
+</style>
+</head>
+
+<body>
+
+<div id="header">
+    <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg" width="180">
+    <h3 id="headername"></h3>
+</div>
+
+<h1 style="text-align:center;">Sign In With An Account</h1>
+<hr>
+
+<div style="text-align:center;">
+    <input type="email" placeholder="Enter Your Email" class="log" id="loginemail">
+    <br>
+    <input type="password" placeholder="Enter Your Password" class="log" id="loginpass">
+</div>
+
+<p style="color: red; font-size: 16px; padding-left: 100px;" id="massage"></p>
+
+<div style="text-align:right;">
+    <button class="sign" onclick="Login()" id="btnlog">Sign In</button>
+</div>
+
+<p style="font-size:18px; padding-left:50px;">
+    Do you have no account?<br>
+    <b><a href="register.html">Create New Account</a></b>
+</p>
+
+<script>
+async function Login(){
+    const email = document.getElementById('loginemail').value.trim();
+    const password = document.getElementById('loginpass').value.trim();
+    const btn = document.getElementById("btnlog");
+
+    if(!email || !password){
+document.getElementById("massage").innerHTML = "Please fill all fields";
+   return;
+    }
+
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+
+    try{
+        const res = await fetch("https://users-server-xyvg.onrender.com/signin",{
+            method:"POST",
+            headers:{ "Content-Type":"application/json" },
+            body:JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if(res.ok){
+document.getElementById('massage').innerHTML = data.message;
+
+        const user = {
+          ...data.user,
+          password: loginpass
+        };
+
+        localStorage.setItem("user", JSON.stringify(user));
+
+            location.href = "asirnet.html";
+        }else{
+        
+document.getElementById("massage").innerHTML = data.message;            
+            btn.disabled = false;
+            btn.innerText = "Sign In";
+        }
+
+    }catch(err){
+        alert("Server error! Try again.");
+        btn.disabled = false;
+        btn.innerText = "Sign In";
+    }
+}
+</script>
+
+</body>
+</html>
