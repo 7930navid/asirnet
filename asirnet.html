@@ -96,6 +96,178 @@
     transform: scale(1.1) rotate(5deg);
     box-shadow: 0 6px 12px rgba(0,0,0,0.25);
 }
+
+/* MAIN BOX */
+.posting-box{
+    background:#ffffff;
+    box-shadow:0 12px 35px rgba(0,0,0,0.15);
+    border-radius:14px;
+    padding:22px 20px 18px;
+    position:relative;
+    overflow:hidden;
+    margin:30px;
+}
+
+/* HEADER ROW */
+.header{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    width: 9000px;
+}
+
+/* IMAGE WITH ROLLING BORDER */
+.img-wrapper{
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.img-wrapper::before{
+    content:"";
+    position:absolute;
+    inset:-3px;
+    border-radius:50%;
+    background:conic-gradient(
+        #007bff,
+        #00c6ff,
+        #007bff
+    );
+    animation: rotateBorder 1.6s linear infinite;
+}
+
+.img-wrapper img{
+    width:100px;
+    height:100px;
+    border-radius:50%;
+    background:#fff;
+    position:relative;
+    z-index:2;
+}
+
+/* TEXT */
+.text h2{
+    margin:0;
+    font-size:30px;
+    color:#222;
+}
+
+.text p{
+    margin:4px 0 0;
+    font-size:20px;
+    color:#666;
+}
+
+/* LOADING LINE */
+.loading-line{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    height:3px;
+    background:#e5e5e5;
+    overflow:hidden;
+}
+
+.loading-line::after{
+    content:"";
+    position:absolute;
+    top:0;
+    right:-40%;
+    width:40%;
+    height:100%;
+    background:linear-gradient(90deg, transparent, #007bff, transparent);
+    animation: moveLine 1.8s linear infinite;
+}
+
+/* ANIMATIONS */
+@keyframes rotateBorder{
+    from{ transform:rotate(0deg); }
+    to{ transform:rotate(360deg); }
+}
+
+@keyframes moveLine{
+    from{ right:100%; }
+    to{ right:-40%; }
+}
+/* Box inside overlay */
+#loaderCom .loadingBox {
+    display: flex;
+    align-items: center; /* Align spinner and text vertically */
+    gap: 20px;           /* Space between spinner and text */
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 20px 25px;
+    max-width: 400px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+/* Spinner */
+#loaderCom .spinner {
+    width: 40px;          /* smaller spinner */
+    height: 40px;
+    border: 5px solid #e5e5e5;
+    border-top: 5px solid #007bff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    display: flex;
+}
+
+/* Text container */
+#loaderCom .textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Headline */
+#loaderCom h2 {
+    margin: 0;
+    font-size: 18px;
+    color: #222;
+}
+
+/* Subtext */
+#loaderCom p {
+    margin: 4px 0 0;
+    font-size: 13px;
+    color: #666;
+}
+
+/* Loading line at bottom */
+#loaderCom .loading-line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: #e5e5e5;
+    overflow: hidden;
+}
+
+#loaderCom .loading-line::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -40%;
+    width: 40%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, #007bff, transparent);
+    animation: moveLine 1.8s linear infinite;
+}
+
+/* Animations */
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+
 </style>
 
 
@@ -149,16 +321,26 @@ body {
     background: white;
 }
 #searchpad { 
-       position:fixed; 
-       top:0; 
-       left:0; 
-       width: 100%; 
-       height:100%; 
-       background:rgba(0,0,0,0.5); 
-       display: none; 
-       z-index:10000;
-       padding: 30px; 
-       } 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%; 
+    background: rgba(0,0,0,0.5); 
+    display: none; 
+    z-index: 10000;
+    padding: 30px;
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
+}
+
+#searchpad.show{
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 #search {
     height: 60px;
     width: 77%;
@@ -184,7 +366,7 @@ body {
     padding-left: 30px;
     font-size: 25px;
     
-}
+    }
 #show {
     display: none;
     background: white;
@@ -216,7 +398,6 @@ body {
     height: 50px;
     width: 50px;
     margin-bottom: 15px;
-    
 }
 #postpage { 
        position:fixed; 
@@ -229,8 +410,15 @@ body {
        z-index:10000;
        justify-content:center; 
        padding: 10px; 
-       } 
-#postpad {
+    opacity: 0;
+    transform: translateY(100px);
+    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
+}
+#postpage.show{
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}#postpad {
     height: 80%;
     width: 650px;
     background: white;
@@ -514,62 +702,95 @@ body {
     margin-top: 20px;
 }
 
-.comSecDiv {
-    height: 70%;
-    width: 90%;
-    background: white;
-    border: none;
-    border-radius: 15px;
-}
-.comWord {
-    height: 200px;          
-    width: 80%;                 
-    padding: 20px;             
-    margin: 40px ;  
-    text-align: justify;      
-    border: 2px solid green;     
-    border-radius: 20px;         
-    color: green;             
-    font-size: 18px;          
-    resize: vertical;      
-    outline: none;            
-    box-shadow: 0 0 5px rgba(0,128,0,0.3);
-    font-family: Arial, sans-serif;
-    transition: all 0.3s ease;  
+.comSecDiv{
+  width: 80%;
+  margin-bottom: 30px;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+  padding: 15px 15px 18px;
+  box-sizing: border-box;
 }
 
-.comWord:focus {
-    border-color: darkgreen;    
-    box-shadow: 0 0 10px rgba(0,128,0,0.5);
+/* HEADER */
+.comHeader{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.combutton {
-    border: 2px solid black;
-    border-radius: 10px;
-    font-size: 20px;
-    background: rgba(0,0,0,0.1);
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px); 
-    position: fixed;
-    z-index: 1000;
-    bottom: 880px;    
-    right: 110px;     
-    cursor: pointer;
-    transition: all 0.3s ease;
-    width: 50px;
-    height: 50px;
-    padding-top: 5px;
+.comHeader h2{
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #333;
 }
 
-
-.combutton:hover {
-    background: green;
-    color: white;
-    transform: scale(1.15);
-    box-shadow: 0 0 15px rgba(0,255,0,0.6);
+/* CLOSE BUTTON */
+.crossBtn{
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #f1f1f1;
+  font-size: 22px;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.combutton:active {
-    transform: scale(0.95);
+
+.crossBtn:hover{
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* BODY */
+.comBody{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* TEXTAREA */
+.comWord{
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  padding: 10px 12px;
+  font-size: 20px;
+  outline: none;
+  height: 90%;
+  width: 90%;
+  transition: 0.2s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.comWord:focus{
+  border-color: #4caf50;
+  box-shadow: 0 0 0 2px rgba(76,175,80,0.15);
+}
+
+/* SEND BUTTON */
+.comButton{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.comButton img{
+  width: 22px;
+}
+
+.comButton:hover{
+  background: #43a047;
+  transform: scale(1.05);
+  border-radius: 90px;
 }
 .crossBtn {
     width: 30px;
@@ -690,6 +911,14 @@ body {
     position: fixed;
     top: 0;
     left: 0;
+    opacity: 0;
+    transform: translateY(120px);
+    transition: opacity 0.3s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
+}
+
+#stryPort.show{
+    opacity: 1;
+    transform: translateY(0);
 }
 #stryPort div{
     width: 90%;
@@ -726,8 +955,42 @@ body {
 #submitpost:hover {
     background: green;
 }
+#postLoading{
+    display: none;
+}
+.ownerPostMenu button{
+    padding: 10px;
+}
 
-    </style>
+#warn{
+    position: fixed;
+    left: 50%;
+    bottom: 200px;   
+    transform: translateX(-50%) scale(0.95);
+    display: none;
+    align-items: center;
+    gap: 10px;
+    background: black;
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 14px;
+
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: 0.2px;
+
+    box-shadow: 0 14px 35px rgba(0,0,0,0.25);
+
+
+    transition:
+      opacity 0.3s ease,
+      bottom 0.45s cubic-bezier(.22,1,.36,1),
+      transform 0.45s cubic-bezier(.22,1,.36,1);
+
+    z-index: 10001;
+}
+
+  </style>
 </head>
 <body id="body">
 <div id="header">
@@ -741,7 +1004,7 @@ body {
 <div id="searchpad">
 <div style="background: none; width: 100%;">
     <div style="text-align: right; padding-right: 70px;">
-        <button onclick="closealert('show');closealert('searchpad');" id="close">×</button>
+        <button onclick="closealert('show');closeSearchPad();" id="close">×</button>
     </div>
     <input type="text" id="search" placeholder="Search here for any ID.."/>
     <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="25"></button>  
@@ -765,7 +1028,7 @@ body {
       <table border="0" id="nameplate"><tr><td><h2 style="text-align: left; color: green;">Create your mind here..</h2>
  </td><td>
       <div style="text-align: right">
-          <button onclick="closealert('postpage')">×</button>
+          <button onclick="closePostpage()">×</button>
       </div> 
       </td> 
       </tr>
@@ -815,8 +1078,27 @@ body {
 </div>
 
 <hr>
+
+<div id="postLoading">
+<div class="posting-box">
+    <div class="header">
+        <div class="img-wrapper">
+            <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="AsirNet">
+        </div>
+
+        <div class="text">
+ <h2>Posting, Keep AsirNet Open</h2>
+ <p>Please wait while your post is uploading...</p>
+        </div>
+    </div>
+
+    <div class="loading-line"></div>
+
+</div>
+</div>
 <div id="content"></div>
 </div>
+
 <div id="stryPort">
     <div>       
         
@@ -977,6 +1259,9 @@ body {
     </section>
 </div>
     
+<div id="warn">
+   <div>testing</div> 
+</div>
 
 
 <script>
@@ -989,9 +1274,29 @@ const qs = sel => document.querySelector(sel);
 
 /* ---------- Open / Close ---------- */
 function openGallery(){ $("storyFile").click(); }
-function openStoryPort(){ $("stryPort").style.display = "flex"; }
-function closeStryPort(){
+function openStoryPort(){ 
+  const el = $("stryPort");
+
+  // reset state
+  el.classList.remove("show");
+  el.style.display = "flex";
+
+  // force reflow (important)
+  el.offsetHeight;
+
+  // trigger animation
+  el.classList.add("show");
+}
+
+function closeStoryPort(){
+  const el = $("stryPort");
   if(!confirm("Are you sure you want to close the story?")) return;
+
+  el.classList.remove("show");
+  setTimeout(()=>{
+    el.style.display = "none";
+  }, 450);
+
 
   const video = $("storyVideo");
   if(video){ video.pause(); video.currentTime=0; }
@@ -1328,7 +1633,14 @@ window.addEventListener("load", loadAllStories);
 
 
 function closealert(id) {
+document.getElementById(id).classList.remove("show");
+setTimeout(()=>{
+  document.getElementById(id).style.display = "none";
+},400);}
+
+function closealertAdv(id, postId) {
     document.getElementById(id).style.display = 'none';
+    updateCounts(postId);
 }
 
 
@@ -1429,7 +1741,7 @@ const s = JSON.parse(styleString);
   <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="edit" border="0" width="30"></button>
   </a></div> <br><br><br><hr></div>
  
- <div id="ownerPosts"></div>   
+ <div id="ownerPosts"></div><div style="height: 300px;width: 100%;"></div> 
     
     `;
 
@@ -1462,7 +1774,29 @@ location.href = 'setting.html';
   
 
 function searchpad() {
-    document.getElementById('searchpad').style.display = 'flex';  
+document.getElementById("searchpad").style.display = "block";
+setTimeout(()=>{
+  document.getElementById("searchpad").classList.add("show");
+},10);
+}
+function closePostpage(){
+   const pad = document.getElementById("postpage");
+
+    pad.classList.remove("show");
+
+    setTimeout(()=>{
+        pad.style.display = "none";
+    }, 450);
+  
+}
+function closeSearchPad(){
+    const pad = document.getElementById("searchpad");
+
+    pad.classList.remove("show");
+
+    setTimeout(()=>{
+        pad.style.display = "none";
+    }, 450);
 }
 
 async function pad() {
@@ -1507,8 +1841,10 @@ async function pad() {
 
 
 function createpost() {
-    document.getElementById('postpage').style.display = 'flex';   
-} 
+document.getElementById("postpage").style.display = "flex";
+setTimeout(()=>{
+  document.getElementById("postpage").classList.add("show");
+},10);} 
 
 function clearpost() {
     document.getElementById('postword').value = "";    
@@ -1517,6 +1853,7 @@ function clearpost() {
 async function postsubmit() {
   const input = document.getElementById('postword');
   const text = input.value.trim();
+
 
   if (!text) {
     alert("Please write something!");
@@ -1527,12 +1864,17 @@ async function postsubmit() {
   if (!user || !user.username) {
     alert("User not found!");
     return;
+ 
   }
 
   const btn = document.getElementById("postbtn");
   if (btn) btn.disabled = true;
 
-  try {
+  document.getElementById("postLoading").style.display = 'flex';
+    closealert('postpage');
+
+
+  try {   
     const res = await fetch("https://posts-server-kmha.onrender.com/post", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -1553,7 +1895,8 @@ body: JSON.stringify({
       try {
         serverData = await res.json();
       } catch (e) {
-        console.error("Error parsing server response:", e);
+        console.error("Error parsing server response:", e);          document.getElementById("postLoading").style.display = 'none';
+
       }
 
       // Pretty print server error
@@ -1563,12 +1906,14 @@ body: JSON.stringify({
       );
 
       alert("Server error. Please try again.");
+   document.getElementById("postLoading").style.display = 'none';
       return;
     }
 
     // ✅ Success
-    alert('Posted successfully');
-    location.reload();
+  document.getElementById("postLoading").style.display = 'none';
+loadPosts();
+  
   } catch (err) {
     // ❌ Network / JS error
     console.error("Network / JS Error:", err);
@@ -1619,7 +1964,7 @@ async function loadPosts() {
 <button onclick="appImoji(${post.id})" style="border-left: none; font-size: 30px;"
  id="react${post.id}">
  <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="like" border="0" width="40"></button>
-<button onclick="comSec(${post.id})" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
+<button onclick="comSec(${post.id}); closealert('loaderCom')" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
 <button>
   <img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" alt="share (1)" border="0" width="30"></button>
 </div>
@@ -1637,31 +1982,45 @@ async function loadPosts() {
 
 <div id="comPen${post.id}" style="display:none; position: fixed; z-index: 100; height: 100%; width: 100%; background: rgba(0,0,0,0.3); top:0; left: 0; justify-content: center;align-items: center;">
     
-    <div class="comSecDiv">
-  <table>
-      <tr>
-          <td>
-              <h2 style="margin-left: 20px;">
-Write a comment here about this post..                 
-              </h2>
-          </td>
-          <td>
-<button onclick="closealert('comPen${post.id}')" class="crossBtn">
-    ×
-</button>             
-          </td>
-      </tr>
-  </table> 
-  <hr> 
-     <textarea class="comWord" placeholder="Enter here your comment..."></textarea>   
-     <button onclick="sendCom(${post.id})" class="combutton">
-         <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="send" border="0" width="30">
-     </button>      
-   
-    </div>
-  
- </div>   
+<div class="comSecDiv">
+  <div class="comHeader">
+    <h2>Write a comment about this post</h2>
+    <button onclick="closealert('comPen${post.id}')" class="crossBtn">×</button>
+  </div>
 
+  <hr>
+
+  <div class="comBody">
+    <textarea 
+      class="comWord" 
+      placeholder="Enter your comment here..."
+      rows="8"
+    ></textarea>
+
+    <button onclick="sendCom(${post.id})" class="comButton">
+      <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="Send">
+      
+    </button>
+            
+    </div>
+    <div id="loaderCom">
+    <div class="loadingBox">
+        <div class="spinner"></div>
+        <div class="textContainer">
+            <h2>Posting your comment...</h2>
+            <p>Please wait while it uploads</p>
+        </div>
+        <div class="loading-line"></div>
+    </div>
+
+    
+</div>
+    
+ </div>
+  
+
+ </div>
+</div>
 
 <div id="commentContainer${post.id}" style="   
     position: fixed;
@@ -1686,7 +2045,7 @@ Write a comment here about this post..
         border: none; 
         background: none; 
         cursor: pointer;" 
-    onclick="closeContainer(${post.id})"
+    onclick="containerClose(${post.id})"
 >
     × </button>  
      </div>
@@ -1730,7 +2089,7 @@ Write a comment here about this post..
       <tr><td colspan="2"> <hr></td></tr>
       </tr></table>
      
- <div id="reactors${post.id}" style="position: relative; margin-top: 140px;"></div>       
+ <div id="reactors${post.id}" style="position: relative; margin-top: 140px;">Loading react...s...</div>       
     </div>
 </div>
 
@@ -1831,12 +2190,12 @@ async function comText(postId) {
  
           
             const menuHTML = (currentEmail && currentEmail === c.email) ? `
-                <div class="comMenu" style="display:none; position: absolute; right: 110px; top: 50px; border:1px solid gray; background:white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                <div class="comMenu" style="display:none; position: absolute; right: 110px; top: 50px; border:1px solid gray; background:white; border-radius: 2px; padding: 0px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);width: 200px;">
             <button
- style="background: none; border: none; border-bottom: 1px solid gray; width: 100%;"           
-             onclick="editCom(${comId}, '${postId}', '${c.comment.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')">Edit</button>
-            <br>
-                  <button style="color: red; background: none; border: none; width: 100%; margin-top: 10px;" onclick="deleteCom(${c.id}, ${postId})">Delete</button>
+ style="background: none; border: none; border-bottom: 1px solid black; width: 100%;"           
+             onclick="editCom(${comId}, '${postId}', '${c.comment.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px;">Edit comment</div></button>
+          
+                  <button style="background: none; border: none; width: 100%; margin-top: 0px;" onclick="deleteCom(${c.id}, ${postId})"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px; color:red">Delete comment</div></button>
                 </div>
             ` : "";
 
@@ -1924,7 +2283,7 @@ async function updateCounts(postId) {
 async function sendCom(postId) {
     const overlay = document.getElementById(`comPen${postId}`);
     const textarea = overlay.querySelector(".comWord");
-    const btn = overlay.querySelector(".combutton");
+    const btn = overlay.querySelector(".comButton");
     const comment = textarea.value.trim();
 
     if (!comment) {
@@ -1937,7 +2296,9 @@ async function sendCom(postId) {
         alert("User not found!");
         return;
     }
-
+    
+    // Show professional loading overlay
+    document.getElementById("loaderCom").style.display = 'flex';
     btn.disabled = true;
 
     try {
@@ -1948,33 +2309,35 @@ async function sendCom(postId) {
                 postId: Number(postId),
                 email: user.email,
                 username: user.username,
-                avatar: user.avatar ,
+                avatar: user.avatar,
                 comment
             })
         });
 
+        const data = await res.json().catch(() => ({}));
+
         if (!res.ok) {
-            const errData = await res.json().catch(() => ({}));
-            console.error("Server Error:", res.status, errData);
-            alert(errData.message || "Failed to send comment!");
+            console.error("Server Error:", res.status, data);
+            alert(data.message || "Failed to send comment!");
             return;
         }
 
-        const data = await res.json();
         console.log("Saved comment:", data.comment);
 
         textarea.value = "";
         overlay.style.display = "none";
+        updateCounts(postId);
         alert("Comment posted ✅");
 
     } catch (err) {
         console.error("Network / JS Error:", err);
         alert("Network error!");
     } finally {
+        // Always hide loading overlay
+        document.getElementById("loaderCom").style.display = 'none';
         btn.disabled = false;
     }
 }
-
 async function reactAppear(postId, emoji) {
   document.getElementById(`appearFlex${postId}`).style.display = "none";
 
@@ -2008,6 +2371,7 @@ async function reactAppear(postId, emoji) {
     if (res.ok) {
       // UI update
       document.getElementById(`react${postId}`).innerHTML = emoji;
+      updateCounts(postId);
       return;
     } else {
       alert(data.message || "You have already reacted!");
@@ -2055,48 +2419,81 @@ async function loadProfilePosts() {
     profileDiv.innerHTML = `<div id="userposts"></div>`;
     const postsDiv = document.getElementById("userposts");
 
-    userPosts.forEach((p, i) => {
+    userPosts.forEach((p) => {
         const div = document.createElement("div");
         div.className = "postshow";
         div.innerHTML = `
             <div style="position: relative;">
                 <table border="0" style="width: 100%;">
                     <tr>
-                        <td><h3 style="color: green"><span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 50px;">${user.avatar} </span><span style="font-size: 50px; text-align: left;">${user.username}</span></h3></td>
-                        <td style="text-align: right;">
+                        <td>
+                          <h3 style="color: green">
+                            <span style="padding:5px;border-right:2px solid rgba(0,0,0,0.2);margin-right:10px;font-size:50px;">
+                              ${user.avatar}
+                            </span>
+                            <span style="font-size:50px;">${user.username}</span>
+                          </h3>
+                        </td>
+                        <td style="text-align:right;">
                             <button 
                                 id="dropdownBtn${p.id}" 
-                                style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 50px;"
+                                style="width:20px;background:none;border:none;height:40px;color:green;font-size:50px;"
                             >⋮</button>
                         </td>
                     </tr>
                 </table>
                 <hr>
-                <p id="posttext${p.id}" style="font-size: 30px;">${p.text.replace(/\n/g, "<br>")}</p>
-                
-                
+
+                <p id="posttext${p.id}" style="font-size:30px;">
+                  ${p.text.replace(/\n/g, "<br>")}
+                </p>
+<div class="ownerPostMenu">
                 <div id="menu${p.id}" 
-                    style="display:none; position: absolute; right: 0; top: 70px; border:1px solid gray; background:white; border-radius: 10px; padding: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-                    <button style="background: none; border: none; border-bottom: 1px solid gray; border-radius: 0; width: 100%;" onclick="editPost(${p.id}); closealert('menu${p.id}');">Edit</button><br>
-                    <button style="color: red; background: none; border: none; border-radius: 0; margin-top: 10px; width: 100%;" onclick="deletePost(${p.id}); closealert('menu${p.id}');">Delete</button>
-                </div>
+                    style="display:none;position:absolute;right:0;top:0;border:1px solid gray;background:white;border-radius:2px;box-shadow:0 2px 10px rgba(0,0,0,0.1);min-height:300px;width:200px;">
+                    
+                    <button style="background:none;border:none;border-bottom:1px solid black;width:100%;" 
+                        onclick="editPost(${p.id}); closealert('menu${p.id}');">
+                        <div style="margin:10px;font-size:20px;text-align:left;">Edit post</div>
+                    </button>
+
+                    <button style="background:none;border:none;border-bottom:1px solid black;width:100%;">
+                        <div 
+                          class="copyBtn"
+                          data-text="${p.text.replace(/"/g, "&quot;")}"
+                          style="margin:10px;font-size:20px;text-align:left;"
+                        >
+                          Copy post
+                        </div>
+                    </button>
+
+                    <button style="color:red;background:none;border:none;border-bottom:1px solid black;width:100%;" 
+                        onclick="deletePost(${p.id}); closealert('menu${p.id}');">
+                        <div style="margin:10px;font-size:20px;text-align:left;">Delete post</div>
+                    </button>
+                </div> </div>
             </div>
         `;
         postsDiv.appendChild(div);
 
-        // 🎯 Dropdown toggle system
         const dropdownBtn = div.querySelector(`#dropdownBtn${p.id}`);
         const menu = div.querySelector(`#menu${p.id}`);
 
         dropdownBtn.addEventListener("click", (e) => {
-            e.stopPropagation(); // prevent document click from closing instantly
+            e.stopPropagation();
             const isOpen = menu.style.display === "block";
-            document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none"); // close all
-            menu.style.display = isOpen ? "none" : "block"; // toggle current one
+            document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none");
+            menu.style.display = isOpen ? "none" : "block";
         });
     });
 
-    // 🧠 Global click listener — close dropdown if click outside
+    // copy handler (ONE TIME)
+    document.addEventListener("click", e => {
+        const btn = e.target.closest(".copyBtn");
+        if (!btn) return;
+        navigator.clipboard.writeText(btn.dataset.text);
+    });
+
+    // dropdown close
     document.addEventListener("click", (e) => {
         document.querySelectorAll("[id^='menu']").forEach(menu => {
             if (!menu.contains(e.target)) {
@@ -2105,7 +2502,6 @@ async function loadProfilePosts() {
         });
     });
 }
-
 // 🔹 Edit Post
 function editPost(id) {
     const el = document.getElementById(`posttext${id}`);
@@ -2277,8 +2673,9 @@ function closeImoji(id) {
     document.getElementById(`appearFlex${id}`).style.display ='none';
 }
 
-function closeContainer(container){
+function containerClose(container){
     document.getElementById(`commentContainer${container}`).style.display = 'none';
+    updateCounts(container);
 }
 
 function appContainer(container) {
