@@ -1,304 +1,1487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=0.7">
-<title>Register</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Professional Signup UI</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+
 :root{
-    --green:#1f8f3a;
-    --light:#eafff0;
+
+  --bg:#0f1412;
+  --card:#171d1a;
+
+  --text:#ffffff;
+  --muted:#93a39a;
+
+  --accent:#6ee7b7;
+  --accent2:#3dd9c0;
+
+  --danger:#ff5d73;
+
+  --shadow:
+  0 20px 60px rgba(0,0,0,.45);
+
 }
 
 *{
-    box-sizing:border-box;
-    font-family: Arial, sans-serif;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
 }
 
 body{
-    margin:0;
-    background:#f6fff9;
+
+  min-height:100vh;
+
+  background:var(--bg);
+
+  font-family:'Inter',sans-serif;
+
+  color:white;
+
+  overflow-x:hidden;
+
+  display:flex;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:40px 20px;
+
 }
 
-/* HEADER */
-header{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:15px 20px;
-    border-bottom:3px solid var(--green);
-    background:white;
+/* =========================
+ BACKGROUND
+========================= */
+
+.bg{
+
+  position:fixed;
+
+  inset:0;
+
+  overflow:hidden;
+
+  z-index:-1;
+
 }
 
-header h2{
-    color:var(--green);
+.blob{
+
+  position:absolute;
+
+  width:450px;
+  height:450px;
+
+  border-radius:50%;
+
+  filter:blur(90px);
+
+  opacity:.35;
+
+  animation:float 12s infinite ease-in-out;
+
 }
 
-/* CONTAINER */
+.blob1{
+  background:#5eead4;
+  top:-120px;
+  left:-120px;
+}
+
+.blob2{
+  background:#8b5cf6;
+  bottom:-120px;
+  right:-120px;
+  animation-delay:3s;
+}
+
+.blob3{
+  background:#22c55e;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  animation-delay:6s;
+}
+
+@keyframes float{
+
+  0%{
+    transform:translateY(0px) scale(1);
+  }
+
+  50%{
+    transform:translateY(-40px) scale(1.1);
+  }
+
+  100%{
+    transform:translateY(0px) scale(1);
+  }
+
+}
+
+/* =========================
+ CARD
+========================= */
+
 .container{
-    max-width:550px;
-    margin:40px auto;
-    background:white;
-    padding:30px;
-    border-radius:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    text-align:center;
+  width:100%;
+  max-width:780px;
 }
 
-/* INPUTS */
-input, textarea{
-    width:100%;
-    padding:15px;
-    margin-top:15px;
-    border-radius:18px;
-    border:2px solid var(--green);
-    font-size:16px;
-    background:var(--light);
-    outline:none;
+.card{
+
+  position:relative;
+
+  background:rgba(255,255,255,.05);
+
+  backdrop-filter:blur(18px);
+
+  border:1px solid rgba(255,255,255,.08);
+
+  border-radius:34px;
+
+  padding:36px;
+
+  box-shadow:var(--shadow);
+
+  overflow:hidden;
+
 }
 
-input:focus, textarea:focus{
-    border-color:#0c5;
+.card::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:-2px;
+
+  background:
+  linear-gradient(
+    130deg,
+    transparent,
+    rgba(255,255,255,.08),
+    transparent
+  );
+
+  animation:borderMove 6s linear infinite;
+
+}
+
+@keyframes borderMove{
+
+  0%{
+    transform:translateX(-100%);
+  }
+
+  100%{
+    transform:translateX(100%);
+  }
+
+}
+
+.card > *{
+  position:relative;
+  z-index:2;
+}
+
+/* =========================
+ HEADER
+========================= */
+
+.logo{
+
+  width:250px;
+
+  height:65px;
+
+  object-fit:cover;
+
+  border-radius:22px;
+
+  animation:logoFloat 4s infinite ease-in-out;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.35);
+
+}
+
+@keyframes logoFloat{
+
+  50%{
+    transform:translateY(-15px);
+  }
+
+}
+
+.title{
+
+  margin-top:25px;
+
+  font-size:40px;
+
+  font-weight:800;
+
+  letter-spacing:-2px;
+
+  line-height:1.1;
+
+}
+
+.subtitle{
+
+  margin-top:14px;
+
+  color:var(--muted);
+
+  line-height:1.7;
+
+}
+
+/* =========================
+ FORM
+========================= */
+
+form{
+  margin-top:34px;
+}
+
+.field{
+  margin-bottom:20px;
+}
+
+.field label{
+
+  display:block;
+
+  margin-bottom:10px;
+
+  font-size:13px;
+
+  font-weight:600;
+
+  color:#d7dfda;
+
+}
+
+/* =========================
+ INPUT
+========================= */
+
+.input-wrap{
+  position:relative;
+}
+
+.input-wrap input,
+textarea{
+
+  width:100%;
+
+  border:none;
+
+  outline:none;
+
+  border-radius:20px;
+
+  background:rgba(255,255,255,.05);
+
+  border:1px solid rgba(255,255,255,.06);
+
+  color:white;
+
+  padding:17px 18px;
+
+  font-size:15px;
+
+  transition:.35s ease;
+
 }
 
 textarea{
-    height:110px;
-    resize:none;
+  min-height:110px;
+  resize:none;
 }
 
-/* AVATAR */
-.avatar-box{
-    display:flex;
-    align-items:center;
-    margin-top:15px;
-    border:2px solid var(--green);
-    border-radius:18px;
-    background:var(--light);
-    cursor:pointer;
-    position: relative;
+.input-wrap input::placeholder,
+textarea::placeholder{
+  color:#7d8b84;
 }
 
-.avatar-text{
-    flex:1;
-    padding:15px;
-    font-size:20px;
+.input-wrap input:focus,
+textarea:focus{
+
+  border-color:
+  rgba(110,231,183,.55);
+
+  background:
+  rgba(255,255,255,.07);
+
+  box-shadow:
+  0 0 0 4px rgba(110,231,183,.08),
+  0 0 25px rgba(110,231,183,.15);
+
+  transform:translateY(-2px);
+
 }
 
-.avatar-btn{
-    padding:15px 18px;
-    font-size:20px;
-    background:none;
-    border-left:2px solid var(--green);
+/* =========================
+ ICON
+========================= */
+
+.icon{
+
+  position:absolute;
+
+  top:50%;
+
+  right:16px;
+
+  transform:translateY(-50%);
+
+  opacity:.7;
+
+  font-size:18px;
+
 }
 
-/* BUTTON */
-button{
-    margin-top:25px;
-    padding:15px;
-    width:100%;
-    font-size:18px;
-    border-radius:20px;
-    border:none;
-    cursor:pointer;
+/* =========================
+ PICKERS
+========================= */
+
+.tray{
+
+  margin-top:18px;
+
+  background:
+  rgba(255,255,255,.04);
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  border-radius:24px;
+
+  padding:18px;
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:space-between;
+
+  cursor:pointer;
+
+  transition:.35s ease;
+
+  position:relative;
+
+  overflow:hidden;
+
 }
 
-#submit{
-    background:var(--green);
-    color:white;
+.tray::before{
+
+  content:"";
+
+  position:absolute;
+
+  inset:0;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.08),
+    transparent
+  );
+
+  transform:translateX(-100%);
+
+  transition:.7s;
+
 }
 
-#submit:hover{
-    background:#15752d;
+.tray:hover::before{
+  transform:translateX(100%);
 }
 
-/* AVATAR MODAL */
-#avatarModal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.55);
+.tray:hover{
+
+  transform:
+  translateY(-4px);
+
+  border-color:
+  rgba(110,231,183,.45);
+
+  background:
+  rgba(255,255,255,.06);
+
 }
 
-#avatarModal .box{
-    background:white;
-    width:90%;
-    max-width:600px;
-    margin:50px auto;
+.avatar-preview{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:15px;
+
+}
+
+.avatar-preview img{
+
+  width:58px;
+  height:58px;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+  box-shadow:
+  0 10px 25px rgba(0,0,0,.35);
+
+}
+
+/* =========================
+ BUTTON
+========================= */
+
+.submit{
+
+  width:100%;
+
+  height:62px;
+
+  margin-top:28px;
+
+  border:none;
+
+  border-radius:22px;
+
+  cursor:pointer;
+
+  font-weight:700;
+
+  font-size:15px;
+
+  color:#062b1f;
+
+  background:
+  linear-gradient(
+    135deg,
+    var(--accent),
+    var(--accent2)
+  );
+
+  box-shadow:
+  0 10px 30px rgba(61,217,192,.25);
+
+  transition:.35s ease;
+
+  position:relative;
+
+  overflow:hidden;
+
+}
+
+.submit::before{
+
+  content:"";
+
+  position:absolute;
+
+  top:0;
+  left:-100%;
+
+  width:100%;
+  height:100%;
+
+  background:
+  linear-gradient(
+    120deg,
+    transparent,
+    rgba(255,255,255,.35),
+    transparent
+  );
+
+  transition:.7s;
+
+}
+
+.submit:hover::before{
+  left:100%;
+}
+
+.submit:hover{
+
+  transform:
+  translateY(-4px);
+
+  box-shadow:
+  0 16px 40px rgba(61,217,192,.4);
+
+}
+
+/* =========================
+ MODAL
+========================= */
+
+.modal{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+  rgba(0,0,0,.6);
+
+  backdrop-filter:blur(12px);
+
+  display:none;
+
+  align-items:flex-end;
+
+  justify-content:center;
+
+  z-index:1000;
+
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-card{
+
+  width:100%;
+
+  max-width:950px;
+
+  max-height:85vh;
+
+  overflow:auto;
+
+  background:#161d19;
+
+  border:
+  1px solid rgba(255,255,255,.08);
+
+  border-radius:
+  38px 38px 0 0;
+
+  padding:30px;
+
+  animation:slideUp .45s
+  cubic-bezier(.16,.84,.44,1);
+
+}
+
+@keyframes slideUp{
+
+  from{
+
+    transform:
+    translateY(100px);
+
+    opacity:0;
+
+  }
+
+  to{
+
+    transform:
+    translateY(0);
+
+    opacity:1;
+
+  }
+
+}
+
+.modal-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:25px;
+
+}
+
+.modal-top button{
+
+  width:48px;
+
+  height:48px;
+
+  border:none;
+
+  border-radius:16px;
+
+  background:
+  rgba(255,255,255,.08);
+
+  color:white;
+
+  cursor:pointer;
+
+  font-size:18px;
+
+  transition:.35s;
+
+}
+
+.modal-top button:hover{
+
+  transform:rotate(90deg);
+
+  background:
+  rgba(255,255,255,.14);
+
+}
+
+/* =========================
+ GRID
+========================= */
+
+.grid{
+
+  display:grid;
+
+  grid-template-columns:
+  repeat(
+    auto-fill,
+    minmax(120px,1fr)
+  );
+
+  gap:20px;
+
+}
+
+.grid button{
+
+  border:none;
+
+  border-radius:26px;
+
+  overflow:hidden;
+
+  cursor:pointer;
+
+  padding:8px;
+
+  background:
+  rgba(255,255,255,.04);
+
+  border:
+  2px solid rgba(255,255,255,.08);
+
+  transition:.35s;
+
+}
+
+.grid button:hover{
+
+  transform:
+  translateY(-7px)
+  scale(1.03);
+
+  border-color:
+  rgba(110,231,183,.45);
+
+}
+
+.grid button.active{
+
+  border-color:
+  var(--accent);
+
+  box-shadow:
+  0 0 25px rgba(110,231,183,.35);
+
+}
+
+.grid img{
+
+  width:100%;
+
+  aspect-ratio:1/1;
+
+  object-fit:cover;
+
+  border-radius:20px;
+
+}
+
+/* =========================
+ FOOTER
+========================= */
+
+.footer{
+
+  margin-top:25px;
+
+  text-align:center;
+
+  color:#809188;
+
+  font-size:13px;
+
+  line-height:1.7;
+
+}
+
+/* =========================
+ MOBILE
+========================= */
+
+@media(max-width:600px){
+
+  .card{
     padding:25px;
-    border-radius:25px;
-    text-align:center;
+  }
+
+  .title{
+    font-size:32px;
+  }
+
 }
 
-.avatar-list button{
-    width:60px;
-    height:60px;
-    font-size:26px;
-    margin:6px;
-    border:none;
-    border-radius:15px;
-    background:#e6f6ea;
+/* =========================
+ LOADER
+========================= */
+
+.loader-wrap{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+  rgba(10,14,12,.92);
+
+  backdrop-filter:blur(14px);
+
+  display:flex;
+
+  align-items:center;
+
+  justify-content:center;
+
+  flex-direction:column;
+
+  gap:28px;
+
+  z-index:999999;
+
+  transition:.5s;
+
 }
 
-.close{
-    float:right;
-    font-size:28px;
-    background:none;
-    color: red;
+.loader-wrap.hide{
+
+  opacity:0;
+
+  visibility:hidden;
+
 }
+
+.loader{
+
+  position:relative;
+
+  width:130px;
+  height:130px;
+
+}
+
+.loader span{
+
+  position:absolute;
+
+  inset:0;
+
+  border-radius:50%;
+
+  border:4px solid transparent;
+
+  animation:rotate 2s linear infinite;
+
+}
+
+.loader span:nth-child(1){
+
+  border-top-color:#6ee7b7;
+
+  filter:
+  drop-shadow(
+    0 0 15px #6ee7b7
+  );
+
+}
+
+.loader span:nth-child(2){
+
+  inset:12px;
+
+  border-top-color:#8b5cf6;
+
+  animation-duration:3s;
+
+  animation-direction:reverse;
+
+}
+
+.loader span:nth-child(3){
+
+  inset:24px;
+
+  border-top-color:#3dd9c0;
+
+  animation-duration:1.5s;
+
+}
+
+@keyframes rotate{
+
+  100%{
+    transform:rotate(360deg);
+  }
+
+}
+
+.loader-logo{
+
+  width:85px;
+  height:85px;
+
+  object-fit:cover;
+
+  border-radius:24px;
+
+  position:absolute;
+
+  top:50%;
+  left:50%;
+
+  transform:
+  translate(-50%,-50%);
+
+  box-shadow:
+  0 0 25px rgba(110,231,183,.25);
+
+}
+
+.loading-text{
+
+  font-size:15px;
+
+  color:#d7dfda;
+
+  letter-spacing:1px;
+
+  animation:pulse 1.6s infinite;
+
+}
+
+@keyframes pulse{
+
+  50%{
+    opacity:.45;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
+    
+<!-- LOADER -->
 
-<header>
-    <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg" width="130">
-</header>
+<div
+class="loader-wrap"
+id="loader"
+>
+
+<div class="loader">
+
+<span></span>
+<span></span>
+<span></span>
+
+<img
+class="loader-logo"
+src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg"
+>
+
+</div>
+
+<div class="loading-text">
+Loading Premium Assets...
+</div>
+
+</div>
+
+<div class="bg">
+
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="blob blob3"></div>
+
+</div>
 
 <div class="container">
 
-    <input id="username" placeholder="Full Name">
-    <input id="useremail" type="email" placeholder="Email Address">
-    <input id="password" type="password" placeholder="Password">
+<div class="card">
 
-    <textarea id="bio" placeholder="Your goal / focus"></textarea>
+<img
+class="logo"
+src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg"
+>
 
-    <div class="avatar-box" onclick="openAvatar()">
-        <div id="avatarText" class="avatar-text">Choose an Avatar</div>
-        <div class="avatar-btn">▼</div>
-    </div>
- 
-<p style="font-size: 20px; color: red;" id="alert"></p>
+<h1 class="title">
+Build your digital identity
+</h1>
 
-    <button id="submit" onclick="register()">Create Account</button>
+<p class="subtitle">
+Create a secure and elegant profile
+space with your own personalized theme.
+</p>
+
+<form id="signupForm">
+
+<div class="field">
+
+<label>Full Name</label>
+
+<div class="input-wrap">
+
+<input
+type="text"
+id="name"
+placeholder="John Doe"
+>
+
+<span class="icon">👤</span>
+
 </div>
 
-<!-- AVATAR MODAL -->
-<div id="avatarModal">
-    <div class="box" style="position:relative">
-        <button class="close" onclick="closeAvatar()">×</button>
-        <h3>Select Avatar</h3>
+</div>
 
-        <div class="avatar-list" style="position:relative">
-<button onclick="setAvatar('😀')">😀</button>
-<button onclick="setAvatar('😃')">😃</button>
-<button onclick="setAvatar('😄')">😄</button>
-<button onclick="setAvatar('😁')">😁</button>
-<button onclick="setAvatar('😆')">😆</button>
-<button onclick="setAvatar('😅')">😅</button>
-<button onclick="setAvatar('😂')">😂</button>
-<button onclick="setAvatar('🤣')">🤣</button>
-<button onclick="setAvatar('😊')">😊</button>
-<button onclick="setAvatar('😇')">😇</button>
+<div class="field">
 
-<button onclick="setAvatar('🙂')">🙂</button>
-<button onclick="setAvatar('😉')">😉</button>
-<button onclick="setAvatar('😌')">😌</button>
-<button onclick="setAvatar('😍')">😍</button>
-<button onclick="setAvatar('🥰')">🥰</button>
-<button onclick="setAvatar('😘')">😘</button>
-<button onclick="setAvatar('😎')">😎</button>
-<button onclick="setAvatar('🤓')">🤓</button>
-<button onclick="setAvatar('🧐')">🧐</button>
-<button onclick="setAvatar('🤩')">🤩</button>
+<label>Email Address</label>
 
-<button onclick="setAvatar('🥳')">🥳</button>
-<button onclick="setAvatar('😜')">😜</button>
-<button onclick="setAvatar('🤪')">🤪</button>
-<button onclick="setAvatar('😝')">😝</button>
-<button onclick="setAvatar('🤔')">🤔</button>
-<button onclick="setAvatar('😴')">😴</button>
-<button onclick="setAvatar('😐')">😐</button>
-<button onclick="setAvatar('😶')">😶</button>
-<button onclick="setAvatar('🙄')">🙄</button>
-<button onclick="setAvatar('😏')">😏</button>
+<div class="input-wrap">
 
-<button onclick="setAvatar('🦸')">🦸</button>
-<button onclick="setAvatar('🦹')">🦹</button>
-<button onclick="setAvatar('🧙')">🧙</button>
-<button onclick="setAvatar('🧑‍🎓')">🧑‍🎓</button>
-<button onclick="setAvatar('👨‍💻')">👨‍💻</button>
-<button onclick="setAvatar('👩‍💻')">👩‍💻</button>
-<button onclick="setAvatar('🧠')">🧠</button>
-<button onclick="setAvatar('🎓')">🎓</button>
-<button onclick="setAvatar('🎯')">🎯</button>
-<button onclick="setAvatar('🚀')">🚀</button>
-        </div>
-    </div>
+<input
+type="email"
+id="email"
+placeholder="john@example.com"
+>
+
+<span class="icon">✉</span>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Password</label>
+
+<div class="input-wrap">
+
+<input
+type="password"
+id="password"
+placeholder="Minimum 8 characters"
+>
+
+<span
+class="icon"
+onclick="togglePassword()"
+style="cursor:pointer;"
+>
+👁
+</span>
+
+</div>
+
+</div>
+
+<div class="field">
+
+<label>Your Goal</label>
+
+<textarea
+id="bio"
+placeholder="Tell us your mission..."
+></textarea>
+
+</div>
+
+<!-- AVATAR -->
+
+<div
+class="tray"
+onclick="openAvatarModal()"
+>
+
+<div
+class="avatar-preview"
+id="avatarPreview"
+>
+
+Choose profile avatar
+
+</div>
+
+<div>🖼</div>
+
+</div>
+
+<!-- THEME -->
+
+<div
+class="tray"
+onclick="openThemeModal()"
+>
+
+<div
+class="avatar-preview"
+id="themePreview"
+>
+
+Choose cover theme
+
+</div>
+
+<div>🎨</div>
+
+</div>
+
+
+<button
+class="submit"
+type="submit"
+>
+Create Account
+</button>
+
+</form>
+
+<div class="footer">
+
+Protected with secure encryption.
+Your data stays private.
+
+<br>
+
+Copyright by @W-deploy
+
+</div>
+
+</div>
+</div>
+
+<!-- =========================
+ AVATAR MODAL
+========================= -->
+
+<div
+class="modal"
+id="avatarModal"
+>
+
+<div class="modal-card">
+
+<div class="modal-top">
+
+<h2>Select Avatar</h2>
+
+<button
+onclick="closeAvatarModal()"
+>
+✕
+</button>
+
+</div>
+
+<div
+class="grid"
+id="avatarGrid"
+></div>
+
+</div>
+
+</div>
+
+<!-- =========================
+ THEME MODAL
+========================= -->
+
+<div
+class="modal"
+id="themeModal"
+>
+
+<div class="modal-card">
+
+<div class="modal-top">
+
+<h2>Select Theme</h2>
+
+<button
+onclick="closeThemeModal()"
+>
+✕
+</button>
+
+</div>
+
+<div
+class="grid"
+id="themeGrid"
+></div>
+
+</div>
+
 </div>
 
 <script>
-const alertBox = document.getElementById('alert');
-const avatarModal = document.getElementById("avatarModal");
-const avatarText = document.getElementById("avatarText");
 
-function openAvatar(){
-    avatarModal.style.display="block";
-}
-function closeAvatar(){
-    avatarModal.style.display="none";
-}
-function setAvatar(a){
-    avatarText.innerText = a;
-    closeAvatar();
+/* =========================
+ CONFIG
+========================= */
+
+const API_AVATAR = "https://sett-serve.onrender.com/avatar";
+const API_THEME  = "https://sett-serve.onrender.com/themes";
+const API_SIGNUP = "https://users-server-xyvg.onrender.com/signup";
+
+/* =========================
+ STATE
+========================= */
+
+let avatars = [];
+let themes = [];
+
+let selectedAvatar = "";
+let selectedTheme = "";
+
+let avatarLoaded = false;
+let themeLoaded = false;
+
+/* =========================
+ SAFE FETCH WRAPPER
+========================= */
+
+async function safeFetch(url){
+
+  try{
+
+    const res = await fetch(url);
+
+    if(!res.ok){
+      throw new Error("Network error");
+    }
+
+    return await res.json();
+
+  }catch(err){
+    console.error("Fetch failed:", err);
+    return [];
+  }
+
 }
 
-avatarModal.addEventListener("click", e=>{
-    if(e.target === avatarModal) closeAvatar();
+/* =========================
+ LOAD DATA
+========================= */
+
+async function loadAvatars(){
+
+  const data = await safeFetch(API_AVATAR);
+
+  avatars = data.map(item => item.avatar);
+
+  renderAvatars();
+
+  avatarLoaded = true;
+  checkLoader();
+
+}
+
+async function loadThemes(){
+
+  const data = await safeFetch(API_THEME);
+
+  themes = data.map(item => item.img);
+
+  renderThemes();
+
+  themeLoaded = true;
+  checkLoader();
+
+}
+
+/* =========================
+ LOADER CONTROL
+========================= */
+
+function checkLoader(){
+
+  if(avatarLoaded && themeLoaded){
+
+    setTimeout(()=>{
+
+      const loader = document.getElementById("loader");
+      if(loader) loader.classList.add("hide");
+
+    }, 700);
+
+  }
+
+}
+
+/* =========================
+ RENDER AVATARS (SAFE)
+========================= */
+
+function renderAvatars(){
+
+  const grid = document.getElementById("avatarGrid");
+  if(!grid) return;
+
+  grid.innerHTML = "";
+
+  avatars.forEach(url => {
+
+    const btn = document.createElement("button");
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.loading = "lazy";
+    img.alt = "avatar";
+
+    btn.appendChild(img);
+
+    btn.onclick = () => {
+
+      selectedAvatar = url;
+
+      document.getElementById("avatarPreview").innerHTML =
+        `<img src="${url}" alt="avatar">
+         <div>Avatar Selected</div>`;
+
+      closeAvatarModal();
+
+    };
+
+    grid.appendChild(btn);
+
+  });
+
+}
+
+/* =========================
+ RENDER THEMES (SAFE)
+========================= */
+
+function renderThemes(){
+
+  const grid = document.getElementById("themeGrid");
+  if(!grid) return;
+
+  grid.innerHTML = "";
+
+  themes.forEach(url => {
+
+    const btn = document.createElement("button");
+
+    const img = document.createElement("img");
+    img.src = url;
+    img.loading = "lazy";
+    img.alt = "theme";
+
+    btn.appendChild(img);
+
+    btn.onclick = () => {
+
+      selectedTheme = url;
+
+      document.getElementById("themePreview").innerHTML =
+        `<img src="${url}" alt="theme">
+         <div>Theme Selected</div>`;
+
+      closeThemeModal();
+
+    };
+
+    grid.appendChild(btn);
+
+  });
+
+}
+
+/* =========================
+ MODALS
+========================= */
+
+function openAvatarModal(){
+  document.getElementById("avatarModal").classList.add("show");
+  if(avatars.length === 0) loadAvatars();
+}
+
+function closeAvatarModal(){
+  document.getElementById("avatarModal").classList.remove("show");
+}
+
+function openThemeModal(){
+  document.getElementById("themeModal").classList.add("show");
+  if(themes.length === 0) loadThemes();
+}
+
+function closeThemeModal(){
+  document.getElementById("themeModal").classList.remove("show");
+}
+
+/* REMOVE UNUSED RISKY FUNCTION */
+function openFrameModal(){ /* disabled */ }
+function closeFrameModal(){ /* disabled */ }
+
+/* =========================
+ PASSWORD TOGGLE
+========================= */
+
+function togglePassword(){
+
+  const pass = document.getElementById("password");
+
+  pass.type = pass.type === "password"
+    ? "text"
+    : "password";
+
+}
+
+/* =========================
+ SIGNUP (SECURE VERSION)
+========================= */
+
+const form = document.getElementById("signupForm");
+const submitBtn = document.querySelector(".submit");
+
+form.addEventListener("submit", async (e) => {
+
+  e.preventDefault();
+
+  const username = document.getElementById("name").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const bio = document.getElementById("bio").value.trim();
+
+  /* VALIDATION */
+  if(!username || !email || !password){
+    alert("Please complete all fields");
+    return;
+  }
+
+  if(password.length < 8){
+    alert("Password minimum 8 characters");
+    return;
+  }
+
+  if(!selectedAvatar || !selectedTheme){
+    alert("Please select avatar & theme");
+    return;
+  }
+
+  submitBtn.innerText = "Creating...";
+  submitBtn.disabled = true;
+
+  try{
+
+    const response = await fetch(API_SIGNUP, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        email,
+        password,
+        bio,
+        avatar: selectedAvatar,
+        cover_photo: selectedTheme
+      })
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+      alert(data.message || "Signup failed");
+      submitBtn.innerText = "Create Account";
+      submitBtn.disabled = false;
+      return;
+    }
+
+    /* ✅ SAFE STORAGE */
+    const safeUser = {
+      username,
+      email,
+      bio,
+      avatar: selectedAvatar,
+      cover_photo: selectedTheme
+    };
+
+    localStorage.setItem("user", JSON.stringify(safeUser));
+
+    /* JWT READY */
+    if(data.token){
+      localStorage.setItem("token", data.token);
+    }
+
+    submitBtn.innerText = "Success ✓";
+
+    alert("Account created successfully");
+
+    setTimeout(() => {
+      location.href = "asirnet.html";
+    }, 1000);
+
+  }catch(err){
+
+    console.error(err);
+
+    alert("Server error");
+
+    submitBtn.innerText = "Create Account";
+    submitBtn.disabled = false;
+
+  }
+
 });
 
-async function register(){
-    alertBox.innerHTML = "";
+/* =========================
+ INIT
+========================= */
 
-    const username = document.getElementById("username").value.trim();
-    const email = document.getElementById("useremail").value.trim();
-    const password = document.getElementById("password").value.trim();
-    const bio = document.getElementById("bio").value.trim();
-    const avatar = avatarText.innerText;
+loadAvatars();
+loadThemes();
 
-    if(!username || !email || !password || !bio || avatar==="Choose an Avatar"){
-        alertBox.innerHTML = "⚠ Please fill all fields";
-        return;
-    }
-
-    if(password.length < 6){
-        alertBox.innerHTML = "⚠ Password must be at least 6 characters";
-        return;
-    }
-
-    try{
-        const res = await fetch("https://users-server-xyvg.onrender.com/signup",{
-            method:"POST",
-            headers:{ "Content-Type":"application/json" },
-            body:JSON.stringify({ username, email, password, bio, avatar })
-        });
-
-        const data = await res.json();
-
-        if(res.ok){
-
-            /* ✅ SAVE ALL DATA LOCALLY */
-            const userData = {
-                username: username,
-                email: email,
-                avatar: avatar,
-                bio: bio,
-                password: password
-                 };
-
-            localStorage.setItem("user", JSON.stringify(userData));
-
-            /* ✅ REDIRECT */
-            location.href = "asirnet.html";
-
-        }else{
-            alertBox.innerHTML = data.message;
-        }
-    }catch{
-        alertBox.innerHTML = "❌ Server error. Try again.";
-    }
-}
 </script>
-
 </body>
 </html>
