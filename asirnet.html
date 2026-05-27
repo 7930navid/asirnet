@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
     <title>AsirNet</title>
     <style>
+ button:focus {
+     background: rgba(255,255,255,0.8);
+ }
         
   .loading-template {
     display: inline-flex;
@@ -90,7 +93,7 @@
     transition: all 0.3s ease;
 }
 
-.retryBtn:hover {
+.retryBtn:focus {
     background: #e67e22;
     color: white;
     transform: scale(1.1) rotate(5deg);
@@ -269,27 +272,28 @@
 
 
 </style>
-
-
-
     <style>
 body {
     background: white;
     }
+textarea,input:focus {
+    outline: none;
+}
 #content {
-    margin-bottom: 500px;
-    min-height: 3000px;
+    margin-bottom: 300px;
 
 }
 #header { 
        display:flex; 
        align-items:center; 
        justify-content:space-between; 
-       padding:20px; 
+       padding:15px;
+       padding-left: 20px;
+       padding-right: 20px; 
        background: white; 
        border-bottom:5px solid green; 
        position: fixed;
-       z-index: 1000;
+       z-index: 998;
        top: 0;
        left: 0;
        right: 0;
@@ -301,9 +305,18 @@ body {
        text-shadow:0 0 20px lightgreen; 
        }
 #profPicture {
+    border: 2px solid green;
+    border-radius: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    width: 55px;
+}
+#profPicture img{
        background: none;
-       height: 45px;
-       width: 45px;
+       height: 50px;
+       width: 50px;
        border: none;
        border-radius: 90px;
        padding: 0;
@@ -407,8 +420,9 @@ body {
        height:100%; 
        background:rgba(0,0,0,0.5); 
        display: none; 
-       z-index:10000;
-       justify-content:center; 
+       z-index:1000;
+       justify-content:center;
+       align-items: center; 
        padding: 10px; 
     opacity: 0;
     transform: translateY(100px);
@@ -418,22 +432,45 @@ body {
     display: block;
     opacity: 1;
     transform: translateY(0);
-}#postpad {
+}
+#postpad {
     height: 80%;
     width: 650px;
     background: white;
     border-radius: 20px;
     padding: 20px;
+    overflow: auto;
 }
 #nameplate {
     width: 100%;
     border-bottom: 2px solid green;
 }
 #nameplate button {
-    background: none;
+    background: #0e00d3;
     border: none;
-    font-size: 30px;
-    color: red;
+    font-size: 20px;
+    color: white;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+.uploadBtn {
+    width: 90%;
+    padding: 20px;
+    font-size: 25px;
+    border-bottom: 1px solid black;
+    transition: 0.3s ease;
+}
+
+#bottomBTN button {
+    width: 45%;
+    margin: 10px;
+    padding: 20px;
+    background: none;
+    border: 2px solid rgb(255,50,50);
+    border-radius: 50px;
+}
+#bottomBTN img {
+    width: 30px;
 }
 #postsubmit {
     background: lightyellow;
@@ -456,14 +493,17 @@ body {
     margin-right: 20px;
 }
 #postword {
-    width: 600px;
+    width: 90%;
     margin-top: 20px;
     border: 1px solid green;
     border-radius: 20px;
     height: 500px;
     padding: 20px;
-    font-size: 30px;
-    color: blue;
+    font-size: 25px;
+    background: white;
+    color: black;
+    text-align: justify;
+    text-shadow: 0 0 5px white;
     font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
 }
 .postshow {
@@ -492,7 +532,7 @@ body {
     border: none;
     border-top: 3px solid green;
     position: fixed;
-    z-index: 10000;
+    z-index: 999;
     width: 100%;
     min-height: 70px;
     bottom: 0;
@@ -514,7 +554,7 @@ body {
     font-size: 25px;
 
 }
-#footerBtn button:hover {
+#footerBtn button:focus {
     background: rgba(0,100,255,0.1);
 
 }
@@ -561,14 +601,12 @@ body {
     font-size: 20px;
 }
 #profPic {
-    background: rgba(255,255,0,0.1);
-    height: 230px;    
-    width: 230px;
-    border: 10px solid rgba(0,0,0,0.2);
+    width: 250px;
+    height: 250px;
     border-radius: 360px;
-    font-size: 150px;
-    padding-top: 20px;
-    padding-left: 20px;
+    border: 5px solid white;
+    box-shadow: 5px 0 0 green;
+    background: rgba(0,0,0,0.3);
 }
 #reactPanal {
     display: flex;
@@ -597,6 +635,7 @@ body {
     display: none;
     overflow: auto;
     padding-left: 20px;
+    
 }
 .appearFlex button {
     padding: 10px;
@@ -608,7 +647,7 @@ body {
     background: white;
     box-shadow: 0 0 6px red;
 }
-.appearFlex button:hover {
+.appearFlex button:focus {
     transform: scale(1.25);
     transition: all 0.3s ease;
 }
@@ -738,7 +777,7 @@ body {
   transition: 0.2s;
 }
 
-.crossBtn:hover{
+.crossBtn:focus{
   background: #e74c3c;
   color: #fff;
 }
@@ -787,7 +826,7 @@ body {
   width: 22px;
 }
 
-.comButton:hover{
+.comButton:focus{
   background: #43a047;
   transform: scale(1.05);
   border-radius: 90px;
@@ -843,23 +882,22 @@ body {
 /* Story container */
 .story-container{
   display:flex;
-  gap:12px;
   padding:15px;
   overflow-x:auto;
-  scroll-snap-type:x mandatory;
-  -webkit-overflow-scrolling:touch;
+  overflow-y:hidden; 
+  align-items: center;
 }
-
-/* Hide scrollbar */
-.story-container::-webkit-scrollbar{
-  display:none;
+#container {
+    display: flex;
+    align-items: center;
+    height:400px;
 }
 
 /* Each story */
 .story{
-  min-width:200px;
-  height:350px;
-  background:#fff;
+  width:230px;
+  height:400px;
+  background:rgba(0,0,0,0.1);
   border-radius:16px;
   display:flex;
   justify-content:center;
@@ -870,9 +908,11 @@ body {
 }
 
 .story-inner{
-  width:92%;
-  height:92%;
-  background:linear-gradient(160deg,#ff3d71,#ff9a9e);
+  width:100%;
+  height:100%;  
+  background: white;
+  background-position: center;
+  background-size: cover;
   border-radius:14px;
   display:flex;
   flex-direction:column;
@@ -887,38 +927,59 @@ body {
   height:auto;
   filter:drop-shadow(0 4px 6px rgba(0,0,0,0.3));
 }
-
-.story-title{
-  color:white;
-  font-size:20px;
-  font-weight:600;
-  letter-spacing:0.4px;
-  opacity:0.95;
-  background: rgba(255,130,130, 0.5);
-  padding: 10px;
-  border-radius: 90px;
-  text-align: center;
+.storyLoader {
+  font-size:25px;
+  width:230px;
+  height:400px;
+  background:rgba(0,0,0,0.1);
+  border-radius:16px;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  box-shadow:0 8px 20px rgba(0,0,0,0.35);
+  position:relative;
+  overflow:hidden;
+  color:white;              
 }
 
+.storyLoader::after{
+  content:"";
+  position:absolute;
+  top:0;
+  left:-100%;
+  width:50%;
+  height:100%;
+  background:linear-gradient(
+    30deg,
+    transparent,
+    rgba(255,255,255,0.7),
+    transparent
+  );
+  animation:shine 3s infinite;
+}
+
+@keyframes shine{
+  0%{
+    right:-100%;
+  }
+  100%{
+    left:150%;
+  }
+}
 #stryPort{
     background: rgba(0,0,0,0.3);
     width: 100%;
     height: 100%;
-    display: none;
+    display: flex;
     justify-content:center;
     align-items:center;
-    z-index: 100;
+    z-index: 1000;
     position: fixed;
     top: 0;
     left: 0;
     opacity: 0;
-    transform: translateY(120px);
-    transition: opacity 0.3s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
-}
-
-#stryPort.show{
-    opacity: 1;
-    transform: translateY(0);
+    transform: translateY(100%);
+    transition: transform 0.45s ease, opacity 0.4s ease;
 }
 #stryPort div{
     width: 90%;
@@ -948,11 +1009,7 @@ body {
     height: 320px;
     border-radius: 20px;
 }
-#postsubmit:hover {
-    background: green;
-    color: white;
-}
-#submitpost:hover {
+#submitpost:focus {
     background: green;
 }
 #postLoading{
@@ -961,41 +1018,390 @@ body {
 .ownerPostMenu button{
     padding: 10px;
 }
+.warning{
+  position:fixed;
+  left:50%;
+  top:-40px;
+  transform:translateX(-50%) scale(0.95);
+    background: conic-gradient(
+        #007bff,
+        #00c6ff,
+        #007bff,
+        #00c6ff,
+        #007bff,
+        #007bff
+    );
+  box-shadow: 0 0 20px #2b96ff;
+  border-radius:16px;
+  padding:8px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  opacity:0;
+  transition:0.9s cubic-bezier(.22,1,.36,1);
+  z-index:10000;
 
-#warn{
-    position: fixed;
-    left: 50%;
-    bottom: 200px;   
-    transform: translateX(-50%) scale(0.95);
-    display: none;
-    align-items: center;
-    gap: 10px;
-    background: black;
-    color: #fff;
-    padding: 12px 22px;
-    border-radius: 14px;
-
-    font-size: 15px;
-    font-weight: 500;
+}
+.warning div {
+    background: white;
+    padding: 7px;
+    border: none;
+    border-radius: 8px;
+    color: #007bff;
+    font-size: 25px;
+    text-align: center;
+    font-weight: bold;
     letter-spacing: 0.2px;
-
-    box-shadow: 0 14px 35px rgba(0,0,0,0.25);
-
-
-    transition:
-      opacity 0.3s ease,
-      bottom 0.45s cubic-bezier(.22,1,.36,1),
-      transform 0.45s cubic-bezier(.22,1,.36,1);
-
-    z-index: 10001;
+    max-width: 400px;
+}
+.warning.warnShow{
+  opacity:1;
+  visibility:visible;
+  top:100px;
 }
 
-  </style>
+.alert-overlay{
+  position:fixed;
+  inset:0;
+  background: none;
+  opacity:0;
+  visibility:hidden;
+  transition:0.35s;
+  z-index:111100;
+}
+
+.custom-alert{
+  position:fixed;
+  left:50%;
+  bottom:-300px;
+  transform:translateX(-50%) scale(0.95);
+  width:70%;
+  background:#fff;
+  border-radius:16px;
+  padding:25px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  opacity:0;
+  transition:0.4s cubic-bezier(.22,1,.36,1);
+  z-index:111200;
+}
+
+.alert-overlay.show{
+  opacity:1;
+  visibility:visible;
+}
+
+.custom-alert.show{
+  bottom:40px;
+  opacity:1;
+  transform:translateX(-50%) scale(1);
+}
+
+.alert-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.alert-icon{
+  width:45px;
+  height:45px;
+  background:#4f46e5;
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:50%;
+  font-size:26px;
+}
+
+.alert-title{
+  font-size:26px;
+  font-weight:bold;
+  color:#111;
+}
+
+.alert-message{
+  font-size:20px;
+  color:gray;
+  margin:10px 0 20px;
+  line-height:1.5;
+}
+
+.alert-actions{
+  display:flex;
+  gap:10px;
+}
+
+.alert-actions button{
+  flex:1;
+  padding:10px;
+  border:none;
+  border-radius:8px;
+  font-size:20px;
+  cursor:pointer;
+  transition:0.2s;
+}
+
+.btn-ok{
+  background:#4f46e5;
+  color:#fff;
+  width: 250px;
+}
+
+.btn-ok:focus{
+  background:#4338ca;
+}
+
+.btn-cancel{
+  background:#e5e7eb;
+}
+
+.btn-cancel:focus{
+  background:#d1d5db;
+}
+.loading-stry{
+    height: 430px;
+    width: 180px;
+    border-radius: 20px;
+    background: rgba(0,0,0,0.3);
+}
+.profDis{
+    position: fixed;
+    z-index: 9999;
+    bottom: -1500px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    inset:0;    
+    background:rgba(0,0,0,0.4);
+    backdrop-filter: blur(4px);
+    opacity:0;
+    visibility:hidden;
+    transition:0.35s;
+}
+.profDis img{
+  width:80%;
+  /* transform:translateX(-50%) scale(0.95); */
+  /* transition:0.4s cubic-bezier(.22,1,.36,1); */
+  /* z-index:1000; */
+}
+.profDis.showDis{
+   opacity:1;
+   visibility:visible;
+ }
+#pBG {
+  position:fixed;
+  inset:0;
+  background:none;
+  opacity:0;
+  visibility:hidden;
+  transition:0.35s;
+  z-index:1001;
+}
+#bgPost, #textFont{
+  position:fixed;
+  left:50%;
+  bottom:-300px;
+  transform:translate(-50%) scale(0.95);
+  width:100%;
+  background:#fff;
+  border-top-right-radius:40px;
+  border-top-left-radius:40px;
+  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  opacity:0;
+  transition:0.4s cubic-bezier(.22,1,.36,1);
+  z-index:1002;
+  height: 40%;
+  overflow: auto;
+  padding: 30px;
+}
+#innerChange {
+    text-align : center;
+} 
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');   
+#innerChange h4 {
+    font-size: 30px;
+    font-family: 'Orbitron', sans-serif;               
+    font-weight: bold;
+    text-shadow: 4px 2px 0 #000;
+    color: rgba(255,255,255, 0.8);
+ }
+#innerChange input {
+    padding: 20px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 35px;
+    border: none;
+    border-bottom: 5px solid #8f8383b3;
+    color: #4b6f5a;
+    width: 80%;
+}
+#innerChange input:focus {
+    border-bottom: 5px solid #4b6f5a; 
+}
+#BGS p {
+    color: gray;
+    font-size: 40px;
+    margin: 20px;
+    border-left: 20px solid gray;
+    padding: 10px;
+}
+#BGS button {
+    height: 100px;
+    width: 100px;
+    border-radius: 35px;
+    margin: 30px;
+    border: none;
+    box-shadow: 0 0 5px gray;
+}
+#BGS img {
+    height: 100px;
+    width: 100px;
+    border-radius: 35px;
+    border: none;
+}
+#imgcont{
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+#loc-feel {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.3);
+    z-index: 1005;
+    height: 100%;
+    width: 100%;
+    top:0;
+    left:0;
+    opacity: 0;
+    transition: all 0.4s ease;
+    transform: translateX(100%);
+}
+#loc-feel div {
+    padding: 40px;
+    border-radius: 20px;
+    background: white;
+}
+#loc-feel input {
+    background: none;
+    border: none;
+    border-bottom: 2px solid #e4e7e3;
+    margin: 20px;
+    font-size: 30px;
+    color: #4b6f5a;
+    padding: 15px;
+    cursor: pointer;
+}
+#loc-feel input:focus {
+    border: none;
+    border-bottom: 2px solid #4b6f5a;
+    outline: none;
+}
+#loc-feel section {
+    text-align: right;
+}
+#loc-feel button {
+    margin: 15px;
+    padding: 15px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 20px;
+}
+#headerPre {
+    color: rgba(0,0,0,0.6);
+    font-size: 30px;
+    padding: 15px;
+}
+#headerPre span {
+    color: black;
+    font-weight: bold;
+}
+.storyReactBtn {
+    background: none;
+    border: none;
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+#tagPeople {
+    display: block;
+    position: fixed;
+    overflow: auto;
+    z-index: 1020;
+    width: 94%;
+    height: 95%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    box-shadow: 0 0 10px gray;
+    padding: 20px;
+    transform: translateY(100%);
+    transition: all 0.4s ease;
+}
+#tagPeople h1 {
+    color: green;
+}
+#searchTagged {
+    position: fixed;
+    display: block;
+    width: 95%;
+    z-index: 10000;
+}
+#searchTagged input {
+    width: 90%;
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    border: none;
+    color: #4b6f5a;
+    box-shadow: 0 0 9px gray;
+}
+#searchTagged input:focus {
+    border-bottom: 5px solid #4b6f5a;
+}
+#postMenu {
+    background: white;
+    border: 1px solid gray;
+    box-shadow: 0 0 8px gray;
+    border-radius: 4px;
+    width: 300px;
+    position: fixed;
+    z-index: 998; 
+    display: block;
+    bottom: 10%;
+    left: 40%;
+    transition:0.4s;
+    transform: translateY(150%); 
+}
+#postMenu div {
+    border: none;
+    border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    padding: 10px;
+    font-size: 20px;
+    background: none;   
+}
+
+
+ </style>
 </head>
 <body id="body">
 <div id="header">
-<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg"  width="200px">
-  <h1 id="profPicture"></h1>
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" width="200px">
+<h1 id="profPicture"></h1>
 </div>
       
 
@@ -1004,10 +1410,13 @@ body {
 <div id="searchpad">
 <div style="background: none; width: 100%;">
     <div style="text-align: right; padding-right: 70px;">
-        <button onclick="closealert('show');closeSearchPad();" id="close">×</button>
+        <button onclick="closeSearchPad();" id="close">×</button>
     </div>
-    <input type="text" id="search" placeholder="Search here for any ID.."/>
-    <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="25"></button>  
+   <table><tr><td>
+    <input type="text" id="search" style="width: 600px;" placeholder="Search here for any ID.."/></td><td>
+    <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="25"></button>
+    </td></tr></table>
+   
    
           <div id="show">
               <div>
@@ -1024,57 +1433,111 @@ body {
     </div>
  
  <div id="postpage">
- <div id="postpad">
-      <table border="0" id="nameplate"><tr><td><h2 style="text-align: left; color: green;">Create your mind here..</h2>
- </td><td>
-      <div style="text-align: right">
-          <button onclick="closePostpage()">×</button>
-      </div> 
-      </td> 
+  <div id="postpad">
+   
+    <table border="0" id="nameplate" style="width:100%;">
+      <tr>
+        <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
+        <td>
+          <div style="text-align: right">
+      <button onclick="postsubmit()" id="postsubmit">Post</button>
+          </div> 
+        </td> 
       </tr>
-      </table>
-                <div style="text-align: right;">
-               <button onclick="postsubmit()" id="postsubmit" style="transition: 0.3s;">Post </button>
-         </div>
+    </table>
+    
+ <div id="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;"><span id="idName"></span> is feeling <span id="feeling">___</span> at <span id="location">___</span></div>
 
-      <div>         
-      <textarea id="postword" placeholder="What's on your mind?"></textarea>
+    <div>
+<div id="imgcont"></div>
+    <textarea id="postword" placeholder="What's on your mind?" ></textarea>
+    <section id="textFont">
+   <section style="text-align: right">
+  <button onclick="closeFontSize()">×</button>
+    </section>
+    <section id="innerChange">
+  <h4>A</h4>
+  <br>
+  <input type="number" id="givenSize" placeholder="Type here your choosen size.." value="20">
+    </section>
+   </section>
+    </div>
+    
+    <!-- ALERT -->
+    <h2 id="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+  <div id="bottomBTN">
+ <button onclick="postBG()"><img src="background.png" alt=""></button>
+ <button onclick="fontSize()"><img src="size.png" alt=""></button>
+  </div>
 
-      </div>
+    <!-- FILE UPLOAD BUTTONS -->
+    <div class="postBtn" style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
+      <label class="uploadBtn">
+  <img src="https://i.ibb.co.com/qFYRdQs6/image.png" width="40" style="margin-right: 20px;"> <span id="imgUp" style="width:500px">Upload photo</span>
+        <input type="file" accept="image/*" id="imageInput"  hidden onchange="loadpostIMG(event)">
+      </label>
+   <label class="uploadBtn" onclick="input('feeling', 'What’s	‌‌‌‌‌‌‌‌‌ your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
+   </label>
+   <label class="uploadBtn" onclick="input('location', 'What’s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
+   </label>
+   <label class="uploadBtn" onclick="tag()"><img src="https://i.ibb.co.com/3yjGy002/tag.png" width="40" style="margin-right: 20px"> Tag Peoples
+   </label>
+   
+    </div>
+
+    <!-- FILE PREVIEW -->
+    <div id="filePreview" style="margin-top:10px;"></div>
+  </div>
+</div>
+
+ <!-- Post Background -->
+ <div id="pBG">
+  <div id="bgPost">
+ <h1 style="color: green; margin-left: 20px;">Choose your post background...</h1><hr style="background: green; height: 2px;">
+<div id="BGS"> 
+  <p>Colors: </p>
+<button style="background: linear-gradient(30deg, white, white)" onclick="textBG('white', 'white', '')"></button>
+<button style="background: linear-gradient(30deg, red, red)" onclick="textBG('red', 'red', '')"></button>
+<button style="background: linear-gradient(30deg, green, green)" onclick="textBG('green', 'green', '')"></button>
+<button style="background: linear-gradient(30deg, skyblue, skyblue)" onclick="textBG('skyblue', 'skyblue', '')"></button>
+ <p>Gradients: </p>
+<button style="background: linear-gradient(30deg, red, pink)" onclick="textBG('red', 'pink', '')"></button>
+<button style="background: linear-gradient(30deg, lightgreen, green)" onclick="textBG('lightgreen', 'green', '')"></button>
+<button style="background: linear-gradient(30deg, white, gray)" onclick="textBG('white', 'gray', '')"></button>
+ <p>Themes: </p>
+ <div onclick="textBG('','','testing.png')" class="imgbg"> <img src="testing.png" alt=""></div>
+</div>
+   </div>
  </div>
- </div> 
+
+
 <div id="allChange">
  
  <h2 style="padding-left:15px;">Stories</h2><hr>
 
 <div class="story-container">
+    <table> <tr> <td>
 <div class="story">
-  <div class="story-inner">
+  <div class="story-inner" onclick="openStoryPort(); appClsBtn()">
+      <div style="background: rgba(0,0,0,0.5); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2.5px); ">
+       <div style="font-size: 60px; padding: 20px; border-radius: 90px; background: white; display: flex; align-items: center; justify-content: center; color: blue; font-weight: bold; width: 30px; height: 30px;">+</div>
+      </div>
+  </div>    
 
-    <h1 style="position: absolute; z-index: 50; top: 0px; right: 0px; background: #ff3d71;border: 5px solid #ff3d71; border-radius: 90px;" id="storyProf">
-    </h1>
-
-    <!-- hidden gallery input -->
-
-
-    <button
-      style="background: pink; border: none; border-radius: 90px; padding: 10px; box-shadow: 0 0 10px white;"
-      onclick="openStoryPort(); appClsBtn()"
-    >
-          <img 
-        id="ImgofStory"
-        src="https://i.ibb.co.com/CsX8QXq1/love-books.png"
-        alt="Love Books"
-        width="120"
-      >
-
-    </button>
-
-    <div class="story-title">Art your mind</div>
-
-  </div>
 </div>
-  <div id="showingStory"></div>
+</td>
+<td>
+  <div id="container">
+     <div>
+       <table cellpadding="9">
+             <tr>
+        <td><div class="storyLoader">Loading story..</div></td>             
+        <td><div class="storyLoader">Loading story..</div></td>             
+        </tr>
+         </table>
+     </div>
+  </div>
+</td></tr></table>
 </div>
 
 <hr>
@@ -1083,7 +1546,7 @@ body {
 <div class="posting-box">
     <div class="header">
         <div class="img-wrapper">
-            <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="AsirNet">
+            <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="">
         </div>
 
         <div class="text">
@@ -1099,71 +1562,7 @@ body {
 <div id="content"></div>
 </div>
 
-<div id="stryPort">
-    <div>       
-        
- <div style="background: white; height: 97%; width: 94%; margin: 20px; display: flex; justify-content:center; align-items:center;" class="showHere">
-
-<div style="text-align: right;" id="clsBtnDo">
-    <button onclick="closealert('stryPort')" style="display: flex; justify-content:center; align-items:center; padding: 20px; font-size: 30px; color: white; border: none; border-radius: 90px; width: 50px;height: 50px; background: red;">
-        ×
-    </button>
-</div>
-   
-<input 
-    type="file" 
-    id="storyFile" 
-    accept="image/*,video/*" 
-    style="display:none"
-    onchange="loadFromGallery(event)"
-  >
-     <section style="position: fixed; z-index: 10000; top:100px; display: none;" id="storyChange">
- <table align="center">
-     <tr>
-<td><button onclick="closeStryPort()" class="videoBtn">Close</button></td>             
-<td><button onclick="openGallery()" class="videoBtn">Change</button></td>
-<td><button onclick="sendStory()" class="videoBtn">Create</button></td>
-     </tr>
- </table>
-    </section>
-
-
-  <button onclick="openGallery()" 
-  id="plusBtn"
-  style="
-      font-size: 30px;
-      width: 400px;
-      height: 200px;
-      background: linear-gradient(30deg,cyan,lightgreen);
-      border: none;
-      border-radius: 20px;
-      display: block;
-      color:red;
-      box-shadow: 0 0 30px green;
-      cursor:pointer;
-      position:absolute;
-      z-index:50;
-    ">
-    + Create Your Story
-  </button>
-
-  <video id="storyVideo" controls style="
-      max-width:100%;
-      max-height:90%;
-      border-radius:20px;
-      display:none;
-  "></video>
-
-  <img id="storyImg" src="" style="
-      max-width:90%;
-      max-height:90%;
-      border-radius:20px;
-      display:none;
-  ">
-        
-    </div>
-    </div>
-</div>
+<div id="stryPort"></div>
 
 
 
@@ -1173,9 +1572,9 @@ body {
     <div>
         <table id="footerBtn">
             <tr>
-<td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="home" border="0" width="40"></button></td>
-<td><button onclick="profile();loadProfile();"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="user" border="0" width="40"></button></td>
-<td><button onclick="createpost()" style="    
+<td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="profile();loadProfile();"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="postMenu();//createpost()" style="    
     width: 90px;
     height: 90px;
     border: 2px solid black;
@@ -1185,13 +1584,22 @@ body {
     padding: 5px;
     color: black;
 ">+</button></td>
-<td><button onclick="setting();"><img src="https://i.ibb.co.com/F4RcTPbR/setting.png" alt="setting" border="0" width="40"></button></td>
-<td><button onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="search interface symbol" border="0" width="40"></button></td>
+<td><button onclick="setting();"><img src="https://i.ibb.co.com/F4RcTPbR/setting.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40"></button></td>
             </tr>
         </table>
     </div>
 </footer>
 
+<div id="postMenu">
+   <div onclick="createpost();clzpostMenu()">Post plain text</div>
+   <div onclick="clzpostMenu()">Post photos</div>
+   <div onclick="openStoryPort();clzpostMenu()">Post story</div>
+</div>
+
+<div class="profDis">
+    <img id="displayPic">
+</div>
 
 
 
@@ -1259,48 +1667,245 @@ body {
     </section>
 </div>
     
-<div id="warn">
-   <div>testing</div> 
+<div class="warning" id="warnOverlay">
+       <div id="wordSet"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="alert-overlay" id="alertOverlay" onclick="closeAlert()"></div>
+
+<!-- ALERT -->
+<div class="custom-alert" id="customAlert">
+  <div class="alert-header">
+    <div class="alert-icon">?</div>
+    <div class="alert-title" id="confirm-text"></div>
+  </div>
+
+  <div class="alert-message" id="confirm-word">
+  </div>
+
+  <div class="alert-actions">
+    <button class="btn-cancel" onclick="closeAlert()">Cancel</button><div id="confirm-btn"></div>
+  </div>
+</div>
+
+<div id="loc-feel">
+    <div>
+   <h2 id="inputText" style="color:green"></h2>
+   <hr style="background: green; height: 2px;"></hr>
+ <input type="text" id="dataInput" placeholder="Enter here....">
+ <section>
+   <button id="removeData" style="background: red;">Remove</button>
+   <button onclick="cancel()" style="background: red;">Cancel</button>
+   <button id="inputData" style="background: blue;">Input</button>
+ </section>
+    </div>
+</div>
+
+
+<div id="tagPeople">
+ <div id="searchTagged">
+ <h1>Select People to tag them: </h1>
+ <hr>
+ <input type="text" placeholder="Search users...."> 
+ </div>
+ <div id="comingUsers"></div>
 </div>
 
 
 <script>
-let selectedVideoFile = null;
-let selectedVideoSrc = "";
+let postImgFiles = [];
+let postImagesBase64 = []; // multiple images save
+
+function loadpostIMG(e) {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    const imgCont = document.getElementById("imgcont");
+    document.getElementById("imgUp").innerHTML = "Add more photos";
+
+    files.forEach(file => {
+        if (!file.type.startsWith("image/")) {
+            onalert("Sorry, video isn’t supported 😥");
+            return;
+        }
+
+        // FB style: push new file
+        postImgFiles.push(file);
+
+        // Wrapper
+        const wrapper = document.createElement("div");
+        wrapper.style.position = "relative";
+        wrapper.style.width = "110px";
+        wrapper.style.height = "110px";
+        wrapper.style.borderRadius = "8px";
+        wrapper.style.overflow = "hidden";
+        wrapper.style.margin = "10px";
+
+        // Image preview
+        const img = document.createElement("img");
+        img.style.width = "100%";
+        img.style.height = "100%";
+        img.style.objectFit = "cover";
+
+        // Remove button
+        const removeBtn = document.createElement("span");
+        removeBtn.innerHTML = "×";
+        removeBtn.style.position = "absolute";
+        removeBtn.style.top = "2px";
+        removeBtn.style.right = "6px";
+        removeBtn.style.cursor = "pointer";
+        removeBtn.style.background = "rgba(0,0,0,.6)";
+        removeBtn.style.color = "#fff";
+        removeBtn.style.borderRadius = "50%";
+        removeBtn.style.padding = "0 6px";
+
+        removeBtn.onclick = () => {
+            const index = postImgFiles.indexOf(file);
+            if (index > -1) {
+                postImgFiles.splice(index, 1);
+                postImagesBase64.splice(index, 1); // remove corresponding Base64
+            }
+            if (postImgFiles.length == 0) document.getElementById("imgUp").innerHTML = "Upload photos";
+            wrapper.remove();
+        };
+
+        wrapper.appendChild(img);
+        wrapper.appendChild(removeBtn);
+        imgCont.appendChild(wrapper);
+
+        // Compress + Base64
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+            const tempImg = new Image();
+            tempImg.onload = function() {
+                const canvas = document.createElement("canvas");
+                canvas.width = tempImg.width;   
+                canvas.height = tempImg.height;
+
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+
+                const base64 = canvas.toDataURL("image/jpeg", 0.5);
+                postImagesBase64.push(base64);
+
+                // Show preview in wrapper
+                img.src = base64;
+            }
+            tempImg.src = evt.target.result; 
+        }
+        reader.readAsDataURL(file);
+    });
+}
 
 /* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
 const qs = sel => document.querySelector(sel);
 
+
+function input(id, quesText) {
+    $('loc-feel').style.opacity = "1";
+    $('loc-feel').style.transform = "translateX(0)";
+    $('inputText').innerText = quesText;
+
+   $("inputData").onclick = () => {
+      if(!$('dataInput').value) {
+         onalert('Write something first!');
+      } else {
+         $(id).innerText = $("dataInput").value;
+         $("dataInput").value = "";
+         $('loc-feel').style.transform = "translateX(100%)";
+         $('loc-feel').style.opacity = "0";
+      }
+   };
+   $("removeData").onclick = () => {
+         $("dataInput").value = "";
+         $('loc-feel').style.transform = "translateX(100%)";
+         $('loc-feel').style.opacity = "0";
+         $(id).innerText = '___';   
+   }
+  BackManager.register(cancel);
+}
+function cancel() {
+         $('loc-feel').style.transform = "translateX(100%)";
+         $('loc-feel').style.opacity = "0";
+}
+
+let selectedVideoFile = null;
+let selectedVideoSrc = "";
+
+
+/* --------- Story Pages ------- */
+const FPage = `
+<div id="changePort">
+   <div id="port" style="display:block">
+<section style="text-align: right;" id="clsBtnDo">
+  <button onclick="closeStoryPort()" style="display:flex;justify-content:center;align-items:center;padding:20px;font-size:30px;color:white;border:none;border-radius:90px;width:50px;height:50px;margin:90px;background:red;">×</button>
+</section>
+<input type="file" id="storyFile" accept="video/*" style="display:none" onchange="loadFromGallery(event)">
+<div id="plusBtn" style="display:flex;justify-content: center; align-items: center;margin-left: 60px;">
+<button onclick="openGallery()" style="font-size:30px;width:400px;height:200px;background:linear-gradient(30deg,cyan,lightgreen);border:none;border-radius:20px;color:red;box-shadow:0 0 30px green;" id="shakeDesign">
+  Create Your Story
+</button>
+</div></div>
+
+<video id="storyVideo" controls style="width:100%;max-height:70%;border-radius:20px;display:none; margin-top: 30px;"></video>
+
+
+<section id="storyChange" style="display: none">
+  <table align="center">
+    <tr>
+      <td><button onclick="onconfirm('Do you want to cancel??', 'Are you sure to cancel current operation? Your current progress will be lost! Press OK button if you’re sure.', 'OK', closeStoryPort, '', '#4f46e5')" class="videoBtn">Close</button></td>
+      <td><button onclick="openGallery()" class="videoBtn">Change</button></td>
+      <td><button onclick="prepearStory()" class="videoBtn">Create</button></td>
+    </tr>
+  </table>
+</section>
+</div>
+`;
+
+const SPage = ` <br><br>
+ <table cellpadding="5"><tr><td>
+    <video id="prepearVideo" muted style="width:200px;height:150px;border:5px solid red"></video></td>
+    
+    <td>
+<textarea id="storyCaption" placeholder="Write something about this video..." style=" height:150px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+"></textarea>
+</td>
+
+ </tr></table>
+   
+ <div style="text-align: right; width: 100%; height: 200px;">   
+<button id="submitpost" onclick="appClsBtn()" 
+    style="background: rgba(0,0,0,0.2); padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
+    Cancel
+</button>
+<button id="submitpost" onclick="sendStory()" 
+    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
+    Post Story
+</button>
+</div>
+`;
+
 /* ---------- Open / Close ---------- */
 function openGallery(){ $("storyFile").click(); }
+
 function openStoryPort(){ 
-  const el = $("stryPort");
 
-  // reset state
-  el.classList.remove("show");
-  el.style.display = "flex";
-
-  // force reflow (important)
-  el.offsetHeight;
-
-  // trigger animation
-  el.classList.add("show");
+const page =  document.getElementById("stryPort");
+page.style.transform = 'translateY(0)';
+page.style.opacity = '1';
+page.innerHTML = FPage;
+ BackManager.register(closeStoryPort);
 }
 
 function closeStoryPort(){
   const el = $("stryPort");
-  if(!confirm("Are you sure you want to close the story?")) return;
-
-  el.classList.remove("show");
-  setTimeout(()=>{
-    el.style.display = "none";
-  }, 450);
-
+el.style.transform = 'translateY(100%)';
+el.style.opacity = '0';
 
   const video = $("storyVideo");
   if(video){ video.pause(); video.currentTime=0; }
-  $("stryPort").style.display = "none";
 }
 
 /* ---------- Load video from gallery ---------- */
@@ -1309,7 +1914,7 @@ function loadFromGallery(e){
   if(!file) return;
 
   if(!file.type.startsWith("video")){
-    alert("Only video is supported");
+    onalert("Only video is supported");
     return;
   }
 
@@ -1320,77 +1925,33 @@ function loadFromGallery(e){
   const video = $("storyVideo");
   video.src = selectedVideoSrc;
   video.style.display = "block";
+  qs('#port').style.display = "none";
+  document.getElementById('storyChange').style.display = 'flex';
 
-  $("plusBtn").style.display = "none";
-  $("storyChange").style.display = "block";
-  qs(".showHere").style.background = "black";
-
-  setTimeout(()=>video.play().catch(()=>{}),150);
+  setTimeout(()=>video.play().catch(()=>{}),1000);
+   BackManager.register(openStoryPort);
 }
 
 /* ---------- Reset / Close story prep ---------- */
 function appClsBtn(){
-qs(".showHere").style.background = "transparent";  qs(".showHere").innerHTML = `
-<div style="text-align: right;" id="clsBtnDo">
-  <button onclick="closealert('stryPort')" style="display:flex;justify-content:center;align-items:center;padding:20px;font-size:30px;color:white;border:none;border-radius:90px;width:50px;height:50px;background:red;">×</button>
-</div>
-<input type="file" id="storyFile" accept="image/*,video/*" style="display:none" onchange="loadFromGallery(event)">
-<section style="position:fixed;top:100px;z-index:10000;display:none;" id="storyChange">
-  <table align="center">
-    <tr>
-      <td><button onclick="closeStryPort()" class="videoBtn">Close</button></td>
-      <td><button onclick="openGallery()" class="videoBtn">Change</button></td>
-      <td><button onclick="prepearStory()" class="videoBtn">Create</button></td>
-    </tr>
-  </table>
-</section>
-<button onclick="openGallery()" id="plusBtn" style="font-size:30px;width:400px;height:200px;background:linear-gradient(30deg,cyan,lightgreen);border:none;border-radius:20px;color:red;box-shadow:0 0 30px green;cursor:pointer;position:absolute;z-index:50;">
-  Create Your Story
-</button>
-<video id="storyVideo" controls style="max-width:100%;max-height:90%;border-radius:20px;display:none"></video>
-<img id="storyOfImg" src="" style="max-width:90%;max-height:90%;border-radius:20px;display:none">
-  `;
+  document.getElementById("stryPort").innerHTML = FPage;
 }
 
 /* ---------- Prepare story screen ---------- */
 function prepearStory(){
-  if(!selectedVideoFile) return alert("Please select a video first!");
+  if(!selectedVideoFile) return onalert("Please select a video first!");
 
-  const box = qs(".showHere");
-  box.style.background = "transparent";
+ qs("#changePort").innerHTML = SPage;
+   BackManager.register(closeStoryPort);
+   BackManager.register(openStoryPort);
 
-  box.innerHTML = `
-<div style="height:100%;width:100%;">
-  <div style="text-align:right">
-    <button onclick="appClsBtn()" style="background:none;border:none;color:red;font-size:40px;">×</button>
-  </div>
-  <div style="position:fixed;top:250px;width:600px;">
-    <video id="prepearVideo" muted style="max-width:100%;max-height:300px;border-radius:20px;"></video>
-    <hr>
-    <textarea id="storyCaption" placeholder="Write something about this video..."
-      style="height:300px;width:500px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
-"></textarea>
-    <hr>
-    <div style="text-align:right">
-<button id="submitpost" onclick="sendStory()" 
-    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s;">
-    Post
-</button>
- </div>
-  </div>
-</div>`;
-
-  const pv = $("prepearVideo");
-  pv.src = selectedVideoSrc;
-  pv.currentTime = 0;
-  pv.play();
-  setTimeout(()=>pv.pause(),1000);
+  const pv = document.getElementById("prepearVideo");
+  setTimeout(()=>pv.play().catch(()=>{}),1000);
 }
 
-/* ---------- Send story to backend ---------- */
 function sendStory(){
-  if(!selectedVideoFile) return alert("No video selected");
-
+  if(!selectedVideoFile) return onalert("No video selected");
+console.log('clicked');
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const fd = new FormData();
@@ -1405,34 +1966,31 @@ function sendStory(){
     body:fd
   })
   .then(r=>r.json())
-  .then(()=>{ alert("Story uploaded ✅"); closeStryPort(); })
+  .then(()=>{ onalert("Story uploaded ✅"); closeStoryPort(); })
   .catch(console.error);
 }
 
-
-/* ---------- Fetch and show all stories ---------- */
+loadAllStories();
 async function loadAllStories() {
-  const container = document.getElementById("showingStory");
-  container.innerHTML = "Loading stories...";
-
+let container = document.getElementById('container');
   try {
     const res = await fetch("https://story-server-9d2k.onrender.com/stories");
     const stories = await res.json();
-
     if (!stories.length) {
-      container.innerHTML = "<p>No stories yet.</p>";
+      container.innerHTML = `<div class="story" style="margin-left: 10px;">
+ <p style="font-size: 26px; text-align: center; color: white;">No story uploaded yet.</p>
+      </div>`;
       return;
     }
 
     container.innerHTML = "";
 
     stories.forEach(story => {
-
       /* ---------- Story Card ---------- */
       const btn = document.createElement("button");
       btn.style = `
-        width:220px;
-        height:330px;
+        width:230px;
+        height:400px;
         margin:10px;
         border-radius:12px;
         overflow:hidden;
@@ -1445,7 +2003,7 @@ async function loadAllStories() {
 
       /* ---------- Video thumbnail ---------- */
       const video = document.createElement("video");
-      video.src = story.videoURL;
+      video.src = story.path;
       video.muted = true;
       video.preload = "metadata";
       video.playsInline = true;
@@ -1458,18 +2016,16 @@ async function loadAllStories() {
       video.onloadeddata = () => video.pause();
 
       /* ---------- Avatar ---------- */
-      const avatar = document.createElement("p");
-      avatar.innerText = story.avatar;
+      const avatar = document.createElement("img");
+      avatar.src = story.avatar;
       avatar.style = `
         position:absolute;
-        top:0px;
-        right:8px;
-        width:34px;
-        height:34px;
-        font-size:30px;
+        top:10px;
+        right:10px;
+        width:55px;
+        height:55px;
         border-radius:50%;
-        border: none;
-        background: none;
+        border: 6px solid black;
         z-index: 100;
       `;
 
@@ -1478,7 +2034,7 @@ async function loadAllStories() {
       username.innerText = story.username || "Anonymous";
       username.style = `
         position:absolute;
-        bottom:0;
+        top:0;
         left:0;
         width:50%;
         padding:10px;
@@ -1486,11 +2042,27 @@ async function loadAllStories() {
         font-weight : bold;
         color:white;
         text-align:left;
-        background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        text-shadow: 0 0 15px black;
+      `;
+      /* ---------- Caption ---------- */
+      const caption = document.createElement("div");
+      caption.innerText = story.caption || "";
+      caption.style = `
+        position:absolute;
+        bottom:0;
+        left:0;
+        width: 90%;
+        padding:10px;
+        font-size:20px;
+        font-weight: normal;
+        color:white;
+        text-align:left;
+        text-shadow: 0 0 15px black;
       `;
 
       /* ---------- Assemble ---------- */
       btn.appendChild(video);
+      btn.appendChild(caption);
       btn.appendChild(avatar);
       btn.appendChild(username);
 
@@ -1498,13 +2070,18 @@ async function loadAllStories() {
       btn.onclick = () => showStoryModal(story);
 
       container.appendChild(btn);
-    });
+    }); 
 
   } catch (err) {
     console.error(err);
-    container.innerHTML = '<p style="color:red;">Network error</p>';
+       container.innerHTML = `<div class="story" style="margin-left: 10px; width: 400px; flex-direction: column;">
+ <p style="font-size: 26px; text-align: center; color: black; font-weight: bold;">Network error</p>
+ <p style="font-size: 18px; text-align: center; color: gray;">Couldn't load stories due to internet connection. Please check your internet connection first!</p>
+      </div>`;
+      return;
+   }
+  
   }
-}
 
 
 /* ---------- Custom modal ---------- */
@@ -1521,7 +2098,7 @@ function showStoryModal(story) {
     position:fixed;
     inset:0;
     background:black;
-    z-index:10000;
+    z-index:1000;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -1550,14 +2127,13 @@ function showStoryModal(story) {
     z-index:2;
   `;
 
-  const avatar = document.createElement("p");
-  avatar.innerText = story.avatar;
+  const avatar = document.createElement("img");
+  avatar.src = story.avatar;
   avatar.style = `
-    width:42px;
-    height:42px;
+    width:54px;
+    height:54px;
     border-radius:50%;
-    border:2px solid white;
-    font-size: 30px;
+    border:5px solid white;
   `;
 
   const username = document.createElement("span");
@@ -1589,14 +2165,15 @@ function showStoryModal(story) {
 
   /* ---------- Video ---------- */
   const video = document.createElement("video");
-  video.src = story.videoURL;
+  video.src = story.path;
   video.controls = true;
   video.autoplay = true;
   video.playsInline = true;
   video.style = `
-    height: 1300px;
+    width: 95%;
     margin:auto;
     border-radius: 20px;
+    bottom : 30px;
   `;
 
   /* ---------- Caption ---------- */
@@ -1604,31 +2181,154 @@ function showStoryModal(story) {
   caption.innerText = story.caption || "";
   caption.style = `
     position:absolute;
-    bottom:0;
+    bottom:20px;
     left:0;
-    width:100%;
+    width:60%;
     padding:20px;
     color:white;
     font-size:30px;
     text-align:left;
-    background:linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background:none;
     z-index:2;
   `;
-
+  /* --------- Story Reactions ------- */
+  const reactpanal = document.createElement("div");
+  reactpanal.innerHTML = `
+  <button onclick="reactAppear(${story.id},'👍')" class="storyReactBtn"> <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="" border="0" width="70"> </button> <hr style="width:100%; background: black; height: 2px;">
+  <button onclick="reactAppear(${story.id},'♥️')" class="storyReactBtn"> <img src="https://i.ibb.co.com/0RZS0W0F/heart.png" alt="" border="0" width="70"> </button> <hr style="width:100%; background: black; height: 2px;">
+  <button id="storyComPort${story.id}" onclick="storyComPort(${story.id})" class="storyReactBtn"> <img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="" border="0" width="70"> <div id="stryComCount${story.id}" style="font-size: 20px; text-align: center; margin-top: 10px;"></div></button>  <hr style="width:100%; background: black; height: 2px;">
+  <button onclick="" class="storyReactBtn"> <img src="https://i.ibb.co.com/1GVLrGM7/hamburger.png" alt="" border="0" width="70"> </button> 
+  `;
+  reactpanal.style = `
+     position: fixed;
+     bottom: 25%;
+     right: 20px;
+     border-radius: 20px;
+     background: rgba(255,255,255,0.4);
+     z-index: 2;
+     display: flex;
+     flex-direction: column;
+     padding: 20px;
+  `;
+  /* -------- React Count --------- */
+  const react = document.createElement('button');
+  react.id = `reactCount${story.id}`;
+  react.style =`
+      background: none;
+      border: none;
+      font-size: 25px;
+      font-weight: bold;
+      color: white;
+      position: absolute;
+      z-index: 2;
+      right: 10px;
+      bottom: 20px;
+      width: 20%;
+   `;
+   
+  /* -------- react panal --------- */
+  const panal = document.createElement('div');
+  panal.id = `stryReact${story.id}`;
+  panal.style =`
+     position: fixed;
+     background: white;
+     border-top-right-radius: 40px; 
+     border-top-left-radius: 40px; 
+     width: 100%;
+     height: 60%;
+     z-index: 1010;
+     display: block;
+     bottom: 0;
+     padding: 20px;
+     transition: all 0.4s ease;
+     opacity: 0;
+     transform: translateY(100%);
+   `;
+   panal.innerHTML = `
+    <h1 style="color: green; margin-left: 20px; position: relative; z-index: 10; width: 100%; background: rgba(255,255,255,0.4);"> Reactions: </h1><hr> 
+  <div id="appearReactors${story.id}" style="margin-top: 20px; padding: 30px;">Loading reactors...</div>    
+   `;
+  /* -------- Comment Box --------- */
+ const comBox = document.createElement('div');
+ comBox.id = `commentBox${story.id}`;
+ comBox.innerHTML=`
+ <div style="     
+     position: fixed;
+     background: white;
+     border-top-right-radius: 40px; 
+     border-top-left-radius: 40px; 
+     width: 100%;
+     height: 60%;
+     z-index: 1010;
+     display: block;
+     bottom: 0;
+">
+<div style="padding: 30px; overflow: auto">
+    <h1 style="color: green; position: relative; z-index: 10; width: 100%; background: rgba(255,255,255,0.4);"> Comments: </h1><hr>
+ <div id="showStoryCom${story.id}" style="padding-top: 30px;"></div>
+</div>
+<div style="position: fixed; display: flex; z-index: 1014; bottom: 0px; width: 100%; padding: 25px; background: white; border-top: 2px solid black;">
+    <input id="storycom" type="text" placeholder="Write a comment about this story..." style="font-size: 25px; padding: 25px; border-radius: 90px; width: 70%; box-shadow: 0 0 8px gray; border: none"/><button onclick="sendStoryCom(${story.id})" id="sendStoryCom${story.id}" style="background: none; margin-left: 30px; border: none; border-radius: 90px; box-shadow: 0 0 8px gray; padding: 0 20px;"> <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="" width="50">
+</button>
+</div></div>
+ `;
+comBox.style = `
+    position: fixed;
+    background: none;
+    width: 100%;
+    height: 100%;
+    z-index: 1009;
+    bottom: 0;
+    right: 0;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(100%);
+`;
   /* ---------- Assemble ---------- */
   box.appendChild(header);
   box.appendChild(closeBtn);
+  box.appendChild(panal);
+  box.appendChild(comBox);
+  box.appendChild(reactpanal);
   box.appendChild(video);
   box.appendChild(caption);
-
+  box.appendChild(react);
   overlay.appendChild(box);
   document.body.appendChild(overlay);
+    reactCounts(story.id);
+  
+ const comPort = document.getElementById(`storyComPort${story.id}`);
+const boxOfCom = document.getElementById(`commentBox${story.id}`);
+
+ const reactPort = document.getElementById(`stryReact${story.id}`);
+ const reactBtn = document.getElementById(`reactCount${story.id}`);
+
+comPort.addEventListener('click', () => {
+  boxOfCom.style.transform = 'translateY(0)';
+  boxOfCom.style.opacity = '1';
+  history.pushState({ commentOpen: story.id }, "");
+});
+
+window.addEventListener('popstate', () => {
+  boxOfCom.style.transform = 'translateY(100%)';
+  boxOfCom.style.opacity = '0';
+  reactCounts(story.id);
+});
+
+reactBtn.addEventListener('click', () => {
+  reactPort.style.transform = 'translateY(0)';
+  reactPort.style.opacity = '1';
+  history.pushState({ panalOpen: story.id }, "");
+  reactorsOnStory(story.id);
+});
+
+window.addEventListener('popstate', () => {
+  reactPort.style.transform = 'translateY(100%)';
+  reactPort.style.opacity = '0';
+  reactCounts(story.id);
+});
+ 
 }
-
-
-/* ---------- Call on page load ---------- */
-window.addEventListener("load", loadAllStories);
-
 
 
 
@@ -1643,6 +2343,15 @@ function closealertAdv(id, postId) {
     updateCounts(postId);
 }
 
+function postMenu() {
+ document.getElementById('postMenu').style.transform = " translateY(0%)";
+ document.querySelectorAll('#postMenu button').onclick = 'clzpostMenu()'; 
+  BackManager.register(clzpostMenu);  
+ }
+
+function clzpostMenu() {
+ document.getElementById('postMenu').style.transform = " translateY(150%)";
+}
 
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
@@ -1733,21 +2442,22 @@ const s = JSON.parse(styleString);
     document.getElementById('allChange').innerHTML =`
  <div id="profdiv">
      <table align="center"><tr><td width="270">
-     <div id="profPic"></div></td><td width="400">
+     <img id="profPic" onclick="disProf()"></div></td><td width="400">
      <p id="userName"></p>
      <h3><u><i id="profileBio" ></i></u></h3>
   </td></tr></table>
   <div id="editbtn"><a href="profileEdit.html">
-  <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="edit" border="0" width="30"></button>
+  <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" border="0" width="30"></button>
   </a></div> <br><br><br><hr></div>
  
  <div id="ownerPosts"></div><div style="height: 300px;width: 100%;"></div> 
     
     `;
 
-document.getElementById('profPic').innerHTML = `${u.avatar}`;       
+document.getElementById('profPic').src =`${u.avatar}`;       
 document.getElementById('userName').innerHTML = `${u.username}`;       
-document.getElementById('profileBio').innerHTML = `${u.bio}`;       
+document.getElementById('profileBio').innerHTML = `${u.bio}`; 
+    BackManager.register(home);      
 
 showLoader("ownerPosts", "Loading Owner's posts...");
 
@@ -1759,26 +2469,79 @@ warning(
     0,
     3000
 );
-
-
 loadProfilePosts();
-
-
 }
 
+function home() {location.reload()}
+
+function disProf() {
+  const user = localStorage.getItem("user");
+  const u = JSON.parse(user);
+document.getElementById("displayPic").src = u.avatar;
+ let p = document.querySelector(".profDis");
+ p.style.opacity = "1";
+ p.style.visibility = "visible";
+p.addEventListener("click", () => {
+ p.style.opacity = "0";
+ p.style.visibility = "hidden";    
+});
+ }
 
 function setting() {
 location.href = 'setting.html';
   }
   
-  
+/* ========= DEFAULT BACK BUTTON MANAGER ========= */
+const BackManager = (function () {
+    let stack = [];
 
+    window.addEventListener("popstate", () => {
+        if (stack.length > 0) {
+            const closeFn = stack.pop();
+            if (typeof closeFn === "function") {
+                closeFn();
+            }
+        }
+    });
+
+    return {
+        register(closeFn) {
+            if (typeof closeFn === "function") {
+                history.pushState({ ui: true }, "");
+                stack.push(closeFn);
+            }
+        }
+    };
+})();
+
+/* ========= SEARCH PAD ========= */
 function searchpad() {
-document.getElementById("searchpad").style.display = "block";
-setTimeout(()=>{
-  document.getElementById("searchpad").classList.add("show");
-},10);
+    const pad = document.getElementById("searchpad");
+    if (!pad) return;
+
+    pad.style.display = "block";
+
+    setTimeout(() => {
+        pad.classList.add("show");
+    }, 10);
+
+    BackManager.register(closeSearchPad);
 }
+
+function closeSearchPad() {
+    const pad = document.getElementById("searchpad");
+    if (!pad) return;
+
+    pad.classList.remove("show");
+
+    setTimeout(() => {
+        pad.style.display = "none";
+    }, 450);
+}
+
+/* ========= POST PAGE EXAMPLE ========= */
+
+
 function closePostpage(){
    const pad = document.getElementById("postpage");
 
@@ -1787,23 +2550,48 @@ function closePostpage(){
     setTimeout(()=>{
         pad.style.display = "none";
     }, 450);
+    closeFontSize();
   
 }
-function closeSearchPad(){
-    const pad = document.getElementById("searchpad");
 
-    pad.classList.remove("show");
+function tag() {
+document.getElementById('tagPeople').style.transform = 'translateY(0)'; 
+    BackManager.register(closeTagPage);   
+}
 
-    setTimeout(()=>{
-        pad.style.display = "none";
-    }, 450);
+function closeTagPage() {
+document.getElementById('tagPeople').style.transform = 'translateY(100%)';        
+}
+
+function postBG() {
+ const p = document.getElementById("pBG");
+ p.style.opacity = '1';
+ p.style.visibility = 'visible';
+ const m = document.getElementById("bgPost");
+ m.style.opacity = '1';
+ m.style.bottom = '0px';
+    BackManager.register(closePostBG);
+}
+
+function closePostBG() {
+ const p = document.getElementById("pBG");
+ p.style.opacity = '0';
+ p.style.visibility = 'hidden';
+ const m = document.getElementById("bgPost");
+ m.style.opacity = '0';
+ m.style.bottom = '-300px';    
 }
 
 async function pad() {
     let search = document.getElementById('search').value;
     if(!search) {
-        document.getElementById("show").style.display = 'none';  
-        alert('Please search anything before');
+        document.getElementById("show").style.display = 'flex';  
+        document.getElementById("searchresult").innerHTML = `<div style="color: red; font-size: 20px; font-weight: bold;" id="searchalert"></div>`;
+   document.getElementById("searchalert").innerHTML = "Please search anything before!";  
+        setTimeout(() => {
+        document.getElementById("show").style.display = 'none';              
+        }, 2000) 
+       
     } else {
         document.getElementById('show').style.display = 'flex'; 
         
@@ -1811,117 +2599,237 @@ async function pad() {
     const search = document.getElementById('search').value.trim().toLowerCase();
     const showDiv = document.getElementById("searchresult");
 
-    // সার্চ খালি না হলে এই ফাংশন চালানো যাবে
     try {
-        // সার্ভার থেকে ইউজার গুলো আনছে
         const res = await fetch("https://users-server-xyvg.onrender.com/users");
         const users = await res.json();
 
-        // শুধু ID বা email দিয়ে filter
         const results = users.filter(u => u.username.toLowerCase().includes(search));
 
         if (results.length === 0) {
-            showDiv.style.display = 'flex';
+            showDiv.style.display = 'block';
             showDiv.innerHTML = `<p style=" color:red">No user found for "<b>${search}</b>"</p>`;
         } else {
             showDiv.style.display = 'flex';
             showDiv.innerHTML = results.map(u => `
-  <button onclick="closealert('searchpad'); showOtherProf('${u.email}')" style="background: none; width: 70%; border: none;">                
+  <button onclick="closeSearchPad(); showOtherProf('${u.email}')" style="background: none; width: 70%; border: none;">                
                 <div style="border:none; margin:5px; padding:10px; color: green; width: 100%; text-align: left;">
                     ${u.username} <br><hr style="background: green; height: 2px;">
                 </div></button>
             `).join("");
       }  
     } catch (err) {
-        alert("Check your network connection please!!");
+alertSome()
     }
 }
           
     }
+    
+function alertSome(){
+
+   document.getElementById("searchalert").innerText = "Please check your network connection!"; 
+  setTimeout(() => {
+        document.getElementById("show").style.display = 'none';              
+        }, 2000) 
+}
+
 
 
 function createpost() {
+  const user = localStorage.getItem("user");
+  const u = JSON.parse(user);
+document.getElementById('idName').innerText = u.username;
+document.getElementById('idSign').src = u.avatar;
 document.getElementById("postpage").style.display = "flex";
 setTimeout(()=>{
   document.getElementById("postpage").classList.add("show");
-},10);} 
+},10);
+    BackManager.register(closePostpage);
 
-function clearpost() {
-    document.getElementById('postword').value = "";    
 } 
-
-async function postsubmit() {
-  const input = document.getElementById('postword');
-  const text = input.value.trim();
-
-
-  if (!text) {
-    alert("Please write something!");
-    return;
-  }
-
-  const user = JSON.parse(localStorage.getItem("user"));
-  if (!user || !user.username) {
-    alert("User not found!");
-    return;
  
-  }
+/* =========================
+   BACKGROUND + TEXT STYLE
+========================= */
+function textBG(c1, c2, bg) {
+    const i = document.getElementById("postword");
 
-  const btn = document.getElementById("postbtn");
-  if (btn) btn.disabled = true;
+    if (c1 && c2) {
+        i.style.background = `linear-gradient(30deg, ${c1}, ${c2})`;
 
-  document.getElementById("postLoading").style.display = 'flex';
-    closealert('postpage');
+        if (c1 === "white" && c2 === "white") {
+            i.style.color = "black";
+            i.style.textAlign = "justify";
+            i.style.textShadow = "0 0 10px white";
+        } else {
+            i.style.color = "white";
+            i.style.textAlign = "center";
+            i.style.textShadow = "0 0 10px gray";
+        }
+    } else if (bg) {
+        i.style.background = "none";
+        i.style.backgroundImage = `url(${bg})`;
+        i.style.backgroundSize = "cover";
+        i.style.backgroundPosition = "center";
+
+        i.style.color = "white";
+        i.style.textAlign = "center";
+        i.style.textShadow = "0 0 10px black";
+    }
+}
+
+/* =========================
+   FONT SIZE PANEL
+========================= */
+function fontSize() {
+ const m = document.getElementById("textFont");
+ m.style.opacity = '1';
+ m.style.bottom = '0';
+    BackManager.register(closeFontSize);
+}
+
+function closeFontSize() {
+ const m = document.getElementById("textFont");
+ m.style.opacity = '0';
+ m.style.bottom = '-200px';
+}
+
+function changeFont(s) {
+    closeFontSize();
+    const i = document.getElementById("postword");
+
+    const map = {
+        xl: ["60px", "bold"],
+        l:  ["50px", "bold"],
+        m:  ["40px", "normal"],
+        s:  ["35px", "normal"],
+        t:  ["30px", "normal"],
+        d:  ["25px", "normal"]
+    };
+
+    const [size, weight] = map[s] || map.d;
+    i.style.fontSize = size;
+    i.style.fontWeight = weight;
+}
+
+/* =========================
+   COLLECT POST DATA
+========================= */
+function collectPostData() {
+    const el = document.getElementById("postword");
+    const cs = window.getComputedStyle(el);
+
+    return {
+        text: el.value || el.innerText,
+        style: {
+            color: cs.color,
+            fontSize: cs.fontSize,
+            fontWeight: cs.fontWeight,
+            textAlign: cs.textAlign,
+            textShadow: cs.textShadow,
+            background: cs.background,
+            backgroundImage: cs.backgroundImage,
+            backgroundSize: cs.backgroundSize,
+            backgroundPosition: cs.backgroundPosition
+        },
+        image: postImageBase64 || "" 
+    };
+}
+/* =========================
+   APPLY STYLE (SERVER → UI)
+========================= */
+function applyPostStyle(el, style) {
+    if (!style) return;
+
+    el.style.color = style.color;
+    el.style.fontSize = style.fontSize;
+    el.style.fontWeight = style.fontWeight;
+    el.style.textAlign = style.textAlign;
+    el.style.textShadow = style.textShadow;
+
+    el.style.background = style.background;
+    el.style.backgroundImage = style.backgroundImage;
+    el.style.backgroundSize = style.backgroundSize;
+    el.style.backgroundPosition = style.backgroundPosition;
+}
 
 
-  try {   
-    const res = await fetch("https://posts-server-kmha.onrender.com/post", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-body: JSON.stringify({
-  user: {
-    username: user.username,
-    email: user.email
-  },
-  text: text,
-  avatar: user.avatar 
-})    
+let postImageBase64 = ""; 
 
-});
-
-    // ❌ Server responded with error (4xx or 5xx)
-    if (!res.ok) {
-      let serverData = {};
-      try {
-        serverData = await res.json();
-      } catch (e) {
-        console.error("Error parsing server response:", e);          document.getElementById("postLoading").style.display = 'none';
-
-      }
-
-      // Pretty print server error
-      console.error(
-        `Server Error Response (status: ${res.status} ${res.statusText}):\n`,
-        JSON.stringify(serverData, null, 2)
-      );
-
-      alert("Server error. Please try again.");
-   document.getElementById("postLoading").style.display = 'none';
-      return;
+/* ===  POST SUBMIT (SERVER SEND) === */
+async function postsubmit() {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user?.username) {
+        onPostAlert("User not found!");
+        return;
     }
 
-    // ✅ Success
-  document.getElementById("postLoading").style.display = 'none';
-loadPosts();
-  
-  } catch (err) {
-    // ❌ Network / JS error
-    console.error("Network / JS Error:", err);
-    alert("Something went wrong. Please try again.");
-  } finally {
-    if (btn) btn.disabled = false;
-  }
+    const postData = collectPostData();
+    if (!postData.text.trim() && !postData.image) {
+        onPostAlert("Please write something or select an image!");
+        return;
+    }
+
+    const loader = document.getElementById("postLoading");
+    const btn = document.getElementById("postbtn");
+    loader.style.display = "flex";
+    if (btn) { btn.style.background = 'gray'; btn.disabled = true; }
+
+    try {
+        const res = await fetch("https://posts-server-kmha.onrender.com/post", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user: {
+                    username: user.username,
+                    email: user.email
+                },
+                post: postData,   // 🔥 text + style + image
+                avatar: user.avatar
+            })
+        });
+
+        if (!res.ok) {
+            onPostAlert("Network error!");
+            return;
+        }
+
+        console.log("Post submitted successfully!");
+        loadPosts(); // তোমার আগে লেখা function
+        closePostpage(); // Optional, close popup
+
+        // Reset form
+        document.getElementById("postword").value = "";
+        postImageBase64 = "";
+        document.getElementById("postPreview").style.display = "none";
+
+    } catch (err) {
+        console.error(err);
+        onPostAlert("Network error!");
+    } finally {
+        loader.style.display = "none";
+        if (btn) { btn.style.background = 'blue'; btn.disabled = false; }
+    }
 }
+
+function onPostAlert(alert) {
+document.getElementById("onPostAlert").innerText = alert;
+setTimeout(() => {document.getElementById("onPostAlert").innerText =""}, 2000)
+  }
+
+function escapeHTML(str = "") {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+function applyPostStyle(el, style) {
+  if (!style) return;
+  Object.keys(style).forEach(k => {
+    el.style[k] = style[k];
+  });
+}
+
 
 async function loadPosts() {
 
@@ -1933,40 +2841,55 @@ async function loadPosts() {
             const contentDiv = document.getElementById("content");
             contentDiv.innerHTML = "";
 
-            data.forEach(post => {      
-                const div = document.createElement("div");
-                div.className = "postshow";
-                div.innerHTML += `<table><tr><td>
-        
-           <span style="padding: 5px; border-right: 2px solid rgba(0,0,0,0.2); margin-right: 10px; font-size: 60px;">${post.avatar} </span></td> <td style="width: 650px">
-  <h2>
-      <button onclick="showOtherProf('${post.email}')" style="background: none; border:none; font-size: 25px; font-weight: bold; color: green;">
-<div style="font-size: 50px; text-align: left;">${post.username}</div></button>
-          <span style="text-align: right;"></span>
-          </h2></td>
-          <td>
-     <button style="background: none; border: none;" class="copyBtn" data-text="${post.text.replace(/"/g, "&quot;")}">
-         <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" alt="copy" border="0" width="30">
-         </button>
-</td></tr></table><hr>
-                
-    
-<p style="font-size: 30px;">${post.text.replace(/\n/g, "<br>")}</p>
-    
+data.forEach(post => {
+
+  const safeText = escapeHTML(post.post.text);
+  const htmlText = safeText.replace(/\n/g, "<br>");
+  const copyText = post.post.text.replace(/"/g, "&quot;");
+
+  const div = document.createElement("div");
+  div.className = "postshow";
+
+  div.innerHTML = `
+<table><tr><td>
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
+</td>
+
+<td style="width:650px">
+<h2>
+<button onclick="showOtherProf('${post.email}')"
+ style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
+<div style="font-size:50px;text-align:left;">${post.username}</div>
+</button>
+</h2>
+</td>
+
+<td>
+<button class="copyBtn" style="background:none;border:none"
+ data-text="${copyText}">
+<img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" width="30">
+</button>
+</td>
+</tr></table>
+
+<hr>
+
+<p class="postText" style="font-size:30px; padding: 20px; border-radius: 5px;">
+${htmlText}
+</p> 
     <div id="countReactions">
    <div id="countByOrder${post.id}" style="text-align: right">
  <button id="likeCount${post.id}" onclick="likeContainer(${post.id}); reactors(${post.id})"></button> <br>     
  <button id="commentCount${post.id}" onclick="appContainer(${post.id}); comText(${post.id})"></button>      
    </div>
      </div>
-    
-    <div id="reactPanal">
+        <div id="reactPanal">
 <button onclick="appImoji(${post.id})" style="border-left: none; font-size: 30px;"
  id="react${post.id}">
- <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="like" border="0" width="40"></button>
-<button onclick="comSec(${post.id}); closealert('loaderCom')" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="comment" border="0" width="40"></button>
+ <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="" border="0" width="40"></button>
+<button onclick="comSec(${post.id}); closealert('loaderCom')" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="" border="0" width="40"></button>
 <button>
-  <img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" alt="share (1)" border="0" width="30"></button>
+  <img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" alt="" border="0" width="30"></button>
 </div>
     
     <div id="appearFlex${post.id}" class='appearFlex'>
@@ -1998,7 +2921,7 @@ async function loadPosts() {
     ></textarea>
 
     <button onclick="sendCom(${post.id})" class="comButton">
-      <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="Send">
+      <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="">
       
     </button>
             
@@ -2089,7 +3012,7 @@ async function loadPosts() {
       <tr><td colspan="2"> <hr></td></tr>
       </tr></table>
      
- <div id="reactors${post.id}" style="position: relative; margin-top: 140px;">Loading react...s...</div>       
+ <div id="reactors${post.id}" style="position: relative; margin-top: 140px;">Loading reactions...</div>       
     </div>
 </div>
 
@@ -2106,11 +3029,27 @@ document.addEventListener("click", e => {
 
                 contentDiv.appendChild(div);
                 updateCounts(post.id);
+                  // 🔥 STYLE APPLY (server → UI)
+  const p = div.querySelector(".postText");
+  applyPostStyle(p, post.post.style);
+  
+  
             });
         } else {
-            alert(data.message || "Error loading posts!");
+            onalert(data.message || "Error loading posts!");
         }
     } catch (err) {
+    console.error(err);
+    
+  document.getElementById("content"). innerHTML = `
+ <div style="justify-content: center;align-items: center; display: flex; width: 100%;">
+     <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
+  <h2 style="color: red; font-size: 20px">Network error</h2><br>
+<button onclick="location.reload()" style="background: orange; color: white; padding: 10px 25px; border-radius: 14px; border: none; font-size: 20px;">Retry</button>
+     </div>
+ </div>
+  `;
+    
  }
 }
 
@@ -2137,10 +3076,10 @@ async function reactors(postId) {
           <table class="likeAppear">
             <tr>
               <td>
-                <div>${l.avatar}</div>
+                <div><img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></div>
               </td>
               <td>
-                <h2>${l.username}</h2>
+                <)h2>${l.username}</h2>
               </td>
               <td><p style="box-shadow:0 0 0px white; padding: 0; margin:0; background: none; width: 150px;">
                 reacted with
@@ -2158,8 +3097,59 @@ async function reactors(postId) {
 
   } catch (err) {
     console.error("Reactors fetch error:", err);
+container.innerHTML = `  <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+        </div>`;
   }
 }
+
+async function reactorsOnStory(postId) {
+
+  try {
+    const res = await fetch(
+      `https://interacts-server-xpbo.onrender.com/likes/${postId}`
+    );
+    const data = await res.json();
+
+    const container = document.getElementById(`appearReactors${postId}`);
+
+    if (!data.likes || data.likes.length === 0) {
+      container.innerHTML = `<p>No likes yet 😐</p>`;
+      return;
+    }
+   container.innerHTML ="";
+ let typeOfReact = "";
+ if(data.likes == '👍') {
+     typeOfReact = '👍 — liked'  
+ }else {
+    typeOfReact = '❤️ — loved' 
+ }
+
+    // 🔹 Map likes to HTML
+    const listHTML = data.likes
+      .map(l => {
+        return `
+         <p style="font-size: 30px; display: flex; align-items: center;"> <img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid  green; margin-right: 15px;">
+   <span style="font-weight: bold; margin-right: 10px;">${l.username}</span><span style'color: blue; '> has </span><span> ${typeOfReact} your story.</span></p>
+        `;
+      })
+      .join("");
+
+    container.innerHTML = listHTML;
+
+  } catch (err) {
+   console.error("Reactors fetch error:", err);
+document.getElementById(`appearReactors${postId}`).innerHTML =`<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+        </div>`;
+  }
+}
+
+
 
 function comSec(appear) {
    document.getElementById(`comPen${appear}`).style.display  = 'flex';
@@ -2167,7 +3157,7 @@ function comSec(appear) {
 
 async function comText(postId) {
     const box = document.getElementById(`comText${postId}`);
-    box.innerHTML = "Loading comments...";
+     box.innerHTML = "Loading comments...";
 
     try {
         const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
@@ -2203,7 +3193,7 @@ async function comText(postId) {
             <div style="position: relative; margin-bottom: 30px;">
               <table>
                 <tr>
-                  <td valign="top"><h2>${c.avatar}</h2></td>
+                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></td>
                   <td>
                     <div style="
                         background: rgba(0,0,0,0.1);   
@@ -2255,7 +3245,109 @@ async function comText(postId) {
 
     } catch (err) {
         console.error(err);
-        box.innerHTML = "<p style='color:red'>Failed to load comments</p>";
+        box.innerHTML = `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+        </div>`;
+    }
+}
+
+async function storyComPort(postId) {
+    const box = document.getElementById(`showStoryCom${postId}`);
+    box.innerHTML = "Loading comments...";
+
+    try {
+        const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
+        const comments = await res.json();
+
+        if (!comments || comments.length === 0) {
+            box.innerHTML = "<p style='color: red;'>No comments yet</p>";
+            return;
+        }
+
+        const currentUser = JSON.parse(localStorage.getItem("user")); // Logged in user
+        const currentEmail = currentUser ? currentUser.email : null;
+
+        box.innerHTML = "";
+
+        comments.forEach(c => {
+            const div = document.createElement("div");
+    
+    let comId = `${c.id}`;        
+ 
+          
+            const menuHTML = (currentEmail && currentEmail === c.email) ? `
+                <div class="comMenu" style="display:none; position: absolute; right: 110px; top: 50px; border:1px solid gray; background:white; border-radius: 2px; padding: 0px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);width: 200px;">
+            <button
+ style="background: none; border: none; border-bottom: 1px solid black; width: 100%;"           
+             onclick="editCom(${comId}, '${postId}', '${c.comment.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px;">Edit comment</div></button>
+          
+                  <button style="background: none; border: none; width: 100%; margin-top: 0px;" onclick="deleteCom(${c.id}, ${postId})"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px; color:red">Delete comment</div></button>
+                </div>
+            ` : "";
+
+            div.innerHTML = `
+            <div style="position: relative; margin-bottom: 30px;">
+              <table>
+                <tr>
+                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></td>
+                  <td>
+                    <div style="
+                        background: rgba(0,0,0,0.1);   
+                        padding: 10px; 
+                        border-radius: 10px;
+                        width: 500px;
+                        margin-left: 30px;
+                        border-left: 5px solid gray;">
+                      <table>
+                        <tr>
+                          <td><h3 style="color: green; margin: 0; width: 470px;">${c.username}</h3></td>
+                          <td>
+                            ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
+                          </td>
+                        </tr>
+                      </table>
+                      <hr style="background: green;">
+                      
+   <div id="commentText${c.id}">                   
+                      <p style="text-align: justify; font-size: 18px; margin:0; box-shadow: none; background: 0; padding: 0; width: 100%;">${c.comment.replace(/\n/g, "<br>")}</p>
+                      ${menuHTML}
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+            `;
+
+            box.appendChild(div);
+
+            // Dropdown toggle only if menu exists
+            if (menuHTML) {
+                const dropdownBtn = div.querySelector(".dropdownBtn");
+                const menu = div.querySelector(".comMenu");
+
+                dropdownBtn.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    const isOpen = menu.style.display === "block";
+                    document.querySelectorAll(".comMenu").forEach(m => m.style.display = "none"); // close all
+                    menu.style.display = isOpen ? "none" : "block";
+                });
+            }
+        });
+
+        // Close dropdown if click outside
+        document.addEventListener("click", () => {
+            document.querySelectorAll(".comMenu").forEach(menu => menu.style.display = "none");
+        });
+
+    } catch (err) {
+        console.error(err);
+        box.innerHTML = `<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+        </div>`;
     }
 }
 
@@ -2279,6 +3371,25 @@ async function updateCounts(postId) {
     }
 }
 
+async function reactCounts(postId) {
+    const likeEl = document.getElementById(`reactCount${postId}`);
+     const commentEl = document.getElementById(`stryComCount${postId}`);
+ 
+    try {
+        const res = await fetch(`https://interacts-server-xpbo.onrender.com/api/counts/${postId}`);
+        if (!res.ok) throw new Error("Failed to fetch counts");
+
+        const data = await res.json(); 
+       if (likeEl) likeEl.innerText = `${data.likes} reactions`;
+        if (commentEl) commentEl.textContent = `${data.comments}`;
+ 
+    } catch (err) {
+        console.error(`Error updating counts for post ${postId}:`, err);
+        if (likeEl) likeEl.innerText = "-- reactions";
+       if (commentEl) commentEl.textContent = "_ _ _";
+  
+   }
+}
 
 async function sendCom(postId) {
     const overlay = document.getElementById(`comPen${postId}`);
@@ -2287,13 +3398,13 @@ async function sendCom(postId) {
     const comment = textarea.value.trim();
 
     if (!comment) {
-        alert("Please write a comment first!");
+        onalert("Please write a comment first!");
         return;
     }
 
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.username || !user.email) {
-        alert("User not found!");
+        onalert("User not found!");
         return;
     }
     
@@ -2318,7 +3429,7 @@ async function sendCom(postId) {
 
         if (!res.ok) {
             console.error("Server Error:", res.status, data);
-            alert(data.message || "Failed to send comment!");
+            onalert(data.message || "Failed to send comment!");
             return;
         }
 
@@ -2327,25 +3438,81 @@ async function sendCom(postId) {
         textarea.value = "";
         overlay.style.display = "none";
         updateCounts(postId);
-        alert("Comment posted ✅");
+        onalert("Comment posted ✅");
 
     } catch (err) {
         console.error("Network / JS Error:", err);
-        alert("Network error!");
+        onalert("Network error!");
     } finally {
         // Always hide loading overlay
         document.getElementById("loaderCom").style.display = 'none';
         btn.disabled = false;
     }
 }
-async function reactAppear(postId, emoji) {
-  document.getElementById(`appearFlex${postId}`).style.display = "none";
 
+async function sendStoryCom(postId) {
+    const overlay = document.getElementById(`commentBox${postId}`);
+    const textarea = overlay.querySelector("#storycom");
+    const btn = overlay.querySelector(`#sendStoryCom${postId}`);
+    const comment = textarea.value.trim();
+
+    if (!comment) {
+        onalert("Please write a comment first!");
+        return;
+    }
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (!user || !user.username || !user.email) {
+        onalert("User not found!");
+        return;
+    }
+    
+    btn.disabled = true;
+
+    try {
+        const res = await fetch("https://interacts-server-xpbo.onrender.com/comment", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                postId: Number(postId),
+                email: user.email,
+                username: user.username,
+                avatar: user.avatar,
+                comment
+            })
+        });
+
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok) {
+            console.error("Server Error:", res.status, data);
+            onalert(data.message || "Failed to send comment!");
+            return;
+        }
+
+        console.log("Saved comment:", data.comment);
+
+        textarea.value = "";
+        reactCounts(postId);
+        onalert("Comment posted ✅");
+
+    } catch (err) {
+        console.error("Network / JS Error:", err);
+        onalert("Network error!");
+    } finally {
+        btn.disabled = false;
+        storyComPort(postId);
+    }
+}
+
+async function reactAppear(postId, emoji) {
+
+document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "none");
   try {
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user || !user.email || !user.username) {
-      alert("You must be logged in to react!");
+      onalert("You must be logged in to react!");
       return;
     }
 
@@ -2374,12 +3541,12 @@ async function reactAppear(postId, emoji) {
       updateCounts(postId);
       return;
     } else {
-      alert(data.message || "You have already reacted!");
+      onalert(data.message || "You have already reacted!");
     }
 
   } catch (err) {
     console.error("Error sending reaction:", err);
-    alert("Something went wrong while sending your reaction.");
+    onalert("It seems network error!");
   }
 }
 
@@ -2409,99 +3576,92 @@ async function loadProfilePosts() {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user) return;
 
-    const res = await fetch("https://posts-server-kmha.onrender.com/post");
-    const allPosts = await res.json();
+    try {
+        const res = await fetch("https://posts-server-kmha.onrender.com/post");
+        const allPosts = await res.json();
 
-    // শুধু current user-এর post filter
-    const userPosts = allPosts.filter(p => p.email === user.email);
+        // শুধু current user-এর post filter
+        const userPosts = allPosts.filter(p => p.email === user.email);
 
-    const profileDiv = document.getElementById("ownerPosts");
-    profileDiv.innerHTML = `<div id="userposts"></div>`;
-    const postsDiv = document.getElementById("userposts");
+        const contentDiv = document.getElementById("ownerPosts");
+        contentDiv.innerHTML = "";
 
-    userPosts.forEach((p) => {
-        const div = document.createElement("div");
-        div.className = "postshow";
-        div.innerHTML = `
-            <div style="position: relative;">
-                <table border="0" style="width: 100%;">
-                    <tr>
-                        <td>
-                          <h3 style="color: green">
-                            <span style="padding:5px;border-right:2px solid rgba(0,0,0,0.2);margin-right:10px;font-size:50px;">
-                              ${user.avatar}
-                            </span>
-                            <span style="font-size:50px;">${user.username}</span>
-                          </h3>
-                        </td>
-                        <td style="text-align:right;">
-                            <button 
-                                id="dropdownBtn${p.id}" 
-                                style="width:20px;background:none;border:none;height:40px;color:green;font-size:50px;"
-                            >⋮</button>
-                        </td>
-                    </tr>
-                </table>
-                <hr>
+        userPosts.forEach(post => {
+  console.log(JSON.stringify(post.id));
+            const safeText = escapeHTML(post.post.text);
+            const htmlText = safeText.replace(/\n/g, "<br>");
+            const copyText = post.post.text.replace(/"/g, "&quot;");
 
-                <p id="posttext${p.id}" style="font-size:30px;">
-                  ${p.text.replace(/\n/g, "<br>")}
-                </p>
-<div class="ownerPostMenu">
-                <div id="menu${p.id}" 
-                    style="display:none;position:absolute;right:0;top:0;border:1px solid gray;background:white;border-radius:2px;box-shadow:0 2px 10px rgba(0,0,0,0.1);min-height:300px;width:200px;">
-                    
-                    <button style="background:none;border:none;border-bottom:1px solid black;width:100%;" 
-                        onclick="editPost(${p.id}); closealert('menu${p.id}');">
-                        <div style="margin:10px;font-size:20px;text-align:left;">Edit post</div>
-                    </button>
+            const div = document.createElement("div");
+            div.className = "postshow";
 
-                    <button style="background:none;border:none;border-bottom:1px solid black;width:100%;">
-                        <div 
-                          class="copyBtn"
-                          data-text="${p.text.replace(/"/g, "&quot;")}"
-                          style="margin:10px;font-size:20px;text-align:left;"
-                        >
-                          Copy post
-                        </div>
-                    </button>
+            div.innerHTML = `
+<table><tr><td>
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
+</td>
 
-                    <button style="color:red;background:none;border:none;border-bottom:1px solid black;width:100%;" 
-                        onclick="deletePost(${p.id}); closealert('menu${p.id}');">
-                        <div style="margin:10px;font-size:20px;text-align:left;">Delete post</div>
-                    </button>
-                </div> </div>
-            </div>
-        `;
-        postsDiv.appendChild(div);
+<td style="width:650px">
+<h2>
+<button onclick="showOtherProf('${post.email}')"
+ style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
+<div style="font-size:50px;text-align:left;">${post.username}</div>
+</button>
+</h2>
+</td>
 
-        const dropdownBtn = div.querySelector(`#dropdownBtn${p.id}`);
-        const menu = div.querySelector(`#menu${p.id}`);
+<td>
+<button id="menuBtn${post.id}" style="background:none;border:none;font-size:30px;color:green;">⋮</button>
+<div id="menu${post.id}" style="display:none;position:absolute;right:20px;top:50px;background:white;border:1px solid gray;border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,0.2);min-width:150px;z-index:100;">
+  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
+  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;" onclick="navigator.clipboard.writeText('${copyText}'); closealert('menu${post.id}')">Copy</button>
+  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;color:red;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
+</div>
+</td>
+</tr></table>
 
-        dropdownBtn.addEventListener("click", (e) => {
-            e.stopPropagation();
-            const isOpen = menu.style.display === "block";
-            document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none");
-            menu.style.display = isOpen ? "none" : "block";
+<hr>
+
+<p class="postText" style="font-size:30px; padding: 20px; border-radius: 5px;">
+${htmlText}
+</p> 
+`;
+
+            contentDiv.appendChild(div);
+
+            // style apply
+            const p = div.querySelector(".postText");
+            applyPostStyle(p, post.post.style);
+
+            // dropdown menu toggle
+            const btn = div.querySelector(`#menuBtn${post.id}`);
+            const menu = div.querySelector(`#menu${post.id}`);
+            btn.addEventListener("click", e => {
+                e.stopPropagation();
+                const isOpen = menu.style.display === "block";
+                document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none");
+                menu.style.display = isOpen ? "none" : "block";
+            });
         });
-    });
 
-    // copy handler (ONE TIME)
-    document.addEventListener("click", e => {
-        const btn = e.target.closest(".copyBtn");
-        if (!btn) return;
-        navigator.clipboard.writeText(btn.dataset.text);
-    });
-
-    // dropdown close
-    document.addEventListener("click", (e) => {
-        document.querySelectorAll("[id^='menu']").forEach(menu => {
-            if (!menu.contains(e.target)) {
-                menu.style.display = "none";
-            }
+        // click outside close all dropdowns
+        document.addEventListener("click", e => {
+            document.querySelectorAll("[id^='menu']").forEach(menu => {
+                if (!menu.contains(e.target)) menu.style.display = "none";
+            });
         });
-    });
+
+    } catch (err) {
+        console.error(err);
+        document.getElementById("ownerPosts").innerHTML = `
+<div style="justify-content: center;align-items: center; display: flex; width: 100%;">
+    <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
+        <h2 style="color: red; font-size: 20px">Network error</h2><br>
+        <button onclick="loadProfilePosts()" style="background: orange; color: white; padding: 10px 25px; border-radius: 14px; border: none; font-size: 20px;">Retry</button>
+    </div>
+</div>`;
+    }
 }
+
 // 🔹 Edit Post
 function editPost(id) {
     const el = document.getElementById(`posttext${id}`);
@@ -2541,27 +3701,28 @@ async function savePost(id) {
             body: JSON.stringify({ text: newText })
         });
         const data = await res.json();
-        alert(data.message);
+        onalert(data.message);
         loadProfilePosts();
     } catch(err) {
         console.error("Error saving post:", err);
-        alert("Failed to save post.");
+        onalert("Failed to save post.");
     }
 }
 
 // 🔹 Delete Post
 async function deletePost(id) {
+     onconfirm("","Are you sure to delete this post?", "Delete", DeletePost, id, "red");
+    }
+async function DeletePost(id){
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!confirm("Are you sure to delete this post?")) return;
-
     try {
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
         const data = await res.json();
-        alert(data.message);
+        onalert(data.message);
         loadProfilePosts();
     } catch(err) {
         console.error("Error deleting post:", err);
-        alert("Failed to delete post.");
+        onalert("Failed to delete post.");
     }
 }
 
@@ -2588,7 +3749,7 @@ function editCom(comId, postId, encodedText) {
     
     const user = JSON.parse(localStorage.getItem("user"));
         const newComment = document.getElementById(`editArea${comId}`).value.trim();
-        if (!newComment) return alert("Comment cannot be empty!");
+        if (!newComment) return onalert("Comment cannot be empty!");
 
         try {
             const res = await fetch(`https://interacts-server-xpbo.onrender.com/comment/${user.email}/${comId}`, {
@@ -2597,13 +3758,13 @@ function editCom(comId, postId, encodedText) {
                 body: JSON.stringify({ newComment })
             });
             const data = await res.json();
-            if (!res.ok) return alert(data.message || "Failed to update comment");
+            if (!res.ok) return onalert(data.message || "Failed to update comment");
 
-            alert("Comment updated ✅");
+            onalert("Comment updated ✅");
             comText(postId); // Refresh comments
         } catch (err) {
             console.error(err);
-            alert("Network error: could not update comment.");
+            onalert("Network error: could not update comment.");
         }
     };
 
@@ -2617,11 +3778,10 @@ function editCom(comId, postId, encodedText) {
 async function deleteCom(commentId, postId) {
     const user = JSON.parse(localStorage.getItem("user"));
     if (!user || !user.email) {
-        alert("User not found!");
+        onalert("User not found!");
         return;
     }
 
-    if (!confirm("Are you sure you want to delete this comment?")) return;
 
     try {
         const res = await fetch(
@@ -2632,19 +3792,23 @@ async function deleteCom(commentId, postId) {
         const data = await res.json();
 
         if (!res.ok) {
-            alert(data.message || "Failed to delete comment.");
+            onalert(data.message || "Failed to delete comment.");
             return;
         }
 
-        alert("Comment deleted ✅");
+        onalert("Comment deleted ✅");
 
         // Update the comments section for this post
-        if (postId) {
-            comText(postId); // reload comments for the post
-        }
+    if (postId) {
+    try {
+        comText(postId);
     } catch (err) {
+        storyComPort(postId);
+    }
+    }
+  } catch (err) {
         console.error("Error deleting comment:", err);
-        alert("Network error: could not delete comment.");
+        onalert("Network error: could not delete comment.");
     }
 }
 
@@ -2693,7 +3857,7 @@ function closeLikeContainer(container){
 
 
 function appLink(postId) {
-alert('😥 under contraction!');
+onalert('😥 under contraction!');
 }
 
 function copyPost(postWord) {
@@ -2702,26 +3866,82 @@ function copyPost(postWord) {
     .replace(/<br\s*\/?>/gi, "\n");
 
   navigator.clipboard.writeText(cleanText)
-    .then(() => alert("Post copied ✅"))
-    .catch(() => alert("Copy failed ❌"));
-}</script>
+    .then(() => onalert("Post copied ✅"))
+    .catch(() => onalert("Copy failed ❌"));
+}
+
+
+function onalert(alertWord) {
+document.getElementById("warnOverlay").classList.add("warnShow");
+ document.querySelector("#wordSet").innerText = alertWord; 
+ setTimeout((c) => {
+document.getElementById("warnOverlay").classList.remove("warnShow");
+ }, 3000)
+    
+}
+
+function onconfirm(text, word, btn, func, innB, color) {
+  const overlay = document.getElementById("alertOverlay");
+  const alertBox = document.getElementById("customAlert");
+  const confirmText = document.getElementById("confirm-text");
+  const confirmWord = document.getElementById("confirm-word");
+  const confirmBtn = document.getElementById("confirm-btn");
+
+  overlay.classList.add("show");
+  alertBox.classList.add("show");
+  confirmText.innerText = text;
+  confirmWord.innerText = word;
+
+  // Clear previous button content
+  confirmBtn.innerHTML = "";
+
+  const button = document.createElement("button");
+  button.id = "conBtn";
+  button.className = "btn-ok";
+  button.innerText = btn;
+  button.style.background = color;
+
+  button.addEventListener("click", () => {
+    closeAlert();
+    if (typeof func === "function") func(innB);
+  });
+
+  confirmBtn.appendChild(button);
+}
+
+function closeAlert(){
+  document.getElementById("alertOverlay").classList.remove("show");
+  document.getElementById("customAlert").classList.remove("show");
+}
+
+function autoAlert(time = 3000){
+  openAlert();
+  setTimeout(closeAlert, time);
+}
+
+</script>
 
 
 <script>
-window.onload = function() {
+window.onload = function () {
     const user = localStorage.getItem("user");
-    if(!user) {
-        alert("Please login first!");
+
+    if (!user) {
         location.href = "sign_in.html";
     } else {
         const u = JSON.parse(user);
-        document.getElementById('profPicture').innerHTML = `${u.avatar}`; 
-        document.getElementById('storyProf').innerHTML = `${u.avatar}`; 
+
+        document.getElementById('profPicture').innerHTML =
+            `<img src="${u.avatar}">`;
+
+        document.querySelector('.story-inner').style.backgroundImage = `url(${u.avatar})`;
+        document.querySelector('.story-inner').style.backgroundSize = "cover";
+        document.querySelector('.story-inner').style.backgroundPosition = "center";
+
         loadPosts();
     }
-}
+};
 
-// localStorage থেকে style নিয়ে আসা
 const styleString = localStorage.getItem('style');
 if (styleString) {
     const s = JSON.parse(styleString);
@@ -2736,7 +3956,7 @@ function showLoader(targetId = "content", message = "Please wait...") {
     <div style="width: 100%; text-align: center; margin-top: 20px;">
       <div class="loading-template">
         <div class="loading-image">
-          <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" >
+          <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="">
         </div>
         <div class="warn">
           <div class="loading-text">${message}</div>
@@ -2797,7 +4017,7 @@ function warning(func, interval = 3000, duration = 0, delay = 3000) {
         if (duration > 0) {
             setTimeout(() => {
                 clearInterval(intervalId);
-                console.log("⏹ Warning stopped");
+                console.log(" Warning stopped");
             }, duration);
         }
     }, delay);
@@ -2811,10 +4031,11 @@ warning(
     () => showWarning(".warn", "⚠ Network seems slow!", () => {
         location.reload();
     }),
-    5000,
+    3000,
     0,
     3000
 );
+
 
 </script></body>
 </html>
