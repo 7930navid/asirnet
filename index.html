@@ -1,146 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PERFECT MOBILE VIEW -->
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
 <title>AsirNet</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+/* ================= RESET ================= */
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family:'Poppins',sans-serif;
 }
+
+html,
+body{
+    width:100%;
+    height:100%;
+}
+
+/* ================= BODY ================= */
 
 body{
-    background: linear-gradient(135deg,#e0f7fa,#b2ebf2);
-}
+    overflow:hidden;
+    position:relative;
 
-/* Splash Container */
-#prepear{
-    position:fixed;
-    inset:0;
     display:flex;
-    align-items:center;
     justify-content:center;
-    z-index:1000;
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top left,
+    #111827 0%,
+    #020617 65%,
+    #000000 100%);
 }
 
-/* Card */
-#main{
-    background:#ffffff;
-    padding:30px 35px;
-    border-radius:30px;
-    text-align:center;
-    border:4px solid skyblue;
-    box-shadow:0 0 25px rgba(0,191,255,0.6);
-    animation: pop 1s ease;
+/* ================= ANIMATED BACKGROUND ================= */
+
+.bg1,
+.bg2,
+.bg3{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(90px);
+    animation:float 10s ease-in-out infinite;
 }
 
-@keyframes pop{
-    0%{transform:scale(0.8);opacity:0}
-    100%{transform:scale(1);opacity:1}
+.bg1{
+    width:320px;
+    height:320px;
+    background:#00f7ff;
+    top:-120px;
+    left:-120px;
 }
 
-/* Logo */
-#main img.main-logo{
-    width:180px;
-    border-radius:20px;
-    animation: float 2.5s infinite ease-in-out;
+.bg2{
+    width:350px;
+    height:350px;
+    background:#7c3aed;
+    bottom:-140px;
+    right:-120px;
+    animation-delay:3s;
+}
+
+.bg3{
+    width:240px;
+    height:240px;
+    background:#2563eb;
+    top:45%;
+    left:40%;
+    animation-delay:6s;
 }
 
 @keyframes float{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-10px)}
+    0%,100%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(35px);
+    }
 }
 
-/* Text */
-#base{
-    opacity:0;
-    margin-top:15px;
-    font-size:18px;
-    color:#333;
-    transition:opacity .6s ease;
-}
+/* ================= MAIN CARD ================= */
 
-#base.show{
-    opacity:1;
-}
+#main{
 
-/* Sub logo */
-#base img{
-    width:40px;
-    border-radius:50%;
-    vertical-align:middle;
-}
+    width:min(380px,92%);
 
-/* Progress bar */
-.loader{
-    margin-top:20px;
-    width:100%;
-    height:6px;
-    background:#e0e0e0;
-    border-radius:10px;
+    padding:45px 30px;
+
+    border-radius:32px;
+
+    background:rgba(255,255,255,0.06);
+
+    backdrop-filter:blur(20px);
+
+    border:1px solid rgba(255,255,255,0.08);
+
+    text-align:center;
+
+    position:relative;
+
     overflow:hidden;
+
+    z-index:10;
+
+    animation:showCard 1s ease;
+
+    transition:.5s ease;
+
+    box-shadow:
+    0 0 60px rgba(0,0,0,.45),
+    0 0 120px rgba(0,247,255,.08),
+    inset 0 0 20px rgba(255,255,255,.03);
 }
 
-.loader span{
-    display:block;
+/* HOVER */
+
+#main:hover{
+    transform:translateY(-6px) scale(1.01);
+}
+
+/* GLOW */
+
+#main::before{
+    content:'';
+
+    position:absolute;
+
+    width:220px;
+    height:220px;
+
+    background:
+    linear-gradient(45deg,#00f7ff,#7c3aed);
+
+    border-radius:50%;
+
+    top:-120px;
+    right:-100px;
+
+    opacity:.25;
+}
+
+/* CARD ANIMATION */
+
+@keyframes showCard{
+
+    from{
+        opacity:0;
+        transform:translateY(40px) scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0px) scale(1);
+    }
+}
+
+/* ================= LOGO ================= */
+
+.logo-box{
+
+    display:inline-block;
+
+    position:relative;
+
+    transition:.4s ease;
+}
+
+.logo-box img{
+
+    width:140px;
+
+    object-fit:cover;
+
+    border-radius:8px;
+
+    border:3px solid rgba(255,255,255,.12);
+
+    transition:.5s ease;
+
+    box-shadow:
+    0 0 25px rgba(0,247,255,.25);
+}
+
+/* LOGO HOVER */
+
+.logo-box:hover{
+    transform:translateY(-8px) scale(1.04);
+}
+
+.logo-box:hover img{
+
+    box-shadow:
+    0 0 35px rgba(0,247,255,.6),
+    0 0 70px rgba(124,58,237,.4);
+}
+
+/* SHINE EFFECT */
+
+.logo-box::after{
+
+    content:'';
+
+    position:absolute;
+
+    top:0;
+    left:-120%;
+
+    width:60%;
     height:100%;
+
+    background:
+    rgba(255,255,255,.25);
+
+    transform:skewX(-25deg);
+}
+
+.logo-box:hover::after{
+    animation:shine 1s ease;
+}
+
+@keyframes shine{
+
+    100%{
+        left:140%;
+    }
+}
+
+/* ================= TITLE ================= */
+
+.title{
+
+    margin-top:24px;
+
+    color:white;
+
+    font-size:38px;
+
+    font-weight:700;
+
+    letter-spacing:1px;
+}
+
+.title span{
+    color:#00f7ff;
+}
+
+/* ================= SUBTITLE ================= */
+
+.subtitle{
+
+    color:#b6c2d2;
+
+    margin-top:10px;
+
+    font-size:15px;
+
+    line-height:1.5;
+}
+
+/* ================= LOADING ================= */
+
+.loading{
+
+    width:100%;
+
+    height:8px;
+
+    background:rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:32px;
+}
+
+.loading div{
+
     width:0%;
-    background:linear-gradient(90deg,#00bcd4,#2196f3);
-    animation: load 5s linear forwards;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+    linear-gradient(90deg,#00f7ff,#7c3aed);
+
+    animation:load 4s linear forwards;
 }
 
 @keyframes load{
-    to{width:100%}
+
+    100%{
+        width:100%;
+    }
 }
 
-/* Footer text */
-.tagline{
-    margin-top:12px;
-    font-size:14px;
-    color:#666;
+/* ================= FOOTER ================= */
+
+#base{
+
+    margin-top:28px;
+
+    opacity:0;
+
+    transform:translateY(15px);
+
+    transition:1s ease;
 }
+
+#base.show{
+
+    opacity:1;
+
+    transform:translateY(0px);
+}
+
+#base p{
+
+    color:#94a3b8;
+
+    font-size:14px;
+}
+
+#base span{
+
+    color:#00f7ff;
+
+    font-weight:600;
+}
+
+/* ================= W LOGO ================= */
+
+.w-logo{
+
+    width:42px;
+
+    margin-top:12px;
+
+    border-radius:50%;
+
+    transition:.4s;
+
+    box-shadow:
+    0 0 15px rgba(0,247,255,.25);
+}
+
+.w-logo:hover{
+
+    transform:rotate(10deg) scale(1.1);
+
+    box-shadow:
+    0 0 20px rgba(0,247,255,.5),
+    0 0 40px rgba(124,58,237,.4);
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:450px){
+
+    #main{
+        padding:40px 22px;
+    }
+
+    .title{
+        font-size:30px;
+    }
+
+    .subtitle{
+        font-size:14px;
+    }
+
+    .logo-box img{
+        width:125px;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<div id="prepear">
-    <div id="main">
+<!-- BACKGROUND -->
 
-        <!-- Main Logo (kept) -->
+<div class="bg1"></div>
+<div class="bg2"></div>
+<div class="bg3"></div>
+
+<!-- MAIN CARD -->
+
+<div id="main">
+
+    <!-- LOGO -->
+
+    <div class="logo-box">
+
         <a href="https://7930navid.github.io/">
-            <img class="main-logo"
-            src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg">
+
+            <img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg">
+
         </a>
 
-        <!-- Loading bar -->
-        <div class="loader"><span></span></div>
+    </div>
 
-        <p class="tagline">Initializing AsirNet...</p>
+    <!-- TITLE -->
 
-        <!-- Product info (kept logo) -->
-        <p id="base">
-           Authorised by  <strong>W-deploy</strong>
-            <a href="https://7930navid.github.io/W-deploy">
-                <img src="https://i.ibb.co.com/gLJK4m8w/IMG-20251108-062250.jpg">
-            </a>
-        </p>
+    <h1 class="title">
+
+        Asir<span>Net</span>
+
+    </h1>
+
+    <!-- SUBTITLE -->
+
+    <p class="subtitle">
+
+        Premium Secure Network Experience
+
+    </p>
+
+    <!-- LOADING -->
+
+    <div class="loading">
+
+        <div></div>
 
     </div>
+
+    <!-- FOOTER -->
+
+    <div id="base">
+
+        <p>
+
+            A Product of <span>W-Deploy</span>
+
+        </p>
+
+        <a href="https://7930navid.github.io/W-deploy">
+
+            <img class="w-logo"
+            src="https://i.ibb.co.com/gLJK4m8w/IMG-20251108-062250.jpg">
+
+        </a>
+
+    </div>
+
 </div>
 
 <script>
-setTimeout(()=>{
-    document.getElementById("base").classList.add("show");
-},1800);
 
-setTimeout(()=>{
-    location.href="asirnet.html";
+/* FOOTER SHOW */
+
+setTimeout(() => {
+
+    document
+    .getElementById('base')
+    .classList.add('show');
+
+},1200);
+
+/* REDIRECT */
+
+setTimeout(() => {
+
+    location.href='asirnet.html';
+
 },5000);
+
 </script>
 
 </body>
