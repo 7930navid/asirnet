@@ -2,12 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
     <title>AsirNet</title>
     <style>
- button:focus {
-     background: rgba(255,255,255,0.8);
- }
         
   .loading-template {
     display: inline-flex;
@@ -348,12 +345,41 @@ textarea,input:focus {
     transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
 }
 
+ @keyframes dropdownShow { 
+ from { 
+         transform: translateY(-15px) 
+         scale(0); 
+         filter: (0);
+         opacity: 0;
+      } to { 
+         opacity: 1;
+         transform: translateY(0)  
+         scale(1);
+         filter: (2px); 
+       } 
+  } 
+ 
 #searchpad.show{
     display: block;
     opacity: 1;
     transform: translateY(0);
 }
 
+.userShowing{
+    border-bottom: 4px solid green;
+}
+.userShowing td{
+    background: rgba(0,200,255,0.1);
+    border-radius: 20px;
+    transition: all 0.4s ease;
+}
+.userShowing td:hover {
+    background: #6ae0fff6;
+    color: red;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transform: scale(1.2);
+    cursor: pointer;  
+}
 #search {
     height: 60px;
     width: 77%;
@@ -460,14 +486,15 @@ textarea,input:focus {
     border-bottom: 1px solid black;
     transition: 0.3s ease;
 }
-
 #bottomBTN button {
     width: 45%;
     margin: 10px;
     padding: 20px;
     background: none;
-    border: 2px solid rgb(255,50,50);
+    border: none;
+    box-shadow: 0 0 10px gray;
     border-radius: 50px;
+    background: linear-gradient(135deg, #c4b5fd, #bfdbfe);
 }
 #bottomBTN img {
     width: 30px;
@@ -499,7 +526,7 @@ textarea,input:focus {
     border-radius: 20px;
     height: 500px;
     padding: 20px;
-    font-size: 25px;
+    font-size: 30px;
     background: white;
     color: black;
     text-align: justify;
@@ -627,15 +654,10 @@ textarea,input:focus {
 }
 
 .appearFlex {
-    position: fixed;
-    z-index: 90;
-    bottom: 140px;
-    left: 0;
-    margin-bottom: 10px;
+    margin-top: 10px;
     display: none;
-    overflow: auto;
-    padding-left: 20px;
-    
+    overflow-y: auto;
+    padding-left: 0;
 }
 .appearFlex button {
     padding: 10px;
@@ -1200,7 +1222,7 @@ textarea,input:focus {
   transition:0.35s;
   z-index:1001;
 }
-#bgPost, #textFont{
+#bgPost{
   position:fixed;
   left:50%;
   bottom:-300px;
@@ -1217,31 +1239,68 @@ textarea,input:focus {
   overflow: auto;
   padding: 30px;
 }
-#innerChange {
-    text-align : center;
-} 
-
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');   
-#innerChange h4 {
-    font-size: 30px;
-    font-family: 'Orbitron', sans-serif;               
-    font-weight: bold;
-    text-shadow: 4px 2px 0 #000;
-    color: rgba(255,255,255, 0.8);
- }
-#innerChange input {
+    
+#textFont {
+    background: white;
+    border-top-right-radius: 40px;
+    border-top-left-radius: 40px;
+    box-shadow: 0 0 10px gray;
+    width: 95%;
+    height: 600px;
+    position: fixed;
+    z-index: 1001; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;   
+    bottom: 0;
+    left: 0;
+    transition:0.4s;
+    transform: translateY(700px); 
     padding: 20px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 35px;
+    overflow: auto;
+  }
+#innerChange input {
     border: none;
-    border-bottom: 5px solid #8f8383b3;
-    color: #4b6f5a;
-    width: 80%;
+    border-bottom: 5px solid lightgray;
+    outline: none;
+    font-size: 30px;
+    margin: 25px;
+    padding: 20px;
+    color: red; 
+    text-align: center;  
+    font-weight: bold;
 }
 #innerChange input:focus {
-    border-bottom: 5px solid #4b6f5a; 
+    border-bottom: 5px solid red;
 }
+#demo {
+    display: flex;
+    justify-content: center;
+}
+#demo div{
+    margin: 10px;
+    padding: 0;
+    font-size: 20px;
+    font-weight: bold;
+    max-width: 400px;
+    text-align: center;
+    background: rgba(66, 133, 244, 0.35);;
+    color: inherit;
+    width: fit-content;
+    }
+#sizeSubmit {
+    border: none;
+    background: none;
+    position: fixed;
+    z-index: 1004;
+    bottom: 100px;
+    right: 100px;
+}
+#sizeSubmit img {
+    box-shadow: 0 0 10px gray;
+    transition: all 0.4s ease;
+ }
+
 #BGS p {
     color: gray;
     font-size: 40px;
@@ -1260,8 +1319,24 @@ textarea,input:focus {
 #BGS img {
     height: 100px;
     width: 100px;
-    border-radius: 35px;
     border: none;
+    border-radius: 35px;
+}
+.postThemes {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.postThemes button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 35px;
+    padding: none;
 }
 #imgcont{
   display: grid;
@@ -1413,7 +1488,7 @@ textarea,input:focus {
         <button onclick="closeSearchPad();" id="close">×</button>
     </div>
    <table><tr><td>
-    <input type="text" id="search" style="width: 600px;" placeholder="Search here for any ID.."/></td><td>
+    <input onkeyup="pad()" type="text" id="search" style="width: 600px;" placeholder="Search here any ID or email.."/></td><td>
     <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="25"></button>
     </td></tr></table>
    
@@ -1451,14 +1526,15 @@ textarea,input:focus {
     <div>
 <div id="imgcont"></div>
     <textarea id="postword" placeholder="What's on your mind?" ></textarea>
+    
     <section id="textFont">
-   <section style="text-align: right">
-  <button onclick="closeFontSize()">×</button>
-    </section>
+<h1 style="color:green; text-align: left;width: 100%;">Adjust here your post size properly...</h1><hr style="background:green; width: 100%; height: 3px;">
     <section id="innerChange">
-  <h4>A</h4>
-  <br>
-  <input type="number" id="givenSize" placeholder="Type here your choosen size.." value="20">
+<input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
+    <div id="demo"><div>"it's a demo of post letters"</div></div>
+ <button onclick="applySize();">
+     <img id="sizeSubmit" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ </button>
     </section>
    </section>
     </div>
@@ -1466,8 +1542,8 @@ textarea,input:focus {
     <!-- ALERT -->
     <h2 id="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
   <div id="bottomBTN">
- <button onclick="postBG()"><img src="background.png" alt=""></button>
- <button onclick="fontSize()"><img src="size.png" alt=""></button>
+ <button onclick="postBG()"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 20px; color: red; margin-top: 10px;">Post Background</p></button>
+ <button onclick="fontSize()"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 20px; color: green; margin-top: 10px;">Font Size</p></button>
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
@@ -1493,19 +1569,112 @@ textarea,input:focus {
  <!-- Post Background -->
  <div id="pBG">
   <div id="bgPost">
- <h1 style="color: green; margin-left: 20px;">Choose your post background...</h1><hr style="background: green; height: 2px;">
+ <h1 style="color: green; margin-left: 20px;">Choose your own background...</h1><hr style="background: green; height: 2px;">
 <div id="BGS"> 
+  <!-- ↕️Colors↕️ -->
   <p>Colors: </p>
-<button style="background: linear-gradient(30deg, white, white)" onclick="textBG('white', 'white', '')"></button>
-<button style="background: linear-gradient(30deg, red, red)" onclick="textBG('red', 'red', '')"></button>
-<button style="background: linear-gradient(30deg, green, green)" onclick="textBG('green', 'green', '')"></button>
-<button style="background: linear-gradient(30deg, skyblue, skyblue)" onclick="textBG('skyblue', 'skyblue', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffb3ba, #ffb3ba)" onclick="textBG('#ffb3ba', '#ffb3ba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffdfba, #ffdfba)" onclick="textBG('#ffdfba', '#ffdfba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffffba, #ffffba)" onclick="textBG('#ffffba', '#ffffba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #baffc9, #baffc9)" onclick="textBG('#baffc9', '#baffc9', '')"></button>
+
+<button style="background: linear-gradient(135deg, #bae1ff, #bae1ff)" onclick="textBG('#bae1ff', '#bae1ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #d5b3ff, #d5b3ff)" onclick="textBG('#d5b3ff', '#d5b3ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffc9de, #ffc9de)" onclick="textBG('#ffc9de', '#ffc9de', '')"></button>
+
+<button style="background: linear-gradient(135deg, #c7f0db, #c7f0db)" onclick="textBG('#c7f0db', '#c7f0db', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f3d1ff, #f3d1ff)" onclick="textBG('#f3d1ff', '#f3d1ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffd6a5, #ffd6a5)" onclick="textBG('#ffd6a5', '#ffd6a5', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a0e7e5, #a0e7e5)" onclick="textBG('#a0e7e5', '#a0e7e5', '')"></button>
+
+<button style="background: linear-gradient(135deg, #b4f8c8, #b4f8c8)" onclick="textBG('#b4f8c8', '#b4f8c8', '')"></button>
+
+<!-- ↕️Gradients↕️ -->
  <p>Gradients: </p>
-<button style="background: linear-gradient(30deg, red, pink)" onclick="textBG('red', 'pink', '')"></button>
-<button style="background: linear-gradient(30deg, lightgreen, green)" onclick="textBG('lightgreen', 'green', '')"></button>
-<button style="background: linear-gradient(30deg, white, gray)" onclick="textBG('white', 'gray', '')"></button>
+
+<button style="background: linear-gradient(135deg, red, pink)" onclick="textBG('red', 'pink', '')"></button>
+
+<button style="background: linear-gradient(135deg, lightgreen, green)" onclick="textBG('lightgreen', 'green', '')"></button>
+
+<button style="background: linear-gradient(135deg, white, gray)" onclick="textBG('white', 'gray', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" onclick="textBG('#ff9a9e', '#fad0c4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);" onclick="textBG('#a18cd1', '#fbc2eb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #84fab0, #8fd3f4);" onclick="textBG('#84fab0', '#8fd3f4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f6d365, #fda085);" onclick="textBG('#f6d365', '#fda085', '')"></button>
+
+<button style="background: linear-gradient(135deg, #667eea, #764ba2);" onclick="textBG('#667eea', '#764ba2', '')"></button>
+
+<button style="background: linear-gradient(135deg, #43e97b, #38f9d7);" onclick="textBG('#43e97b', '#38f9d7', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fa709a, #fee140);" onclick="textBG('#fa709a', '#fee140', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffecd2, #fcb69f);" onclick="textBG('#ffecd2', '#fcb69f', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffdee9, #b5fffc);" onclick="textBG('#ffdee9', '#b5fffc', '')"></button>
+
+<button style="background: linear-gradient(135deg, #cfd9df, #e2ebf0);" onclick="textBG('#cfd9df', '#e2ebf0', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb);" onclick="textBG('#a1c4fd', '#c2e9fb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #d4fc79, #96e6a1);" onclick="textBG('#d4fc79', '#96e6a1', '')"></button>
+
+<button style="background: linear-gradient(135deg, #84fab0, #8fd3f4);" onclick="textBG('#84fab0', '#8fd3f4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fccb90, #d57eeb);" onclick="textBG('#fccb90', '#d57eeb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #e0c3fc, #8ec5fc);" onclick="textBG('#e0c3fc', '#8ec5fc', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f093fb, #f5576c);" onclick="textBG('#f093fb', '#f5576c', '')"></button>
+
+<button style="background: linear-gradient(135deg, #4facfe, #00f2fe);" onclick="textBG('#4facfe', '#00f2fe', '')"></button>
+
+<button style="background: linear-gradient(135deg, #43e97b, #38f9d7);" onclick="textBG('#43e97b', '#38f9d7', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fa709a, #fee140);" onclick="textBG('#fa709a', '#fee140', '')"></button>
+
+<button style="background: linear-gradient(135deg, #30cfd0, #330867);" onclick="textBG('#30cfd0', '#330867', '')"></button>
+
+<button style="background: linear-gradient(135deg, #5ee7df, #b490ca);" onclick="textBG('#5ee7df', '#b490ca', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f6d365, #fda085);" onclick="textBG('#f6d365', '#fda085', '')"></button>
+
+<button style="background: linear-gradient(135deg, #96fbc4, #f9f586);" onclick="textBG('#96fbc4', '#f9f586', '')"></button>
+
+<button style="background: linear-gradient(135deg, #c471f5, #fa71cd);" onclick="textBG('#c471f5', '#fa71cd', '')"></button>
+
+<button style="background: linear-gradient(135deg, #48c6ef, #6f86d6);" onclick="textBG('#48c6ef', '#6f86d6', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fddb92, #d1fdff);" onclick="textBG('#fddb92', '#d1fdff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #9890e3, #b1f4cf);" onclick="textBG('#9890e3', '#b1f4cf', '')"></button>
+
+<!-- ↕️Themes↕️ -->
+
  <p>Themes: </p>
- <div onclick="textBG('','','testing.png')" class="imgbg"> <img src="testing.png" alt=""></div>
+     <div class="postThemes">
+ <button onclick="textBG('','','https://i.ibb.co.com/pG2GfyL/Pink-And-Green-Watercolor-Blank-Background-Instagram-Post-20260529-213836-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/pG2GfyL/Pink-And-Green-Watercolor-Blank-Background-Instagram-Post-20260529-213836-0000.png"></button>
+     
+ <button onclick="textBG('','','https://i.ibb.co.com/JWx4Ksh8/Black-and-White-Scrapbook-Background-Instagram-Post-20260529-214059-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/JWx4Ksh8/Black-and-White-Scrapbook-Background-Instagram-Post-20260529-214059-0000.png"></button>
+     
+ <button onclick="textBG('','','https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png"></button>
+     
+     </div>
 </div>
    </div>
  </div>
@@ -1566,15 +1735,13 @@ textarea,input:focus {
 
 
 
-<div id="appearFlex">
-</div>
 <footer id="footer">
     <div>
         <table id="footerBtn">
             <tr>
 <td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40"></button></td>
 <td><button onclick="profile();loadProfile();"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40"></button></td>
-<td><button onclick="postMenu();//createpost()" style="    
+<td><button onclick="postMenu(event)" style="    
     width: 90px;
     height: 90px;
     border: 2px solid black;
@@ -1593,8 +1760,8 @@ textarea,input:focus {
 
 <div id="postMenu">
    <div onclick="createpost();clzpostMenu()">Post plain text</div>
-   <div onclick="clzpostMenu()">Post photos</div>
-   <div onclick="openStoryPort();clzpostMenu()">Post story</div>
+   <div onclick="">Post photos</div>
+   <div onclick="openStoryPort()">Post story</div>
 </div>
 
 <div class="profDis">
@@ -1802,6 +1969,8 @@ function loadpostIMG(e) {
 const $ = id => document.getElementById(id);
 const qs = sel => document.querySelector(sel);
 
+let postLocation ="";
+let feeling ="";
 
 function input(id, quesText) {
     $('loc-feel').style.opacity = "1";
@@ -1813,23 +1982,35 @@ function input(id, quesText) {
          onalert('Write something first!');
       } else {
          $(id).innerText = $("dataInput").value;
-         $("dataInput").value = "";
+          if(id == "location") {
+             postLocation = $("dataInput").value;   
+          } else {
+             feeling = $("dataInput").value;       
+          }                 
+          $("dataInput").value = "";
          $('loc-feel').style.transform = "translateX(100%)";
          $('loc-feel').style.opacity = "0";
       }
    };
    $("removeData").onclick = () => {
          $("dataInput").value = "";
-         $('loc-feel').style.transform = "translateX(100%)";
+         if(id == "location") {
+             postLocation ="";   
+          } else {
+             feeling ="";       
+          }                 
+          $('loc-feel').style.transform = "translateX(100%)";
          $('loc-feel').style.opacity = "0";
          $(id).innerText = '___';   
    }
   BackManager.register(cancel);
 }
+
 function cancel() {
          $('loc-feel').style.transform = "translateX(100%)";
          $('loc-feel').style.opacity = "0";
 }
+
 
 let selectedVideoFile = null;
 let selectedVideoSrc = "";
@@ -1951,7 +2132,7 @@ function prepearStory(){
 
 function sendStory(){
   if(!selectedVideoFile) return onalert("No video selected");
-console.log('clicked');
+//console.log('clicked');
   const user = JSON.parse(localStorage.getItem("user") || "{}");
 
   const fd = new FormData();
@@ -2343,15 +2524,29 @@ function closealertAdv(id, postId) {
     updateCounts(postId);
 }
 
-function postMenu() {
- document.getElementById('postMenu').style.transform = " translateY(0%)";
- document.querySelectorAll('#postMenu button').onclick = 'clzpostMenu()'; 
-  BackManager.register(clzpostMenu);  
- }
+// Open menu 
+function postMenu(e) { 
+ 
+e.stopPropagation();
+ 
+const menu = document.getElementById("postMenu"); 
 
-function clzpostMenu() {
- document.getElementById('postMenu').style.transform = " translateY(150%)";
-}
+        menu.style.transform = "translateY(0%)"; 
+
+        BackManager.register(clzpostMenu); 
+    } 
+    
+// Close menu 
+function clzpostMenu() { 
+document.getElementById("postMenu") .style.transform = "translateY(150%)"; 
+} 
+
+ document.getElementById("postMenu") .addEventListener("click", (e) => { 
+e.stopPropagation(); 
+    }); document.addEventListener("click", () => {
+     clzpostMenu(); 
+  }); 
+
 
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
@@ -2367,7 +2562,7 @@ async function showOtherProf(email) {
     try {
         /* 🔹 Fetch profile */
         const userRes = await fetch(
-          `https://users-server-xyvg.onrender.com/public-profile?email=${encodeURIComponent(email)}`
+          `https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(email)}`
         );
         if (!userRes.ok) throw new Error("Profile not found");
         const user = await userRes.json();
@@ -2551,6 +2746,11 @@ function closePostpage(){
         pad.style.display = "none";
     }, 450);
     closeFontSize();
+    document.getElementById('location') ="";
+    document.getElementById('feeling') ="";
+    postLocation ="";
+    feeling ="";
+
   
 }
 
@@ -2571,6 +2771,7 @@ function postBG() {
  m.style.opacity = '1';
  m.style.bottom = '0px';
     BackManager.register(closePostBG);
+
 }
 
 function closePostBG() {
@@ -2583,55 +2784,94 @@ function closePostBG() {
 }
 
 async function pad() {
-    let search = document.getElementById('search').value;
-    if(!search) {
-        document.getElementById("show").style.display = 'flex';  
-        document.getElementById("searchresult").innerHTML = `<div style="color: red; font-size: 20px; font-weight: bold;" id="searchalert"></div>`;
-   document.getElementById("searchalert").innerHTML = "Please search anything before!";  
+
+    const search = document.getElementById('search').value.trim();
+
+    if (!search) {
+document.getElementById("show").style.display = 'flex';
+
+        document.getElementById("searchresult").innerHTML = `
+            <div
+                style="color:red;font-size:20px;font-weight:bold;"
+                id="searchalert">
+            </div>
+        `;
+
+        document.getElementById("searchalert").innerHTML =
+            "Please search anything before!";
+
         setTimeout(() => {
-        document.getElementById("show").style.display = 'none';              
-        }, 2000) 
-       
-    } else {
-        document.getElementById('show').style.display = 'flex'; 
-        
-    
-    const search = document.getElementById('search').value.trim().toLowerCase();
+            document.getElementById("show").style.display = 'none';
+        }, 2000);
+
+        return;
+    }
+
+    document.getElementById('show').style.display = 'flex';
+
     const showDiv = document.getElementById("searchresult");
 
     try {
-        const res = await fetch("https://users-server-xyvg.onrender.com/users");
+
+        const token = localStorage.getItem("token");
+        const res = await fetch(
+            `https://users-server-xyvg.onrender.com/search?q=${encodeURIComponent(search)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+        //console.log("Status:", res.status);
         const users = await res.json();
+        //console.log("Users:", users);
+        if (users.length === 0) {
 
-        const results = users.filter(u => u.username.toLowerCase().includes(search));
+            showDiv.innerHTML = `
+                <p style="color:red; font-size: 30px;">
+                    No user found for <b>${search}</b>
+                </p>
+            `;
 
-        if (results.length === 0) {
-            showDiv.style.display = 'block';
-            showDiv.innerHTML = `<p style=" color:red">No user found for "<b>${search}</b>"</p>`;
         } else {
-            showDiv.style.display = 'flex';
-            showDiv.innerHTML = results.map(u => `
-  <button onclick="closeSearchPad(); showOtherProf('${u.email}')" style="background: none; width: 70%; border: none;">                
-                <div style="border:none; margin:5px; padding:10px; color: green; width: 100%; text-align: left;">
-                    ${u.username} <br><hr style="background: green; height: 2px;">
-                </div></button>
+
+            showDiv.innerHTML = users.map(user => `
+                <button
+                    onclick="closeSearchPad(); showOtherProf('${user.email}')" 
+              style="background:none;width:70%;border:none;">
+<table border="0" class="userShowing" cellspacing="18"><tr><td style="width: 60px; height: 60px; border-radius: 50%; ">
+<img src="${user.avatar}" width="90" height="90"></td><td>     
+                    <div style="
+                        margin:5px;
+                        padding:10px;
+                        color:red;
+                        font-weight: bold;
+                        width:100%;
+                        text-align:left;
+                        font-size: 20px;
+                        width: 500px;
+                    ">
+
+                        ${user.username}
+                   </div> <p style="font-size: 15px; color: green; text-align: left; margin-left: 20px">${user.email}</p>
+                </button>
+      </td></tr></table>
             `).join("");
-      }  
+        }
     } catch (err) {
-alertSome()
+       console.error(err);
+        alertSome();
     }
 }
-          
-    }
     
 function alertSome(){
 
+document.getElementById("searchresult").innerHTML = `<div style="color: red; font-size: 20px; font-weight: bold;" id="searchalert"></div>`;
    document.getElementById("searchalert").innerText = "Please check your network connection!"; 
   setTimeout(() => {
         document.getElementById("show").style.display = 'none';              
         }, 2000) 
 }
-
 
 
 function createpost() {
@@ -2681,16 +2921,40 @@ function textBG(c1, c2, bg) {
    FONT SIZE PANEL
 ========================= */
 function fontSize() {
- const m = document.getElementById("textFont");
- m.style.opacity = '1';
- m.style.bottom = '0';
-    BackManager.register(closeFontSize);
+    const f = document.getElementById("textFont");
+    f.style.transform = "translate(0)";
+  BackManager.register(closeFontSize);    
 }
 
+function demoShow() {
+    const pickFrom = document.getElementById("textSize");
+    const applyTo = document.querySelector("#demo div");
+
+    const size = String(pickFrom.value);
+    if(size <= 70 && size >= 20) {
+      applyTo.style.fontSize = `${size}px`;
+      } else {
+          onalert('Size must be between 20px and 70px');
+      }
+   }
+function applySize() {
+   
+   const givenSize = document.getElementById('textSize');
+   const appliedSize = document.getElementById('postword');
+
+  if(givenSize.value <= 70 && givenSize.value >= 20){
+    appliedSize.style.fontSize = givenSize.value + "px";
+    closeFontSize();
+    } else if (!givenSize.value) { 
+    onalert('Please type a size first!');
+    } else {
+    onalert('Font size must be between 20px and 70px');
+    }
+ }
+
 function closeFontSize() {
- const m = document.getElementById("textFont");
- m.style.opacity = '0';
- m.style.bottom = '-200px';
+    const f = document.getElementById("textFont");
+    f.style.transform = "translateY(700px)";
 }
 
 function changeFont(s) {
@@ -2793,7 +3057,7 @@ async function postsubmit() {
             return;
         }
 
-        console.log("Post submitted successfully!");
+        //console.log("Post submitted successfully!");
         loadPosts(); // তোমার আগে লেখা function
         closePostpage(); // Optional, close popup
 
@@ -2837,27 +3101,34 @@ async function loadPosts() {
         const res = await fetch("https://posts-server-kmha.onrender.com/post");
         const data = await res.json();
 
-        if (res.ok) {
-            const contentDiv = document.getElementById("content");
-            contentDiv.innerHTML = "";
+        if (!res.ok) {
+            onalert(data.message || "Error loading posts!");
+            return;
+        }
 
-data.forEach(post => {
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = "";
 
-  const safeText = escapeHTML(post.post.text);
-  const htmlText = safeText.replace(/\n/g, "<br>");
-  const copyText = post.post.text.replace(/"/g, "&quot;");
+        data.forEach(post => {
 
-  const div = document.createElement("div");
-  div.className = "postshow";
+            const safeText = escapeHTML(post.post.text || "");
+            const htmlText = safeText.replace(/\n/g, "<br>");
 
-  div.innerHTML = `
+            const copyText = encodeURIComponent(post.post.text || "");
+            const emailSafe = encodeURIComponent(post.email || "");
+
+            const div = document.createElement("div");
+            div.className = "postshow";
+
+            div.innerHTML = `
 <table><tr><td>
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
 </td>
 
 <td style="width:650px">
 <h2>
-<button onclick="showOtherProf('${post.email}')"
+<button class="profileBtn"
+ data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
 <div style="font-size:50px;text-align:left;">${post.username}</div>
 </button>
@@ -2865,7 +3136,8 @@ data.forEach(post => {
 </td>
 
 <td>
-<button class="copyBtn" style="background:none;border:none"
+<button class="copyBtn"
+ style="background:none;border:none"
  data-text="${copyText}">
 <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" width="30">
 </button>
@@ -2874,185 +3146,137 @@ data.forEach(post => {
 
 <hr>
 
-<p class="postText" style="font-size:30px; padding: 20px; border-radius: 5px;">
-${htmlText}
-</p> 
-    <div id="countReactions">
-   <div id="countByOrder${post.id}" style="text-align: right">
- <button id="likeCount${post.id}" onclick="likeContainer(${post.id}); reactors(${post.id})"></button> <br>     
- <button id="commentCount${post.id}" onclick="appContainer(${post.id}); comText(${post.id})"></button>      
-   </div>
-     </div>
-        <div id="reactPanal">
-<button onclick="appImoji(${post.id})" style="border-left: none; font-size: 30px;"
- id="react${post.id}">
- <img src="https://i.ibb.co.com/NgV9p5jg/like.png" alt="" border="0" width="40"></button>
-<button onclick="comSec(${post.id}); closealert('loaderCom')" id="comSec${post.id}"><img src="https://i.ibb.co.com/hRNSdTgD/comment.png" alt="" border="0" width="40"></button>
-<button>
-  <img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" alt="" border="0" width="30"></button>
+<p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
+
+<div id="countReactions">
+<div id="countByOrder${post.id}" style="text-align:right">
+<button id="likeCount${post.id}" onclick="likeContainer('${post.id}'); reactors('${post.id}')"></button><br>
+<button id="commentCount${post.id}" onclick="appContainer('${post.id}'); comText('${post.id}')"></button>
 </div>
-    
-    <div id="appearFlex${post.id}" class='appearFlex'>
-<button onclick="reactAppear(${post.id},'👍')">👍</button>
-<button onclick="reactAppear(${post.id},'♥️')">♥️</button>
-<button onclick="reactAppear(${post.id},'🤣')">🤣</button>
-<button onclick="reactAppear(${post.id},'😁')">😁</button>
-<button onclick="reactAppear(${post.id},'🤔')">🤔</button>
-<button onclick="reactAppear(${post.id},'🥰')">🥰</button>
-<button onclick="reactAppear(${post.id},'😥')">😥</button>
-<button onclick="reactAppear(${post.id},'😡')">😡</button>
 </div>
 
-<div id="comPen${post.id}" style="display:none; position: fixed; z-index: 100; height: 100%; width: 100%; background: rgba(0,0,0,0.3); top:0; left: 0; justify-content: center;align-items: center;">
-    
+<div id="reactPanal">
+<button onclick="//appImoji('${post.id}')" style="border-left:none;font-size:30px;" id="react${post.id}">
+<img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40">
+</button>
+
+<button onclick="comSec('${post.id}'); closealert('loaderCom')" id="comSec${post.id}">
+<img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40">
+</button>
+<button>
+<img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" width="30">
+</button><br>
+</div>
+
+<div id="appearFlex${post.id}" class="appearFlex">
+<button onclick="reactAppear('${post.id}','👍')">👍</button>
+<button onclick="reactAppear('${post.id}','♥️')">♥️</button>
+<button onclick="reactAppear('${post.id}','🤣')">🤣</button>
+<button onclick="reactAppear('${post.id}','😁')">😁</button>
+<button onclick="reactAppear('${post.id}','🤔')">🤔</button>
+<button onclick="reactAppear('${post.id}','🥰')">🥰</button>
+<button onclick="reactAppear('${post.id}','😥')">😥</button>
+<button onclick="reactAppear('${post.id}','😡')">😡</button>
+</div>
+
+
+
+<div id="comPen${post.id}" style="display:none;position:fixed;z-index:100;height:100%;width:100%;background:rgba(0,0,0,0.3);top:0;left:0;justify-content:center;align-items:center;">
 <div class="comSecDiv">
   <div class="comHeader">
     <h2>Write a comment about this post</h2>
     <button onclick="closealert('comPen${post.id}')" class="crossBtn">×</button>
   </div>
-
   <hr>
-
   <div class="comBody">
-    <textarea 
-      class="comWord" 
-      placeholder="Enter your comment here..."
-      rows="8"
-    ></textarea>
-
-    <button onclick="sendCom(${post.id})" class="comButton">
-      <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="">
-      
+    <textarea class="comWord" rows="8"></textarea>
+    <button onclick="sendCom('${post.id}')" class="comButton">
+      <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
     </button>
-            
-    </div>
-    <div id="loaderCom">
-    <div class="loadingBox">
-        <div class="spinner"></div>
-        <div class="textContainer">
-            <h2>Posting your comment...</h2>
-            <p>Please wait while it uploads</p>
-        </div>
-        <div class="loading-line"></div>
-    </div>
-
-    
+  </div>
 </div>
-    
- </div>
-  
-
- </div>
 </div>
 
-<div id="commentContainer${post.id}" style="   
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.4);
-">
-    <div class="Display">
-  <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>      
-          <h1 id="reactName">Comments</h1></td><td>
-    <div style="text-align: right;">
-<button 
-    style="
-        color: red; 
-        font-size: 30px; 
-        border: none; 
-        background: none; 
-        cursor: pointer;" 
-    onclick="containerClose(${post.id})"
->
-    × </button>  
-     </div>
-      </td></tr>
- <tr><td colspan="2"><hr></td></tr>     
-      </table>
+<div id="commentContainer${post.id}" style="position:fixed;z-index:1000;top:0;left:0;height:100%;width:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);">
+<div class="Display">
+<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<tr><td><h1>Comments</h1></td>
+<td><div style="text-align:right;">
+<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="containerClose('${post.id}')">×</button>
+</div></td></tr>
+</table>
+
+<div id="comText${post.id}" style="margin-top:140px"></div>
+</div>
+</div>
+
+<div id="likeContainer${post.id}" style="position:fixed;z-index:1000;top:0;left:0;height:100%;width:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);">
+<div class="Display">
+<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<tr><td><h1>Reactions</h1></td>
+<td><div style="text-align:right;">
+<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="closeLikeContainer('${post.id}')">×</button>
+</div></td></tr>
+</table>
+
+<div id="reactors${post.id}" style="margin-top:140px;">Loading reactions...</div>
+</div>
+</div>
+`;
+
+            // text inject safe
+            div.querySelector(".postText").innerHTML = htmlText;
+
+            contentDiv.appendChild(div);
+
+            updateCounts(post.id);
+
+            applyPostStyle(div.querySelector(".postText"), post.post.style);
+
         
- <div id="comText${post.id}" style="position: relative; margin-top: 140px"></div>       
-    </div>
-</div>
+        
+// Reaction button 
+const btn = document.getElementById(`react${post.id}`); 
 
+// Reaction panel 
+const panel = document.getElementById(`appearFlex${post.id}`);
+ 
+ btn.addEventListener("click", (e) => { 
+ 
+     e.stopPropagation(); 
+    document.querySelectorAll(".appearFlex") .forEach(p => { 
+   p.style.display = "none"; 
+  }); 
+   
+  panel.style.display = panel.style.display === "flex" ? "none" : "flex"; });
+  
+ panel.addEventListener("click", (e) => { 
+    e.stopPropagation();
+ }); 
 
-<div id="likeContainer${post.id}" style="   
-    position: fixed;
-    z-index: 1000;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.4);
-">
-    <div class="Display">
-  <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>      
-          <h1 id="reactName">Reactions</h1></td><td>
-    <div style="text-align: right;">
-<button 
-    style="
-        color: red; 
-        font-size: 30px; 
-        border: none; 
-        background: none; 
-        cursor: pointer;" 
-    onclick="closeLikeContainer(${post.id})"
->
-    × </button>  
-     </div>
-      </td>
-      <tr><td colspan="2"> <hr></td></tr>
-      </tr></table>
-     
- <div id="reactors${post.id}" style="position: relative; margin-top: 140px;">Loading reactions...</div>       
-    </div>
-</div>
-
-    `;
-    
-       // let displayText = postText.length > 5 ? postText.slice(0, 5) + "..." : postText;
-
-document.addEventListener("click", e => {
-  const btn = e.target.closest(".copyBtn");
-  if (!btn) return;
-
-  navigator.clipboard.writeText(btn.dataset.text);
 });
-
-                contentDiv.appendChild(div);
-                updateCounts(post.id);
-                  // 🔥 STYLE APPLY (server → UI)
-  const p = div.querySelector(".postText");
-  applyPostStyle(p, post.post.style);
-  
-  
-            });
-        } else {
-            onalert(data.message || "Error loading posts!");
-        }
     } catch (err) {
-    console.error(err);
-    
-  document.getElementById("content"). innerHTML = `
- <div style="justify-content: center;align-items: center; display: flex; width: 100%;">
-     <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
-  <h2 style="color: red; font-size: 20px">Network error</h2><br>
-<button onclick="location.reload()" style="background: orange; color: white; padding: 10px 25px; border-radius: 14px; border: none; font-size: 20px;">Retry</button>
-     </div>
- </div>
-  `;
-    
- }
+        console.error(err);
+
+        document.getElementById("content").innerHTML = `
+        <div style="justify-content:center;align-items:center;display:flex;width:100%;">
+            <div style="display:flex;flex-direction:column;align-items:center;">
+                <h2 style="color:red;font-size:20px">Network error</h2><br>
+                <button onclick="location.reload()" style="background:orange;color:white;padding:10px 25px;border-radius:14px;border:none;font-size:20px;">
+                    Retry
+                </button>
+            </div>
+        </div>`;
+    }
 }
 
+
+// Outside click → close all panels
+document.addEventListener("click", () => { 
+document.querySelectorAll(".appearFlex") .forEach(panel => { 
+    panel.style.display = "none"; 
+    }); 
+   });
 
 async function reactors(postId) {
   try {
@@ -3161,14 +3385,15 @@ async function comText(postId) {
 
     try {
         const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
+  
         const comments = await res.json();
-
+//console.log(comments || "null");
         if (!comments || comments.length === 0) {
             box.innerHTML = "<p style='color: red;'>No comments yet</p>";
             return;
         }
 
-        const currentUser = JSON.parse(localStorage.getItem("user")); // Logged in user
+        const currentUser = JSON.parse(localStorage.getItem("user")); 
         const currentEmail = currentUser ? currentUser.email : null;
 
         box.innerHTML = "";
@@ -3185,7 +3410,7 @@ async function comText(postId) {
  style="background: none; border: none; border-bottom: 1px solid black; width: 100%;"           
              onclick="editCom(${comId}, '${postId}', '${c.comment.replace(/'/g, "\\'").replace(/\n/g, "\\n")}')"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px;">Edit comment</div></button>
           
-                  <button style="background: none; border: none; width: 100%; margin-top: 0px;" onclick="deleteCom(${c.id}, ${postId})"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px; color:red">Delete comment</div></button>
+                  <button style="background: none; border: none; width: 100%; margin-top: 0px;" onclick="deleteCom(${c.id}, '${postId}')"><div style="margin:0px;font-size:18px;text-align:left; padding: 10px; color:red">Delete comment</div></button>
                 </div>
             ` : "";
 
@@ -3266,7 +3491,8 @@ async function storyComPort(postId) {
             return;
         }
 
-        const currentUser = JSON.parse(localStorage.getItem("user")); // Logged in user
+        const currentUser = JSON.parse(localStorage.getItem("user")); 
+        
         const currentEmail = currentUser ? currentUser.email : null;
 
         box.innerHTML = "";
@@ -3353,7 +3579,7 @@ async function storyComPort(postId) {
 
 
 async function updateCounts(postId) {
-    const likeEl = document.getElementById(`likeCount${postId}`);
+      const likeEl = document.getElementById(`likeCount${postId}`);
     const commentEl = document.getElementById(`commentCount${postId}`);
 
     try {
@@ -3368,7 +3594,7 @@ async function updateCounts(postId) {
         console.error(`Error updating counts for post ${postId}:`, err);
         if (likeEl) likeEl.textContent = "– reactions";
         if (commentEl) commentEl.textContent = "– comments";
-    }
+    } 
 }
 
 async function reactCounts(postId) {
@@ -3407,9 +3633,7 @@ async function sendCom(postId) {
         onalert("User not found!");
         return;
     }
-    
-    // Show professional loading overlay
-    document.getElementById("loaderCom").style.display = 'flex';
+    //document.getElementById("loaderCom").style.display = 'flex';
     btn.disabled = true;
 
     try {
@@ -3417,7 +3641,7 @@ async function sendCom(postId) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                postId: Number(postId),
+                postId: postId,
                 email: user.email,
                 username: user.username,
                 avatar: user.avatar,
@@ -3433,10 +3657,10 @@ async function sendCom(postId) {
             return;
         }
 
-        console.log("Saved comment:", data.comment);
+        //console.log("Saved comment:", data.comment);
 
         textarea.value = "";
-        overlay.style.display = "none";
+      //  overlay.style.display = "none";
         updateCounts(postId);
         onalert("Comment posted ✅");
 
@@ -3490,7 +3714,7 @@ async function sendStoryCom(postId) {
             return;
         }
 
-        console.log("Saved comment:", data.comment);
+        //console.log("Saved comment:", data.comment);
 
         textarea.value = "";
         reactCounts(postId);
@@ -3587,7 +3811,7 @@ async function loadProfilePosts() {
         contentDiv.innerHTML = "";
 
         userPosts.forEach(post => {
-  console.log(JSON.stringify(post.id));
+  //console.log(JSON.stringify(post.id));
             const safeText = escapeHTML(post.post.text);
             const htmlText = safeText.replace(/\n/g, "<br>");
             const copyText = post.post.text.replace(/"/g, "&quot;");
@@ -3596,7 +3820,7 @@ async function loadProfilePosts() {
             div.className = "postshow";
 
             div.innerHTML = `
-<table><tr><td>
+ <table><tr><td>                
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
 </td>
 
@@ -3609,49 +3833,70 @@ async function loadProfilePosts() {
 </h2>
 </td>
 
-<td>
-<button id="menuBtn${post.id}" style="background:none;border:none;font-size:30px;color:green;">⋮</button>
-<div id="menu${post.id}" style="display:none;position:absolute;right:20px;top:50px;background:white;border:1px solid gray;border-radius:5px;box-shadow:0 2px 8px rgba(0,0,0,0.2);min-width:150px;z-index:100;">
-  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
-  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;" onclick="navigator.clipboard.writeText('${copyText}'); closealert('menu${post.id}')">Copy</button>
-  <button style="width:100%;padding:10px;border:none;background:none;text-align:left;color:red;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
+<td style="position:relative">
+<button id="options${post.id}" style="background:none;border:none;font-size:30px;color:green;margin-right:20px;display:block">⋮</button>
+<div id="menu${post.id}" style=" display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:500px; margin-right: 30px; z-index:1000; overflow:hidden;transform-origin: top right; animation: dropdownShow 0.4s ease; " > 
+   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:30px;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
+ <hr> <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:30px;" onclick="navigator.clipboard.writeText('${copyText}'); closealert('menu${post.id}')">Copy</button>
+ <hr> <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;color:red;font-size:30px;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
 </div>
+
 </td>
 </tr></table>
 
 <hr>
 
-<p class="postText" style="font-size:30px; padding: 20px; border-radius: 5px;">
+
+
+<p class="postText" id="posttext${post.id}"style="font-size:30px; padding: 20px; border-radius: 5px;">
 ${htmlText}
 </p> 
 `;
 
             contentDiv.appendChild(div);
 
-            // style apply
-            const p = div.querySelector(".postText");
-            applyPostStyle(p, post.post.style);
+// Style apply
+const p = div.querySelector(".postText");
+applyPostStyle(p, post.post.style);
 
-            // dropdown menu toggle
-            const btn = div.querySelector(`#menuBtn${post.id}`);
-            const menu = div.querySelector(`#menu${post.id}`);
-            btn.addEventListener("click", e => {
-                e.stopPropagation();
-                const isOpen = menu.style.display === "block";
-                document.querySelectorAll("[id^='menu']").forEach(m => m.style.display = "none");
-                menu.style.display = isOpen ? "none" : "block";
-            });
-        });
+// Dropdown menu toggle
+const btn = div.querySelector(`#options${post.id}`);
+const menu = div.querySelector(`#menu${post.id}`);
 
-        // click outside close all dropdowns
-        document.addEventListener("click", e => {
-            document.querySelectorAll("[id^='menu']").forEach(menu => {
-                if (!menu.contains(e.target)) menu.style.display = "none";
-            });
-        });
+btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const isOpen = menu.style.display === "block";
+    const istrigged = menu.style.display === "none";
+
+    // Menu open/close toggle
+    menu.style.display = isOpen ? "none" : "block";
+    btn.style.display = istrigged ? "none" : "block";
+});
+
+});
+
+// Click outside → close all dropdown menus
+document.addEventListener("click", () => {
+
+    const allMenus = document.querySelectorAll('[id^="menu"]');
+    const allOptionTriggers = document.querySelectorAll('[id^="options"]');
+
+    allMenus.forEach((el) => {
+
+        // Skip button ids like menuBtn
+        if (!el.id.includes("Btn")) {
+            el.style.display = "none";
+        }
+    });
+
+    allOptionTriggers.forEach((el) => {
+               el.style.display = "block";
+    });
+
+});
 
     } catch (err) {
-        console.error(err);
+        console.error(err); 
         document.getElementById("ownerPosts").innerHTML = `
 <div style="justify-content: center;align-items: center; display: flex; width: 100%;">
     <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
@@ -3676,11 +3921,11 @@ function editPost(id) {
         <table style="width: 100%;">
             <tr>
                 <td>
-                    <textarea id="${textareaId}" style="width: 80%; margin-top: 20px; border: 1px solid green; border-radius: 10px; height: 100px; padding: 20px; font-size: 16px; color: red;    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+                    <textarea id="${textareaId}" style="width: 85%; margin-topte0px; border: 1px solid green; border-radius: 10px; height: 300px; padding: 20px; font-size: 30px; color: red;    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
 ">${postText}</textarea>
                 </td>
                 <td>
-                    <button onclick="savePost(${id})" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
+                    <button onclick="savePost('${id}')" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
                     <br>
                     <button onclick="loadProfilePosts()" style="background:white;width:100px;height:50px;border:1px solid red;border-radius:10px;color:red;">Cancel</button>
                 </td>
@@ -3692,13 +3937,16 @@ function editPost(id) {
 // 🔹 Save Post (PUT)
 async function savePost(id) {
     const user = JSON.parse(localStorage.getItem("user"));
+    console.log(JSON.stringify(user));
     const newText = document.getElementById(`editpost${id}`).value;
-
+console.log(newText);
+const payload = { post: newText };
+console.log(JSON.stringify(payload));
     try {
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ text: newText })
+            body: JSON.stringify({ post: newText })
         });
         const data = await res.json();
         onalert(data.message);
@@ -3790,6 +4038,7 @@ async function deleteCom(commentId, postId) {
         );
 
         const data = await res.json();
+       
 
         if (!res.ok) {
             onalert(data.message || "Failed to delete comment.");
@@ -3827,9 +4076,8 @@ function closealert(menuId) {
 let closePlace = document.querySelector('#body');
 
 
-function appImoji(id) {
-document.getElementById(`appearFlex${id}`).style.display ='flex';
-}
+
+
 
 
 
@@ -3995,7 +4243,7 @@ function showWarning(targetSelector = ".warn", message = "⚠ Check Your Network
             if (typeof retryFunc === "function") {
                 retryFunc(); // user-defined function call
             } else {
-                console.log("No retry function provided, default reload");
+                console.warn("No retry function provided, default reload");
                 
             }
         });
@@ -4017,7 +4265,7 @@ function warning(func, interval = 3000, duration = 0, delay = 3000) {
         if (duration > 0) {
             setTimeout(() => {
                 clearInterval(intervalId);
-                console.log(" Warning stopped");
+               // console.log(" Warning stopped");
             }, duration);
         }
     }, delay);
