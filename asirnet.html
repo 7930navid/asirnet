@@ -194,77 +194,85 @@
     from{ right:100%; }
     to{ right:-40%; }
 }
-/* Box inside overlay */
-#loaderCom .loadingBox {
-    display: flex;
-    align-items: center; /* Align spinner and text vertically */
-    gap: 20px;           /* Space between spinner and text */
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 20px 25px;
+.inlineLoader {
+    width: 100%;
     max-width: 400px;
-    margin-top: 30px;
-    margin-bottom: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin: 20px auto;
+
+    opacity: 0;
+    transform: translateY(-20px);
+    pointer-events: none;
+
+    transition: all .35s ease;
+}
+
+/* SHOW state */
+.inlineLoader.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+}
+
+/* Box */
+.inlineLoader .loadingBox {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    background: none;
+    padding: 15px 20px;
+
+    border-radius: 12px;
+
+    width: 100%;
 }
 
 /* Spinner */
-#loaderCom .spinner {
-    width: 40px;          /* smaller spinner */
-    height: 40px;
-    border: 5px solid #e5e5e5;
-    border-top: 5px solid #007bff;
+.inlineLoader .spinner {
+    width: 35px;
+    height: 35px;
+
+    border: 4px solid #e5e5e5;
+    border-top: 4px solid #007bff;
+
     border-radius: 50%;
     animation: spin 1s linear infinite;
-    display: flex;
 }
 
-/* Text container */
-#loaderCom .textContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-/* Headline */
-#loaderCom h2 {
-    margin: 0;
-    font-size: 18px;
-    color: #222;
-}
-
-/* Subtext */
-#loaderCom p {
-    margin: 4px 0 0;
-    font-size: 13px;
-    color: #666;
-}
-
-/* Loading line at bottom */
-#loaderCom .loading-line {
-    position: absolute;
-    bottom: 0;
-    left: 0;
+/* Loading line */
+.inlineLoader .loading-line {
     width: 100%;
     height: 3px;
+    margin-top: 8px;
+
     background: #e5e5e5;
     overflow: hidden;
 }
 
-#loaderCom .loading-line::after {
+.inlineLoader .loading-line::after {
     content: "";
     position: absolute;
-    top: 0;
-    right: -40%;
+
     width: 40%;
-    height: 100%;
+    height: 3px;
+
     background: linear-gradient(90deg, transparent, #007bff, transparent);
-    animation: moveLine 1.8s linear infinite;
+
+    animation: moveLine 1.5s linear infinite;
 }
 
-/* Animations */
 @keyframes spin {
-    0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+@keyframes moveLine {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(250%); }
 }
 
 
@@ -489,15 +497,15 @@ textarea,input:focus {
 #bottomBTN button {
     width: 45%;
     margin: 10px;
-    padding: 20px;
+    padding: 5px;
     background: none;
     border: none;
     box-shadow: 0 0 10px gray;
-    border-radius: 50px;
+    border-radius: 4px;
     background: linear-gradient(135deg, #c4b5fd, #bfdbfe);
 }
 #bottomBTN img {
-    width: 30px;
+    width: 40px;
 }
 #postsubmit {
     background: lightyellow;
@@ -654,11 +662,33 @@ textarea,input:focus {
 }
 
 .appearFlex {
-    margin-top: 10px;
-    display: none;
+    margin-top: 20px;
+    height: 0px;
+    display: flex;
     overflow-y: auto;
-    padding-left: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(-80px);
+
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1),
+        opacity .4s ease,
+        height .4s ease;
 }
+
+.appearFlex.show {
+    opacity: 1;
+    transform: translateY(0);
+
+    pointer-events: auto;
+
+    transition:
+        transform .4s cubic-bezier(.22,1,.36,1),
+        opacity .4s ease,
+        height .4s ease;
+    height: 80px;
+}
+
 .appearFlex button {
     padding: 10px;
     font-size: 25px;
@@ -763,6 +793,29 @@ textarea,input:focus {
     margin-top: 20px;
 }
 
+.likeComCon {
+    position:fixed;
+    z-index:1000;
+    top:0;
+    left:0;
+    height:100%;
+    width:100%;
+    align-items: center;
+    justify-content:center;
+    background:rgba(0,0,0,0.4);
+    display: flex;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .4s ease,
+                visibility .4s ease,
+                transform .4s ease;
+    transform: translateX(-1000px);
+}
+.likeComCon.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+}
 .comSecDiv{
   width: 80%;
   margin-bottom: 30px;
@@ -1280,7 +1333,7 @@ textarea,input:focus {
 #demo div{
     margin: 10px;
     padding: 0;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     max-width: 400px;
     text-align: center;
@@ -1288,17 +1341,19 @@ textarea,input:focus {
     color: inherit;
     width: fit-content;
     }
-#sizeSubmit {
+.correctBtn {
     border: none;
     background: none;
     position: fixed;
     z-index: 1004;
     bottom: 100px;
     right: 100px;
+    border-radius: 50%;
 }
-#sizeSubmit img {
+.correctBtn img {
     box-shadow: 0 0 10px gray;
     transition: all 0.4s ease;
+    border-radius: 50%;
  }
 
 #BGS p {
@@ -1432,6 +1487,7 @@ textarea,input:focus {
     display: block;
     width: 95%;
     z-index: 10000;
+    background: white;
 }
 #searchTagged input {
     width: 90%;
@@ -1447,6 +1503,190 @@ textarea,input:focus {
 #searchTagged input:focus {
     border-bottom: 5px solid #4b6f5a;
 }
+#faultMass {
+    width: 95%;
+    background: white;
+    color: red;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 18px;
+}
+.tagIds {
+    position: relative;
+    width: 220px;
+    padding: 18px;
+    border: none;
+    border-radius: 8px;
+    background: rgb(200,200,200);
+    cursor: pointer;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.08),
+        0 1px 3px rgba(0,0,0,.05);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        background .25s ease;
+
+    overflow: hidden;
+}
+
+.tagIds img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+
+    border: 3px solid #f1f1f1;
+
+    transition:
+        transform .3s ease,
+        border-color .3s ease;
+}
+
+.tagIds div {
+    font-size: 20px;
+    font-weight: 700;
+    color: #222;
+    margin-top: 6px;
+}
+
+.tagIds p {
+    font-size: 17px;
+    color: #777;
+    margin: 0;
+    word-break: break-word;
+}
+
+
+.tagIds::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 80%;
+    height: 100%;
+
+    background: linear-gradient(
+        120deg,
+        transparent,
+        rgba(255,255,255,.5),
+        transparent
+    );
+
+    transition: .7s;
+}
+
+.tagIds:active {
+    transform: scale(.97);
+}
+
+/* Selected State */
+.tagIds.selected {
+    background: linear-gradient(
+        135deg,
+        #4f46e5,
+        #7c3aed
+    );
+
+    color: white;
+
+    box-shadow:
+        0 15px 35px rgba(79,70,229,.35);
+}
+
+.tagIds.selected div,
+.tagIds.selected p {
+    color: white;
+}
+
+.tagIds.selected img {
+    border-color: white;
+}
+
+/* Entry Animation */
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tagIds {
+    animation: cardAppear .4s ease;
+}
+
+#taggedShow {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.4s ease;
+    transform: translateX(800px);
+}
+#taggedShowDiv {
+    background: white;
+    width: 70%;
+    height: 30%;
+    padding: 10px;
+    overflow: auto;
+    position: relative;
+    border-radius: 10px;
+}
+#taggedShowDiv h2 {
+    color: green;
+    padding-bottom: 20px;
+    border-bottom: 3px solid green;
+    position: absolute;
+    z-index: 1014;
+    width: 96%;
+    background: white;
+}
+
+.tag-card{
+  background: mediumpurple;
+  border: 2px solid purple;
+  border-radius: 4px;
+  margin: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.tag-card h3, .tag-card div, .tag-card p {
+  color: white;
+  background: none;
+  text-align: center
+}
+.tag-card button {
+  position: absolute;
+  z-index: 1010;
+  border: none;
+  background: red; 
+  top: 3px;
+  right: 3px;
+  border-radius: 8px;
+  font-size: 20px;
+  color: white;
+}
+
 #postMenu {
     background: white;
     border: 1px solid gray;
@@ -1467,9 +1707,14 @@ textarea,input:focus {
     border-bottom: 1px solid gray;
     padding: 10px;
     font-size: 20px;
-    background: none;   
+    background: none;  
 }
-
+.postInfo{
+    margin-left: 15px;
+}
+.postInfo img {
+   width: 20px;
+}
 
  </style>
 </head>
@@ -1521,7 +1766,14 @@ textarea,input:focus {
       </tr>
     </table>
     
- <div id="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;"><span id="idName"></span> is feeling <span id="feeling">___</span> at <span id="location">___</span></div>
+ <div id="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+<span id="idName"></span> 
+is feeling 
+<span id="feeling">___</span> 
+at 
+<span id="location">___</span> 
+<a href="javascript:void(0)" onclick="showTagged()" id="taggedBtn" style="display:none">with other ones<a>
+</div>
 
     <div>
 <div id="imgcont"></div>
@@ -1532,8 +1784,8 @@ textarea,input:focus {
     <section id="innerChange">
 <input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
     <div id="demo"><div>"it's a demo of post letters"</div></div>
- <button onclick="applySize();">
-     <img id="sizeSubmit" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ <button onclick="applySize()">
+     <img class="correctBtn" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
  </button>
     </section>
    </section>
@@ -1542,8 +1794,8 @@ textarea,input:focus {
     <!-- ALERT -->
     <h2 id="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
   <div id="bottomBTN">
- <button onclick="postBG()"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 20px; color: red; margin-top: 10px;">Post Background</p></button>
- <button onclick="fontSize()"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 20px; color: green; margin-top: 10px;">Font Size</p></button>
+ <button onclick="postBG()"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 30px; color: red; margin-top: 10px;">Post Background</p></button>
+ <button onclick="fontSize()"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 30px; color: green; margin-top: 10px;">Font Size</p></button>
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
@@ -1874,11 +2126,21 @@ textarea,input:focus {
  <div id="searchTagged">
  <h1>Select People to tag them: </h1>
  <hr>
- <input type="text" placeholder="Search users...."> 
+ <input type="text" placeholder="Search users...." onkeyup="comeUsers()" id="searchBar">
+ <div id="faultMass"></div>
  </div>
- <div id="comingUsers"></div>
+ <div id="comingUsers" style="margin-top:250px;display: grid;grid-template-columns: repeat(3, 1fr);gap: 16px;"></div>
+ <button onclick="closeTagPage('a')" class="correctBtn">
+     <img id="sizeSubmit" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ </button>
 </div>
 
+<div id="taggedShow">
+    <div id="taggedShowDiv">
+    <h2>Your Tagged Peoples:</h2>
+    <section id="personWise" style="margin-top: 100px"></section>
+    </div>
+</div>
 
 <script>
 let postImgFiles = [];
@@ -2517,7 +2779,8 @@ function closealert(id) {
 document.getElementById(id).classList.remove("show");
 setTimeout(()=>{
   document.getElementById(id).style.display = "none";
-},400);}
+},400);
+}
 
 function closealertAdv(id, postId) {
     document.getElementById(id).style.display = 'none';
@@ -2705,9 +2968,18 @@ const BackManager = (function () {
                 history.pushState({ ui: true }, "");
                 stack.push(closeFn);
             }
+        },
+
+        unregister(closeFn) {
+            stack = stack.filter(fn => fn !== closeFn);
+        },
+
+        clear() {
+            stack = [];
         }
     };
 })();
+
 
 /* ========= SEARCH PAD ========= */
 function searchpad() {
@@ -2745,22 +3017,153 @@ function closePostpage(){
     setTimeout(()=>{
         pad.style.display = "none";
     }, 450);
-    closeFontSize();
-    document.getElementById('location') ="";
-    document.getElementById('feeling') ="";
+    document.getElementById('location').innerText="___";
+    document.getElementById('feeling').innerText ="___";
     postLocation ="";
     feeling ="";
-
-  
-}
+  }
 
 function tag() {
+    if(taggedEmailList.length == 0) {
 document.getElementById('tagPeople').style.transform = 'translateY(0)'; 
     BackManager.register(closeTagPage);   
+        
+    }else {
+      BackManager.unregister(closeTagPage);   
+ onconfirm('Attention!!', 'Do you want to remove your previously tagged peoples and select new ones?', 'Yes', reOpen, '', '#4f46e5')       
+    } 
 }
 
-function closeTagPage() {
-document.getElementById('tagPeople').style.transform = 'translateY(100%)';        
+function reOpen() {
+   taggedEmailList = [];
+   tag();
+}
+
+function closeTagPage(check) {
+document.getElementById('searchBar').value ="";
+document.getElementById('comingUsers').innerHTML ="";
+document.getElementById('tagPeople').style.transform = 'translateY(100%)'; 
+document.getElementById('taggedBtn').style.display = 'block'; 
+    BackManager.unregister(closeTagPage);      
+    if(check != 'a') {
+    taggedEmailList = [];
+        }
+      clearTags();
+}
+function clearTags() {
+    if(taggedEmailList.length == 0) {
+document.getElementById('taggedBtn').style.display = 'none';
+    }            
+    
+}
+
+function showTagged() {
+    document.getElementById('taggedShow').style.transform = 'translate(0)';
+
+    BackManager.register(closeTagged);
+
+    const container = document.getElementById('personWise');
+
+container.innerHTML = taggedEmailList.map(i => `
+        <div class="tag-card">
+            <div>
+          <h3>${i.name}</h3>
+          <p>${i.email}</p>
+            </div>
+            <button
+                onclick="removeTag('${i.email}')">
+                ✕
+            </button>
+
+        </div>
+    `).join("");
+}
+
+function removeTag(email) {
+
+    taggedEmailList = taggedEmailList.filter(
+        user => user.email !== email
+    );
+
+    showTagged();
+    clearTags();
+}
+function closeTagged() {
+ document.getElementById('taggedShow').style.transform = 'translate(800px)';   
+}
+
+
+async function comeUsers() {
+  let searchElement = document.getElementById('searchBar').value;
+  let showingDisplay = document.getElementById('comingUsers');
+  
+  if(!searchElement) {
+    alertShow('Please Write something here to search');  
+  }else {
+     try{
+
+        const token = localStorage.getItem("token");
+        const res = await fetch(
+            `https://users-server-xyvg.onrender.com/search?q=${encodeURIComponent(searchElement)}`,
+            {
+            headers: {
+            Authorization: `Bearer ${token}`
+                     }
+            });
+        const users = await res.json();
+        if (users.length === 0) {
+        alertShow('No user found');
+        showingDisplay.innerHTML ='';  
+          } else {
+         showingDisplay.innerHTML = users.map(user => `
+<button onclick="tagAdd(this,'${user.email}','${user.username}')" class="tagIds">
+<img src="${user.avatar}">
+<br>
+<div>${user.username}</div><br>   
+<p>${user.email}</p>
+</button>           
+               `).join("");
+        }
+         
+     } catch(err) {
+     console.error(err);
+     alertShow('');
+     onalert('Something went wrong');    
+     }
+  }
+
+}
+
+let taggedEmailList = [];
+
+function tagAdd(btn, email, name) {
+
+    btn.classList.toggle("selected");
+
+    const userIndex = taggedEmailList.findIndex(
+        user => user.email === email
+    );
+
+    if (userIndex === -1) {
+
+        taggedEmailList.push({
+            email,
+            name
+        });
+
+    } else {
+
+        taggedEmailList.splice(userIndex, 1);
+
+    }
+
+}
+
+function alertShow(alert) {
+   document.getElementById('faultMass').innerText = alert;
+   setTimeout(() => {
+   document.getElementById('faultMass').innerText = "";       
+   },4000); 
 }
 
 function postBG() {
@@ -2945,6 +3348,7 @@ function applySize() {
   if(givenSize.value <= 70 && givenSize.value >= 20){
     appliedSize.style.fontSize = givenSize.value + "px";
     closeFontSize();
+    changeSize(givenSize.value);
     } else if (!givenSize.value) { 
     onalert('Please type a size first!');
     } else {
@@ -2957,22 +3361,16 @@ function closeFontSize() {
     f.style.transform = "translateY(700px)";
 }
 
-function changeFont(s) {
-    closeFontSize();
+function changeSize(size) {
     const i = document.getElementById("postword");
-
-    const map = {
-        xl: ["60px", "bold"],
-        l:  ["50px", "bold"],
-        m:  ["40px", "normal"],
-        s:  ["35px", "normal"],
-        t:  ["30px", "normal"],
-        d:  ["25px", "normal"]
-    };
-
-    const [size, weight] = map[s] || map.d;
     i.style.fontSize = size;
-    i.style.fontWeight = weight;
+    let s = Number(size);
+    if(s >= 35) {
+    i.style.fontWeight = 'bold';        
+    }else {
+    i.style.fontWeight = 'normal';        
+    }
+
 }
 
 /* =========================
@@ -2984,6 +3382,13 @@ function collectPostData() {
 
     return {
         text: el.value || el.innerText,
+
+        feelings: feeling || "",
+
+        location: postLocation || "",
+
+        others: taggedEmailList || [],
+
         style: {
             color: cs.color,
             fontSize: cs.fontSize,
@@ -2995,9 +3400,12 @@ function collectPostData() {
             backgroundSize: cs.backgroundSize,
             backgroundPosition: cs.backgroundPosition
         },
-        image: postImageBase64 || "" 
+
+        image: postImageBase64 || ""
     };
 }
+
+
 /* =========================
    APPLY STYLE (SERVER → UI)
 ========================= */
@@ -3022,57 +3430,84 @@ let postImageBase64 = "";
 /* ===  POST SUBMIT (SERVER SEND) === */
 async function postsubmit() {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user?.username) {
+
+    if (!user?.username || !user?.email) {
         onPostAlert("User not found!");
         return;
     }
 
     const postData = collectPostData();
-    if (!postData.text.trim() && !postData.image) {
+
+    if (!postData.text?.trim() && !postData.image) {
         onPostAlert("Please write something or select an image!");
         return;
     }
 
     const loader = document.getElementById("postLoading");
-    const btn = document.getElementById("postbtn");
     loader.style.display = "flex";
-    if (btn) { btn.style.background = 'gray'; btn.disabled = true; }
+    closePostpage();
+    
+     const btn = document.getElementById("postsubmit");
 
+    
+    if (btn) {
+        btn.style.background = "gray";
+        btn.disabled = true;
+    }
+ 
     try {
+         const payload = {
+            user: {
+                username: user.username,
+                email: user.email
+            },
+
+            avatar: user.avatar || "",
+
+            post: {
+                text: postData.text || "",
+                style: postData.style || {},
+                image: postData.image || ""
+            },
+
+            feelings: postData.feelings || null,
+            location: postData.location || null,
+            others: postData.others || []
+        };
+
         const res = await fetch("https://posts-server-kmha.onrender.com/post", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                user: {
-                    username: user.username,
-                    email: user.email
-                },
-                post: postData,   // 🔥 text + style + image
-                avatar: user.avatar
-            })
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
         });
 
+        const data = await res.json().catch(() => ({}));
+
         if (!res.ok) {
-            onPostAlert("Network error!");
+            onPostAlert(data.message || "Server error!");
             return;
         }
 
-        //console.log("Post submitted successfully!");
-        loadPosts(); // তোমার আগে লেখা function
-        closePostpage(); // Optional, close popup
+        loadPosts();
+        closePostpage();
 
-        // Reset form
+        // reset UI
         document.getElementById("postword").value = "";
         postImageBase64 = "";
         document.getElementById("postPreview").style.display = "none";
-
+ 
     } catch (err) {
         console.error(err);
         onPostAlert("Network error!");
     } finally {
         loader.style.display = "none";
-        if (btn) { btn.style.background = 'blue'; btn.disabled = false; }
-    }
+        if (btn) {
+            btn.style.background = "blue";
+            btn.disabled = false;
+        }
+     }
 }
 
 function onPostAlert(alert) {
@@ -3121,8 +3556,8 @@ async function loadPosts() {
             div.className = "postshow";
 
             div.innerHTML = `
-<table><tr><td>
-<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
+<table><tr><td valign="top">
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
 </td>
 
 <td style="width:650px">
@@ -3130,9 +3565,12 @@ async function loadPosts() {
 <button class="profileBtn"
  data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:50px;text-align:left;">${post.username}</div>
+<div style="font-size:40px;text-align:left;">${post.username}</div>
 </button>
 </h2>
+<p class="postInfo"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
+<p class="postInfo" onclick="showTagged()"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
+<p class="postInfo"><img src="https://i.ibb.co.com/39jD6F2q/customer.png"> ${post.others}</p>
 </td>
 
 <td>
@@ -3156,11 +3594,11 @@ async function loadPosts() {
 </div>
 
 <div id="reactPanal">
-<button onclick="//appImoji('${post.id}')" style="border-left:none;font-size:30px;" id="react${post.id}">
+<button style="border-left:none;font-size:30px;" id="react${post.id}">
 <img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40">
 </button>
 
-<button onclick="comSec('${post.id}'); closealert('loaderCom')" id="comSec${post.id}">
+<button onclick="comSec('${post.id}');" id="comSec${post.id}">
 <img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40">
 </button>
 <button>
@@ -3181,11 +3619,11 @@ async function loadPosts() {
 
 
 
-<div id="comPen${post.id}" style="display:none;position:fixed;z-index:100;height:100%;width:100%;background:rgba(0,0,0,0.3);top:0;left:0;justify-content:center;align-items:center;">
+<div id="comPen${post.id}" class="likeComCon">
 <div class="comSecDiv">
   <div class="comHeader">
     <h2>Write a comment about this post</h2>
-    <button onclick="closealert('comPen${post.id}')" class="crossBtn">×</button>
+    <button onclick="closeComSec('${post.id}')" class="crossBtn">×</button>
   </div>
   <hr>
   <div class="comBody">
@@ -3194,10 +3632,29 @@ async function loadPosts() {
       <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
     </button>
   </div>
+
+<div id="loaderCom" class="inlineLoader">
+    <div class="loadingBox">
+
+        <div class="spinner"></div>
+
+        <div class="textContainer">
+            <h2>Loading...</h2>
+            <p>Please wait...</p>
+        </div>
+
+    </div>
+
+    <div class="loading-line"></div>
+</div>
+
+
+
+
 </div>
 </div>
 
-<div id="commentContainer${post.id}" style="position:fixed;z-index:1000;top:0;left:0;height:100%;width:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);">
+<div id="commentContainer${post.id}" class="likeComCon">
 <div class="Display">
 <table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
 <tr><td><h1>Comments</h1></td>
@@ -3210,7 +3667,10 @@ async function loadPosts() {
 </div>
 </div>
 
-<div id="likeContainer${post.id}" style="position:fixed;z-index:1000;top:0;left:0;height:100%;width:100%;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,0.4);">
+<div id="likeContainer${post.id}" class="likeComCon" >
+    
+    
+    
 <div class="Display">
 <table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
 <tr><td><h1>Reactions</h1></td>
@@ -3235,24 +3695,35 @@ async function loadPosts() {
 
         
         
-// Reaction button 
-const btn = document.getElementById(`react${post.id}`); 
-
-// Reaction panel 
+const btn = document.getElementById(`react${post.id}`);
 const panel = document.getElementById(`appearFlex${post.id}`);
- 
- btn.addEventListener("click", (e) => { 
- 
-     e.stopPropagation(); 
-    document.querySelectorAll(".appearFlex") .forEach(p => { 
-   p.style.display = "none"; 
-  }); 
-   
-  panel.style.display = panel.style.display === "flex" ? "none" : "flex"; });
-  
- panel.addEventListener("click", (e) => { 
+
+
+btn.addEventListener("click", (e) => {
     e.stopPropagation();
- }); 
+    console.log("clicked");
+
+    const isOpen = panel.classList.contains("show");
+
+    document.querySelectorAll(".appearFlex").forEach(p => {
+        p.classList.remove("show");
+    });
+
+    if (!isOpen) {
+        panel.classList.add("show");
+    }
+});
+
+panel.addEventListener("click", (e) => {
+    e.stopPropagation();
+});
+
+document.addEventListener("click", () => {
+    document.querySelectorAll(".appearFlex").forEach(p => {
+        p.classList.remove("show");
+    });
+});
+
 
 });
     } catch (err) {
@@ -3274,7 +3745,7 @@ const panel = document.getElementById(`appearFlex${post.id}`);
 // Outside click → close all panels
 document.addEventListener("click", () => { 
 document.querySelectorAll(".appearFlex") .forEach(panel => { 
-    panel.style.display = "none"; 
+    panel.classList.remove("show"); 
     }); 
    });
 
@@ -3376,7 +3847,13 @@ document.getElementById(`appearReactors${postId}`).innerHTML =`<div style="displ
 
 
 function comSec(appear) {
-   document.getElementById(`comPen${appear}`).style.display  = 'flex';
+const el = document.getElementById(`comPen${appear}`);
+    el.classList.add("show");
+}
+
+function closeComSec(close) {
+const el = document.getElementById(`comPen${close}`);
+    el.classList.remove("show");
 }
 
 async function comText(postId) {
@@ -3633,11 +4110,11 @@ async function sendCom(postId) {
         onalert("User not found!");
         return;
     }
-    //document.getElementById("loaderCom").style.display = 'flex';
-    btn.disabled = true;
+
+    btn.disabled = true;   document.getElementById("loaderCom").classList.add("show");
 
     try {
-        const res = await fetch("https://interacts-server-xpbo.onrender.com/comment", {
+         const res = await fetch("https://interacts-server-xpbo.onrender.com/comment", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -3653,14 +4130,14 @@ async function sendCom(postId) {
 
         if (!res.ok) {
             console.error("Server Error:", res.status, data);
+            document.getElementById("loaderCom").classList.remove("show");
+
             onalert(data.message || "Failed to send comment!");
             return;
         }
-
-        //console.log("Saved comment:", data.comment);
-
+ 
         textarea.value = "";
-      //  overlay.style.display = "none";
+        closeComSec(postId);
         updateCounts(postId);
         onalert("Comment posted ✅");
 
@@ -3668,8 +4145,7 @@ async function sendCom(postId) {
         console.error("Network / JS Error:", err);
         onalert("Network error!");
     } finally {
-        // Always hide loading overlay
-        document.getElementById("loaderCom").style.display = 'none';
+        document.getElementById("loaderCom").classList.remove("show");
         btn.disabled = false;
     }
 }
@@ -4061,11 +4537,6 @@ async function deleteCom(commentId, postId) {
     }
 }
 
-
-
-
-
-
 // 🔹 Close dropdown
 function closealert(menuId) {
     const el = document.getElementById(menuId);
@@ -4075,31 +4546,32 @@ function closealert(menuId) {
 
 let closePlace = document.querySelector('#body');
 
-
-
-
-
-
-
 function closeImoji(id) {
     document.getElementById(`appearFlex${id}`).style.display ='none';
 }
 
 function containerClose(container){
-    document.getElementById(`commentContainer${container}`).style.display = 'none';
+const el = document.getElementById(`commentContainer${container}`);
+    el.classList.remove("show");
     updateCounts(container);
 }
 
 function appContainer(container) {
-document.getElementById(`commentContainer${container}`).style.display ='flex';
+const el = document.getElementById(`commentContainer${container}`);
+    el.classList.add("show");
+
 }
 
 function likeContainer(container) {
-document.getElementById(`likeContainer${container}`).style.display ='flex';
+const el = document.getElementById(`likeContainer${container}`);
+    el.classList.add("show");
+    
 }
 
 function closeLikeContainer(container){
-    document.getElementById(`likeContainer${container}`).style.display = 'none';
+const el = document.getElementById(`likeContainer${container}`);
+    el.classList.remove("show");
+    updateCounts(container);
 }
 
 
