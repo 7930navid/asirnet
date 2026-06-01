@@ -610,40 +610,54 @@ textarea,input:focus {
     margin: 20px;
     border: none;
     border-radius: 20px;
+    background-size: cover;  
+    background-position: center; 
+    background-repeat: no-repeat;
+
 }
 #profdiv p{
     font-size: 50px;
     font-weight: bold;
-    color: green;
+    color: #ffffff;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 10px;
+    border-radius: 15px;
+    width: fit-content;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
 #profdiv h3{
-    color: red;
+    font-size: 30px;
+    color: rgba(255,255,255,0.85);
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 8px;
+    border-radius: 8px;
+    width: fit-content;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.5);
 }
-#profdiv hr{
-    height: 15px;
-    background: rgba(150,150,150,0.3);
-}
+
 #editbtn {
     position: absolute;
     z-index: 100;
-    top: 330px;
-    left: 260px;
+    top: 310px;
+    left: 250px;
 }
 #editbtn button{
     border: none;
     height: 60px;
     width: 60px;
     border-radius: 90px;
-    box-shadow: 0 0 3px gray;
     font-size: 20px;
+    background: white;
 }
 #profPic {
     width: 250px;
     height: 250px;
     border-radius: 360px;
-    border: 5px solid white;
-    box-shadow: 5px 0 0 green;
-    background: rgba(0,0,0,0.3);
+    background: none;
 }
 #reactPanal {
     display: flex;
@@ -918,7 +932,9 @@ textarea,input:focus {
     font-weight: bold;
     margin-left: 150px;
 }
-
+#countReactions {
+    margin: 16px;
+}
 #countReactions button{
     font-size: 15px;
     background: none;
@@ -1715,7 +1731,30 @@ textarea,input:focus {
     margin-left: 15px;
 }
 .postInfo img {
-   width: 20px;
+    width: 20px;
+}   
+
+.othInfo {
+    visibility: hidden;
+    height: 0;
+    transition: height 0.4s ease;
+    animition: infoApp 0.5s ease;
+}
+
+.othInfo.show {
+    visibility: visible;
+    height: 160px;
+}
+
+.hideAndSick button {
+    background: none;
+    border: none;
+    margin-top: 20px;
+    transform: rotate(0);
+    transition: transform 0.4s ease;
+}
+.hideAndSick button.active {
+    transform: rotate(180deg);
 }
 
  </style>
@@ -2005,7 +2044,7 @@ at
     padding: 5px;
     color: black;
 ">+</button></td>
-<td><button onclick="setting();"><img src="https://i.ibb.co.com/F4RcTPbR/setting.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="setting();"><img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40"></button></td>
 <td><button onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40"></button></td>
             </tr>
         </table>
@@ -2904,11 +2943,11 @@ const s = JSON.parse(styleString);
      <table align="center"><tr><td width="270">
      <img id="profPic" onclick="disProf()"></div></td><td width="400">
      <p id="userName"></p>
-     <h3><u><i id="profileBio" ></i></u></h3>
+     <h3 id="profileBio"></h3>
   </td></tr></table>
   <div id="editbtn"><a href="profileEdit.html">
   <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" border="0" width="30"></button>
-  </a></div> <br><br><br><hr></div>
+  </a></div></div>
  
  <div id="ownerPosts"></div><div style="height: 300px;width: 100%;"></div> 
     
@@ -2917,6 +2956,9 @@ const s = JSON.parse(styleString);
 document.getElementById('profPic').src =`${u.avatar}`;       
 document.getElementById('userName').innerHTML = `${u.username}`;       
 document.getElementById('profileBio').innerHTML = `${u.bio}`; 
+document.getElementById('profdiv').style.backgroundImage =
+  `url('${u.cover_photo}')`;
+  
     BackManager.register(home);      
 
 showLoader("ownerPosts", "Loading Owner's posts...");
@@ -3561,7 +3603,7 @@ async function loadPosts() {
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
 </td>
 
-<td style="width:650px">
+<td style="width:460px;">
 <h2>
 <button class="profileBtn"
  data-email="${emailSafe}"
@@ -3569,15 +3611,31 @@ async function loadPosts() {
 <div style="font-size:40px;text-align:left;">${post.username}</div>
 </button>
 </h2>
-<p class="postInfo" id="feelShow" style="display: none;"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
-<p class="postInfo" id="locShow" style="display: none;"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
-<p class="postInfo" style="color: purple" onclick="appOthers('${post.id}', '${post.others}')" id="othShow" style="display: none;"><img src="https://i.ibb.co.com/39jD6F2q/customer.png"> <u style="color:purple">With other ones </u></a>
+
+<div class="othInfo" id="othInfo${post.id}">
+<p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
+
+<p class="postInfo" id="locShow" style="display:${post.location ? 'block' : 'none'};"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
+
+<p class="postInfo"
+   style="display:${Array.isArray(post.others) && post.others.length ? 'block' : 'none'}; color:purple"
+   onclick="appOthers('${post.others}')">
+   <img src="https://i.ibb.co.com/39jD6F2q/customer.png">
+   <u style="color:purple">With other ones</u>
+</p>
+</div>
 </td>
 
+<td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}"
+>
+  <button onclick="showMoreInfo('${post.id}')">
+   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50">
+  </button>
+</td>
 
-<td>
-<button class="copyBtn"
- style="background:none;border:none"
+<td valign="top">
+<button
+ style="background:none;border:none; margin-top: 30px;"
  data-text="${copyText}">
 <img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" width="30">
 </button>
@@ -3685,18 +3743,8 @@ async function loadPosts() {
 </div>
 </div>
 `;
-
- if(post.feelings) {
-  $('feelShow').style.display = 'block';
-}
-  if(post.location) {
-  $('locShow').style.display = 'block';
-}
-/*
- if(post.others) {
-  $('othShow').style.display = 'block';
-}
- */            // text inject safe
+            
+            // text inject safe
             div.querySelector(".postText").innerHTML = htmlText;
 
             contentDiv.appendChild(div);
@@ -3713,7 +3761,7 @@ const panel = document.getElementById(`appearFlex${post.id}`);
 
 btn.addEventListener("click", (e) => {
     e.stopPropagation();
-    console.log("clicked");
+    //console.log("clicked");
 
     const isOpen = panel.classList.contains("show");
 
@@ -3786,7 +3834,7 @@ async function reactors(postId) {
                 <div><img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></div>
               </td>
               <td>
-                <)h2>${l.username}</h2>
+                <h2>${l.username}</h2>
               </td>
               <td><p style="box-shadow:0 0 0px white; padding: 0; margin:0; background: none; width: 150px;">
                 reacted with
@@ -3810,6 +3858,23 @@ container.innerHTML = `  <div style="display: flex; flex-direction: column; alig
   <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
         </div>`;
   }
+}
+
+function showMoreInfo(id) {
+  let el = document.getElementById(`othInfo${id}`);
+  let fl = document.querySelectorAll('.hideAndSick button');
+
+  if (el) {
+    el.classList.toggle('show');
+  }
+
+  fl.forEach(btn => {
+    btn.classList.toggle('active');
+  });
+}
+
+function appOthers(others) {
+   onalert('on development'); 
 }
 
 async function reactorsOnStory(postId) {
