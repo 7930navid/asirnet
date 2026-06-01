@@ -458,9 +458,11 @@ textarea,input:focus {
        justify-content:center;
        align-items: center; 
        padding: 10px; 
-    opacity: 0;
-    transform: translateY(100px);
-    transition: opacity 0.35s ease, transform 0.45s cubic-bezier(.22,1,.36,1);
+       opacity: 0;
+       transform: translateY(100px);
+       transition: opacity 0.35s ease, 
+                   transform 0.45s 
+                   cubic-bezier(.22,1,.36,1);
 }
 #postpage.show{
     display: block;
@@ -1772,7 +1774,7 @@ is feeling
 <span id="feeling">___</span> 
 at 
 <span id="location">___</span> 
-<a href="javascript:void(0)" onclick="showTagged()" id="taggedBtn" style="display:none">with other ones<a>
+<p onclick="showTagged()" id="taggedBtn" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:pulple">with other ones</u><p>
 </div>
 
     <div>
@@ -3029,7 +3031,6 @@ document.getElementById('tagPeople').style.transform = 'translateY(0)';
     BackManager.register(closeTagPage);   
         
     }else {
-      BackManager.unregister(closeTagPage);   
  onconfirm('Attention!!', 'Do you want to remove your previously tagged peoples and select new ones?', 'Yes', reOpen, '', '#4f46e5')       
     } 
 }
@@ -3568,10 +3569,11 @@ async function loadPosts() {
 <div style="font-size:40px;text-align:left;">${post.username}</div>
 </button>
 </h2>
-<p class="postInfo"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
-<p class="postInfo" onclick="showTagged()"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
-<p class="postInfo"><img src="https://i.ibb.co.com/39jD6F2q/customer.png"> ${post.others}</p>
+<p class="postInfo" id="feelShow" style="display: none;"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
+<p class="postInfo" id="locShow" style="display: none;"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
+<p class="postInfo" style="color: purple" onclick="appOthers('${post.id}', '${post.others}')" id="othShow" style="display: none;"><img src="https://i.ibb.co.com/39jD6F2q/customer.png"> <u style="color:purple">With other ones </u></a>
 </td>
+
 
 <td>
 <button class="copyBtn"
@@ -3684,7 +3686,17 @@ async function loadPosts() {
 </div>
 `;
 
-            // text inject safe
+ if(post.feelings) {
+  $('feelShow').style.display = 'block';
+}
+  if(post.location) {
+  $('locShow').style.display = 'block';
+}
+/*
+ if(post.others) {
+  $('othShow').style.display = 'block';
+}
+ */            // text inject safe
             div.querySelector(".postText").innerHTML = htmlText;
 
             contentDiv.appendChild(div);
@@ -4756,6 +4768,10 @@ warning(
     3000
 );
 
+const isTurned = localStorage.getItem('dark');
+const isEnable = localStorage.getItem('notify');
 
+
+ 
 </script></body>
 </html>
