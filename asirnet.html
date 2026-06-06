@@ -111,7 +111,7 @@
 /* HEADER ROW */
 .header{
     display:flex;
-    align-items:center;
+    align-items: center;
     gap:14px;
     width: 9000px;
 }
@@ -292,7 +292,7 @@ textarea,input:focus {
        display:flex; 
        align-items:center; 
        justify-content:space-between; 
-       padding:15px;
+       padding:0px;
        padding-left: 20px;
        padding-right: 20px; 
        background: white; 
@@ -303,12 +303,9 @@ textarea,input:focus {
        left: 0;
        right: 0;
        }
-
-#header h1 { 
-       margin:0; 
-       color:green; 
-       text-shadow:0 0 20px lightgreen; 
-       }
+#header div {
+    width: fit-content;
+}
 #profPicture {
     border: 2px solid green;
     border-radius: 90px;
@@ -446,30 +443,27 @@ textarea,input:focus {
     width: 50px;
     margin-bottom: 15px;
 }
-#postpage { 
+#postpage, #IMGpost { 
        position:fixed; 
        top:0; 
        left:0; 
        width: 100%; 
        height:100%; 
        background:rgba(0,0,0,0.5); 
-       display: none; 
        z-index:1000;
+       display: flex;
        justify-content:center;
        align-items: center; 
-       padding: 10px; 
        opacity: 0;
-       transform: translateY(100px);
-       transition: opacity 0.35s ease, 
-                   transform 0.45s 
-                   cubic-bezier(.22,1,.36,1);
+       transform: translateY(100%);
+       transition: opacity 0.4s ease, 
+                   transform 0.45s ease;
 }
-#postpage.show{
-    display: block;
+#postpage.show , #IMGpost.show{
     opacity: 1;
     transform: translateY(0);
 }
-#postpad {
+#postpad, #IMGpad {
     height: 80%;
     width: 650px;
     background: white;
@@ -477,11 +471,11 @@ textarea,input:focus {
     padding: 20px;
     overflow: auto;
 }
-#nameplate {
+.nameplate {
     width: 100%;
     border-bottom: 2px solid green;
 }
-#nameplate button {
+.nameplate button {
     background: #0e00d3;
     border: none;
     font-size: 20px;
@@ -811,7 +805,7 @@ textarea,input:focus {
 
 .likeComCon {
     position:fixed;
-    z-index:1000;
+    z-index:1100;
     top:0;
     left:0;
     height:100%;
@@ -1464,12 +1458,12 @@ textarea,input:focus {
     font-weight: bold;
     font-size: 20px;
 }
-#headerPre {
+.headerPre {
     color: rgba(0,0,0,0.6);
     font-size: 30px;
     padding: 15px;
 }
-#headerPre span {
+.headerPre span {
     color: black;
     font-weight: bold;
 }
@@ -1657,7 +1651,7 @@ textarea,input:focus {
     justify-content: center;
     align-items: center;
     transition: all 0.4s ease;
-    transform: translateX(800px);
+    transform: translateX(1000px);
 }
 #taggedShowDiv {
     background: white;
@@ -1756,15 +1750,183 @@ textarea,input:focus {
 .hideAndSick button.active {
     transform: rotate(180deg);
 }
+#menuAside {
+    position: fixed;
+    display: block;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    width: 100%;
+    height: 100%;
+    transform: translateX(-1000px);
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+#menuAside.show {
+    transform: translateX(0);
+    opacity: 1;
+}
+#menuContent {
+    width: 80%;
+    height: 100%;
+    background: white;
+    padding: 20px;
+}
+#upperBtn img {
+    margin: 20px; 
+}
+#btnBox button {
+    padding: 20px;
+    padding-left: 80px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: bold;
+    color: black;
+    background: url('https://i.ibb.co.com/PGk8ffPh/Screenshot-2026-0602-003940.png');
+    width: 80%;
+    height: 200px;
+    margin-top: 20px;
+    text-align: left;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+#otherProf{
+    display: block;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 99%;
+    height: 97%;
+    z-index: 1000;
+    background: white;
+    border-top-right-radius: 50px;
+    border-top-left-radius: 50px;
+    box-shadow: 0 0 8px gray;
+    overflow: auto;
+    opacity: 0;
+    transform: translateY(100%); 
+    transition: transform 0.5s ease,
+                opacity 0.3s ease;
+}
+#otherProf.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+#headerName {
+    margin: 20px;
+    color: green;
+    font-size: 30px;
+}
+#othProfInfo {
+    display: flex;
+    padding: 20px;
+    border-radius: 20px;
+    background-size: cover;  
+    background-position: center; 
+    background-repeat: no-repeat;
+    margin: 20px;
+    margin-top: 30px;
+}
+#othProfPic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+}
+#othProfInfo section {
+    display: block;
+    background: none;
+    width: fit-content;
+    height: fit-content;
+}
+#othProfName {
+    font-size: 30px;
+    width: fit-content;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(4px);
+    color: white;
+    padding: 15px;
+    text-shadow: 0 0 8px gray;
+    border-radius: 15px;
+}
+#otherProfdiv {
+    font-size: 20px;
+    width: fit-content;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(4px);
+    color: white;
+    padding: 15px;
+    text-shadow: 0 0 8px gray;
+    border-radius: 10px;
+}
+#connectBTN {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#connectBTN button{
+    width: 600px;
+    height: 100px; 
+    border: none;
+    border-radius: 30px; 
+    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+     font-size: 32px;
+     color: white;
+} 
+
+#connectionList {
+    display: flex;
+    overflow: auto;
+    height: 280px;
+}
+#showOnes{
+    display: flex;
+    height: 280px;
+    overflow: auto;
+}  
+.friendShow {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   background: white; 
+   padding: 20px;
+   border-radius: 15px;
+   box-shadow: 0 0 8px gray;
+   margin: 16px;
+   margin-left: 20px;
+   margin-right: 20px;
+   width: 200px;
+   height: 200px;
+}
+
+.friendShow h3 {
+   color: green;
+   font-size: 20px;
+}
+
+.friendShow p {
+   color: red;
+   font-size: 16px;
+}
+
+
 
  </style>
 </head>
 <body id="body">
 <div id="header">
-<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" width="200px">
+ <div>
+<img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="50px" onclick="appAside()">
+<img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" width="200px"></div>
 <h1 id="profPicture"></h1>
 </div>
-      
+
 
 <div id="bio"></div>
 
@@ -1795,8 +1957,8 @@ textarea,input:focus {
  
  <div id="postpage">
   <div id="postpad">
-   
-    <table border="0" id="nameplate" style="width:100%;">
+   <div>
+    <table border="0" class="nameplate" style="width:100%;">
       <tr>
         <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
         <td>
@@ -1807,7 +1969,7 @@ textarea,input:focus {
       </tr>
     </table>
     
- <div id="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+ <div class="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
 <span id="idName"></span> 
 is feeling 
 <span id="feeling">___</span> 
@@ -1816,8 +1978,6 @@ at
 <p onclick="showTagged()" id="taggedBtn" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:pulple">with other ones</u><p>
 </div>
 
-    <div>
-<div id="imgcont"></div>
     <textarea id="postword" placeholder="What's on your mind?" ></textarea>
     
     <section id="textFont">
@@ -1833,18 +1993,14 @@ at
     </div>
     
     <!-- ALERT -->
-    <h2 id="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+    <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
   <div id="bottomBTN">
  <button onclick="postBG()"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 30px; color: red; margin-top: 10px;">Post Background</p></button>
  <button onclick="fontSize()"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 30px; color: green; margin-top: 10px;">Font Size</p></button>
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
-    <div class="postBtn" style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
-      <label class="uploadBtn">
-  <img src="https://i.ibb.co.com/qFYRdQs6/image.png" width="40" style="margin-right: 20px;"> <span id="imgUp" style="width:500px">Upload photo</span>
-        <input type="file" accept="image/*" id="imageInput"  hidden onchange="loadpostIMG(event)">
-      </label>
+    <div id="postBtn" style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
    <label class="uploadBtn" onclick="input('feeling', 'What’s	‌‌‌‌‌‌‌‌‌ your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
    </label>
    <label class="uploadBtn" onclick="input('location', 'What’s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
@@ -1967,10 +2123,65 @@ at
  <button onclick="textBG('','','https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png')" class="imgbg">
      <img src="https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png"></button>
      
-     </div>
+    </div>
 </div>
    </div>
  </div>
+
+
+
+<div id="IMGpost">
+  <div id="IMGpad">
+  
+    <table border="0" class="nameplate" style="width:100%;">
+      <tr>
+        <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
+        <td>
+          <div style="text-align: right">
+      <button onclick="postsubmit()" id="IMGsubmit">Post</button>
+          </div> 
+        </td> 
+      </tr>
+    </table>
+    
+ <div class="headerPre"><img id="accSign" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+<span id="accName"></span> 
+is feeling 
+<span id="feeling2">___</span> 
+at 
+<span id="location2">___</span> 
+<p onclick="showTagged()" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
+</div>
+
+    <textarea id="postword" placeholder="Write a caption about this image.." ></textarea>
+    
+  
+<div id="imgcont"></div>
+    
+    <!-- ALERT -->
+    <h2 class="onPicAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+
+    <div style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
+
+   <label class="uploadBtn" onclick="input('feeling2', 'What\'s your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
+   </label>
+   <label class="uploadBtn" onclick="input('location2', 'What\'s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
+   </label>
+   <label class="uploadBtn" onclick="tag()"><img src="https://i.ibb.co.com/3yjGy002/tag.png" width="40" style="margin-right: 20px"> Tag Peoples
+   </label>
+   
+  </div>  
+</div>
+</div>
+
+
+
+<!--       <label class="uploadBtn">
+  <img src="https://i.ibb.co.com/qFYRdQs6/image.png" width="40" style="margin-right: 20px;"> <span id="imgUp" style="width:500px">Upload photo</span>
+        <input type="file" accept="image/*" id="imageInput"  hidden onchange="loadpostIMG(event)">
+      </label>
+ -->
+
 
 
 <div id="allChange">
@@ -2044,7 +2255,7 @@ at
     padding: 5px;
     color: black;
 ">+</button></td>
-<td><button onclick="setting();"><img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="notification();"><img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40"></button></td>
 <td><button onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40"></button></td>
             </tr>
         </table>
@@ -2052,8 +2263,11 @@ at
 </footer>
 
 <div id="postMenu">
-   <div onclick="createpost();clzpostMenu()">Post plain text</div>
-   <div onclick="">Post photos</div>
+   <div onclick="createpost('postpage');clzpostMenu()">Post plain text</div>
+   <label>
+   <div onclick="clzpostMenu()">
+ <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">
+ Post photos</div></label>
    <div onclick="openStoryPort()">Post story</div>
 </div>
 
@@ -2061,72 +2275,22 @@ at
     <img id="displayPic">
 </div>
 
+<div id="otherProf">
+    <h2 id="headerName"></h2>
+    <hr style="background: green; height: 2px;">
+    <div id="othProfInfo">
+    <img id="othProfPic" src="">
+    <section><h1 id="othProfName"></h1>
+    <h3 id="otherProfdiv"></h3></section>
+    </div>
+    <div id="connectBTN">
+    <button onclick="connect()">Add Connection</button></div>
+    <h1>Connected ones</h1><hr>
+    <div id="showOnes"></div><hr>
+    <div id="otherPosts"></div>
+</div>    
 
 
-<div id="otherProf"  style="
-    background: rgba(0,0,0,0.2);
-    width: 100%;
-    height: 100%;
-    z-index: 100;
-    top:0;
-    left:0;
-    position: fixed;
-    display: none;
-    justify-content: center;
-    align-items: center;
-
- ">
-    <section style="
-    background: white;
-    height: 77%;
-    width: 90%;
-    border-radius: 20px;
-    padding: 20px;
-    position:relative;
-    overflow: auto;
-">
-        <table style="width: 700px; position: fixed; z-index: 1000; background: rgba(255,255,255,0.8);"><tr><td>
-  <h2 style="color: green;width: 600px;" id="headerName"></h2>  
-  </td>
- <td><button onclick="closealert('otherProf')" style="background: none; border: none; font-size: 40px; color: red;">
-     ×
- </button></td> 
-  </tr><tr><td colspan="2"><hr style="background: green;"></td></tr></table> 
- <div id="otherProfdiv" style="   
-    background: white;
-    padding: 20px;
-    margin: 20px;
-    margin-top: 100px;
-    border: none;
-    border-radius: 20px;
-">
-
-     <table align="center"><tr>
-     <td width="270">
-     <div id="otherProfPic" style="
-    background: rgba(255,255,0,0.1);
-    height: 230px;    
-    width: 230px;
-    border: 10px solid rgba(0,0,0,0.2);
-    border-radius: 360px;
-    font-size: 150px;
-    padding-top: 20px;
-    padding-left: 20px;
-"></div></td>
-     <td width="400">
-     <p id="idName" style="   
-    font-size: 50px;
-    font-weight: bold;
-    color: green;
-"></p>
-     <h4 style="color: red;"><u><i id="otherProfileBio"></i></u></h4>
-  </td></tr></table>
- <br><br><br><hr style="background: rgba(0,0,0,0.1); height: 10px;"></div>
- 
- <div id="otherPosts" style="position:relative; overflow: auto; padding: 10px"></div>   
-    </section>
-</div>
-    
 <div class="warning" id="warnOverlay">
        <div id="wordSet"></div>
 </div>
@@ -2150,7 +2314,7 @@ at
 </div>
 
 <div id="loc-feel">
-    <div>
+     <div>
    <h2 id="inputText" style="color:green"></h2>
    <hr style="background: green; height: 2px;"></hr>
  <input type="text" id="dataInput" placeholder="Enter here....">
@@ -2183,16 +2347,53 @@ at
     </div>
 </div>
 
+
+<div id="menuAside">
+   <div id="menuContent">
+  <div id="upperBtn">
+  <img src="https://i.ibb.co.com/GfNT4MjW/back.png" width="60" onclick="appAside()">
+  <img src="https://i.ibb.co.com/1fpddb1t/loading.png" width="60" onclick="location.reload()">
+  </div>
+  <hr style="height: 1px; background: black;">  
+ <div id="btnBox">
+<button onclick="appAside();profile()">
+    <img src="https://i.ibb.co.com/YgKxNZB/user.png" width="50"><br>
+    Profile
+</button>    
+<button onclick="appAside();window.location.assign('notification.html')"> 
+    <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" width="50"><br>
+    Notifications
+</button>    
+<button onclick="appAside();setting()">    
+    <img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50"><br>
+    Settings
+</button>
+<button onclick="appAside();">    
+    <img src="https://i.ibb.co.com/xqF04qNG/happy-1.png" width="70"><br>
+    Friends List
+</button>    
+  </div> 
+     
+   </div>
+</div>
+      
+
+
 <script>
+    
+function appAside() {
+  let el = document.getElementById('menuAside');
+  el.classList.toggle('show');
+  console.log('checked');
+}   
+    
 let postImgFiles = [];
 let postImagesBase64 = []; // multiple images save
 
 function loadpostIMG(e) {
+    createpost('IMGpost');
     const files = Array.from(e.target.files);
     if (!files.length) return;
-
-    const imgCont = document.getElementById("imgcont");
-    document.getElementById("imgUp").innerHTML = "Add more photos";
 
     files.forEach(file => {
         if (!file.type.startsWith("image/")) {
@@ -2236,8 +2437,7 @@ function loadpostIMG(e) {
                 postImgFiles.splice(index, 1);
                 postImagesBase64.splice(index, 1); // remove corresponding Base64
             }
-            if (postImgFiles.length == 0) document.getElementById("imgUp").innerHTML = "Upload photos";
-            wrapper.remove();
+            wrapper.remove(); // wrapper রিমুভ করা
         };
 
         wrapper.appendChild(img);
@@ -2261,12 +2461,13 @@ function loadpostIMG(e) {
 
                 // Show preview in wrapper
                 img.src = base64;
-            }
+            };
             tempImg.src = evt.target.result; 
-        }
+        };
         reader.readAsDataURL(file);
-    });
+    }); 
 }
+
 
 /* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
@@ -2497,8 +2698,8 @@ let container = document.getElementById('container');
         object-fit:cover;
         pointer-events:none;
       `;
-      video.onloadeddata = () => video.pause();
-
+      video.onloadeddata = () =>
+      video.pause();
       /* ---------- Avatar ---------- */
       const avatar = document.createElement("img");
       avatar.src = story.avatar;
@@ -2850,77 +3051,104 @@ e.stopPropagation();
     }); document.addEventListener("click", () => {
      clzpostMenu(); 
   }); 
+  
+let receiver_id ="";
 
+async function connect() {
+const el = document.querySelector("#connectBTN button");
+
+const user = localStorage.getItem('user');
+const u = JSON.parse(user);
+const sender_id = u.email;
+
+        if(el){
+            el.innerText = "On process..";
+            el.disabled = true;
+            }
+
+    try {
+
+        const res = await fetch(`https://connection-server-9bzk.onrender.com/connections`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                sender_id,
+                receiver_id
+            })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.message || "Request Failed");
+        }
+        if(res.ok){
+            el.innerText = "Request sent";
+            el.disabled = true;
+            }
+
+        onalert(data.message);
+
+    } catch (err) {
+
+        onalert(err.message);
+        console.error(err);
+        if(el){
+            el.innerText = "Add Connection";
+            el.disabled = false;
+            }
+
+    }
+
+}
 
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
-    const nameEl = document.getElementById("idName");
+    const upperlay = document.getElementById("othProfInfo");
+    const nameEl = document.getElementById("othProfName");
     const headerName = document.getElementById("headerName");
-    const bioEl = document.getElementById("otherProfileBio");
-    const picEl = document.getElementById("otherProfPic");
+    const bioEl = document.getElementById("otherProfdiv");
+    const picEl = document.getElementById("othProfPic");
     const postsDiv = document.getElementById("otherPosts");
+    const friendList = document.getElementById("showOnes");
 
-    overlay.style.display = "flex";
+    overlay.classList.add("show");
+
+if(friendList){friendList.innerHTML=""}
+
+    BackManager.register(remove);
+
+    receiver_id ="";
+    receiver_id = email;
+  
     postsDiv.innerHTML = "<p>Loading posts...</p>";
+    
+    const token = localStorage.getItem("token");
 
     try {
         /* 🔹 Fetch profile */
         const userRes = await fetch(
-          `https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(email)}`
+            `https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(email)}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
         );
+
         if (!userRes.ok) throw new Error("Profile not found");
         const user = await userRes.json();
 
         nameEl.innerText = user.username || "Unknown";
         bioEl.innerText = user.bio || "No bio";
-        picEl.innerText = user.avatar || "N";
+        picEl.src = user.avatar || "";
         headerName.innerText = `Profile of "${user.username}"`;
+        upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
 
-        /* 🔹 Fetch posts */
-        const postRes = await fetch(
-          `https://posts-server-kmha.onrender.com/posts?email=${encodeURIComponent(email)}`
-        );
-        if (!postRes.ok) throw new Error("Posts not found");
-        const posts = await postRes.json();
-
-        postsDiv.innerHTML = "";
-
-        if (posts.length === 0) {
-            postsDiv.innerHTML = "<p style='text-align:center;'>No posts yet</p>";
-            return;
-        }
-
-posts.forEach(post => {
-    const div = document.createElement("div");
-    div.style.cssText = `
-        position: relative;
-        background: white;
-        margin: 15px;
-        padding: 15px;
-        border-radius: 15px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        width: 100%;
-        overflow-wrap: break-word;
-        word-wrap: break-word;
-        box-sizing: border-box;
-    `;
-
-    div.innerHTML = `
-        <h2 style="word-break: break-word;">
-            <span style="padding: 10px; border-right: 1px solid gray; margin-right: 10px;">
-                ${post.avatar}
-            </span>
-            <span style="color: green;">${post.username}</span>
-        </h2>
-        <hr style="background: green; height: 1px;">
-        <p style="font-size:25px; word-break: break-word;">
-            ${post.text.replace(/\n/g, "<br>")}
-        </p>
-    `;
-
-    postsDiv.appendChild(div);
-});
-
+loadProfilePosts(email, 'otherPosts');
+loadConnections(receiver_id, 'showOnes');
 
     } catch (err) {
         console.error(err);
@@ -2929,8 +3157,29 @@ posts.forEach(post => {
 }
 
 
+
 function closealert(id) {
     document.getElementById(id).style.display = "none";
+}
+
+function remove() {
+     const overlay = document.getElementById("otherProf");
+    const upperlay = document.getElementById("othProfInfo");
+    const nameEl = document.getElementById("othProfName");
+    const headerName = document.getElementById("headerName");
+    const bioEl = document.getElementById("otherProfdiv");
+    const picEl = document.getElementById("othProfPic");
+    const postsDiv = document.getElementById("otherPosts");
+    const friendList = document.getElementById("showOnes");
+
+    nameEl.innerText ="";
+    headerName.innerText ="";
+    bioEl.innerText ="";
+    picEl.src ="";
+    postsDiv.innerHTML ="";
+    friendList.innerHTML ="";
+    receiver_id ="";
+    overlay.classList.remove("show");
 }
 
 
@@ -2948,8 +3197,12 @@ const s = JSON.parse(styleString);
   <div id="editbtn"><a href="profileEdit.html">
   <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" border="0" width="30"></button>
   </a></div></div>
- 
- <div id="ownerPosts"></div><div style="height: 300px;width: 100%;"></div> 
+  
+  <h1>Your Connected Persons</h1><hr>
+  <div id="connectionList"></div><hr>
+  
+ <div id="ownerPosts"></div>
+ <div style="height: 300px;width: 100%;"></div> 
     
     `;
 
@@ -2971,10 +3224,88 @@ warning(
     0,
     3000
 );
-loadProfilePosts();
+loadProfilePosts(u.email, 'ownerPosts');
+loadConnections(u.email, 'connectionList');
 }
 
 function home() {location.reload()}
+
+
+async function loadConnections(email, place) {
+
+    const display = document.getElementById(place);
+
+     const token = localStorage.getItem('token');
+
+    try {
+
+        const res = await fetch(
+            `https://connection-server-9bzk.onrender.com/friends/${encodeURIComponent(email)}`
+        );
+
+        if (!res.ok) {
+            onalert('Something went wrong');
+            return;
+        }
+
+        const friend = await res.json();
+        
+        const friendsArray = friend.data || friend;
+
+if(friendsArray.length == 0) {
+display.innerHTML= `<p>No connected person</p>`
+    return;
+}
+
+
+        const enrichedFriends = await Promise.all(
+            friendsArray.map(async (f) => {
+let oth = "";
+oth = f.sender_id == email? f.receiver_id : f.sender_id
+
+                const res = await fetch(
+                    `https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(oth)}`, {
+                method: 'GET',
+                headers: {
+             Authorization: `Bearer ${token}`
+                }
+                    });
+
+                const data = await res.json();
+
+                return {
+                    ...f,
+                    profile: data
+                };
+
+            })
+        );
+        
+
+        display.innerHTML = "";
+
+        enrichedFriends.forEach(f => {
+        
+
+            const prof = document.createElement('div');
+
+            prof.innerHTML = `
+ <div class="friendShow" onclick="showOtherProf('${f.profile.email}')">
+   <img src="${f.profile.avatar}" width="80" height="80" style="border-radius:50%">
+     <h3>${f.profile.username}</h3>
+     <p>${f.profile.email}</p>
+
+       </div>
+            `;
+
+            display.appendChild(prof);
+ 
+        });
+
+    } catch (err) {
+        onalert(err);
+    }
+}    
 
 function disProf() {
   const user = localStorage.getItem("user");
@@ -2991,6 +3322,10 @@ p.addEventListener("click", () => {
 
 function setting() {
 location.href = 'setting.html';
+  }
+
+function notification() {
+location.href = 'notification.html';
   }
   
 /* ========= DEFAULT BACK BUTTON MANAGER ========= */
@@ -3054,13 +3389,14 @@ function closeSearchPad() {
 
 
 function closePostpage(){
-   const pad = document.getElementById("postpage");
+   const pad1 = document.getElementById("postpage");
+   const pad2 = document.getElementById("IMGpost");
 
-    pad.classList.remove("show");
-
-    setTimeout(()=>{
-        pad.style.display = "none";
-    }, 450);
+ if(pad1) {
+     pad1.classList.remove("show");
+ } if(pad2) {
+    pad2.classList.remove("show");
+  }
     document.getElementById('location').innerText="___";
     document.getElementById('feeling').innerText ="___";
     postLocation ="";
@@ -3072,7 +3408,7 @@ function tag() {
 document.getElementById('tagPeople').style.transform = 'translateY(0)'; 
     BackManager.register(closeTagPage);   
         
-    }else {
+    } else {
  onconfirm('Attention!!', 'Do you want to remove your previously tagged peoples and select new ones?', 'Yes', reOpen, '', '#4f46e5')       
     } 
 }
@@ -3086,16 +3422,33 @@ function closeTagPage(check) {
 document.getElementById('searchBar').value ="";
 document.getElementById('comingUsers').innerHTML ="";
 document.getElementById('tagPeople').style.transform = 'translateY(100%)'; 
-document.getElementById('taggedBtn').style.display = 'block'; 
-    BackManager.unregister(closeTagPage);      
+
+const taggedBtn = document.getElementById('taggedBtn'); 
+const taggedBtn2 = document.getElementById('taggedBtn2'); 
+
+if(taggedBtn) {
+     taggedBtn.style.display = 'block'   
+} if (taggedBtn2) {
+     taggedBtn2.style.display = 'block'       
+}
+    
     if(check != 'a') {
     taggedEmailList = [];
-        }
+   }
       clearTags();
+    BackManager.unregister(closeTagPage);   
 }
+
 function clearTags() {
     if(taggedEmailList.length == 0) {
-document.getElementById('taggedBtn').style.display = 'none';
+const taggedBtn = document.getElementById('taggedBtn'); 
+const taggedBtn2 = document.getElementById('taggedBtn2'); 
+
+if(taggedBtn) {
+     taggedBtn.style.display = 'none'   
+} if(taggedBtn2) {
+     taggedBtn2.style.display = 'none'       
+}
     }            
     
 }
@@ -3131,8 +3484,9 @@ function removeTag(email) {
     showTagged();
     clearTags();
 }
+
 function closeTagged() {
- document.getElementById('taggedShow').style.transform = 'translate(800px)';   
+ document.getElementById('taggedShow').style.transform = 'translateX(1000px)';   
 }
 
 
@@ -3320,18 +3674,27 @@ document.getElementById("searchresult").innerHTML = `<div style="color: red; fon
 }
 
 
-function createpost() {
-  const user = localStorage.getItem("user");
-  const u = JSON.parse(user);
-document.getElementById('idName').innerText = u.username;
-document.getElementById('idSign').src = u.avatar;
-document.getElementById("postpage").style.display = "flex";
-setTimeout(()=>{
-  document.getElementById("postpage").classList.add("show");
-},10);
+function createpost(id) {
+    const user = localStorage.getItem("user");
+    const u = JSON.parse(user);
+    
+    const nameEl1 = document.getElementById('idName');
+    const nameEl2 = document.getElementById('accName');
+    const signEl1 = document.getElementById('idSign');
+    const signEl2 = document.getElementById('accSign');
+    
+    if (nameEl1) nameEl1.innerText = u.username;
+    if (nameEl2) nameEl2.innerText = u.username;
+    if (signEl1) signEl1.src = u.avatar;
+    if (signEl2) signEl2.src = u.avatar;
+    
+    setTimeout(() => {
+        document.getElementById(id).classList.add("show");
+    }, 10);
+    
     BackManager.register(closePostpage);
+}
 
-} 
  
 /* =========================
    BACKGROUND + TEXT STYLE
@@ -3482,7 +3845,7 @@ async function postsubmit() {
     const postData = collectPostData();
 
     if (!postData.text?.trim() && !postData.image) {
-        onPostAlert("Please write something or select an image!");
+        onPostAlert("Please write something first!");
         return;
     }
 
@@ -3554,7 +3917,7 @@ async function postsubmit() {
 }
 
 function onPostAlert(alert) {
-document.getElementById("onPostAlert").innerText = alert;
+document.querySelector(".onPostAlert").innerText = alert;
 setTimeout(() => {document.getElementById("onPostAlert").innerText =""}, 2000)
   }
 
@@ -3612,7 +3975,7 @@ async function loadPosts() {
 </button>
 </h2>
 
-<div class="othInfo" id="othInfo${post.id}">
+<div class="othInfo" id="othInfo${post.id}content">
 <p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
 
 <p class="postInfo" id="locShow" style="display:${post.location ? 'block' : 'none'};"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
@@ -3628,7 +3991,7 @@ async function loadPosts() {
 
 <td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}"
 >
-  <button onclick="showMoreInfo('${post.id}')">
+  <button onclick="showMoreInfo('${post.id}', 'content')">
    <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50">
   </button>
 </td>
@@ -3860,8 +4223,8 @@ container.innerHTML = `  <div style="display: flex; flex-direction: column; alig
   }
 }
 
-function showMoreInfo(id) {
-  let el = document.getElementById(`othInfo${id}`);
+function showMoreInfo(id, value) {
+  let el = document.getElementById(`othInfo${id}${value}`);
   let fl = document.querySelectorAll('.hideAndSick button');
 
   if (el) {
@@ -4346,51 +4709,75 @@ function backtoprofile() {
     document.querySelector('#backbtn').innerHTML = "";
 }
 
-
-
-// 🔹 Load Current User Posts
-async function loadProfilePosts() {
-    const user = JSON.parse(localStorage.getItem("user"));
-    if (!user) return;
+async function loadProfilePosts(email, place) {
 
     try {
-        const res = await fetch("https://posts-server-kmha.onrender.com/post");
-        const allPosts = await res.json();
+        const res = await fetch(`https://posts-server-kmha.onrender.com/postOfAnUser/${email}`);
+        const data = await res.json();
 
-        // শুধু current user-এর post filter
-        const userPosts = allPosts.filter(p => p.email === user.email);
-
-        const contentDiv = document.getElementById("ownerPosts");
+        if (!res.ok) {
+            onalert(data.message || "Error to fetch posts!");
+            return;
+        }
+        const contentDiv = document.getElementById(place);
         contentDiv.innerHTML = "";
 
-        userPosts.forEach(post => {
-  //console.log(JSON.stringify(post.id));
-            const safeText = escapeHTML(post.post.text);
+        if(data.length == 0) {
+ contentDiv.innerHTML = `<p>No posts yet</p>`;            
+        }
+
+        data.forEach(post => {
+            const safeText = escapeHTML(post.post.text || "");
             const htmlText = safeText.replace(/\n/g, "<br>");
-            const copyText = post.post.text.replace(/"/g, "&quot;");
+
+            const copyText = encodeURIComponent(post.post.text || "");
+            const emailSafe = encodeURIComponent(post.email || "");
 
             const div = document.createElement("div");
             div.className = "postshow";
 
             div.innerHTML = `
- <table><tr><td>                
-<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white;">
+<table><tr><td valign="top">
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
 </td>
 
-<td style="width:650px">
+<td style="width:460px;">
 <h2>
-<button onclick="showOtherProf('${post.email}')"
+<button class="profileBtn"
+ data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:50px;text-align:left;">${post.username}</div>
+<div style="font-size:40px;text-align:left;">${post.username}</div>
 </button>
 </h2>
+
+<div class="othInfo" id="othInfo${post.id}${place}">
+<p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
+
+<p class="postInfo" id="locShow" style="display:${post.location ? 'block' : 'none'};"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
+
+<p class="postInfo"
+   style="display:${Array.isArray(post.others) && post.others.length ? 'block' : 'none'}; color:purple"
+   onclick="appOthers('${post.others}')">
+   <img src="https://i.ibb.co.com/39jD6F2q/customer.png">
+   <u style="color:purple">with other ones</u>
+</p>
+</div>
 </td>
 
-<td style="position:relative">
-<button id="options${post.id}" style="background:none;border:none;font-size:30px;color:green;margin-right:20px;display:block">⋮</button>
+<td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}"
+>
+  <button onclick="showMoreInfo('${post.id}', '${place}')">
+   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50">
+  </button>
+</td>
+
+<td valign="top" style="position: relative">
+<button id="options${post.id}" style="background: none; border: none; margin-top: 15px;">   
+    <img src="https://i.ibb.co.com/Dg8wMY8b/menu-bar.png" width="50">
+</button>
 <div id="menu${post.id}" style=" display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:500px; margin-right: 30px; z-index:1000; overflow:hidden;transform-origin: top right; animation: dropdownShow 0.4s ease; " > 
    <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:30px;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
- <hr> <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:30px;" onclick="navigator.clipboard.writeText('${copyText}'); closealert('menu${post.id}')">Copy</button>
+ <hr> <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:30px;" onclick="navigator.clipboard.writeText(decodeURIComponent('${copyText}')); closealert('menu${post.id}')">Copy</button>
  <hr> <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;color:red;font-size:30px;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
 </div>
 
@@ -4399,58 +4786,165 @@ async function loadProfilePosts() {
 
 <hr>
 
+<p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
 
+<div id="countReactions">
+<div id="countByOrder${post.id}" style="text-align:right">
+<button id="likeCount${post.id}" onclick="likeContainer('${post.id}'); reactors('${post.id}')"></button><br>
+<button id="commentCount${post.id}" onclick="appContainer('${post.id}'); comText('${post.id}')"></button>
+</div>
+</div>
 
-<p class="postText" id="posttext${post.id}"style="font-size:30px; padding: 20px; border-radius: 5px;">
-${htmlText}
-</p> 
+<div id="reactPanal">
+<button style="border-left:none;font-size:30px;" id="react${post.id}">
+<img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40">
+</button>
+
+<button onclick="comSec('${post.id}');" id="comSec${post.id}">
+<img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40">
+</button>
+<button>
+<img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" width="30">
+</button><br>
+</div>
+
+<div id="appearFlex${post.id}" class="appearFlex">
+<button onclick="reactAppear('${post.id}','👍')">👍</button>
+<button onclick="reactAppear('${post.id}','♥️')">♥️</button>
+<button onclick="reactAppear('${post.id}','🤣')">🤣</button>
+<button onclick="reactAppear('${post.id}','😁')">😁</button>
+<button onclick="reactAppear('${post.id}','🤔')">🤔</button>
+<button onclick="reactAppear('${post.id}','🥰')">🥰</button>
+<button onclick="reactAppear('${post.id}','😥')">😥</button>
+<button onclick="reactAppear('${post.id}','😡')">😡</button>
+</div>
+
+<div id="comPen${post.id}" class="likeComCon">
+<div class="comSecDiv">
+  <div class="comHeader">
+    <h2>Write a comment about this post</h2>
+    <button onclick="closeComSec('${post.id}')" class="crossBtn">×</button>
+  </div>
+  <hr>
+  <div class="comBody">
+    <textarea class="comWord" rows="8"></textarea>
+    <button onclick="sendCom('${post.id}')" class="comButton">
+      <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
+    </button>
+  </div>
+
+<div id="loaderCom" class="inlineLoader">
+    <div class="loadingBox">
+        <div class="spinner"></div>
+        <div class="textContainer">
+            <h2>Loading...</h2>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <div class="loading-line"></div>
+</div>
+
+</div>
+</div>
+
+<div id="commentContainer${post.id}" class="likeComCon">
+<div class="Display">
+<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<tr><td><h1>Comments</h1></td>
+<td><div style="text-align:right;">
+<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="containerClose('${post.id}')">×</button>
+</div></td></tr>
+</table>
+
+<div id="comText${post.id}" style="margin-top:140px"></div>
+</div>
+</div>
+
+<div id="likeContainer${post.id}" class="likeComCon" >
+<div class="Display">
+<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<tr><td><h1>Reactions</h1></td>
+<td><div style="text-align:right;">
+<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="closeLikeContainer('${post.id}')">×</button>
+</div></td></tr>
+</table>
+
+<div id="reactors${post.id}" style="margin-top:140px;">Loading reactions...</div>
+</div>
+</div>
 `;
+            
+            // text inject safe
+            div.querySelector(".postText").innerHTML = htmlText;
 
             contentDiv.appendChild(div);
 
-// Style apply
-const p = div.querySelector(".postText");
-applyPostStyle(p, post.post.style);
+            updateCounts(post.id);
 
-// Dropdown menu toggle
-const btn = div.querySelector(`#options${post.id}`);
-const menu = div.querySelector(`#menu${post.id}`);
+            applyPostStyle(div.querySelector(".postText"), post.post.style);
 
-btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    const isOpen = menu.style.display === "block";
-    const istrigged = menu.style.display === "none";
+            // React button panel toggle
+            const reactBtn = div.querySelector(`#react${post.id}`);
+            const reactPanel = div.querySelector(`#appearFlex${post.id}`);
 
-    // Menu open/close toggle
-    menu.style.display = isOpen ? "none" : "block";
-    btn.style.display = istrigged ? "none" : "block";
-});
+            reactBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
 
-});
+                document.querySelectorAll(".appearFlex").forEach(p => {
+                    p.classList.remove("show");
+                });
 
-// Click outside → close all dropdown menus
-document.addEventListener("click", () => {
+                if (!reactPanel.classList.contains("show")) {
+                    reactPanel.classList.add("show");
+                }
+            });
 
-    const allMenus = document.querySelectorAll('[id^="menu"]');
-    const allOptionTriggers = document.querySelectorAll('[id^="options"]');
+            reactPanel.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
 
-    allMenus.forEach((el) => {
+            // Dropdown menu toggle
+            const optionsBtn = div.querySelector(`#options${post.id}`);
+            const menuDiv = div.querySelector(`#menu${post.id}`);
 
-        // Skip button ids like menuBtn
-        if (!el.id.includes("Btn")) {
-            el.style.display = "none";
-        }
-    });
+            optionsBtn.addEventListener("click", (e) => {
+                e.stopPropagation();
+                
+                // Close all other menus first
+                document.querySelectorAll('[id^="menu"]').forEach(m => {
+                    if (m.id !== `menu${post.id}`) {
+                        m.style.display = "none";
+                    }
+                });
+                
+                // Toggle current menu
+                if (menuDiv.style.display === "block") {
+                    menuDiv.style.display = "none";
+                } else {
+                    menuDiv.style.display = "block";
+                }
+            });
 
-    allOptionTriggers.forEach((el) => {
-               el.style.display = "block";
-    });
+            // Close menu when clicking outside
+            menuDiv.addEventListener("click", (e) => {
+                e.stopPropagation();
+            });
+        });
 
-});
+        // Global click event to close all panels and menus
+        document.addEventListener("click", () => {
+            document.querySelectorAll(".appearFlex").forEach(p => {
+                p.classList.remove("show");
+            });
+            document.querySelectorAll('[id^="menu"]').forEach(m => {
+                m.style.display = "none";
+            });
+        });
 
     } catch (err) {
-        console.error(err); 
-        document.getElementById("ownerPosts").innerHTML = `
+        console.error(err);
+
+  document.getElementById(place).innerHTML = `
 <div style="justify-content: center;align-items: center; display: flex; width: 100%;">
     <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
         <h2 style="color: red; font-size: 20px">Network error</h2><br>
@@ -4459,7 +4953,6 @@ document.addEventListener("click", () => {
 </div>`;
     }
 }
-
 // 🔹 Edit Post
 function editPost(id) {
     const el = document.getElementById(`posttext${id}`);
