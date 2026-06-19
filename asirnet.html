@@ -503,14 +503,14 @@ textarea,input:focus {
 #bottomBTN img {
     width: 40px;
 }
-#postsubmit {
-    background: lightyellow;
-    padding: 15px;
-    font-size: 16px;
+.postSubBtn {
+    background: blue;
+    padding: 10px;
+    font-size: 20px;
     border-radius: 10px;
-    border: 2px solid green;
-    color: green;
-    margin-top: 20px;
+    border: 1px solid skyblue;
+    color: white;
+    margin-top: 20px;    
 }
 #clear {
     width: 20%;
@@ -536,6 +536,17 @@ textarea,input:focus {
     text-align: justify;
     text-shadow: 0 0 5px white;
     font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+}
+#Imgword {
+    max-height: 200px;
+    color: black;
+    margin-bottom: 10px;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 20px;
+    width: 100%;
+    border: none;
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;    
 }
 .postshow {
     padding: 20px;
@@ -1406,10 +1417,8 @@ textarea,input:focus {
     padding: none;
 }
 #imgcont{
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 8px;
-  margin-bottom: 10px;
+  display: block;
+  width: 100%;
 }
 #loc-feel {
     position: fixed;
@@ -1963,7 +1972,7 @@ textarea,input:focus {
         <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
         <td>
           <div style="text-align: right">
-      <button onclick="postsubmit()" id="postsubmit">Post</button>
+      <button onclick="postsubmit()" id="postsubmit" class="postSubBtn">Post</button>
           </div> 
         </td> 
       </tr>
@@ -2138,7 +2147,7 @@ at
         <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
         <td>
           <div style="text-align: right">
-      <button onclick="postsubmit()" id="IMGsubmit">Post</button>
+      <button onclick="postsubmit()" id="IMGsubmit" class="postSubBtn">Post</button>
           </div> 
         </td> 
       </tr>
@@ -2153,16 +2162,20 @@ at
 <p onclick="showTagged()" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
 </div>
 
-    <textarea id="postword" placeholder="Write a caption about this image.." ></textarea>
-    
+    <textarea id="Imgword" placeholder="Write a caption about this image.." ></textarea>
   
 <div id="imgcont"></div>
+    
     
     <!-- ALERT -->
     <h2 class="onPicAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
 
     <div style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
 
+   <label class="uploadBtn">
+   <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">     
+       <img src="https://i.ibb.co.com/HfSqkppH/exchange.png"  style="margin-right: 20px" width="40"> Change image
+   </label>
    <label class="uploadBtn" onclick="input('feeling2', 'What\'s your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
    </label>
    <label class="uploadBtn" onclick="input('location2', 'What\'s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
@@ -2176,11 +2189,6 @@ at
 
 
 
-<!--       <label class="uploadBtn">
-  <img src="https://i.ibb.co.com/qFYRdQs6/image.png" width="40" style="margin-right: 20px;"> <span id="imgUp" style="width:500px">Upload photo</span>
-        <input type="file" accept="image/*" id="imageInput"  hidden onchange="loadpostIMG(event)">
-      </label>
- -->
 
 
 
@@ -2387,87 +2395,68 @@ function appAside() {
   console.log('checked');
 }   
     
-let postImgFiles = [];
-let postImagesBase64 = []; // multiple images save
+let postImgFiles = '';
+let postImagesBase64 = ''; 
 
 function loadpostIMG(e) {
+    postImgFiles = '';
     createpost('IMGpost');
-    const files = Array.from(e.target.files);
-    if (!files.length) return;
 
-    files.forEach(file => {
-        if (!file.type.startsWith("image/")) {
-            onalert("Sorry, video isn’t supported 😥");
-            return;
-        }
+    const file = e.target.files[0];
 
-        // FB style: push new file
-        postImgFiles.push(file);
+    if (!file) {
+        return;
+    }
 
-        // Wrapper
-        const wrapper = document.createElement("div");
-        wrapper.style.position = "relative";
-        wrapper.style.width = "110px";
-        wrapper.style.height = "110px";
-        wrapper.style.borderRadius = "8px";
-        wrapper.style.overflow = "hidden";
-        wrapper.style.margin = "10px";
+    if (!file.type.startsWith("image/")) {
+        onalert("Sorry, video isn’t supported 😥");
+        return;
+    }
 
-        // Image preview
-        const img = document.createElement("img");
-        img.style.width = "100%";
-        img.style.height = "100%";
-        img.style.objectFit = "cover";
+    postImgFiles = file;
 
-        // Remove button
-        const removeBtn = document.createElement("span");
-        removeBtn.innerHTML = "×";
-        removeBtn.style.position = "absolute";
-        removeBtn.style.top = "2px";
-        removeBtn.style.right = "6px";
-        removeBtn.style.cursor = "pointer";
-        removeBtn.style.background = "rgba(0,0,0,.6)";
-        removeBtn.style.color = "#fff";
-        removeBtn.style.borderRadius = "50%";
-        removeBtn.style.padding = "0 6px";
+    const wrapper = document.createElement("div");
+    wrapper.style.position = "relative";
+    wrapper.style.width = "100%";
+    wrapper.style.maxHeight = "500px";
+    wrapper.style.borderBottomLeftRadius = "40px";
+    wrapper.style.borderBottomRightRadius = "40px";
+    wrapper.style.overflow = "hidden";
 
-        removeBtn.onclick = () => {
-            const index = postImgFiles.indexOf(file);
-            if (index > -1) {
-                postImgFiles.splice(index, 1);
-                postImagesBase64.splice(index, 1); // remove corresponding Base64
-            }
-            wrapper.remove(); // wrapper রিমুভ করা
+    const img = document.createElement("img");
+    img.style.width = "100%";
+    img.style.height = "100%";
+    img.style.objectFit = "cover";
+
+    wrapper.appendChild(img);
+    imgcont.innerHTML = "";
+    imgcont.appendChild(wrapper);
+
+    const reader = new FileReader();
+
+    reader.onload = function(evt) {
+        const tempImg = new Image();
+
+        tempImg.onload = function() {
+            const canvas = document.createElement("canvas");
+            canvas.width = tempImg.width;
+            canvas.height = tempImg.height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+
+            const base64 = canvas.toDataURL("image/jpeg", 0.5);
+
+            postImagesBase64 = base64; // ✅ single file (NO push)
+
+            img.src = base64;
         };
 
-        wrapper.appendChild(img);
-        wrapper.appendChild(removeBtn);
-        imgCont.appendChild(wrapper);
+        tempImg.src = evt.target.result;
+    };
 
-        // Compress + Base64
-        const reader = new FileReader();
-        reader.onload = function(evt) {
-            const tempImg = new Image();
-            tempImg.onload = function() {
-                const canvas = document.createElement("canvas");
-                canvas.width = tempImg.width;   
-                canvas.height = tempImg.height;
-
-                const ctx = canvas.getContext("2d");
-                ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
-
-                const base64 = canvas.toDataURL("image/jpeg", 0.5);
-                postImagesBase64.push(base64);
-
-                // Show preview in wrapper
-                img.src = base64;
-            };
-            tempImg.src = evt.target.result; 
-        };
-        reader.readAsDataURL(file);
-    }); 
+    reader.readAsDataURL(file);
 }
-
 
 /* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
