@@ -2392,11 +2392,10 @@ at
 function appAside() {
   let el = document.getElementById('menuAside');
   el.classList.toggle('show');
-  console.log('checked');
 }   
     
 let postImgFiles = '';
-let postImagesBase64 = ''; 
+let postImageBase64 = ''; 
 
 function loadpostIMG(e) {
     postImgFiles = '';
@@ -2424,6 +2423,7 @@ function loadpostIMG(e) {
     wrapper.style.overflow = "hidden";
 
     const img = document.createElement("img");
+    img.id = 'imgPost';
     img.style.width = "100%";
     img.style.height = "100%";
     img.style.objectFit = "cover";
@@ -2447,7 +2447,7 @@ function loadpostIMG(e) {
 
             const base64 = canvas.toDataURL("image/jpeg", 0.5);
 
-            postImagesBase64 = base64; // ✅ single file (NO push)
+            postImageBase64 = base64; 
 
             img.src = base64;
         };
@@ -3772,7 +3772,12 @@ function changeSize(size) {
    COLLECT POST DATA
 ========================= */
 function collectPostData() {
-    const el = document.getElementById("postword");
+    const plainText = document.getElementById("postword");
+    const imagePost = document.getElementById("Imgword");
+    let el ="";
+    if(plainText) {el = plainText}
+    if(imagePost) {el = imagePost}
+       
     const cs = window.getComputedStyle(el);
 
     return {
@@ -3820,21 +3825,21 @@ function applyPostStyle(el, style) {
 }
 
 
-let postImageBase64 = ""; 
-
 /* ===  POST SUBMIT (SERVER SEND) === */
 async function postsubmit() {
+    
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user?.username || !user?.email) {
         onPostAlert("User not found!");
         return;
     }
-
+    
     const postData = collectPostData();
 
+
     if (!postData.text?.trim() && !postData.image) {
-        onPostAlert("Please write something first!");
+        onPostAlert("Please insert something first!");
         return;
     }
 
@@ -3878,10 +3883,10 @@ async function postsubmit() {
             body: JSON.stringify(payload)
         });
 
-        const data = await res.json().catch(() => ({}));
+ const data = await res.json().catch((err) => {console.log(err)});
 
         if (!res.ok) {
-            onPostAlert(data.message || "Server error!");
+            onalert(data.message || "Server error!");
             return;
         }
 
@@ -3906,9 +3911,17 @@ async function postsubmit() {
 }
 
 function onPostAlert(alert) {
-document.querySelector(".onPostAlert").innerText = alert;
-setTimeout(() => {document.getElementById("onPostAlert").innerText =""}, 2000)
+
+const id = document.querySelector(".onPostAlert");
+
+if(id) {
+    id.innerText = alert;
+    setTimeout(() => {
+    document.getElementById("onPostAlert").innerText =""
+    }, 2000)
   }
+
+}
 
 function escapeHTML(str = "") {
   return str
@@ -3940,7 +3953,6 @@ async function loadPosts() {
         contentDiv.innerHTML = "";
 
         data.forEach(post => {
-
             const safeText = escapeHTML(post.post.text || "");
             const htmlText = safeText.replace(/\n/g, "<br>");
 
@@ -3996,7 +4008,12 @@ async function loadPosts() {
 
 <hr>
 
+
 <p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
+
+<div id="box${post.id}">
+    <img src="${post.post.image}" style="max-width: 100%;">
+</div>
 
 <div id="countReactions">
 <div id="countByOrder${post.id}" style="text-align:right">
@@ -4094,8 +4111,10 @@ async function loadPosts() {
 <div id="reactors${post.id}" style="margin-top:140px;">Loading reactions...</div>
 </div>
 </div>
+
 `;
             
+
             // text inject safe
             div.querySelector(".postText").innerHTML = htmlText;
 
