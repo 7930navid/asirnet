@@ -7,9 +7,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-<meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
-<link rel="icon" href="https://i.ibb.co.com/ccMxvp0S/asirnet-link-logo.png">
-
 <style>
 *{
     margin:0;
@@ -292,6 +289,67 @@ section button:focus::after {
         opacity: 1;
     }
 }
+.guest-btn {
+    width: 100%;
+    margin-top: 12px;
+    padding: 12px;
+    border: 1px solid rgba(0, 247, 255, 0.5);
+    border-radius: 14px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    
+    /* Animated Gradient Background */
+    background: linear-gradient(135deg, rgba(0, 247, 255, 0.15), rgba(124, 58, 237, 0.25), rgba(0, 247, 255, 0.15));
+    background-size: 200% 200%;
+    
+    /* Glow effect & Animations */
+    box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
+    animation: gradientShift 4s ease infinite, breath 2.5s ease-in-out infinite;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+/* Hover করলে অ্যানিমেশন থামবে এবং সুন্দর শাইন করবে */
+.guest-btn:hover {
+    animation-play-state: paused;
+    transform: scale(1.03) translateY(-2px);
+    border-color: #00f7ff;
+    box-shadow: 
+        0 0 20px rgba(0, 247, 255, 0.5),
+        0 0 10px rgba(124, 58, 237, 0.4);
+}
+
+/* Click করলে হালকা ছোট হবে */
+.guest-btn:active {
+    transform: scale(0.98);
+}
+
+/* Keyframes 1: Smooth Background Gradient Shift */
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+/* Keyframes 2: Breathing Effect (ধীরে ধীরে বড়-ছোট হওয়া) */
+@keyframes breath {
+    0%, 100% {
+        transform: scale(1);
+        box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
+    }
+    50% {
+        transform: scale(1.02);
+        box-shadow: 0 0 22px rgba(0, 247, 255, 0.45);
+    }
+}
+
 </style>
 </head>
 
@@ -322,10 +380,16 @@ section button:focus::after {
         </button>
 
     </form>
+          <!-- Guest Login Button -->
+<button type="button" class="guest-btn" onclick="continueAsGuest()">
+    Continue as Guest
+    </button>
+
             <section>
          <button onclick="forgot()">Forgot password?</button>
          <a href="register.html"><button>Create a new account?</button></a>
         </section>
+
 
     <div class="bottom-text">
         Protected by <span>AsirNet Security</span>
@@ -476,6 +540,15 @@ async function resetPassword() {
     alert("Server error");
   }
 }
+
+function continueAsGuest() {
+    // প্রয়োজন হলে গেস্ট হিসেবে চিহ্নিত করার জন্য LocalStorage ব্যবহার করতে পারেন
+    localStorage.setItem("isGuest", "true");
+    
+    // guest.html পেজে রিডাইরেক্ট
+    window.location.href = "guest.html";
+}
+
 
 </script>
 </html>
