@@ -381,12 +381,12 @@ section button:focus::after {
 
     </form>
           <!-- Guest Login Button -->
-<button type="button" class="guest-btn" onclick="continueAsGuest(); guestAl();">
+<button type="button" class="guest-btn" onclick="continueAsGuest();">
     Continue as Guest
     </button>
 
             <section>
-         <button onclick="forgot()">Forgot password?</button>
+         <button onclick="forgot();guestAl()">Forgot password?</button>
          <a href="register.html"><button>Create a new account?</button></a>
         </section>
 
@@ -401,7 +401,7 @@ section button:focus::after {
 <script>
 
 function guestAl(){
- alert('going to guest');
+ alert('This Function Is Under Devlopment');
 }
 
 const form = document.querySelector("form");
