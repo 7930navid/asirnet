@@ -381,7 +381,7 @@ section button:focus::after {
 
     </form>
           <!-- Guest Login Button -->
-<button type="button" class="guest-btn" onclick="continueAsGuest()">
+<button type="button" class="guest-btn" onclick="continueAsGuest(); guestAl();">
     Continue as Guest
     </button>
 
@@ -399,6 +399,10 @@ section button:focus::after {
 
 </body>
 <script>
+
+function guestAl(){
+ alert('going to guest');
+}
 
 const form = document.querySelector("form");
 const loginBtn = document.querySelector(".login-btn");
@@ -542,10 +546,7 @@ async function resetPassword() {
 }
 
 function continueAsGuest() {
-    // প্রয়োজন হলে গেস্ট হিসেবে চিহ্নিত করার জন্য LocalStorage ব্যবহার করতে পারেন
-    localStorage.setItem("isGuest", "true");
     
-    // guest.html পেজে রিডাইরেক্ট
     window.location.href = "guest.html";
 }
 
