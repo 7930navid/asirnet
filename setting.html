@@ -409,9 +409,11 @@ function notify(el) {
 function inconfirm(warn, func) {
 
     const el = document.querySelector('#confirm');
+    const warning = document.querySelector('#warn');
     const okBtn = document.querySelector('#okBtn');
 
     el.classList.add('show');
+    warning.innerText = warn;
 
     okBtn.onclick = () => {
         closeConfirm();
@@ -422,21 +424,22 @@ function inconfirm(warn, func) {
     };
 }
 
+
 function closeConfirm() {
     document.querySelector('#confirm').classList.remove('show');
 }
 
 function logOut() {
+function logOut() {
     inconfirm('Do you want to log out?', logged);
+}
 }
 
 function logged() {
-    if(confirm('Do you want to Log out ?')) {
         localStorage.removeItem("user");
-        alert("Logged out!");
         location.href = "sign_in.html";
     
-}
+
 }
 
 </script>
