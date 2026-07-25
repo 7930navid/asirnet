@@ -374,9 +374,7 @@ input:checked + .slider:before{
 
 <div id="confirm">
   <section>
-  <div>
-      testing
-  </div>
+  <div id="warn"></div>
   <button id="cancelBtn" style="background: red;" onclick="closeConfirm()">Cancel</button>
   <button id="okBtn" style="background: blue;">OK</button>
   </section>
@@ -424,21 +422,17 @@ function inconfirm(warn, func) {
     };
 }
 
-
 function closeConfirm() {
     document.querySelector('#confirm').classList.remove('show');
 }
 
 function logOut() {
-function logOut() {
     inconfirm('Do you want to log out?', logged);
-}
 }
 
 function logged() {
         localStorage.removeItem("user");
         location.href = "sign_in.html";
-    
 
 }
 
