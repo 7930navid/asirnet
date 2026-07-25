@@ -424,8 +424,20 @@
 </style>
     <style>
 body {
-    background: white;
-    }
+    background: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+.app-con {
+     width: 100%;
+     max-width: 800px;
+     background-color: white;
+     min-height: 100vh;
+     position: relative;
+     box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+        }
+    
 textarea,input:focus {
     outline: none;
 }
@@ -702,7 +714,17 @@ textarea,input:focus {
     min-height: 100px;
     width: 90%;
     box-shadow: 0 0 5px gray;
+    /* animation: postAppear 0.4s ease-in forwards ; */
 }
+@keyframes postAppear {
+    from {
+        transform: translateY(10%);
+    }
+    to {
+        transform: translateY(0);
+    }
+}
+
 .postshow h2{
     color: green;
 }
@@ -1148,6 +1170,7 @@ textarea,input:focus {
   box-shadow:0 8px 20px rgba(0,0,0,0.35);
   position:relative;
   overflow:hidden;
+  animation: divAppear 0.4s ease-in forwards;  
 }
 
 .story-inner{
@@ -1183,6 +1206,7 @@ textarea,input:focus {
   position:relative;
   overflow:hidden;
   color:white;              
+  animation: divAppear 0.4s ease-in forwards;
 }
 
 .storyLoader::after{
@@ -1805,7 +1829,7 @@ textarea,input:focus {
     justify-content: center;
     align-items: center;
     transition: all 0.4s ease;
-    transform: translateX(1000px);
+    transform: translateX(100%);
 }
 #taggedShowDiv {
     background: white;
@@ -2119,11 +2143,202 @@ textarea,input:focus {
     overflow: auto;
     color: white;
 }
+/* Container & Existing Vibes Style */
+.vibes-container {
+    display: flex;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.vibes-div {
+    width: 200px;
+    height: 150px;
+    border: 1px solid green;
+    border-radius: 20px;
+    padding: 15px;
+    margin: 10px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    animation: divAppear 0.35s ease-in forwards;
+}
+@keyframes divAppear {
+    0% {
+        transform: translateX(100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.vibes-text {
+    font-size: 18px;
+    line-height: 1.4;
+    color: #333;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.vibes-more {
+    color: #7b55ff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.vibes-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 2;
+    background: green;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.vibes-footer div {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* 📌 Share Trigger Card (প্রথম প্লাস কার্ডটি) */
+.share-trigger-card {
+    border: 2px dashed green;
+    background: #f4fff4;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.add-icon {
+    font-size: 32px;
+    color: green;
+    font-weight: bold;
+    line-height: 1;
+    margin-bottom: 5px;
+}
+
+.share-btn-text {
+    font-size: 14px;
+    font-weight: bold;
+    color: green;
+    margin-bottom: 25px; /* Footer এর জন্য জায়গা রাখা */
+}
+
+/* 📌 Modal / Popup Box Style */
+.modal-overlay {
+    display: none; /* ডিফল্টভাবে হাইড থাকবে */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: appear 0.4s ease-in forwards;
+}
+@keyframes appear {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.modal-card {
+    background: #fff;
+    width: 80%;
+    max-width: 620px;
+    padding: 20px;
+    border-radius: 20px;
+    position: relative;
+    border: 1px solid green;
+    perspective: 1000px;
+    animation: bottomFlip 0.4s ease-in forwards;
+    backface-visibility: hidden; 
+    transform-origin: bottom center;
+}
+@keyframes bottomFlip {
+    0% {
+        opacity: 0;
+        transform: translateY(100%) scale(0); 
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1); 
+    }
+}
+.modal-card * {
+    margin: 10px;
+}
+.close-btn {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+.modal-card h3 {
+    color: green;
+    font-size: 25px;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+#modalShareForm {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 80%;
+}
 
 
+#modalShareForm textarea {
+    height: 100px;
+    resize: none;
+    font-size: 22px;
+    border: none;
+    padding: 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    transition: height 0.4s ease-in-out;
+}
+#modalShareForm textarea:focus {
+    height: 200px;
+    box-shadow: 0 0 4px green;
+}
+.btn-submit-vibe {
+    background: green;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 30px;
+}
  </style>
+<link rel="stylesheet" href="./asirnet.css">
 </head>
 <body id="body">
+<div class="app-con">
 <div id="header">
  <div>
 <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="50px" onclick="appAside()">
@@ -2192,7 +2407,7 @@ is feeling
 <span id="feeling">___</span> 
 at 
 <span id="location">___</span> 
-<p onclick="showTagged()" id="taggedBtn" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:pulple">with other ones</u><p>
+<p onclick="showTagged('')" id="taggedBtn" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:pulple">with other ones</u><p>
 </div>
 
     <textarea id="postword" placeholder="What's on your mind?" ></textarea>
@@ -2367,7 +2582,7 @@ is feeling
 <span id="feeling2">___</span> 
 at 
 <span id="location2">___</span> 
-<p onclick="showTagged()" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
+<p onclick="showTagged('')" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
 </div>
 
     <textarea id="Imgword" placeholder="Write a caption about this image.." ></textarea>
@@ -2394,10 +2609,6 @@ at
   </div>  
 </div>
 </div>
-
-
-
-
 
 
 <div id="allChange">
@@ -2430,6 +2641,36 @@ at
 </div>
 
 <hr>
+
+<div class="vibes-container">
+    <div class="vibes-div share-trigger-card" onclick="openShareModal()">
+        <div class="add-icon">+</div>
+        <div class="share-btn-text">Share Your Vibe</div>
+        <div class="vibes-footer">
+            <div> — Post New</div>
+        </div>
+    </div>   
+  
+    <div id="vibes-show"></div>
+</div>
+<div id="vibeModal" class="modal-overlay" onclick="closeShareModal(event)">
+    <div class="modal-card">
+        <span class="close-btn" onclick="closeModalDirect()">&times;</span>
+        <h3>Share Your Vibe ✨</h3>
+  <hr style="background:green;height:2px">
+        <form id="modalShareForm" onsubmit="event.preventDefault(); sendvibe(); closeModalDirect();">
+            <textarea id="modalText" placeholder="Write your vibe here..." required maxlength="120"></textarea>
+            <button type="submit" class="btn-submit-vibe">Post Vibe</button>
+        </form>
+    </div>
+</div>
+
+<hr>
+
+<script>
+
+</script>
+
 
 <div id="postLoading">
 <div class="posting-box">
@@ -2592,7 +2833,7 @@ at
 
    </div>
 </div>
-
+</div>
 <script>
 
 function appAside() {
@@ -2853,6 +3094,7 @@ function sendStory(){
 }
 
 loadAllStories();
+
 async function loadAllStories() {
 let container = document.getElementById('container');
   try {
@@ -3529,18 +3771,23 @@ const BackManager = (function () {
 
     window.addEventListener("popstate", () => {
         if (stack.length > 0) {
-            const closeFn = stack.pop();
-            if (typeof closeFn === "function") {
-                closeFn();
+            const item = stack.pop();
+            if (typeof item === "function") {
+                item();
             }
         }
     });
 
     return {
-        register(closeFn) {
+        register(closeFn, ...args) {
             if (typeof closeFn === "function") {
                 history.pushState({ ui: true }, "");
-                stack.push(closeFn);
+
+                if (args.length > 0) {
+                    stack.push(() => closeFn(...args));
+                } else {
+                    stack.push(closeFn);
+                }
             }
         },
 
@@ -3648,27 +3895,8 @@ if(taggedBtn) {
 
 }
 
-function showTagged() {
-    document.getElementById('taggedShow').style.transform = 'translate(0)';
 
-    BackManager.register(closeTagged);
 
-    const container = document.getElementById('personWise');
-
-container.innerHTML = taggedEmailList.map(i => `
-        <div class="tag-card">
-            <div>
-          <h3>${i.name}</h3>
-          <p>${i.email}</p>
-            </div>
-            <button
-                onclick="removeTag('${i.email}')">
-                ✕
-            </button>
-
-        </div>
-    `).join("");
-}
 
 function removeTag(email) {
 
@@ -3680,76 +3908,169 @@ function removeTag(email) {
     clearTags();
 }
 
-function closeTagged() {
- document.getElementById('taggedShow').style.transform = 'translateX(1000px)';   
+function closeTagged(param) {
+ 
+if(param == 'r') taggedEmailList
+ document.getElementById('taggedShow').style.transform = 'translateX(100%)';   
 }
 
-
 async function comeUsers() {
-  let searchElement = document.getElementById('searchBar').value;
-  let showingDisplay = document.getElementById('comingUsers');
+    let searchElement = document.getElementById("searchBar").value.trim();
+    let showingDisplay = document.getElementById("comingUsers");
 
-  if(!searchElement) {
-    alertShow('Please Write something here to search');  
-  }else {
-     try{
+    if (!searchElement) {
+        alertShow("Please Write something here to search");
+        return;
+    }
 
-        const token = localStorage.getItem("token");
+    // Token check
+    const token = localStorage.getItem("token");
+    if (!token) {
+        alertShow("Please login first");
+        return;
+    }
+
+    try {
         const res = await fetch(
             `https://users-server-xyvg.onrender.com/search?q=${encodeURIComponent(searchElement)}`,
             {
-            headers: {
-            Authorization: `Bearer ${token}`
-                     }
-            });
-        const users = await res.json();
-        if (users.length === 0) {
-        alertShow('No user found');
-        showingDisplay.innerHTML ='';  
-          } else {
-         showingDisplay.innerHTML = users.map(user => `
-<button onclick="tagAdd(this,'${user.email}','${user.username}')" class="tagIds">
-<img src="${user.avatar}">
-<br>
-<div>${user.username}</div><br>   
-<p>${user.email}</p>
-</button>           
-               `).join("");
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        // HTTP status check
+        if (!res.ok) {
+            throw new Error(`HTTP Error: ${res.status}`);
         }
 
-     } catch(err) {
-     console.error(err);
-     alertShow('');
-     onalert('Something went wrong');    
-     }
-  }
+        const users = await res.json();
 
+        // Array check
+        if (!Array.isArray(users) || users.length === 0) {
+            alertShow("No user found");
+            showingDisplay.innerHTML = "";
+            return;
+        }
+
+        showingDisplay.innerHTML = users.map(user => `
+            <button onclick="tagAdd(this,'${user.email}','${user.username}')" class="tagIds">
+                <img src="${user.avatar}">
+                <br>
+                <div>${user.username}</div>
+                <br>
+                <p>${user.email}</p>
+            </button>
+        `).join("");
+
+    } catch (err) {
+        console.error(err);
+        alertShow("Something went wrong");
+    }
 }
+
 
 let taggedEmailList = [];
 
-function tagAdd(btn, email, name) {
-
-    btn.classList.toggle("selected");
-
-    const userIndex = taggedEmailList.findIndex(
-        user => user.email === email
-    );
-
-    if (userIndex === -1) {
-
-        taggedEmailList.push({
-            email,
-            name
-        });
-
-    } else {
-
-        taggedEmailList.splice(userIndex, 1);
-
+/* === ১. tagAdd (বাটনে ক্লিক করলে সিলেক্ট/ডি-সিলেক্ট হবে) === */
+function tagAdd(btn, email, name, avatar) {
+    // ১. বাটনের ভিজ্যুয়াল টগল
+    if (btn) {
+        btn.classList.toggle("selected");
     }
 
+    const userIndex = taggedEmailList.findIndex(user => user.email === email);
+
+    // ২. যদি আগে থেকে না থাকে তবে অ্যাড হবে, থাকলে রিমুভ হবে
+    if (userIndex === -1) {
+        taggedEmailList.push({
+            email: email || "",
+            name: name || "",
+            avatar: avatar || ""
+        });
+    } else {
+        taggedEmailList.splice(userIndex, 1);
+    }
 }
+
+/* === ২. showTagged (UI-তে লিস্ট দেখানোর জন্য) === */
+function showTagged(c) {
+    const taggedShow = document.getElementById('taggedShow');
+    const container = document.getElementById('personWise');
+
+    if (taggedShow) {
+        taggedShow.style.transform = 'translate(0)';
+    }
+
+    if (typeof BackManager !== 'undefined' && BackManager.register) {
+        BackManager.register(closeTagged, c);
+    }
+
+    if (!container) return;
+
+    if (taggedEmailList.length === 0) {
+        container.innerHTML = `<p style="padding:15px; text-align:center; color:gray;">No tagged friends</p>`;
+        return;
+    }
+
+    container.innerHTML = taggedEmailList.map(i => `
+        <div class="tag-card">
+            <div>
+                <h3>${i.name || 'User'}</h3>
+                <p>${i.email || ''}</p>
+            </div>
+            <button
+                onclick="removeTag('${i.email}')"
+                style="display:${c === 'r' ? 'none' : 'block'}"
+                class="tagCloseBtn">
+                ✕
+            </button>
+        </div>
+    `).join("");
+}
+
+
+
+function appOthers(others) {
+    let targetData = others;
+
+    if (typeof targetData === "string") {
+        try {
+            const decodedData = decodeURIComponent(targetData);
+            targetData = JSON.parse(decodedData);
+        } catch (err) {
+            try {
+                targetData = JSON.parse(targetData);
+            } catch (innerErr) {
+                targetData = [];
+            }
+        }
+    }
+
+    if (targetData && typeof targetData === "object" && !Array.isArray(targetData)) {
+        targetData = [targetData];
+    }
+
+    taggedEmailList = [];
+
+    if (Array.isArray(targetData) && targetData.length > 0) {
+        targetData.forEach((o) => {
+            if (o && typeof o === "object") {
+                taggedEmailList.push({
+                    email: o.email || o.userEmail || "",
+                    name: o.name || o.username || "Tagged User",
+                    avatar: o.avatar || ""
+                });
+            }
+        });
+    }
+
+    showTagged("r");
+}
+
+
+
 
 function alertShow(alert) {
    document.getElementById('faultMass').innerText = alert;
@@ -4031,9 +4352,8 @@ function applyPostStyle(el, style) {
 }
 
 
-/* ===  POST SUBMIT (SERVER SEND) === */
+/* === 1. POST SUBMIT (CLEAN & PRODUCTION READY) === */
 async function postsubmit() {
-
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (!user?.username || !user?.email) {
@@ -4043,42 +4363,36 @@ async function postsubmit() {
 
     const postData = collectPostData();
 
-
     if (!postData.text?.trim() && !postData.image) {
         onPostAlert("Please insert something first!");
         return;
     }
 
     const loader = document.getElementById("postLoading");
-    loader.style.display = "flex";
+    if (loader) loader.style.display = "flex";
     closePostpage();
 
-     const btn = document.getElementById("postsubmit");
-
-
+    const btn = document.getElementById("postsubmit");
     if (btn) {
         btn.style.background = "gray";
         btn.disabled = true;
     }
 
     try {
-         const payload = {
+        const payload = {
             user: {
                 username: user.username,
                 email: user.email
             },
-
             avatar: user.avatar || "",
-
             post: {
                 text: postData.text || "",
                 style: postData.style || {},
                 image: postData.image || ""
             },
-
             feelings: postData.feelings || null,
             location: postData.location || null,
-            others: postData.others || []
+            others: Array.isArray(postData.others) ? postData.others : []
         };
 
         const res = await fetch("https://posts-server-kmha.onrender.com/post", {
@@ -4089,32 +4403,37 @@ async function postsubmit() {
             body: JSON.stringify(payload)
         });
 
- const data = await res.json().catch((err) => {console.log(err)});
+        const data = await res.json().catch(() => null);
 
         if (!res.ok) {
-            onalert(data.message || "Server error!");
+            onPostAlert(data?.message || "Server error!");
             return;
         }
 
         loadPosts();
         closePostpage();
 
-        // reset UI
-        document.getElementById("postword").value = "";
+        // UI Reset
+        const postInput = document.getElementById("postword");
+        const postPreview = document.getElementById("postPreview");
+        
+        if (postInput) postInput.value = "";
         postImageBase64 = "";
-        document.getElementById("postPreview").style.display = "none";
+        if (postPreview) postPreview.style.display = "none";
 
     } catch (err) {
-        console.error(err);
+        console.error("Post Submission Error:", err);
         onPostAlert("Network error!");
     } finally {
-        loader.style.display = "none";
+        if (loader) loader.style.display = "none";
         if (btn) {
             btn.style.background = "blue";
             btn.disabled = false;
         }
-     }
+    }
 }
+
+
 
 function onPostAlert(alert) {
 
@@ -4149,7 +4468,6 @@ async function loadPosts() {
     try {
         const res = await fetch("https://posts-server-kmha.onrender.com/post");
         const data = await res.json();
-
         if (!res.ok) {
             onalert(data.message || "Error loading posts!");
             return;
@@ -4167,7 +4485,10 @@ async function loadPosts() {
 
             const div = document.createElement("div");
             div.className = "postshow";
-
+            
+            const safeOthers = encodeURIComponent(JSON.stringify(post.others || []));
+            
+            
             div.innerHTML = `
 <table><tr><td valign="top">
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
@@ -4189,7 +4510,7 @@ async function loadPosts() {
 
 <p class="postInfo"
    style="display:${Array.isArray(post.others) && post.others.length ? 'block' : 'none'}; color:purple"
-   onclick="appOthers('${post.others}')">
+   onclick="appOthers('${safeOthers}')">
    <img src="https://i.ibb.co.com/39jD6F2q/customer.png">
    <u style="color:purple">With other ones</u>
 </p>
@@ -4450,9 +4771,10 @@ function showMoreInfo(id, value) {
   });
 }
 
-function appOthers(others) {
-   onalert('on development'); 
-}
+
+
+
+
 
 function onDisImg(img, caption) {
 const el = qs('#onDisImg');
@@ -5433,6 +5755,120 @@ function autoAlert(time = 3000){
   setTimeout(closeAlert, time);
 }
 
+function openShareModal() {
+    document.getElementById('vibeModal').style.display = 'flex';
+  BackManager.register(closeModalDirect);
+}
+
+function closeModalDirect() {
+    document.getElementById('vibeModal').style.display = 'none';
+  BackManager.unregister(closeModalDirect);
+}
+
+function closeShareModal(e) {
+    if (e.target.classList.contains('modal-overlay')) {
+        closeModalDirect();
+    }
+}
+
+async function sendvibe() {
+    // 1. LocalStorage থেকে ইউজার অবজেক্ট নেওয়া
+    const u = JSON.parse(localStorage.getItem("user")) || {};
+
+let e = u?.email;
+let un = u?.username;
+let av = u?.avatar || '';
+let t = document.getElementById('modalText')?.value?.trim();
+
+if (!e) return onalert('Email required');
+if (!un) return onalert('Username required');
+if (!t) return onalert('Text required');
+
+    if (!t.trim()) {
+        alert("Please write something before posting!");
+        return;
+    }
+
+
+    const payload = {
+        email: e,
+        username: un,
+        vibe: t,
+        avatar: av
+    };
+    
+   console.log(JSON.stringify(payload));
+
+try {
+    const response = await fetch('https://posts-server-kmha.onrender.com/api/add-vibe', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(payload)
+    });
+
+    const result = await response.json();
+    if (response.ok && result.success) {
+        document.getElementById('modalText').value = '';
+        if (typeof onalert === 'function') {
+            onalert('Vibe posted successfully!');
+        }
+    } else {
+        console.error('Error adding vibe:', result.error || 'Server error');
+        if (typeof onalert === 'function') {
+            onalert(result.error || 'Failed to post vibe');
+        }
+    }
+
+} catch (err) {
+    console.error('Fetch error:', err);
+    if (typeof onalert === 'function') {
+        onalert('Server connections problem or Network error!');
+    }
+}
+
+}
+
+async function loadVibes() {
+    const vibesContainer = document.querySelector('#vibes-show');  
+    try {
+        const response = await fetch('https://posts-server-kmha.onrender.com/api/get-vibes');
+        const result = await response.json();
+
+        if (response.ok && result.success && Array.isArray(result.data)) {
+            vibesContainer.innerHTML = '';
+            result.data.forEach(item => {
+                const vibeCard = document.createElement('div');
+                vibeCard.className = 'vibes-div';
+
+                const fullText = item.vibe || '';
+                const isLongText = fullText.length > 50;
+                const displayText = isLongText ? fullText.substring(0, 50) + '... ' : fullText;
+
+                vibeCard.innerHTML = `
+                    <div class="vibes-text">
+                        ${displayText}${isLongText ? '<span class="vibes-more">see more</span>' : ''}
+                    </div>
+                    <div class="vibes-footer">
+                        <div>— ${item.username || 'Anonymous'}</div>
+                    </div>
+                `;
+
+                vibesContainer.appendChild(vibeCard);
+            });
+        } else {
+            console.error('Failed to load vibes:', result.error || 'Unknown error');
+        }
+
+    } catch (err) {
+        console.error('Error fetching vibes:', err);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadVibes);
+
+
 </script>
 
 
@@ -5618,5 +6054,7 @@ startServerPing();
 
 
 
-</script></body>
+</script>
+
+</body>
 </html>
