@@ -8,7 +8,7 @@
 <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
 <link rel="icon" href="https://i.ibb.co.com/ccMxvp0S/asirnet-link-logo.png">
 
-    <style>
+     <style>
 
 :root {
     --primary-blue: #3b82f6;
@@ -182,13 +182,13 @@
 }
 
 .warning-main-text {
-    font-size: 14px;
+    font-size: 25px;
     font-weight: 600;
     color: var(--text-dark);
 }
 
 .warning-sub-text {
-    font-size: 12px;
+    font-size: 16px;
     color: var(--text-gray);
     margin-top: 2px;
 }
@@ -714,14 +714,14 @@ textarea,input:focus {
     min-height: 100px;
     width: 90%;
     box-shadow: 0 0 5px gray;
-    /* animation: postAppear 0.4s ease-in forwards ; */
+    animation: postAppear 0.2s ease-in forwards;
 }
 @keyframes postAppear {
     from {
-        transform: translateY(10%);
+        margin-top: 500px;
     }
     to {
-        transform: translateY(0);
+        margin-top: 0px;
     }
 }
 
@@ -2206,7 +2206,7 @@ textarea,input:focus {
 .vibes-footer div {
     color: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 18px;
     text-align: center;
 }
 
@@ -2231,7 +2231,7 @@ textarea,input:focus {
 }
 
 .share-btn-text {
-    font-size: 14px;
+    font-size: 22px;
     font-weight: bold;
     color: green;
     margin-bottom: 25px; /* Footer এর জন্য জায়গা রাখা */
@@ -2334,6 +2334,124 @@ textarea,input:focus {
     cursor: pointer;
     font-size: 30px;
 }
+#showVibeText {
+    display: flex;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+#showVibeText.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+#showVibeText-card {
+    position: relative;
+    background: #ffffff;
+    width: 90%;
+    max-width: 580px;
+    max-height: 85vh;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#showVibeText-card.show {
+    transform: scale(1.1);
+    transition: transform 0.2s ease-out;
+}
+
+#showVibeText-card.bounce {
+    transform: scale(1.0);    
+    transition: transform 0.25s ease-in-out;
+}
+
+
+.vibe-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    background: #f1f5f9;
+    border: none;
+    font-size: 28px;
+    font-weight: bold;
+    color: #64748b;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    line-height: 1;
+}
+
+.vibe-close-btn:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+
+.vibe-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding-bottom: 18px;
+    padding-right: 40px; 
+    border-bottom: 1px solid #f1f5f9;
+}
+
+#urAvatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #10b981;
+    box-shadow: 0 4px 10px rgba(16, 185, 129, 0.2);
+    flex-shrink: 0;
+}
+
+.vibe-user-info h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.vibe-body {
+    margin-top: 18px;
+    background: #f8fafc;
+    border-radius: 14px;
+    padding: 20px;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+#urVibe {
+    margin: 0;
+    font-size: 22px;
+    line-height: 1.7;
+    color: #334155;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+
  </style>
 <link rel="stylesheet" href="./asirnet.css">
 </head>
@@ -2667,9 +2785,24 @@ at
 
 <hr>
 
-<script>
+<div id="showVibeText">
+    <div id="showVibeText-card">
+        <button class="vibe-close-btn" onclick="closeVibeModal()">&times;</button>
 
-</script>
+        <div class="vibe-header">
+            <img id="urAvatar" src="" alt="User Avatar" />
+            <div class="vibe-user-info">
+                <h3 id="urName"></h3>
+            </div>
+        </div>
+
+<hr style="background-color: green; height: 2px; border: none; margin: 15px 0;">
+
+        <div class="vibe-body">
+            <p id="urVibe"></p>
+        </div>
+    </div>
+</div>
 
 
 <div id="postLoading">
@@ -3682,6 +3815,7 @@ async function loadConnections(email, place) {
 
         if (!res.ok) {
             onalert('Something went wrong');
+            console.error(errorData?.message || 'Something went wrong');
             return;
         }
 
@@ -5832,15 +5966,38 @@ try {
 
 async function loadVibes() {
     const vibesContainer = document.querySelector('#vibes-show');  
+    if (!vibesContainer) return;
+
     try {
         const response = await fetch('https://posts-server-kmha.onrender.com/api/get-vibes');
         const result = await response.json();
 
         if (response.ok && result.success && Array.isArray(result.data)) {
             vibesContainer.innerHTML = '';
+
+            if (result.data.length === 0) {
+                const vibeEmpty = document.createElement('div');
+                vibeEmpty.className = 'vibes-div';
+                vibeEmpty.innerHTML = `
+                    <div class="vibes-text" style="text-align: center;">
+                        No vibe has been submitted yet!                  
+                    </div>
+                    <div class="vibes-footer">
+                        <div>— Empty text</div>
+                    </div>
+                `;
+                vibesContainer.appendChild(vibeEmpty); 
+                return;           
+            }
+
             result.data.forEach(item => {
                 const vibeCard = document.createElement('div');
                 vibeCard.className = 'vibes-div';
+
+                vibeCard.dataset.email = item.email || '';
+                vibeCard.dataset.username = item.username || '';
+                vibeCard.dataset.avatar = item.avatar || '';
+                vibeCard.dataset.vibe = item.vibe || '';
 
                 const fullText = item.vibe || '';
                 const isLongText = fullText.length > 50;
@@ -5866,8 +6023,48 @@ async function loadVibes() {
     }
 }
 
+const vibesContainer = document.querySelector('#vibes-show');
+if (vibesContainer) {
+    vibesContainer.addEventListener('click', (event) => {
+        const card = event.target.closest('.vibes-div');
+        if (card && card.dataset.vibe) {
+            const { email, username, avatar, vibe } = card.dataset;
+            vibeDisShow(email, username, avatar, vibe);
+        }
+    });
+}
+
 document.addEventListener('DOMContentLoaded', loadVibes);
 
+function vibeDisShow(e, u, a, v) {
+    const overlay = document.getElementById('showVibeText');
+    const card = document.getElementById('showVibeText-card');
+
+document.getElementById('urName').innerText = u ;   
+document.getElementById('urAvatar').src = a;   
+document.getElementById('urVibe').innerText  = v;   
+
+    overlay.classList.add('show');
+    card.classList.remove('bounce');
+    card.classList.add('show');      
+
+    setTimeout(() => {
+        card.classList.remove('show');
+        card.classList.add('bounce');
+    }, 200);
+
+    if (typeof BackManager !== 'undefined') {
+        BackManager.register(closeVibeModal);
+    }
+}
+
+function closeVibeModal() {
+    const overlay = document.getElementById('showVibeText');
+    const card = document.getElementById('showVibeText-card');
+
+    card.classList.remove('show', 'bounce');
+    overlay.classList.remove('show');
+}
 
 </script>
 
@@ -6055,6 +6252,5 @@ startServerPing();
 
 
 </script>
-
 </body>
 </html>
