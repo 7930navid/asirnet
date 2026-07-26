@@ -4381,7 +4381,7 @@ async function pad() {
     const search = document.getElementById('search').value.trim();
 
     if (!search) {
-document.getElementById("show").style.display = 'flex';
+document.getElementById("showBox").style.display = 'flex';
 
         document.getElementById("searchresult").innerHTML = `
             <div
@@ -4394,13 +4394,13 @@ document.getElementById("show").style.display = 'flex';
             "Please search anything before!";
 
         setTimeout(() => {
-            document.getElementById("show").style.display = 'none';
+            document.getElementById("showBox").style.display = 'none';
         }, 2000);
 
         return;
     }
 
-    document.getElementById('show').style.display = 'flex';
+    document.getElementById('showBox').style.display = 'flex';
 
     const showDiv = document.getElementById("searchresult");
 
