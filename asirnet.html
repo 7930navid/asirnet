@@ -4415,9 +4415,7 @@ document.getElementById("showBox").style.display = 'flex';
                 }
             }
         );
-        //console.log("Status:", res.status);
         const users = await res.json();
-        //console.log("Users:", users);
         if (users.length === 0) {
 
             showDiv.innerHTML = `
