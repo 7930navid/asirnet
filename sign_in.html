@@ -7,6 +7,9 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <link rel="icon" href="https://i.ibb.co.com/ccMxvp0S/asirnet-link-logo.png">
+
+
 <style>
 *{
     margin:0;
@@ -105,21 +108,19 @@ body::after{
     color:#fff;
     text-align:center;
     margin-bottom:35px;
+    padding: 20px;
+    background: rgba(255,255,255,0.4);
+    border-radius: 10px;
 }
 
-.logo h1{
-    font-size:38px;
-    font-weight:700;
-    letter-spacing:1px;
-}
-
-.logo span{
-    color:#00f7ff;
+.logo img{
+    width: 150px;
+    border-radius: 20px;
 }
 
 .logo p{
     margin-top:8px;
-    color:#b8c1d9;
+    color: gray;
     font-size:14px;
 }
 
@@ -358,7 +359,7 @@ section button:focus::after {
 <div class="login-box">
 
     <div class="logo">
-        <h1>Asir<span>Net</span></h1>
+        <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg" alt="AsirNet Logo">
         <p>Secure Premium Access</p>
     </div>
 
@@ -381,12 +382,12 @@ section button:focus::after {
 
     </form>
           <!-- Guest Login Button -->
-<button type="button" class="guest-btn" onclick="continueAsGuest();">
+<button type="button" class="guest-btn" onclick="continueAsGuest()">
     Continue as Guest
     </button>
 
             <section>
-         <button onclick="forgot();guestAl()">Forgot password?</button>
+         <button onclick="forgot()">Forgot password?</button>
          <a href="register.html"><button>Create a new account?</button></a>
         </section>
 
@@ -399,10 +400,6 @@ section button:focus::after {
 
 </body>
 <script>
-
-function guestAl(){
- alert('This Function Is Under Devlopment');
-}
 
 const form = document.querySelector("form");
 const loginBtn = document.querySelector(".login-btn");
@@ -546,7 +543,10 @@ async function resetPassword() {
 }
 
 function continueAsGuest() {
+    // প্রয়োজন হলে গেস্ট হিসেবে চিহ্নিত করার জন্য LocalStorage ব্যবহার করতে পারেন
+    localStorage.setItem("isGuest", "true");
     
+    // guest.html পেজে রিডাইরেক্ট
     window.location.href = "guest.html";
 }
 
