@@ -2551,6 +2551,15 @@ textarea,input:focus {
     to { transform: rotate(360deg); }
 }
 
+@keyframes appStry {
+    from { 
+        transform: translateY(100%) scale(0); 
+      }    
+    to { 
+        transform: translateY(0) scale(1);
+      }
+}
+
 
 
 
@@ -3503,6 +3512,7 @@ function showStoryModal(story) {
     display:flex;
     justify-content:center;
     align-items:center;
+    animation: appStry 0.4s ease;
   `;
 
   /* ---------- Story Box ---------- */
@@ -3555,12 +3565,13 @@ function showStoryModal(story) {
     position:absolute;
     top:10px;
     right:15px;
-    font-size:42px;
+    font-size:72px;
     color:white;
     background:none;
     border:none;
     cursor:pointer;
-    z-index:2;
+    z-index: 2;
+    margin-right: 5%;
   `;
   closeBtn.onclick = () => overlay.remove();
 
@@ -5064,33 +5075,86 @@ cap.innerText = caption;
 
 
 async function reactorsOnStory(postId) {
-
   try {
     const res = await fetch(
       `https://interacts-server-xpbo.onrender.com/likes/${postId}`
     );
-    const data = await res.json();
 
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
     const container = document.getElementById(`appearReactors${postId}`);
+
+    if (!container) return; // container না থাকলে সেফ এক্সিট
 
     if (!data.likes || data.likes.length === 0) {
       container.innerHTML = `<p>No likes yet 😐</p>`;
       return;
     }
-   container.innerHTML ="";
- let typeOfReact = "";
- if(data.likes == '👍') {
-     typeOfReact = '👍 — liked'  
- }else {
-    typeOfReact = '❤️ — loved' 
- }
 
-    // 🔹 Map likes to HTML
+        let typeOfReact = "";
+    // 🔹 Map likes to HTML (সরাসরি map-এর ভেতরে reaction লজিক বসানো হয়েছে)
     const listHTML = data.likes
       .map(l => {
+    console.log(l.reaction);
+        if (l.reaction === '👍') {
+          typeOfReact = '👍 — liked';
+        } else if (l.reaction === '♥️') {
+          typeOfReact = '❤️ — loved';
+        } else {
+          typeOfReact = '❓';
+        }
+
         return `
-         <p style="font-size: 30px; display: flex; align-items: center;"> <img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid  green; margin-right: 15px;">
-   <span style="font-weight: bold; margin-right: 10px;">${l.username}</span><span style'color: blue; '> has </span><span> ${typeOfReact} your story.</span></p>
+<div style="
+  display: flex;
+  background: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 16px; 
+  padding: 12px 16px; 
+  margin-bottom: 12px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+">
+  <img src="${l.avatar}" style="
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #22c55e; 
+    margin-right: 14px;
+    flex-shrink: 0;
+  ">
+
+
+  <div style="
+    font-size: 24px; 
+    line-height: 1.4; 
+    color: #e2e8f0; 
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 4px;
+    display: flex;
+  ">
+    <strong style="color: #ffffff; font-weight: 600;">${l.username}</strong>
+    <span style="color: #94a3b8;">has</span>
+    <span style="
+      background: rgba(110, 231, 183, 0.12); 
+      color: #6ee7b7; 
+      padding: 2px 8px; 
+      border-radius: 6px; 
+      font-weight: 500; 
+      font-size: 22px;
+    ">
+      ${typeOfReact}
+    </span>
+    <span style="color: #94a3b8;">your story.</span>
+  </div>
+</div>
         `;
       })
       .join("");
@@ -5098,12 +5162,17 @@ async function reactorsOnStory(postId) {
     container.innerHTML = listHTML;
 
   } catch (err) {
-   console.error("Reactors fetch error:", err);
-document.getElementById(`appearReactors${postId}`).innerHTML =`<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
-<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
-  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
-  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+    console.error("Reactors fetch error:", err);
+    
+    const container = document.getElementById(`appearReactors${postId}`);
+    if (container) {
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+          <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+          <button onclick="location.reload()" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange; cursor: pointer;">Reload Page</button>
         </div>`;
+    }
   }
 }
 
@@ -5473,6 +5542,7 @@ async function reactAppear(postId, emoji) {
 document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "none");
   try {
     const user = JSON.parse(localStorage.getItem("user"));
+    
 
     if (!user || !user.email || !user.username) {
       onalert("You must be logged in to react!");
@@ -5499,8 +5569,10 @@ document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "no
     const data = await res.json();
 
     if (res.ok) {
-      // UI update
-      document.getElementById(`react${postId}`).innerHTML = emoji;
+     
+const el = document.getElementById(`react${postId}`);
+if(el) el.innerHTML = emoji;
+
       updateCounts(postId);
       return;
     } else {
