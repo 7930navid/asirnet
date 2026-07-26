@@ -2536,6 +2536,23 @@ textarea,input:focus {
     object-fit: contain;
 }
 
+/* Spinner Style */
+.vibe-spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: green;
+    animation: spin 2.6s infinite linear;
+    margin: 0 auto; /* Center alignment */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+
+
 
  </style>
 <!-- <link rel="stylesheet" href="./asirnet.css"> -->
@@ -2858,7 +2875,24 @@ at
         <div class="vibes-footer">
             <div> — Post New</div>
         </div>
-    </div>   
+    </div>
+    
+ 
+    <div class="vibes-div" id="vibe-error"  style="background: rgba(255,0,0,0.2); display: none;">
+       <div style="color: red; font-size: 23px; font-weight: bold; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">SOMETHING WENT WRONG</div> 
+        <div class="vibes-footer" style="background: red;">
+            <div> — ERR_CONNECTION</div>
+        </div>
+    </div> 
+    
+    <div class="vibes-div" id="vibe-loader" style="display: none;">
+        <div class="vibe-spinner"></div>
+        <div class="vibes-footer">
+            <div> — Loading...</div>
+        </div>
+    </div>
+   
+   
   
     <div id="vibes-show"></div>
 </div>
@@ -6098,6 +6132,8 @@ try {
 async function loadVibes() {
     const vibesContainer = document.querySelector('#vibes-show');  
     if (!vibesContainer) return;
+ 
+ document.getElementById('vibe-loader').style.display = 'block';
 
     try {
         const response = await fetch('https://posts-server-kmha.onrender.com/api/get-vibes');
@@ -6118,9 +6154,11 @@ async function loadVibes() {
                     </div>
                 `;
                 vibesContainer.appendChild(vibeEmpty); 
+document.getElementById('vibe-loader').style.display = 'none';
                 return;           
             }
-
+            
+document.getElementById('vibe-loader').style.display = 'none';
             result.data.forEach(item => {
                 const vibeCard = document.createElement('div');
                 vibeCard.className = 'vibes-div';
@@ -6151,8 +6189,13 @@ async function loadVibes() {
 
     } catch (err) {
         console.error('Error fetching vibes:', err);
+        document.getElementById('vibe-loader').style.display = 'none';
+document.getElementById('vibe-error').style.display = 'block';
+
     }
 }
+
+
 
 const vibesContainer = document.querySelector('#vibes-show');
 if (vibesContainer) {
