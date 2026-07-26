@@ -2701,6 +2701,20 @@ textarea,input:focus {
     border: none;
     color: white;
 }
+/* Spinner Style */
+.vibe-spinner {
+    width: 55px;
+    height: 55px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: green;
+    animation: spin 2.6s infinite linear;
+    margin: 0 auto; /* Center alignment */
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
 
 
 
@@ -2800,6 +2814,7 @@ textarea,input:focus {
 <hr>
 
 <div class="vibes-container">
+        
     <div class="vibes-div share-trigger-card" onclick="guestWarn()">
         <div class="add-icon">+</div>
         <div class="share-btn-text">Share Your Vibe</div>
@@ -2807,6 +2822,23 @@ textarea,input:focus {
             <div> — Post New</div>
         </div>
     </div> 
+
+    <div class="vibes-div" id="vibe-error"  style="background: rgba(255,0,0,0.2); display: none;">
+       <div style="color: red; font-size: 23px; font-weight: bold; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">SOMETHING WENT WRONG</div> 
+        <div class="vibes-footer" style="background: red;">
+            <div> — ERR_CONNECTION</div>
+        </div>
+    </div> 
+    
+    <div class="vibes-div" id="vibe-loader" style="display: none;">
+        <div class="vibe-spinner"></div>
+        <div class="vibes-footer">
+            <div> — Loading...</div>
+        </div>
+    </div>
+   
+ <div id="vibes-show"></div> 
+ 
   </div>  
 
 <hr>
@@ -2870,7 +2902,7 @@ textarea,input:focus {
     <h3 id="otherProfdiv"></h3></section>
     </div>
     <div id="connectBTN">
-    <button onclick="connect()">Add Connection</button></div>
+    <button onclick="guestWarn()">Add Connection</button></div>
     <h1>Connected ones</h1><hr>
     <div id="showOnes"></div><hr>
     <div id="otherPosts"></div>
@@ -3858,13 +3890,13 @@ document.getElementById("show").style.display = 'flex';
             "Please search anything before!";
 
         setTimeout(() => {
-            document.getElementById("show").style.display = 'none';
+            document.getElementById("showBox").style.display = 'none';
         }, 2000);
 
         return;
     }
 
-    document.getElementById('show').style.display = 'flex';
+    document.getElementById('showBox').style.display = 'flex';
 
     const showDiv = document.getElementById("searchresult");
 
@@ -4192,7 +4224,7 @@ async function loadPosts() {
   <hr>
   <div class="comBody">
     <textarea class="comWord" rows="8"></textarea>
-    <button onclick="sendCom('${post.id}')" class="comButton">
+    <button onclick="guestWarn()" class="comButton">
       <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
     </button>
   </div>
@@ -5024,6 +5056,8 @@ function autoAlert(time = 3000){
 async function loadVibes() {
     const vibesContainer = document.querySelector('#vibes-show');  
     if (!vibesContainer) return;
+ 
+ document.getElementById('vibe-loader').style.display = 'block';
 
     try {
         const response = await fetch('https://posts-server-kmha.onrender.com/api/get-vibes');
@@ -5044,9 +5078,11 @@ async function loadVibes() {
                     </div>
                 `;
                 vibesContainer.appendChild(vibeEmpty); 
+document.getElementById('vibe-loader').style.display = 'none';
                 return;           
             }
-
+            
+document.getElementById('vibe-loader').style.display = 'none';
             result.data.forEach(item => {
                 const vibeCard = document.createElement('div');
                 vibeCard.className = 'vibes-div';
@@ -5077,6 +5113,9 @@ async function loadVibes() {
 
     } catch (err) {
         console.error('Error fetching vibes:', err);
+        document.getElementById('vibe-loader').style.display = 'none';
+document.getElementById('vibe-error').style.display = 'block';
+
     }
 }
 
@@ -5091,7 +5130,7 @@ if (vibesContainer) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadVibes);
+loadVibes();
 
 function vibeDisShow(e, u, a, v) {
     const overlay = document.getElementById('showVibeText');
