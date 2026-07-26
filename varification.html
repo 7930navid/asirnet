@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AsirNet Single Sign-On</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    overflow:hidden;
+    background: radial-gradient(circle at top left,#0f172a,#020617 60%);
+    position:relative;
+}
+
+body::before,
+body::after{
+    content:'';
+    position:absolute;
+    width:450px;
+    height:450px;
+    border-radius:50%;
+    filter:blur(90px);
+    animation:float 8s ease-in-out infinite;
+}
+
+body::before{
+    background:#00f7ff;
+    top:-150px;
+    left:-120px;
+}
+
+body::after{
+    background:#7c3aed;
+    bottom:-150px;
+    right:-120px;
+    animation-delay:4s;
+}
+
+@keyframes float{
+    0%,100%{ transform:translateY(0px); }
+    50%{ transform:translateY(30px); }
+}
+
+.sso-box{
+    width:380px;
+    padding:35px 30px;
+    border-radius:28px;
+    background:rgba(255,255,255,0.06);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 40px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.03);
+    position:relative;
+    z-index:10;
+    overflow:hidden;
+    text-align:center;
+    animation:cardShow 1s ease;
+}
+
+@keyframes cardShow{
+    from{
+        opacity:0;
+        transform:translateY(40px) scale(.95);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0px) scale(1);
+    }
+}
+
+.logo-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #00f7ff, #7c3aed);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-header p {
+    color: #94a3b8;
+    font-size: 13px;
+    margin-top: 4px;
+    margin-bottom: 25px;
+}
+
+.profile-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid #00f7ff;
+    object-fit: cover;
+    margin-bottom: 12px;
+    box-shadow: 0 0 15px rgba(0, 247, 255, 0.3);
+}
+
+.user-name {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.user-email {
+    color: #94a3b8;
+    font-size: 12px;
+    margin-top: 2px;
+}
+
+.btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.35s ease;
+    margin-bottom: 10px;
+    display: block;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #00f7ff, #7c3aed);
+    color: #fff;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
+}
+
+.btn-secondary {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
+}
+
+.no-account-msg {
+    color: #ff4d4d;
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: rgba(255, 77, 77, 0.1);
+    border: 1px solid rgba(255, 77, 77, 0.2);
+    border-radius: 14px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.bottom-text {
+    margin-top: 15px;
+    color: #64748b;
+    font-size: 11px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="sso-box">
+
+    <div class="logo-header">
+        <h2>AsirNet Core</h2>
+        <p>Single Sign-On Authorization</p>
+    </div>
+
+    <div id="loggedInState" class="hidden">
+        <div class="profile-card">
+            <img id="userAvatar" src="https://via.placeholder.com/70" alt="Avatar" class="avatar">
+            <div id="userName" class="user-name">Loading...</div>
+            <div id="userEmail" class="user-email">Loading...</div>
+        </div>
+
+        <button type="button" id="continueBtn" class="btn btn-primary" onclick="continueToApp()">
+            Continue as <span id="btnUserName">User</span>
+        </button>
+
+        <button type="button" class="btn btn-secondary" onclick="backToNexTalk()">
+            Cancel
+        </button>
+    </div>
+
+    <div id="loggedOutState" class="hidden">
+        <div class="no-account-msg">
+            No logged in account found
+        </div>
+
+        <button type="button" class="btn btn-primary" onclick="goToAsirNetLogin()">
+            Login to AsirNet
+        </button>
+
+        <button type="button" class="btn btn-secondary" onclick="backToNexTalk()">
+            Back to NexTalk
+        </button>
+    </div>
+
+    <div class="bottom-text">
+        Connecting securely to NexTalk
+    </div>
+
+</div>
+
+<script>
+// CHANGE THIS: AsirNet Backend API Base URL
+const ASIRNET_BACKEND_URL = "https://users-server-xyvg.onrender.com"; // Production হলে আপনার আসল সার্ভার URL দিবেন
+
+let currentUser = null;
+let token = null;
+
+window.addEventListener("DOMContentLoaded", () => {
+    const rawUserData = localStorage.getItem("user");
+    token = localStorage.getItem("token");
+
+    if (rawUserData) {
+        try {
+            currentUser = JSON.parse(rawUserData);
+        } catch (e) {
+            currentUser = null;
+        }
+    }
+
+    const loggedInState = document.getElementById("loggedInState");
+    const loggedOutState = document.getElementById("loggedOutState");
+
+    if (currentUser && currentUser.email) {
+        const displayName = currentUser.username || "AsirNet User";
+        document.getElementById("userName").innerText = displayName;
+        document.getElementById("userEmail").innerText = currentUser.email;
+        document.getElementById("btnUserName").innerText = displayName;
+        
+        if (currentUser.avatar) {
+            document.getElementById("userAvatar").src = currentUser.avatar;
+        } else {
+            document.getElementById("userAvatar").src = "https://ui-avatars.com/api/?name=" + encodeURIComponent(displayName) + "&background=0D8ABC&color=fff";
+        }
+
+        loggedInState.classList.remove("hidden");
+    } else {
+        loggedOutState.classList.remove("hidden");
+    }
+});
+
+async function continueToApp() {
+    if (!currentUser || !currentUser.email) return;
+
+    const continueBtn = document.getElementById("continueBtn");
+    continueBtn.disabled = true;
+    continueBtn.innerText = "Authorizing...";
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let redirectUrl = urlParams.get("redirect") || "https://7930navid.github.io/.nextalk/sign_in.html";
+
+    try {
+        // Request AsirNet Backend for a valid signed SSO Token
+        const response = await fetch(`${ASIRNET_BACKEND_URL}/auth/sso/nextalk`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": token ? `Bearer ${token}` : ""
+            },
+            body: JSON.stringify({
+                user: currentUser
+            })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.ssoToken) {
+            const separator = redirectUrl.includes("?") ? "&" : "?";
+            window.location.href = redirectUrl + separator + "sso_token=" + encodeURIComponent(data.ssoToken);
+        } else {
+            // Fallback if backend API is not responding
+            fallbackRedirect(redirectUrl);
+        }
+    } catch (err) {
+        console.error("SSO Token Generation Error:", err);
+        fallbackRedirect(redirectUrl);
+    }
+}
+
+function fallbackRedirect(redirectUrl) {
+    // Basic token fallback using stored auth token or fallback payload
+    const ssoPayload = token || btoa(JSON.stringify({ email: currentUser.email, username: currentUser.username, avatar: currentUser.avatar || "" }));
+    const separator = redirectUrl.includes("?") ? "&" : "?";
+    window.location.href = redirectUrl + separator + "sso_token=" + encodeURIComponent(ssoPayload);
+}
+
+function goToAsirNetLogin() {
+    window.location.href = "login.html";
+}
+
+function backToNexTalk() {
+    const urlParams = new URLSearchParams(window.location.search);
+    let redirectUrl = urlParams.get("redirect");
+
+    if (redirectUrl) {
+        window.location.href = redirectUrl;
+    } else {
+        window.history.back();
+    }
+}
+</script>
+
+</body>
+</html>
