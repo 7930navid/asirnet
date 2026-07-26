@@ -4016,7 +4016,8 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
         });
 
     } catch (err) {
-        onalert(err);
+        onalert('Something went wrong');
+        console.error(err)
     }
 }    
 
