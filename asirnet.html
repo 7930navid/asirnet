@@ -2581,17 +2581,17 @@ textarea,input:focus {
     z-index: 999;
     right: 40px;
     bottom: 12%;
-    max-width: 50%;
+    max-width: 60%;
     border-radius: 100px;
     box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
-    opacity: 0.5;
+    opacity: 1;
     padding: 16px 24px;
-    background: transparent;
+    background: white;
     transition: border-radius 0.4s ease, box-shadow 0.4s ease, opacity, background 0.4s ease;
 }
 
 #nextalk-overlay img {
-    background: none;
+    background: white;
     width: 100px; 
     height: auto;
 }
@@ -2613,10 +2613,9 @@ textarea,input:focus {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 70px;
     opacity: 1;
-    animation: round 0.35s eaae;
 }
 #nextalk-overlay section.open {
-    width: 300px; 
+    width: 350px; 
     opacity: 1;
     margin-left: 15px; 
 }
@@ -3968,7 +3967,6 @@ function startChatSession(friendEmail) {
 }
 
 
-
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
     const upperlay = document.getElementById("othProfInfo");
@@ -4020,7 +4018,6 @@ loadConnections(receiver_id, 'showOnes');
         postsDiv.innerHTML = "<p style='color:red;'>Failed to load posts</p>";
     }
 }
-
 
 
 function closealert(id) {
@@ -4913,20 +4910,19 @@ async function loadPosts() {
 
             const div = document.createElement("div");
             div.className = "postshow";
-            
+          
             const safeOthers = encodeURIComponent(JSON.stringify(post.others || []));
-            
             
             div.innerHTML = `
 <table><tr><td valign="top">
-<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;" onclick="showOtherProf('${post.email}');">
 </td>
 
-<td style="width:460px;">
-<h2>
+<td style="width:460px;" >
+<h2 onclick="showOtherProf('${post.email}')">
 <button class="profileBtn"
  data-email="${emailSafe}"
- style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
+style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
 <div style="font-size:40px;text-align:left;">${post.username}</div>
 </button>
 </h2>
@@ -4952,7 +4948,7 @@ async function loadPosts() {
   </button>
 </td>
 
-<td valign="top">
+<td valign="top" onclick="">
 <button
  style="background:none;border:none; margin-top: 30px;"
  data-text="${copyText}">
@@ -5154,7 +5150,7 @@ async function reactors(postId) {
     const listHTML = data.likes
       .map(l => {
         return `
-          <table class="likeAppear">
+          <table class="likeAppear" onclick="showOtherProf('${l.email}')">
             <tr>
               <td>
                 <div><img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></div>
@@ -5258,7 +5254,7 @@ async function reactorsOnStory(postId) {
   margin-bottom: 12px; 
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
   transition: transform 0.2s ease;
-">
+" onclick="showOtherProf('${l.email}')">
   <img src="${l.avatar}" style="
     width: 60px; 
     height: 60px; 
@@ -5367,7 +5363,7 @@ async function comText(postId) {
             <div style="position: relative; margin-bottom: 30px;">
               <table>
                 <tr>
-                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></td>
+                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green" onclick="showOtherProf('${c.email}')"></td>
                   <td>
                     <div style="
                         background: rgba(0,0,0,0.1);   
@@ -5378,7 +5374,7 @@ async function comText(postId) {
                         border-left: 5px solid gray;">
                       <table>
                         <tr>
-                          <td><h3 style="color: green; margin: 0; width: 470px;">${c.username}</h3></td>
+                          <td><h3 style="color: green; margin: 0; width: 470px;" onclick="showOtherProf('${c.email}')">${c.username}</h3></td>
                           <td>
                             ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
                           </td>
@@ -5466,7 +5462,7 @@ async function storyComPort(postId) {
             <div style="position: relative; margin-bottom: 30px;">
               <table>
                 <tr>
-                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green"></td>
+                  <td valign="top"><img src="${c.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid white; box-shadow: 2px 0 0 green" onclick="showOtherProf('${c.email}')"></td>
                   <td>
                     <div style="
                         background: rgba(0,0,0,0.1);   
@@ -5477,7 +5473,7 @@ async function storyComPort(postId) {
                         border-left: 5px solid gray;">
                       <table>
                         <tr>
-                          <td><h3 style="color: green; margin: 0; width: 470px;">${c.username}</h3></td>
+                          <td><h3 style="color: green; margin: 0; width: 470px;" onclick="showOtherProf('${c.email}')">${c.username}</h3></td>
                           <td>
                             ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
                           </td>
@@ -5760,7 +5756,10 @@ async function loadProfilePosts(email, place) {
         }
 
         const contentDiv = document.getElementById(place);
-        if (!contentDiv) return;
+if (!contentDiv) {
+    alert(`Error: #${place} element is missing in HTML!`);
+    return;
+}
 
         contentDiv.innerHTML = "";
 
@@ -5770,6 +5769,7 @@ async function loadProfilePosts(email, place) {
         }
 
         data.forEach(post => {
+
             const safeText = escapeHTML(post.post?.text || "");
             const htmlText = safeText.replace(/\n/g, "<br>");
 
@@ -5782,11 +5782,11 @@ async function loadProfilePosts(email, place) {
 
             div.innerHTML = `
 <table><tr><td valign="top">
-<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;">
+<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;" onclick="showOtherProf('${post.email}')">
 </td>
 
 <td style="width:460px;">
-<h2>
+<h2 onclick="showOtherProf('${post.email}')">
 <button class="profileBtn"
  data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
@@ -6025,7 +6025,7 @@ function editPost(id) {
                 <td>
                     <button onclick="savePost('${id}')" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
                     <br>
-                    <button onclick="loadProfilePosts()" style="background:white;width:100px;height:50px;border:1px solid red;border-radius:10px;color:red;">Cancel</button>
+                    <button onclick="" style="background:white;width:100px;height:50px;border:1px solid red;border-radius:10px;color:red;">Cancel</button>
                 </td>
             </tr>
         </table>
@@ -6048,7 +6048,6 @@ console.log(JSON.stringify(payload));
         });
         const data = await res.json();
         onalert(data.message);
-        loadProfilePosts();
     } catch(err) {
         console.error("Error saving post:", err);
         onalert("Failed to save post.");
@@ -6065,7 +6064,6 @@ async function DeletePost(id){
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
         const data = await res.json();
         onalert(data.message);
-        loadProfilePosts();
     } catch(err) {
         console.error("Error deleting post:", err);
         onalert("Failed to delete post.");
