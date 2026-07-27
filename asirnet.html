@@ -2560,6 +2560,54 @@ textarea,input:focus {
       }
 }
 
+#nextalk-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 999;
+    right: 40px;
+    bottom: 12%;
+    max-width: 50%;
+    border-radius: 100px;
+    box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
+    opacity: 0.5;
+    padding: 16px 24px;
+    background: transparent;
+    transition: border-radius 0.4s ease, box-shadow 0.4s ease, opacity, background 0.4s ease;
+}
+
+#nextalk-overlay img {
+    background: none;
+    width: 100px; 
+    height: auto;
+}
+
+#nextalk-overlay section {
+    font-size: 30px; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.5s ease, opacity 0.4s ease, margin-left 0.4s ease;
+}
+
+#nextalk-overlay.open {
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 70px;
+    opacity: 1;
+    animation: round 0.35s eaae;
+}
+#nextalk-overlay section.open {
+    width: 300px; 
+    opacity: 1;
+    margin-left: 15px; 
+}
+
 
 
 
@@ -2582,7 +2630,13 @@ textarea,input:focus {
 
 
 <div id="bio"></div>
-
+<div id="top-sentinel"></div>
+<a href="https://7930navid.github.io/nextalk/">
+    <div id="nextalk-overlay">
+        <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" alt="" width="80">
+        <section> Chat with NEXTALK </section>
+    </div>
+</a>
 
 
 <div id="onDisImg">
@@ -3115,6 +3169,29 @@ at
 
 
 <script>
+        const topSentinel = document.getElementById('top-sentinel');
+        const overlay = document.getElementById('nextalk-overlay');
+        const overlaySection = overlay.querySelector('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    overlay.classList.add('open');
+                    overlaySection.classList.add('open');
+                } else {
+                    overlay.classList.remove('open');
+                    overlaySection.classList.remove('open');
+                }
+            });
+        }, {
+            threshold: 1.0 
+        });
+
+        observer.observe(topSentinel);
+    
+    
+    
+    
     
  const btnMM = document.getElementById('bbcv');
  btnMM.addEventListener('click', (e) => {
@@ -3998,6 +4075,7 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
                     });
 
                 const data = await res.json();
+console.log(JSON.stringify(res.json));
 
                 return {
                     ...f,
@@ -4006,6 +4084,7 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
 
             })
         );
+
 
 
         display.innerHTML = "";
