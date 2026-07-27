@@ -575,6 +575,17 @@ textarea,input:focus {
     width: 93%;
     height: 70%;
     margin-top: 40px;
+    animation: widthEnrich 0.2s ease-in
+}
+@keyframes widthEnrich {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 #showheader h2 {
     color: green;
@@ -589,6 +600,7 @@ textarea,input:focus {
 #searchresult {
     padding: 20px;
 }
+
 #close {
     background: red;
     padding: 10px;
@@ -2006,13 +2018,14 @@ textarea,input:focus {
     align-items: center;
 }
 #connectBTN button{
-    width: 600px;
-    height: 100px; 
+    padding: 17px 39px; 
     border: none;
-    border-radius: 30px; 
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-     font-size: 32px;
-     color: white;
+    border-radius: 8px; 
+    background: green;
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    margin: 8px;
 } 
 
 #connectionList {
@@ -2656,8 +2669,8 @@ textarea,input:focus {
         <button onclick="closeSearchPad();" id="close" class="profile-btn">×</button>
     </div>
    <table><tr><td>
-    <input onkeyup="pad()" type="text" id="search" style="width: 600px;" placeholder="Search here any ID or email.."/></td><td>
-    <button onclick="pad();" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="25"></button>
+    <input onkeyup="pad('n')" type="text" id="search" style="width: 600px;" placeholder="Search here any ID or email.."/></td><td>
+    <button onclick="pad('y');" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="25"></button>
     </td></tr></table>
 
 
@@ -3062,7 +3075,9 @@ at
     <h3 id="otherProfdiv"></h3></section>
     </div>
     <div id="connectBTN">
-    <button onclick="connect()">Add Connection</button></div>
+    <button onclick="connect()" id="connectionBtn">Add Connection</button>
+    <button onclick="messageWithNexttalk()" id="messageSending">Send Message</button>
+    </div>
     <h1>Connected ones</h1><hr>
     <div id="showOnes"></div><hr>
     <div id="otherPosts"></div>
@@ -3859,7 +3874,7 @@ e.stopPropagation();
 let receiver_id ="";
 
 async function connect() {
-const el = document.querySelector("#connectBTN button");
+const el = document.querySelector("#connectionBtn");
 
 const user = localStorage.getItem('user');
 const u = JSON.parse(user);
@@ -3907,6 +3922,52 @@ const sender_id = u.email;
     }
 
 }
+
+
+async function messageWithNexttalk() {
+  if (!receiver_id) {
+    alert("Receiver ID parameter missing!");
+    return;
+  }
+
+  const backendUrl = `https://nextalk-user-server.onrender.com/get/api/verify-receiver/${receiver_id}`;
+
+  try {
+    const response = await fetch(backendUrl, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.text();
+    console.log(data);
+
+    if (response.ok && data == 'yes') {
+      startChatSession(receiver_id);
+    } else if (response.ok && data == 'no') {
+    onalert('Cannot send messages');
+    } else {
+      const errorMessage = data.message || "User does not exist in our database.";
+      console.log(`Cannot send message due to: ${errorMessage}`);
+    onalert('something went wrong');
+    }
+
+  } catch (error) {
+    console.error("Network or server error:", error);
+    alert("Cannot send message due to a network connection issue. Please try again!");
+  }
+}
+
+
+
+function startChatSession(friendEmail) {
+            if (!friendEmail) return;
+            window.location.href = `https://7930navid.github.io/nextalk/nextalk-chat.html?friend=${encodeURIComponent(friendEmail)}`;
+  
+}
+
+
 
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
@@ -4466,11 +4527,11 @@ function closePostBG() {
  m.style.bottom = '-300px';    
 }
 
-async function pad() {
+async function pad(v) {
 
     const search = document.getElementById('search').value.trim();
 
-    if (!search) {
+    if (!search && (v === 'y')) {
 document.getElementById("showBox").style.display = 'flex';
 
         document.getElementById("searchresult").innerHTML = `
@@ -4550,7 +4611,7 @@ function alertSome(){
 document.getElementById("searchresult").innerHTML = `<div style="color: red; font-size: 20px; font-weight: bold;" id="searchalert"></div>`;
    document.getElementById("searchalert").innerText = "Please check your network connection!"; 
   setTimeout(() => {
-        document.getElementById("show").style.display = 'none';              
+        document.getElementById("showBox").style.display = 'none';              
         }, 2000) 
 }
 
@@ -6531,13 +6592,13 @@ const isTurned = localStorage.getItem('dark');
 const isEnable = localStorage.getItem('notify');
 
 const endpoints = [
-"https://users-server-xyvg.onrender.com/get/users",
+    "https://users-server-xyvg.onrender.com/get/users",
     "https://posts-server-kmha.onrender.com/get/posts",
     "https://interacts-server-xpbo.onrender.com/get/interact",
     "https://story-server-9d2k.onrender.com/get/story",
     "https://nextalk-user-server.onrender.com/get/nextalk-users-server",
 "https://connection-server-9bzk.onrender.com/get/connection",
-"https://nextalk-9yw9.onrender.com/get/nextalk"    
+"https://nextalk-9yw9.onrender.com/get/nextalk"
 ];
 
 
