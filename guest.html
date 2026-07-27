@@ -2002,13 +2002,14 @@ textarea,input:focus {
     align-items: center;
 }
 #connectBTN button{
-    width: 600px;
-    height: 100px; 
+    padding: 17px 39px; 
     border: none;
-    border-radius: 30px; 
-    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
-     font-size: 32px;
-     color: white;
+    border-radius: 8px; 
+    background: green;
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    margin: 8px;
 } 
 
 #connectionList {
@@ -2957,7 +2958,8 @@ textarea,input:focus {
     <h3 id="otherProfdiv"></h3></section>
     </div>
     <div id="connectBTN">
-    <button onclick="guestWarn()">Add Connection</button></div>
+    <button onclick="guestWarn()" id="connectionBtn">Add Connection</button>
+    <button onclick="guestWarn()" id="messageSending">Send Message</button>
     <h1>Connected ones</h1><hr>
     <div id="showOnes"></div><hr>
     <div id="otherPosts"></div>
@@ -5434,10 +5436,7 @@ const endpoints = [
     "https://posts-server-kmha.onrender.com/get/posts",
     "https://interacts-server-xpbo.onrender.com/get/interact",
     "https://story-server-9d2k.onrender.com/get/story",
-    "https://nextalk-user-server.onrender.com/get/nextalk-users-server",
-"https://connection-server-9bzk.onrender.com/get/connection",
-"https://nextalk-9yw9.onrender.com/get/nextalk"
-
+    "https://connection-server-9bzk.onrender.com/get/connection"
 ];
 
 
