@@ -256,7 +256,7 @@ async function bootSequence() {
         }, 1200);
 
     } catch (err) {
-        handleFailure("Server Connection Error ❌");
+        handleFailure("Network error ❌");
         console.error("Boot Critical Error:", err);
     }
 }
