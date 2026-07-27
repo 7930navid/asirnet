@@ -2716,6 +2716,54 @@ textarea,input:focus {
     to { transform: rotate(360deg); }
 }
 
+#nextalk-overlay {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 999;
+    right: 40px;
+    bottom: 12%;
+    max-width: 50%;
+    border-radius: 100px;
+    box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
+    opacity: 0.5;
+    padding: 16px 24px;
+    background: transparent;
+    transition: border-radius 0.4s ease, box-shadow 0.4s ease, opacity, background 0.4s ease;
+}
+
+#nextalk-overlay img {
+    background: none;
+    width: 100px; 
+    height: auto;
+}
+
+#nextalk-overlay section {
+    font-size: 30px; 
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    width: 0;
+    opacity: 0;
+    overflow: hidden;
+    white-space: nowrap;
+    transition: width 0.5s ease, opacity 0.4s ease, margin-left 0.4s ease;
+}
+
+#nextalk-overlay.open {
+    background: white;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 70px;
+    opacity: 1;
+    animation: round 0.35s eaae;
+}
+#nextalk-overlay section.open {
+    width: 300px; 
+    opacity: 1;
+    margin-left: 15px; 
+}
+
 
 
 
@@ -2739,8 +2787,15 @@ textarea,input:focus {
 
 
 
-<div id="bio">
-</div>
+<div id="bio"></div>
+<div id="top-sentinel"></div>
+<a href="https://7930navid.github.io/nextalk/">
+    <div id="nextalk-overlay">
+        <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" alt="" width="80">
+        <section> Chat with NEXTALK </section>
+    </div>
+</a>
+
 
 
 
@@ -3017,6 +3072,29 @@ So create an account or log in to AsirNet to enjoy it.</div>
 
 <script>
     
+            const topSentinel = document.getElementById('top-sentinel');
+        const overlay = document.getElementById('nextalk-overlay');
+        const overlaySection = overlay.querySelector('section');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    overlay.classList.add('open');
+                    overlaySection.classList.add('open');
+                } else {
+                    overlay.classList.remove('open');
+                    overlaySection.classList.remove('open');
+                }
+            });
+        }, {
+            threshold: 1.0 
+        });
+
+        observer.observe(topSentinel);
+    
+    
+
+    
  const btnMM = document.getElementById('bbcv');
  btnMM.addEventListener('click', (e) => {
      fun();
@@ -3027,7 +3105,7 @@ function offerGuest() {
 }
 function cenMess() {
  document.getElementById('offerinf').classList.remove('show');  
- setTimeout(() => {offerGuest()}, 10000);
+ setTimeout(() => {offerGuest()}, 30000);
 }
 offerGuest();
  
@@ -4420,33 +4498,86 @@ cap.innerText = caption;
 
 
 async function reactorsOnStory(postId) {
-
   try {
     const res = await fetch(
       `https://interacts-server-xpbo.onrender.com/likes/${postId}`
     );
-    const data = await res.json();
 
+    if (!res.ok) {
+      throw new Error(`HTTP error! Status: ${res.status}`);
+    }
+
+    const data = await res.json();
     const container = document.getElementById(`appearReactors${postId}`);
+
+    if (!container) return; // container না থাকলে সেফ এক্সিট
 
     if (!data.likes || data.likes.length === 0) {
       container.innerHTML = `<p>No likes yet 😐</p>`;
       return;
     }
-   container.innerHTML ="";
- let typeOfReact = "";
- if(data.likes == '👍') {
-     typeOfReact = '👍 — liked'  
- }else {
-    typeOfReact = '❤️ — loved' 
- }
 
-    // 🔹 Map likes to HTML
+        let typeOfReact = "";
+    // 🔹 Map likes to HTML (সরাসরি map-এর ভেতরে reaction লজিক বসানো হয়েছে)
     const listHTML = data.likes
       .map(l => {
+    console.log(l.reaction);
+        if (l.reaction === '👍') {
+          typeOfReact = '👍 — liked';
+        } else if (l.reaction === '♥️') {
+          typeOfReact = '❤️ — loved';
+        } else {
+          typeOfReact = '❓';
+        }
+
         return `
-         <p style="font-size: 30px; display: flex; align-items: center;"> <img src="${l.avatar}" style="width: 50px; height: 50px; border-radius: 90px; border: 2px solid  green; margin-right: 15px;">
-   <span style="font-weight: bold; margin-right: 10px;">${l.username}</span><span style'color: blue; '> has </span><span> ${typeOfReact} your story.</span></p>
+<div style="
+  display: flex;
+  background: rgba(255, 255, 255, 0.05); 
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1); 
+  border-radius: 16px; 
+  padding: 12px 16px; 
+  margin-bottom: 12px; 
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease;
+">
+  <img src="${l.avatar}" style="
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    object-fit: cover; 
+    border: 2px solid #22c55e; 
+    margin-right: 14px;
+    flex-shrink: 0;
+  ">
+
+
+  <div style="
+    font-size: 24px; 
+    line-height: 1.4; 
+    color: #e2e8f0; 
+    display: flex; 
+    align-items: center; 
+    flex-wrap: wrap; 
+    gap: 4px;
+    display: flex;
+  ">
+    <strong style="color: black; font-weight: 600;">${l.username}</strong>
+    <span style="color: #94a3b8;">has</span>
+    <span style="
+      background: rgba(110, 231, 183, 0.12); 
+      color: #6ee7b7; 
+      padding: 2px 8px; 
+      border-radius: 6px; 
+      font-weight: 500; 
+      font-size: 22px;
+    ">
+      ${typeOfReact}
+    </span>
+    <span style="color: #94a3b8;">your story.</span>
+  </div>
+</div>
         `;
       })
       .join("");
@@ -4454,12 +4585,17 @@ async function reactorsOnStory(postId) {
     container.innerHTML = listHTML;
 
   } catch (err) {
-   console.error("Reactors fetch error:", err);
-document.getElementById(`appearReactors${postId}`).innerHTML =`<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
-<p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
-  <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
-  <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
+    console.error("Reactors fetch error:", err);
+    
+    const container = document.getElementById(`appearReactors${postId}`);
+    if (container) {
+      container.innerHTML = `
+        <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+          <p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
+          <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
+          <button onclick="location.reload()" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange; cursor: pointer;">Reload Page</button>
         </div>`;
+    }
   }
 }
 
