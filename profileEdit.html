@@ -428,7 +428,7 @@ LOADER
 
 <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg">
 
-<a href="asirnet.html">
+<a href="/AsirNet.html">
 <button>×</button>
 </a>
 
@@ -728,103 +728,70 @@ function hideLoader(){
 AUTH CHECK
 ========================= */
 
-async function authenticationCheck(){
+async function authenticationCheck() {
+    const passwordInput = document.getElementById("checkPassword");
+    const password = passwordInput.value;
+    const alertBox = document.getElementById("alert");
 
-    const password =
-    document
-    .getElementById(
-        "checkPassword"
-    )
-    .value;
+    // পূর্বের কোনো স্টাইল রিসেট করা
+    alertBox.style.color = ""; 
 
-    const alertBox =
-    document
-    .getElementById(
-        "alert"
-    );
-
-    if(!user || !user.email){
+    if (!user || !user.email) {
+        alertBox.style.color = "red";
         alertBox.innerHTML = "❌ User session not found";
+        return;
+    }
+
+    if (!password) {
+        alertBox.style.color = "red";
+        alertBox.innerHTML = "❌ Please enter your password";
         return;
     }
 
     showLoader("Verifying...");
 
-    try{
+    try {
+        const response = await fetch("https://users-server-xyvg.onrender.com/signin", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                email: user.email,
+                password: password
+            })
+        });
 
-        const response =
-        await fetch(
-            "https://users-server-xyvg.onrender.com/signin",
-            {
-                method:"POST",
-
-                headers:{
-                    "Content-Type":
-                    "application/json"
-                },
-
-                body:JSON.stringify({
-
-                    email:user.email,
-                    password
-
-                })
-
-            }
-        );
-
-        const data =
-        await response.json();
+        const data = await response.json();
 
         hideLoader();
 
-        if(!response.ok){
-
-            alertBox.innerHTML =
-            "❌ Wrong Password";
-
+        if (!response.ok) {
+            alertBox.style.color = "red";
+            alertBox.innerHTML = "❌ Wrong Password";
             return;
-
         }
 
-        localStorage.setItem(
-            "token",
-            data.token
-        );
+        // টোকেন এবং ইউজার ডাটা লোকাল স্টোরেজে সেভ করা
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("user", JSON.stringify(data.user));
 
-        localStorage.setItem(
-            "user",
-            JSON.stringify(data.user)
-        );
+        alertBox.style.color = "green";
+        alertBox.innerHTML = "✅ Verified";
 
-        alertBox.style.color =
-        "green";
+        // ইনপুট ফিল্ড খালি করে দেওয়া নিরাপত্তার জন্য ভালো
+        passwordInput.value = "";
 
-        alertBox.innerHTML =
-        "✅ Verified";
+        setTimeout(() => {
+            document.getElementById("modal").style.display = "none";
+            // চাইলে এখানে পেজ রিলোড বা রিডাইরেক্ট করতে পারেন
+        }, 1000);
 
-        setTimeout(()=>{
-
-            document
-            .getElementById(
-                "modal"
-            )
-            .style.display =
-            "none";
-
-        },1000);
-
-    }
-
-    catch(err){
-
+    } catch (err) {
         hideLoader();
-
-        alertBox.innerHTML =
-        "❌ Server Error";
-
+        alertBox.style.color = "red";
+        alertBox.innerHTML = "❌ Server Error. Please try again later.";
     }
-
 }
 
 /* =========================
