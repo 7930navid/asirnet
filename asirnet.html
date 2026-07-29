@@ -62,10 +62,14 @@
     left: 50%;
     transform: translateX(-50%);
     box-shadow: 0 0 8px var(--primary-blue);
-    animation: spin 2s linear infinite;
+    animation: dropdrop 4s ease infinite;
     transform-origin: center 80px;
 }
-
+@keyframes dropdrop {
+    0%{transform:translateX(30px)}
+    50%{transform:translateX(-30px)}
+    100%{transform:translateX(30px)}
+}
 .logo-box {
     width: 110px;
     height: 110px;
@@ -776,9 +780,8 @@ textarea,input:focus {
     font-size: 25px;
 
 }
-#footerBtn button:focus {
-    background: rgba(0,100,255,0.1);
-
+#footerBtn button.inactive {
+    border-top: 2px solid green;
 }
 #specialBtn {
     width: 110px;
@@ -2652,7 +2655,7 @@ textarea,input:focus {
     right: 40px;
     bottom: 12%;
     max-width: 60%;
-    border-radius: 100px;
+    border-radius: 50%;
     box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
     opacity: 1;
     padding: 16px 24px;
@@ -2664,6 +2667,7 @@ textarea,input:focus {
     background: white;
     width: 100px; 
     height: auto;
+    border-radius: 50%;
 }
 
 #nextalk-overlay section {
@@ -2681,7 +2685,7 @@ textarea,input:focus {
 #nextalk-overlay.open {
     background: white;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 70px;
+    border-radius: 35px;
     opacity: 1;
 }
 #nextalk-overlay section.open {
@@ -3157,7 +3161,7 @@ at
         <table id="footerBtn">
             <tr>
 <td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40"></button></td>
-<td><button onclick="profile();loadProfile();" class="profile-btn"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40"></button></td>
+<td><button onclick="profile(); loadProfile(); inactive(this)" class="profile-btn"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40"></button></td>
 <td><button onclick="postMenu(event)" style="    
     width: 90px;
     height: 90px;
@@ -3333,15 +3337,17 @@ at
         observer.observe(topSentinel);
     
     
-    
-    
-    
  const btnMM = document.getElementById('bbcv');
  btnMM.addEventListener('click', (e) => {
      fun();
  });
-
-
+ 
+/* function inactive(it) {
+ let el = document.querySelector(it);
+ el.classList.add('inactive');   
+}
+ */
+ 
 function fun() {
 document.getElementById("MainMenuAside").classList.toggle('show');    
 document.getElementById("MainMenuContent").classList.toggle('show');    
@@ -3801,31 +3807,6 @@ function showStoryModal(story) {
     border:5px solid white;
   `;
 
-// Time Shortener Function
-const getShortTime = (dateString) => {
-  if (!dateString) return "";
-
-  const date = new Date(dateString);
-  const now = new Date();
-  const diffInSeconds = Math.floor((now - date) / 1000);
-
-  if (diffInSeconds < 60) return "Just now";
-  
-  const minutes = Math.floor(diffInSeconds / 60);
-  if (minutes < 60) return `${minutes}m`;
-  
-  const hours = Math.floor(minutes / 60);
-  if (hours < 24) return `${hours}h`;
-  
-  const days = Math.floor(hours / 24);
-  if (days < 7) return `${days}d`;
-  
-  const weeks = Math.floor(days / 7);
-  if (weeks < 52) return `${weeks}w`;
-  
-  const years = Math.floor(weeks / 52);
-  return `${years}y`;
-};
 
 // Application
 const username = document.createElement("span");
@@ -4020,6 +4001,33 @@ reactBtn.addEventListener('click', () => {
 });
 
 }
+
+// Time Shortener Function
+const getShortTime = (dateString) => {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  if (diffInSeconds < 60) return "Just now";
+  
+  const minutes = Math.floor(diffInSeconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h`;
+  
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d`;
+  
+  const weeks = Math.floor(days / 7);
+  if (weeks < 52) return `${weeks}w`;
+  
+  const years = Math.floor(weeks / 52);
+  return `${years}y`;
+};
+
 
 function prepearForCloseR(id) {
  BackManager.register(closeReactMmodal, id);   
@@ -5127,6 +5135,7 @@ async function loadPosts() {
             div.className = "postshow";
           
             const safeOthers = encodeURIComponent(JSON.stringify(post.others || []));
+           const formattedTime = getShortTime(post.created_at);
             
             div.innerHTML = `
 <table><tr><td valign="top">
@@ -5138,7 +5147,7 @@ async function loadPosts() {
 <button class="profileBtn"
  data-email="${emailSafe}"
 style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:40px;text-align:left;">${post.username}</div>
+<div style="font-size:40px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
 </button>
 </h2>
 
@@ -5996,6 +6005,9 @@ if (!contentDiv) {
             const div = document.createElement("div");
             div.className = "postshow";
 
+            const formattedTime = getShortTime(post.created_at);
+
+
             div.innerHTML = `
 <table><tr><td valign="top">
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;" onclick="showOtherProf('${post.email}')">
@@ -6006,7 +6018,7 @@ if (!contentDiv) {
 <button class="profileBtn"
  data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:40px;text-align:left;">${post.username}</div>
+<div style="font-size:40px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
 </button>
 </h2>
 
