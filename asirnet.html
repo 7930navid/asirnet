@@ -4949,10 +4949,9 @@ function collectPostData() {
     const imagePost = document.getElementById("Imgword");
     let el ="";
     el = plainText;
-   if(!el) {
+    if (!plainText || !plainText.value.trim()) {
     el = imagePost;
-   }
-
+    }
     const cs = window.getComputedStyle(el);
 
     return {
