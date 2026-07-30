@@ -4250,6 +4250,8 @@ function remove() {
     const picEl = document.getElementById("othProfPic");
     const postsDiv = document.getElementById("otherPosts");
     const friendList = document.getElementById("showOnes");
+    const resetbtn = 
+document.getElementById("connectionBtn");
 
     nameEl.innerText ="";
     headerName.innerText ="";
@@ -4259,6 +4261,8 @@ function remove() {
     friendList.innerHTML ="";
     receiver_id ="";
     overlay.classList.remove("show");
+    resetbtn.innerText = "Add Connection";
+    resetbtn.disabled = false;
 }
 
 
