@@ -3521,7 +3521,7 @@ at
     <div class="tab-btns"  id="clipTab">ClipNovas</div>
   </div>
 
-    <div id="otherPosts"></div>
+    <div id="otherPosts" style="display:flex; flex-wrap:wrap;"></div>
 </div>    
 
 
@@ -4555,7 +4555,9 @@ async function showOtherProf(email) {
     });
     clipTab.addEventListener('click', () => {
       tabSelectOth(clipTab);
-      clipNovas(email, 'otherPosts')    
+      postsDiv.innerHTML ="";
+      clipNovas(email, 'otherPosts');
+         
     });
 
     postsDiv.innerHTML = "<p>Loading posts...</p>";
