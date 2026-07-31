@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AsirNet Reels Feed</title>
+    <title>Professional Reels Feed</title>
     <style>
         * {
             margin: 0;
@@ -592,6 +592,8 @@
                 
                 // Encode tagged array safely to pass into inline function
                const encodedTags = hasTags ? encodeURIComponent(JSON.stringify(reel.tags_people)) : '';
+               
+               const formattedTime = getShortTime(reel.created_at);
 
                 card.innerHTML = `
                     <video src="${reel.vid}" loop playsinline preload="metadata" id="video-${postId}"></video>
@@ -606,7 +608,7 @@
                             <img src="${reel.avatar || 'https://via.placeholder.com/40'}" alt="Avatar" class="user-avatar">
                             <div>
                                 <div class="username-container">
-                                    <span class="username">${reel.username || 'Anonymous'}</span>
+                                    <span class="username">${reel.username || 'Anonymous'}</span><span style="color:white; font-size:18px; text-shadow: 0 0 4px black; font-weight: bolf"> • ${formattedTime}</span>
                                     ${hasTags ? `<span class="tag-trigger" onclick="openTagDrawer('${encodedTags}')">with other ones</span>` : ''}
                                 </div>
                                 <div class="location">${reel.location || ''}</div>
@@ -1065,6 +1067,34 @@
                 navigator.clipboard.writeText(window.location.href);
             }
         }
+        
+        
+ // Time Shortener Function
+const getShortTime = (dateString) => {
+  if (!dateString) return "";
+
+  const date = new Date(dateString);
+  const now = new Date();
+  const diffInSeconds = Math.floor((now - date) / 1000);
+
+  if (diffInSeconds < 60) return "Just now";
+  
+  const minutes = Math.floor(diffInSeconds / 60);
+  if (minutes < 60) return `${minutes}m`;
+  
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours}h`;
+  
+  const days = Math.floor(hours / 24);
+  if (days < 7) return `${days}d`;
+  
+  const weeks = Math.floor(days / 7);
+  if (weeks < 52) return `${weeks}w`;
+  
+  const years = Math.floor(weeks / 52);
+  return `${years}y`;
+};
+
         
 const endpoints = [
     "https://users-server-xyvg.onrender.com/get/users",
