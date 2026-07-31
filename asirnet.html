@@ -2793,11 +2793,11 @@ textarea,input:focus {
     font-size: 24px;
 }
 
-.clips-overlay {
+#showClip {
     padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
+    display: flex;
     gap: 8px;
+    flex-wrap: wrap;
 }
 .clipUpload {
     height: 400px;
@@ -2812,7 +2812,7 @@ textarea,input:focus {
 }
 .clips {
     height: 400px;
-    width: 250px;
+    width: 200px;
     border-radius: 20px;
     box-shadow: 5px 4px 10px lightgray;
     border: 1px solid black;
@@ -3461,7 +3461,7 @@ at
         <table id="footerBtn">
             <tr>
 <td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40"></button></td>
-<td><button onclick="reels()" class="profile-btn"><img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0"></td>
+<td><button onclick="location.href='reels.html'" class="profile-btn"><img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0"></td>
 <td><button onclick="postMenu(event)" style="    
     width: 90px;
     height: 90px;
@@ -4673,29 +4673,22 @@ loadConnections(u.email, 'connectionList');
 function home() {location.reload()}
 
 function ownerClips(email, avatar) {
- const allChange = document.getElementById('ownerPosts');
- allChange.innerHTML = `
- 
- <div class="clips-overlay">
-  <div class="clipUpload" id="clipUpload" onclick="helperForLoad()">
-     <input type="file" accept="video/*" onchange="loadReels(event)" id="takeClip" hidden>
-      <div class="labal">
-   <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="60" border="0">   
-      <div class="labal-text">Create ClipNova</div>
-      </div>
-  </div>
-  
-  <div id="showClips"></div>
-  
- </div> 
-     
-     `;
- 
-const el = document.getElementById('clipUpload');
-el.style.backgroundImage = `url('${avatar}')`;
+    const allChange = document.getElementById('ownerPosts');
+    
+    allChange.innerHTML = `
+        <div id="showClip"></div> 
+    `;
+    
+     document.getElementById('showClip').innerHTML = reelUploadBtn;
+   
+    const el = document.getElementById('clipUpload');
+    if (el) {
+        el.style.backgroundImage = `url('${avatar}')`;
+    }
 
-clipNovas(email, 'showClips');    
+    clipNovas(email, 'showClip');    
 }
+
 
 function helperForLoad() {
 document.getElementById('takeClip').click();
@@ -4727,6 +4720,16 @@ function loadReels(e) {
   setTimeout(()=>video.play().catch(()=>{}),1000);
    BackManager.register(closeReelPage);
 }
+
+const reelUploadBtn = ` 
+     <div class="clipUpload" id="clipUpload" onclick="helperForLoad()">
+     <input type="file" accept="video/*" onchange="loadReels(event)" id="takeClip" hidden>
+      <div class="labal">
+   <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="60" border="0">   
+      <div class="labal-text">Create ClipNova</div>
+      </div>
+  </div>
+`;
 
 function closeReelPage() {
   $('clip-take-overlay').classList.remove('open');
@@ -4813,52 +4816,56 @@ async function uploadClip() {
 }
 
 async function clipNovas(email, place) {
-        let pl = document.getElementById(`${place}`);
-        pl.innerHTML = `
-      <div class="loaderClip"><div></div></div>  
-        `;
+    let pl = document.getElementById(place);
+    if (!pl) return; // এলিমেন্ট না থাকলে থেমে যাবে
+
+    // লোডার যোগ করা
+    let loaderDiv = document.createElement('div');
+    loaderDiv.className = 'loaderClip';
+    loaderDiv.innerHTML = `<div></div>`;
+    pl.appendChild(loaderDiv);
 
     try {
-        let loaders = document.querySelectorAll('.loaderClip'); 
-        loaders.forEach(l => {
-            l.style.display = 'block';    
-        });
-
         const response = await fetch(`https://reels-server-40uv.onrender.com/api/reels/user?email=${encodeURIComponent(email)}`);
-        
         const data = await response.json();
+
+        // সফলভাবে ডাটা আসলে লোডার রিমুভ করে দেওয়া
+        loaderDiv.remove();
 
         if (response.ok) {
             console.log("User Reels:", data);
           
-        data.forEach(data => {
-            
-        const showClip = document.createElement('div');
-        showClip.innerHTML = `
-        <button style="border: none; background: none; animation: divAppear 0.35s ease-in forwards;" id="openBtn${data.id}">
-     <video src="${data.vid}" id="reel${data.id}" class="clips" onclick="window.location.href='reels.html?show=${data.id}'"></video>
-     </button>
-        `;
-        pl.appendChild(showClip);
-        let clip = document.getElementById(`reel${data.id}`);
-        setTimeout(() => {clip.pause()}, 100);
-                });
+            data.forEach(item => { // 변수 이름 conflict এড়াতে item দেওয়া হলো
+                const showClip = document.createElement('div');
+                showClip.innerHTML = `
+                <button style="border: none; background: none; animation: divAppear 0.35s ease-in forwards;" id="openBtn${item.id}">
+                    <video src="${item.vid}" id="reel${item.id}" class="clips" onclick="window.location.href='reels.html?show=${item.id}'"></video>
+                </button>
+                `;
+                pl.appendChild(showClip);
+                
+                let clip = document.getElementById(`reel${item.id}`);
+                if (clip) {
+                    setTimeout(() => { clip.pause(); }, 100);
+                }
+            });
 
         } else {
             console.error("Error fetching reels:", data.error);
-            onalert(data.error || "Failed to load reels");
+            alert(data.error || "Failed to load reels"); // onalert এর বদলে standard alert ব্যবহার করা ভালো
         }
 
     } catch (err) {
         console.error("Network or Server error:", err);
-        onalert("Please check your network connection");
-    } finally {
-        let loaders = document.querySelectorAll('.loaderClip'); 
-        loaders.forEach(l => {
-            l.style.display = 'none';    
-        });
+        loaderDiv.remove();
+        
+        // শুধু নেটওয়ার্ক বা সার্ভার এরর হলেই এই মেসেজ দেখাবে
+        let errMessage = document.createElement('div');
+        errMessage.innerText = 'Cannot load reel due to internet connection';
+        pl.appendChild(errMessage);
     }
 }
+
 
 function tabSelect(btnEl) {
     const allTabs = document.querySelectorAll('.tab-items');
@@ -4881,9 +4888,7 @@ async function loadConnections(email, place) {
 
     try {
 
-        const res = await fetch(
-            `https://connection-server-9bzk.onrender.com/friends/${encodeURIComponent(email)}`
-        );
+        const res = await fetch(`https://connection-server-9bzk.onrender.com/friends/${encodeURIComponent(email)}`);
 
         if (!res.ok) {
             onalert('Something went wrong');
@@ -7396,8 +7401,9 @@ const endpoints = [
     "https://interacts-server-xpbo.onrender.com/get/interact",
     "https://story-server-9d2k.onrender.com/get/story",
     "https://nextalk-user-server.onrender.com/get/nextalk-users-server",
-"https://connection-server-9bzk.onrender.com/get/connection",
-"https://nextalk-9yw9.onrender.com/get/nextalk"
+    "https://connection-server-9bzk.onrender.com/get/connection",
+    "https://nextalk-9yw9.onrender.com/get/nextalk",
+    "https://reels-server-40uv.onrender.com/get/reels"
 ];
 
 
