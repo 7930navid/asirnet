@@ -2967,7 +2967,7 @@ textarea,input:focus {
 }
 .video-container {
     width: 100%;
-    max-height: 280px;
+    max-height: 700px;
     background: #f0f2f5;
     border-radius: 12px;
     overflow: hidden;
@@ -2978,8 +2978,7 @@ textarea,input:focus {
 }
 
 #clip-nova {
-    width: 100%;
-    max-height: 280px;
+    height: 700px;
     display: block;
     object-fit: contain;
     background: #000;
@@ -3484,8 +3483,12 @@ at
    <label>
    <div onclick="clzpostMenu()">
  <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">
- Post photos</div></label>
+ Post photo</div></label>
    <div onclick="openStoryPort()">Post story</div>
+   <label>
+   <div onclick="clzpostMenu()">
+ <input type="file" accept="video/*" id="imageInput" hidden onchange="loadReels(event)">
+ Post clip</div></label>
 </div>
 
 <div class="profDis">
