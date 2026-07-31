@@ -51,7 +51,7 @@
         .reel-card video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
         }
 
         /* Double Tap Skip Overlay Animation */
@@ -492,8 +492,8 @@
                 card.className = 'reel-card';
 
                 card.innerHTML = `
-                    <video src="${reel.vid}" loop playsinline preload="metadata" id="video-${postId}"></video>
-                    
+        <video src="${reel.vid}" loop playsinline preload="metadata" id="video-${postId}"></video>
+                  
                     <div class="video-duration" id="duration-${postId}">0:00 / 0:00</div>
 
                     <div class="skip-indicator left" id="skipLeft-${postId}">⏪ -10s</div>
