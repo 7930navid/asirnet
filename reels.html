@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Reels Feed</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            color: #fff;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            overflow: hidden;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-touch-callout: none;
+        }
+
+        .reels-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scrollbar-width: none;
+        }
+
+        .reels-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .reel-card {
+            width: 100%;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #111;
+        }
+
+        .reel-card video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Double Tap Skip Overlay Animation */
+        .skip-indicator {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 15px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .skip-indicator.left { left: 30px; }
+        .skip-indicator.right { right: 30px; }
+        .skip-indicator.show { opacity: 1; }
+
+        /* Video Duration Tracker */
+        .video-duration {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+            z-index: 10;
+        }
+
+        .reel-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 15px;
+            right: 80px;
+            z-index: 10;
+            text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #fff;
+            margin-right: 10px;
+        }
+
+        .username {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .location {
+            font-size: 12px;
+            color: #ccc;
+        }
+
+        .caption {
+            font-size: 14px;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .feelings {
+            font-size: 13px;
+            color: #ffcc00;
+            margin-bottom: 5px;
+        }
+
+        .reel-actions {
+            position: absolute;
+            right: 15px;
+            bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 10;
+        }
+
+        .action-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+
+        .action-btn {
+            background: rgba(0, 0, 0, 0.5);
+            border: none;
+            color: #fff;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 22px;
+            transition: transform 0.2s;
+        }
+
+        .action-btn:active {
+            transform: scale(0.9);
+        }
+
+        .action-count {
+            font-size: 12px;
+            margin-top: 5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+            font-weight: 600;
+        }
+
+        /* Reactions Popup Box */
+        .reaction-popup {
+            position: absolute;
+            right: 60px;
+            bottom: 0;
+            background: rgba(25, 25, 25, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 8px 14px;
+            display: none;
+            gap: 12px;
+            z-index: 25;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .reaction-popup span {
+            font-size: 26px;
+            cursor: pointer;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-block;
+        }
+
+        .reaction-popup span:hover {
+            transform: scale(1.4) translateY(-5px);
+        }
+
+        /* Bottom Sheet (40% Height) */
+        .bottom-sheet {
+            position: fixed;
+            bottom: -100%;
+            left: 0;
+            width: 100%;
+            height: 40vh;
+            background: #18191a;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            z-index: 100;
+            transition: bottom 0.35s cubic-bezier(0.1, 0.9, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.6);
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .bottom-sheet.active {
+            bottom: 0;
+        }
+
+        .sheet-header {
+            padding: 14px 20px;
+            border-bottom: 1px solid #2f3032;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .close-sheet {
+            background: #3a3b3c;
+            border: none;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sheet-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 15px 20px;
+        }
+
+        /* Comments List */
+        .comment-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .comment-avatar {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .comment-content-box {
+            background: #242526;
+            padding: 10px 14px;
+            border-radius: 18px;
+            flex: 1;
+            position: relative;
+        }
+
+        .comment-user {
+            font-weight: 600;
+            color: #e4e6eb;
+            font-size: 13px;
+            margin-bottom: 3px;
+            display: block;
+        }
+
+        .comment-text {
+            color: #b0b3b8;
+            word-break: break-word;
+        }
+
+        .comment-actions-row {
+            font-size: 11px;
+            color: #b0b3b8;
+            margin-top: 4px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .comment-actions-row span {
+            cursor: pointer;
+        }
+
+        .comment-actions-row span:hover {
+            text-decoration: underline;
+        }
+
+        .edit-input {
+            width: 100%;
+            background: #3a3b3c;
+            border: 1px solid #4e4f50;
+            color: #fff;
+            padding: 6px 10px;
+            border-radius: 10px;
+            outline: none;
+            margin-top: 5px;
+        }
+
+        /* Reaction Viewers List */
+        .reaction-user-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #2f3032;
+        }
+
+        .reaction-user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .reaction-user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Sheet Footer / Comment Input */
+        .sheet-footer {
+            padding: 12px 20px;
+            background: #242526;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-top: 1px solid #2f3032;
+        }
+
+        .comWord {
+            flex: 1;
+            padding: 10px 16px;
+            border-radius: 20px;
+            border: 1px solid #3a3b3c;
+            background: #3a3b3c;
+            color: #fff;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .comWord:focus {
+            border-color: #2e89ff;
+        }
+
+        .comButton {
+            background: #1877f2;
+            color: #fff;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .comButton:hover {
+            background: #166fe5;
+        }
+
+        #loader {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            color: #fff;
+            z-index: 150;
+        }
+
+        #loaderCom {
+            display: none;
+            font-size: 12px;
+            color: #b0b3b8;
+        }
+        #loaderCom.show {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loader">Loading Reels...</div>
+    <div class="reels-container" id="reelsContainer"></div>
+
+    <!-- Bottom Sheet (40% Height) -->
+    <div class="bottom-sheet" id="bottomSheet">
+        <div class="sheet-header">
+            <span id="sheetTitle">Interactions</span>
+            <button class="close-sheet" onclick="closeBottomSheet()">✕</button>
+        </div>
+        <div class="sheet-body" id="sheetBody"></div>
+        <div class="sheet-footer" id="sheetFooter" style="display: none;">
+            <input type="text" class="comWord" placeholder="Write a comment...">
+            <span id="loaderCom">Sending...</span>
+            <button class="comButton">Post</button>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = "https://reels-server-40uv.onrender.com/api";
+        const INTERACT_API = "https://interacts-server-xpbo.onrender.com";
+
+        // Backmanager utility mock / compatibility structure if external global is missing
+        window.backmanager = window.backmanager || {
+            register: (callback) => { window._currentBackHandler = callback; },
+            unregister: () => { window._currentBackHandler = null; }
+        };
+
+        // Handle native/browser back gestures or custom back button events if hooked
+        window.addEventListener('popstate', (e) => {
+            if (window._currentBackHandler) {
+                window._currentBackHandler();
+                history.pushState(null, '', window.location.href);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            history.pushState(null, '', window.location.href);
+            fetchReelsData();
+        });
+
+        async function fetchReelsData() {
+            const container = document.getElementById('reelsContainer');
+            const loader = document.getElementById('loader');
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const reelId = urlParams.get('show');
+
+            let endpoint = `${API_BASE}/reels`;
+            if (reelId) {
+                endpoint = `${API_BASE}/reels/${reelId}`;    
+                }
+ 
+            try {
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                loader.style.display = 'none';
+
+                if (response.ok) {
+                    const reelsList = Array.isArray(data) ? data : [data];
+                    if (reelsList.length === 0) {
+                        container.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">No reels found!</div>`;
+                        return;
+                    }
+                    renderReels(reelsList);
+                } else {
+                    container.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">${data.error || 'Failed to load reels'}</div>`;
+                }
+            } catch (err) {
+                console.error("Error fetching:", err);
+                loader.style.display = 'none';
+                container.innerHTML = `<div style="display:flex; justify-content:center; align-items:center; height:100vh;">Check network connection!</div>`;
+            }
+        }
+
+        function renderReels(reels) {
+            const container = document.getElementById('reelsContainer');
+            container.innerHTML = '';
+
+            reels.forEach(reel => {
+                const postId = reel.id;
+                const card = document.createElement('div');
+                card.className = 'reel-card';
+
+                card.innerHTML = `
+                    <video src="${reel.vid}" loop playsinline preload="metadata" id="video-${postId}"></video>
+                    
+                    <div class="video-duration" id="duration-${postId}">0:00 / 0:00</div>
+
+                    <div class="skip-indicator left" id="skipLeft-${postId}">⏪ -10s</div>
+                    <div class="skip-indicator right" id="skipRight-${postId}">+10s ⏩</div>
+
+                    <div class="reel-overlay">
+                        <div class="user-info">
+                            <img src="${reel.avatar || 'https://via.placeholder.com/40'}" alt="Avatar" class="user-avatar">
+                            <div>
+                                <div class="username">${reel.username || 'Anonymous'}</div>
+                                <div class="location">${reel.location || ''}</div>
+                            </div>
+                        </div>
+                        ${reel.feelings ? `<div class="feelings">feeling ${reel.feelings}</div>` : ''}
+                        <div class="caption">${reel.caption || ''}</div>
+                    </div>
+
+                    <div class="reel-actions">
+                        <!-- Reaction Group -->
+                        <div class="action-group" id="appearFlex${postId}" onmouseleave="hideReactionPopup('${postId}')">
+                            <button class="action-btn" id="react${postId}" onclick="reactAppear('${postId}', '👍')" onmouseenter="showReactionPopup('${postId}')">👍</button>
+                            
+                            <div class="reaction-popup" id="popup${postId}">
+                                <span onclick="reactAppear('${postId}', '👍')">👍</span>
+                                <span onclick="reactAppear('${postId}', '❤️')">❤️</span>
+                                <span onclick="reactAppear('${postId}', '🤗')">🤗</span>
+                                <span onclick="reactAppear('${postId}', '😆')">😆</span>
+                            </div>
+
+                            <div class="action-count" id="reactCount${postId}" onclick="openReactionView('${postId}')" style="cursor: pointer;">0 reactions</div>
+                        </div>
+
+                        <!-- Comment Group -->
+                        <div class="action-group">
+                            <button class="action-btn" onclick="openCommentSection('${postId}')">💬</button>
+                            <div class="action-count" id="stryComCount${postId}" onclick="openCommentSection('${postId}')" style="cursor: pointer;">0</div>
+                        </div>
+
+                        <!-- Share Group -->
+                        <div class="action-group">
+                            <button class="action-btn" onclick="shareReel('${postId}')">🔗</button>
+                            <div class="action-count">Share</div>
+                        </div>
+                    </div>
+                `;
+
+                container.appendChild(card);
+                setupVideoInteractions(postId);
+                reactCounts(postId);
+            });
+
+            initVideoObserver();
+        }
+
+        // Single Touch (Play/Pause) & Double Touch (Skip 10s) Logic
+        function setupVideoInteractions(postId) {
+            const video = document.getElementById(`video-${postId}`);
+            const durationEl = document.getElementById(`duration-${postId}`);
+            const leftIndicator = document.getElementById(`skipLeft-${postId}`);
+            const rightIndicator = document.getElementById(`skipRight-${postId}`);
+
+            let lastTapTime = 0;
+            let tapTimeout = null;
+
+            video.addEventListener('loadedmetadata', () => {
+                updateDurationText(video, durationEl);
+            });
+
+            video.addEventListener('timeupdate', () => {
+                updateDurationText(video, durationEl);
+            });
+
+            video.addEventListener('click', (e) => {
+                const currentTime = new Date().getTime();
+                const tapLength = currentTime - lastTapTime;
+                
+                const rect = video.getBoundingClientRect();
+                const clickX = e.clientX - rect.left;
+                const isLeftSide = clickX < rect.width / 2;
+
+                if (tapLength < 300 && tapLength > 0) {
+                    // Double Tap Event
+                    clearTimeout(tapTimeout);
+                    if (isLeftSide) {
+                        video.currentTime = Math.max(0, video.currentTime - 10);
+                        showSkipIndicator(leftIndicator);
+                    } else {
+                        video.currentTime = Math.min(video.duration, video.currentTime + 10);
+                        showSkipIndicator(rightIndicator);
+                    }
+                } else {
+                    // Single Tap Event (Delay slightly to detect double tap)
+                    tapTimeout = setTimeout(() => {
+                        if (video.paused) {
+                            video.play();
+                        } else {
+                            video.pause();
+                        }
+                    }, 300);
+                }
+                lastTapTime = currentTime;
+            });
+        }
+
+        function updateDurationText(video, element) {
+            if (isNaN(video.duration)) return;
+            const currentMin = Math.floor(video.currentTime / 60);
+            const currentSec = Math.floor(video.currentTime % 60);
+            const totalMin = Math.floor(video.duration / 60);
+            const totalSec = Math.floor(video.duration % 60);
+
+            const format = (m, s) => `${m}:${s < 10 ? '0' : ''}${s}`;
+            element.innerText = `${format(currentMin, currentSec)} / ${format(totalMin, totalSec)}`;
+        }
+
+        function showSkipIndicator(indicator) {
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 600);
+        }
+
+        function initVideoObserver() {
+            const videos = document.querySelectorAll('.reel-card video');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    const video = entry.target;
+                    if (entry.isIntersecting) {
+                        video.play().catch(e => console.log("Auto-play blocked:", e));
+                    } else {
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                });
+            }, { threshold: 0.6 });
+
+            videos.forEach(video => observer.observe(video));
+        }
+
+        function showReactionPopup(postId) {
+            document.getElementById(`popup${postId}`).style.display = 'flex';
+        }
+
+        function hideReactionPopup(postId) {
+            document.getElementById(`popup${postId}`).style.display = 'none';
+        }
+
+        async function reactAppear(postId, emoji) {
+            hideReactionPopup(postId);
+            try {
+                const user = JSON.parse(localStorage.getItem("user"));
+
+                if (!user || !user.email || !user.username) {
+                    alert("You must be logged in to react!");
+                    return;
+                }
+
+                const res = await fetch(`${INTERACT_API}/react`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        postId: postId,
+                        email: user.email,
+                        username: user.username,
+                        avatar: user.avatar,
+                        reaction: emoji
+                    })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    document.getElementById(`react${postId}`).innerHTML = emoji;
+                    reactCounts(postId);
+                } else {
+                    alert(data.message || "You have already reacted!");
+                }
+
+            } catch (err) {
+                console.error("Error sending reaction:", err);
+                alert("Network error!");
+            }
+        }
+
+        async function reactCounts(postId) {
+            const likeEl = document.getElementById(`reactCount${postId}`);
+            const commentEl = document.getElementById(`stryComCount${postId}`);
+
+            try {
+                const res = await fetch(`${INTERACT_API}/api/counts/${postId}`);
+                if (!res.ok) throw new Error("Failed to fetch counts");
+
+                const data = await res.json(); 
+                if (likeEl) likeEl.innerText = `${data.likes} reactions`;
+                if (commentEl) commentEl.textContent = `${data.comments}`;
+
+            } catch (err) {
+                if (likeEl) likeEl.innerText = "0 reactions";
+                if (commentEl) commentEl.textContent = "0";
+            }
+        }
+
+        async function openReactionView(postId) {
+            const sheet = document.getElementById('bottomSheet');
+            const title = document.getElementById('sheetTitle');
+            const body = document.getElementById('sheetBody');
+            const footer = document.getElementById('sheetFooter');
+
+            title.innerText = "People who reacted";
+            footer.style.display = 'none';
+            body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">Loading reactions...</div>`;
+            sheet.classList.add('active');
+
+            // backmanager register
+            if (window.backmanager && typeof window.backmanager.register === 'function') {
+                window.backmanager.register(closeBottomSheet);
+            }
+
+            try {
+                const res = await fetch(`${INTERACT_API}/likes/${postId}`);
+                const data = await res.json();
+
+                if (res.ok && data.likes && data.likes.length > 0) {
+                    body.innerHTML = data.likes.map(item => `
+                        <div class="reaction-user-item">
+                            <div class="reaction-user-info">
+                                <img src="${item.avatar || 'https://via.placeholder.com/36'}" class="reaction-user-avatar">
+                                <span style="font-weight:600; font-size:14px; color:#e4e6eb;">${item.username}</span>
+                            </div>
+                            <span style="font-size:18px;">${item.reaction || '👍'}</span>
+                        </div>
+                    `).join('');
+                } else {
+                    body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">No reactions yet</div>`;
+                }
+            } catch (err) {
+                body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">Failed to load reactions</div>`;
+            }
+        }
+
+        async function openCommentSection(postId) {
+            const sheet = document.getElementById('bottomSheet');
+            const title = document.getElementById('sheetTitle');
+            const body = document.getElementById('sheetBody');
+            const footer = document.getElementById('sheetFooter');
+            const postBtn = footer.querySelector('.comButton');
+
+            title.innerText = "Comments";
+            footer.style.display = 'flex';
+            postBtn.setAttribute("onclick", `sendCom('${postId}')`);
+            
+            body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">Loading comments...</div>`;
+            sheet.classList.add('active');
+
+            // backmanager register
+            if (window.backmanager && typeof window.backmanager.register === 'function') {
+                window.backmanager.register(closeBottomSheet);
+            }
+
+            loadCommentsList(postId);
+        }
+
+        async function loadCommentsList(postId) {
+            const body = document.getElementById('sheetBody');
+            try {
+                const res = await fetch(`${INTERACT_API}/comments/${postId}`);
+                const comments = await res.json();
+                const currentUser = JSON.parse(localStorage.getItem("user") || "{}");
+
+                if (res.ok && comments.length > 0) {
+                    body.innerHTML = comments.map(c => `
+                        <div class="comment-item" id="comment-${c.id}">
+                            <img src="${c.avatar || 'https://via.placeholder.com/34'}" class="comment-avatar">
+                            <div class="comment-content-box">
+                                <span class="comment-user">${c.username}</span>
+                                <div class="comment-text" id="commentText-${c.id}">${c.comment}</div>
+                                <div class="comment-actions-row">
+                                    <span>Just now</span>
+                                    ${c.email === currentUser.email ? `
+                                        <span onclick="enableEditComment('${c.id}', '${encodeURIComponent(c.comment)}', '${postId}')">Edit</span>
+                                        <span onclick="deleteComment('${postId}', '${c.id}')" style="color:#ff4d4d;">Delete</span>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">No comments yet. Be the first!</div>`;
+                }
+            } catch (err) {
+                body.innerHTML = `<div style="text-align:center; color:#b0b3b8; padding:20px;">Failed to load comments</div>`;
+            }
+        }
+
+        async function sendCom(postId) {
+            const overlay = document.getElementById('bottomSheet');
+            const textarea = overlay.querySelector(".comWord");
+            const btn = overlay.querySelector(".comButton");
+            const comment = textarea.value.trim();
+
+            if (!comment) {
+                alert("Please write a comment first!");
+                return;
+            }
+
+            const user = JSON.parse(localStorage.getItem("user"));
+            if (!user || !user.username || !user.email) {
+                alert("User not found!");
+                return;
+            }
+
+            btn.disabled = true;
+            document.getElementById("loaderCom").classList.add("show");
+
+            try {
+                const res = await fetch(`${INTERACT_API}/comment`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        postId: postId,
+                        email: user.email,
+                        username: user.username,
+                        avatar: user.avatar,
+                        comment
+                    })
+                });
+
+                const data = await res.json().catch(() => ({}));
+
+                if (!res.ok) {
+                    alert(data.message || "Failed to send comment!");
+                    return;
+                }
+
+                textarea.value = "";
+                loadCommentsList(postId);
+                reactCounts(postId);
+            } catch (err) {
+                alert("Network error!");
+            } finally {
+                document.getElementById("loaderCom").classList.remove("show");
+                btn.disabled = false;
+            }
+        }
+
+        function enableEditComment(commentId, oldText, postId) {
+            const textDiv = document.getElementById(`commentText-${commentId}`);
+            const decodedText = decodeURIComponent(oldText);
+            textDiv.innerHTML = `
+                <input type="text" class="edit-input" id="editInput-${commentId}" value="${decodedText}">
+                <div style="margin-top:6px; display:flex; gap:8px;">
+                    <span style="color:#2e89ff; cursor:pointer;" onclick="saveEditComment('${commentId}', '${postId}')">Save</span>
+                    <span style="color:#b0b3b8; cursor:pointer;" onclick="cancelEdit('${commentId}', '${oldText}')">Cancel</span>
+                </div>
+            `;
+        }
+
+        function cancelEdit(commentId, oldText) {
+            const textDiv = document.getElementById(`commentText-${commentId}`);
+            textDiv.innerText = decodeURIComponent(oldText);
+        }
+
+        async function saveEditComment(commentId, postId) {
+            const newComment = document.getElementById(`editInput-${commentId}`).value.trim();
+            if (!newComment) return;
+
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+            if (!user.email) {
+                alert("User not logged in");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${INTERACT_API}/comment/${user.email}/${commentId}`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ newComment })
+                });
+
+                if (res.ok) {
+                    loadCommentsList(postId);
+                } else {
+                    alert("Failed to update comment");
+                }
+            } catch (err) {
+                alert("Network error during update");
+            }
+        }
+
+        async function deleteComment(postId, commentId) {
+            if (!confirm("Are you sure you want to delete this comment?")) return;
+
+            const user = JSON.parse(localStorage.getItem("user") || "{}");
+            if (!user.email) {
+                alert("User not logged in");
+                return;
+            }
+
+            try {
+                const res = await fetch(`${INTERACT_API}/comment/${user.email}/${commentId}`, {
+                    method: "DELETE"
+                });
+
+                if (res.ok) {
+                    document.getElementById(`comment-${commentId}`).remove();
+                    reactCounts(postId);
+                } else {
+                    alert("Failed to delete comment");
+                }
+            } catch (err) {
+                alert("Network error during deletion");
+            }
+        }
+
+        function closeBottomSheet() {
+            document.getElementById('bottomSheet').classList.remove('active');
+            if (window.backmanager && typeof window.backmanager.unregister === 'function') {
+                window.backmanager.unregister();
+            }
+        }
+
+        function shareReel(postId) {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Check out this Reel',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+            }
+        }
+    </script>
+</body>
+</html>
