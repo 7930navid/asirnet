@@ -439,6 +439,7 @@ body {
      background-color: white;
      min-height: 100vh;
      position: relative;
+     overflow: hidden;
      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
         }
     
@@ -606,6 +607,7 @@ textarea,input:focus {
     padding: 20px;
     max-height: 800px;
     overflow: auto;
+    overscroll-behavior: contain;
 
 }
 
@@ -647,6 +649,7 @@ textarea,input:focus {
     border-radius: 20px;
     padding: 20px;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 .nameplate {
     width: 100%;
@@ -873,6 +876,7 @@ textarea,input:focus {
     height: 0px;
     display: flex;
     overflow-y: auto;
+    overscroll-behavior: contain;
     pointer-events: none;
     opacity: 0;
     transform: translateY(-80px);
@@ -973,6 +977,7 @@ textarea,input:focus {
     background: white;
     padding: 20px;
     overflow: auto;
+    overscroll-behavior: contain;
 }
 .Display hr {
     background: green;
@@ -1181,6 +1186,7 @@ textarea,input:focus {
   padding:15px;
   overflow-x:auto;
   overflow-y:hidden; 
+  overscroll-behavior: contain;
   align-items: center;
 }
 #container {
@@ -1513,6 +1519,7 @@ textarea,input:focus {
   z-index:1002;
   height: 40%;
   overflow: auto;
+  overscroll-behavior: contain;
   padding: 30px;
 }
 
@@ -1534,6 +1541,7 @@ textarea,input:focus {
     transform: translateY(700px); 
     padding: 20px;
     overflow: auto;
+  overscroll-behavior: contain;
   }
 #innerChange input {
     border: none;
@@ -1699,6 +1707,7 @@ textarea,input:focus {
     padding: 20px;
     transform: translateY(100%);
     transition: all 0.4s ease;
+  overscroll-behavior: contain;
 }
 #tagPeople h1 {
     color: green;
@@ -1870,6 +1879,7 @@ textarea,input:focus {
     overflow: auto;
     position: relative;
     border-radius: 10px;
+  overscroll-behavior: contain;
 }
 #taggedShowDiv h2 {
     color: green;
@@ -2035,6 +2045,7 @@ textarea,input:focus {
     transform: translateY(100%); 
     transition: transform 0.5s ease,
                 opacity 0.3s ease;
+  overscroll-behavior: contain;
 }
 #otherProf.show {
     transform: translateY(0);
@@ -2108,11 +2119,13 @@ textarea,input:focus {
     display: flex;
     overflow: auto;
     height: 280px;
+  overscroll-behavior: contain;
 }
 #showOnes{
     display: flex;
     height: 280px;
     overflow: auto;
+  overscroll-behavior: contain;
 }  
 .friendShow {
    display: flex;
@@ -2234,12 +2247,14 @@ textarea,input:focus {
     font-weigh: bold;
     overflow: auto;
     color: white;
+  overscroll-behavior: contain;
 }
 /* Container & Existing Vibes Style */
 .vibes-container {
     display: flex;
     overflow-x: auto;
     padding: 10px;
+  overscroll-behavior: contain;
 }
 
 .vibes-div {
@@ -2532,6 +2547,7 @@ textarea,input:focus {
     padding: 20px;
     overflow-y: auto;
     max-height: 350px;
+  overscroll-behavior: contain;
 }
 
 #urVibe {
@@ -2569,6 +2585,7 @@ textarea,input:focus {
     overflow-y: auto; 
     box-sizing: border-box;
     transition: width 0.4s ease-in
+  overscroll-behavior: contain;
 }
 #MainMenuContent.show {
     width: 80%;
@@ -2768,6 +2785,7 @@ textarea,input:focus {
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(255, 255, 255, 0.1);
     scrollbar-width: none; 
+  overscroll-behavior: contain;
 }
 
 .tab-switching::-webkit-scrollbar {
@@ -2876,6 +2894,7 @@ textarea,input:focus {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     transition: transform 0.3s ease;
     overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 #clip-take-overlay.open {
@@ -3124,6 +3143,7 @@ textarea,input:focus {
     color: green;
     padding: 16px;
     overflow: auto;
+  overscroll-behavior: contain;
 }
 
 #options-card {
@@ -3212,7 +3232,116 @@ textarea,input:focus {
     border: none;
     color: white;
 }
+       /* Quick Ball স্টাইল */
+        .quick-ball {
+            position: fixed;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #3b82f6, #1d4ed8);
+            border-radius: 50%;
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            cursor: pointer;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-weight: bold;
+            font-size: 25px;
+            user-select: none;
+            touch-action: none;
+            z-index: 1000;
+        }
 
+        .quick-ball:active {
+            transform: scale(0.92);
+        }
+
+        /* পপআপ অ্যাপ মেনু ডিভ (Grid Layout, White BG, Max-Height & Overflow Auto) */
+        .quick-menu {
+            position: fixed;
+            width: 600px;
+            max-height: 600px;
+            overflow-y: auto;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            display: none;
+            flex-direction: column;
+            padding: 12px;
+            gap: 10px;
+            z-index: 999;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+  overscroll-behavior: contain;
+        }
+
+        .quick-menu.active {
+            display: flex;
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* স্ক্রোলবার কাস্টমাইজেশন */
+        .quick-menu::-webkit-scrollbar {
+            width: 5px;
+        }
+        .quick-menu::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+
+        /* হেডার বা টাইটেল */
+        .quick-menu-header {
+            font-size: 26px;
+            font-weight: 600;
+            color: #64748b;
+            padding: 0 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* গ্রিড কন্টেইনার (প্রতি লাইনে ৪টি অ্যাপ বা আইটেম) */
+        .quick-apps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        /* অ্যাপ্লিকেশন বাটন স্টাইল (মোবাইল অ্যাপের মতো আইকন ও টেক্সট) */
+        .quick-app-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px 4px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .quick-app-item p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: 500;
+            color: #334155;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+        }
+
+        .quick-app-item:hover {
+            background: #eff6ff;
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
+        }
+ 
 
 
  </style>
@@ -3852,9 +3981,225 @@ So create an account or log in to AsirNet to enjoy it.</div>
 </div>
 
 
+    <div id="myQuickBall" class="quick-ball">Apps</div>
+
+    <div id="myQuickMenu" class="quick-menu">
+        <div class="quick-menu-header">Quick Apps</div>
+        <div class="quick-apps-grid">
+
+            
+            <div class="quick-app-item" onclick="location.reload()">
+<img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
+<p>Home</p>
+            </div>
+            
+
+            <div class="quick-app-item" onclick="profile(); loadProfile();">
+<img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40">                <p>Profile</p>
+            </div>
+            
+            <div class="quick-app-item" onclick="notification();">
+<img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40">
+<p>Notifications</p>
+            </div>
+
+            <div class="quick-app-item" onclick="location.href='reels.html'">
+<img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0">
+<p>Clipnovas</p>
+            </div>
+
+            <div class="quick-app-item" onclick="setting();">
+<img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50">
+<p>Settings</p>
+            </div>
+                                    
+             <div class="quick-app-item" onclick="createpost('postpage');">
+<img src="https://i.ibb.co.com/XZHcvRMN/add-post.png" width="50">
+<p>Post Text</p>
+</div>
+
+<label>
+ <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">                        
+             <div class="quick-app-item" onclick="">
+<img src="https://i.ibb.co.com/9mmh24xT/image.png" width="50">
+<p>Post Photo</p>
+</div></label>
+
+<label>
+ <input type="file" accept="video/*" id="imageInput" hidden onchange="loadReels(event)">                        
+             <div class="quick-app-item" onclick="">
+<img src="https://i.ibb.co.com/NdZ3MTD3/video-player.png" width="50">
+<p>Post Clip</p>
+</div></label>
+
+                        
+             <div class="quick-app-item" onclick="openStoryPort()">
+<img src="https://i.ibb.co.com/0Rk479f9/book.png" width="50">
+<p>Create story</p>
+</div>
+
+
+        </div>   
+    </div>
+
 
 
 </div>
+    <script>
+        function initQuickBallWithGridMenu(ballId, menuId) {
+            const ball = document.getElementById(ballId);
+            const menu = document.getElementById(menuId);
+            if (!ball || !menu) return;
+
+            let isDragging = false;
+            let startX, startY;
+            let initialX, initialY;
+            let hasMoved = false;
+
+            const defaultX = window.innerWidth - ball.offsetWidth - 20;
+            const defaultY = (window.innerHeight - ball.offsetHeight) / 2;
+            ball.style.left = defaultX + 'px';
+            ball.style.top = defaultY + 'px';
+
+            function dragStart(e) {
+                isDragging = true;
+                hasMoved = false;
+                menu.classList.remove('active');
+                ball.style.transition = 'none';
+
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+
+                startX = clientX;
+                startY = clientY;
+
+                initialX = ball.offsetLeft;
+                initialY = ball.offsetTop;
+
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('touchmove', drag, { passive: false });
+                document.addEventListener('mouseup', dragEnd);
+                document.addEventListener('touchend', dragEnd);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+
+                const clientX = e.clientX || e.touches[0].clientX;
+                const clientY = e.clientY || e.touches[0].clientY;
+
+                if (Math.abs(clientX - startX) > 5 || Math.abs(clientY - startY) > 5) {
+                    hasMoved = true;
+                }
+
+                const dx = clientX - startX;
+                const dy = clientY - startY;
+
+                let newX = initialX + dx;
+                let newY = initialY + dy;
+
+                const topBottomGap = 80;
+                const sideGap = 15;
+
+                const maxX = window.innerWidth - ball.offsetWidth - sideGap;
+                const minX = sideGap;
+                const maxY = window.innerHeight - ball.offsetHeight - topBottomGap;
+                const minY = topBottomGap;
+
+                newX = Math.max(minX, Math.min(newX, maxX));
+                newY = Math.max(minY, Math.min(newY, maxY));
+
+                ball.style.left = newX + 'px';
+                ball.style.top = newY + 'px';
+            }
+
+            function dragEnd() {
+                if (!isDragging) return;
+                isDragging = false;
+
+                document.removeEventListener('mousemove', drag);
+                document.removeEventListener('touchmove', drag);
+                document.removeEventListener('mouseup', dragEnd);
+                document.removeEventListener('touchend', dragEnd);
+
+                ball.style.transition = 'left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s ease';
+
+                const currentX = ball.offsetLeft;
+                const currentY = ball.offsetTop;
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+                const sideGap = 15;
+                const topBottomGap = 80;
+                const centerX = screenWidth / 2;
+
+                let targetX = (currentX + ball.offsetWidth / 2 < centerX) ? sideGap : (screenWidth - ball.offsetWidth - sideGap);
+                let targetY = Math.max(topBottomGap, Math.min(currentY, screenHeight - ball.offsetHeight - topBottomGap));
+
+                ball.style.left = targetX + 'px';
+                ball.style.top = targetY + 'px';
+            }
+
+            ball.addEventListener('mousedown', dragStart);
+            ball.addEventListener('touchstart', dragStart);
+
+            ball.addEventListener('click', (e) => {
+                if (!hasMoved) {
+                    e.stopPropagation();
+                    toggleMenu();
+                }
+            });
+
+            function toggleMenu() {
+                if (menu.classList.contains('active')) {
+                    menu.classList.remove('active');
+                } else {
+                    const ballRect = ball.getBoundingClientRect();
+                    const menuWidth = 280;
+                    const menuHeight = menu.offsetHeight || 220;
+                    const screenWidth = window.innerWidth;
+                    const screenHeight = window.innerHeight;
+                    const centerX = screenWidth / 2;
+                    const centerY = screenHeight / 2;
+
+                    let menuTop, menuLeft;
+
+                    const isRight = (ballRect.left + ball.offsetWidth / 2) > centerX;
+                    const isBottom = (ballRect.top + ball.offsetHeight / 2) > centerY;
+
+                    if (isRight) {
+                        menuLeft = ballRect.left - menuWidth - 12; 
+                    } else {
+                        menuLeft = ballRect.right + 12;
+                    }
+
+                    if (isBottom) {
+                        menuTop = ballRect.bottom - menuHeight;
+                    } else {
+                        menuTop = ballRect.top; 
+                    }
+
+                    if (menuLeft < 15) menuLeft = 15;
+                    if (menuLeft + menuWidth > screenWidth - 15) menuLeft = screenWidth - menuWidth - 15;
+                    if (menuTop < 15) menuTop = 15;
+                    if (menuTop + menuHeight > screenHeight - 15) menuTop = screenHeight - menuHeight - 15;
+
+                    menu.style.top = menuTop + 'px';
+                    menu.style.left = menuLeft + 'px';
+
+                    menu.classList.add('active');
+                }
+            }
+
+            document.addEventListener('click', (e) => {
+                if (!ball.contains(e.target) && !menu.contains(e.target)) {
+                    menu.classList.remove('active');
+                }
+            });
+        }
+
+        initQuickBallWithGridMenu('myQuickBall', 'myQuickMenu');
+    </script>
 <script>
         const topSentinel = document.getElementById('top-sentinel');
         const overlay = document.getElementById('nextalk-overlay');
