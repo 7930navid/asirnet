@@ -492,11 +492,309 @@
         #loaderCom.show {
             display: inline-block;
         }
+/* loader */
+
+.asirnet-loader-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 15, 30, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.asirnet-loader-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo-container {
+  position: relative;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.asirnet-logo-img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  z-index: 2;
+  animation: floatLogo 2s ease-in-out infinite;
+  border-radius: 50%;
+}
+
+.pulse-ring {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(0, 198, 255, 0.3);
+  border-top: 2px solid #00c6ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.brand-logo-text {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.loading-bar-container {
+  width: 140px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.loading-bar-progress {
+  width: 30%;
+  height: 100%;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  border-radius: 2px;
+  animation: progressMove 1.2s infinite ease-in-out;
+}
+
+.loading-text {
+  font-size: 13px;
+  color: #a0aec0;
+  font-family: sans-serif;
+  letter-spacing: 0.5px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes floatLogo {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+@keyframes progressMove {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(150%); }
+  100% { transform: translateX(300%); }
+}
+#guestAlert {
+    display: flex;
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+}
+#guestAlert.show {
+    opacity: 1;
+    visibility: visible;    
+}
+#guestAlert-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000000;
+    width: 0;
+    bottom: 5%;
+    left: 0;
+    background: transparent;
+    transition: width 0.4s ease-out;
+ }
+#guestAlert-card.show {
+    width: 100%;
+}
+#warnings-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background: linear-gradient(135deg, #ffffff, #dcfce7, #a7f3d0, #f0fdf4);
+    background-size: 300% 300%;
+    animation: smoothGradient 4s ease infinite;
+    
+    border: 2px solid green;
+    border-radius: 15px;
+    width: 90%;
+    height: 300px;
+    margin: 8px;
+    padding: 8px;
+}
+
+/* গ্র্যাডিয়েন্ট মুভ করার কি-ফ্রেম */
+@keyframes smoothGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#warnings-card img {
+    width: 30%;
+    background: none;
+}
+
+#warnings-card div {
+    width: 80%;
+    height: 200px;
+    background: rgba(255,255,255,0.7);
+    border: 8px solid white;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: bold;
+    color: green;
+    padding: 7px;
+    overflow: auto;
+}
+
+#options-card {
+    width: 80%;
+    margin: 8px;
+    padding: 8px;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#options-card button {
+    border: none;
+    width: 40%;
+    padding: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    margin: 13px;
+    border-radius: 20px;    
+}
+
+@keyframes attraction {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    20% {
+        transform: scale(1.1) rotate(-8deg);
+    }
+    30% {
+        transform: scale(1.1) rotate(8deg);
+    }
+    40% {
+        transform: scale(1.1) rotate(-6deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(6deg);
+    }
+    60% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+    70% {
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+#offerinf {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    bottom: 10%;
+    padding: 8px;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.4s ease-in-out;
+}
+#offerinf.show {
+    opacity: 1;
+    transform: scale(1); 
+}
+#offerinf div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border-radius: 10px;
+    padding: 8px;
+}
+#offerinf div div {
+    display: block;
+}
+#offerinf div div p{
+    font-size: 14px;
+    color: white;
+    font-weight: bold;
+    display: block;
+}
+#offerinf div div a {
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 5px white;
+}
+#offerinf button {
+    background: none;
+    font-size: 20px;
+    border: none;
+    color: white;
+}
+
+
+
     </style>
 </head>
 <body>
 
-    <div id="loader">Loading Reels...</div>
+    <div id="loader">
+<div class="asirnet-loader-overlay" id="asirnetLoader">
+  <div class="loader-content">
+    <div class="logo-container">
+      <!-- Apnar logo-r img tag -->
+      <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="Asirnet Logo" class="asirnet-logo-img">
+      <div class="pulse-ring"></div>
+    </div>
+    <div class="brand-logo-text">Asirnet</div>
+    <div class="loading-bar-container">
+      <div class="loading-bar-progress"></div>
+    </div>
+    <p class="loading-text">Loading reels...</p>
+  </div>
+</div>
+
+</div>
+ 
+    </div>
     <div class="reels-container" id="reelsContainer"></div>
 
     <!-- Bottom Sheet (40% Height) -->
@@ -521,6 +819,32 @@
         </div>
         <div class="drawer-body" id="drawerBody"></div>
     </div>
+    
+    <div id="guestAlert">
+    <div id="guestAlert-card">
+  <div id="warnings-card">
+   <img src="https://i.ibb.co.com/27Nk0Tpk/guest-logo.png" alt="">
+   <div>You are not a member of AsirNet till now! On account of this, you cannot enjoy anything of this application.<br><br>
+So create an account or log in to AsirNet to enjoy it.</div>
+  </div>
+  <div id="options-card">
+  <button style="background: lightgray; color: white; box-shadow: 0 0 4px gray" onclick="guestWarn()"
+>Cencel</button>
+  <button style="background: red; color: white; box-shadow: 0 0 4px red;animation: attraction 2s ease-in infinite;" onclick="window.location.assign('sign_in.html')"
+>Go Log In</button>
+  </div>     
+    </div>
+</div>
+
+<div id="offerinf">
+  <div>
+ <div><p>You are enjoying limited joy here. Log in to enjoy all.</p><a href="sign_in.html">Log in</a></div>
+ <button onclick="cenMess()">×</button>
+  </div>
+</div>
+
+
+
 
     <script>
         const API_BASE = "https://reels-server-40uv.onrender.com/api";
@@ -605,10 +929,10 @@
 
                     <div class="reel-overlay">
                         <div class="user-info">
-                            <img src="${reel.avatar || 'https://via.placeholder.com/40'}" alt="Avatar" class="user-avatar">
+                            <img src="${reel.avatar || 'https://via.placeholder.com/40'}" alt="Avatar" class="user-avatar" onclick="redirectToSee('${reel.email}')">
                             <div>
                                 <div class="username-container">
-                                    <span class="username">${reel.username || 'Anonymous'}</span><span style="color:white; font-size:18px; text-shadow: 0 0 4px black; font-weight: bolf"> • ${formattedTime}</span>
+                                    <span class="username" onclick="redirectToSee('${reel.email}')">${reel.username || 'Anonymous'}</span><span style="color:white; font-size:18px; text-shadow: 0 0 4px black; font-weight: bold"> • ${formattedTime}</span>
                                     ${hasTags ? `<span class="tag-trigger" onclick="openTagDrawer('${encodedTags}')">with other ones</span>` : ''}
                                 </div>
                                 <div class="location">${reel.location || ''}</div>
@@ -665,7 +989,7 @@
                 
                 if (taggedPeople && taggedPeople.length > 0) {
                     drawerBody.innerHTML = taggedPeople.map(person => `
-                        <div class="tagged-user-item">
+                        <div class="tagged-user-item" onclick="redirectToSee('${person.email}')">
                             <img src="${person.avatar || 'https://via.placeholder.com/42'}" class="tagged-user-avatar">
                             <div>
                                 <div style="font-weight:600; font-size:14px; color:#e4e6eb;">${person.name || 'User'}</div>
@@ -786,6 +1110,9 @@
         }
 
         async function reactAppear(postId, emoji) {
+
+    if(guest.isGuest = true) return guestWarn();
+
             hideReactionPopup(postId);
             try {
                 const user = JSON.parse(localStorage.getItem("user"));
@@ -863,8 +1190,8 @@
                     body.innerHTML = data.likes.map(item => `
                         <div class="reaction-user-item">
                             <div class="reaction-user-info">
-                                <img src="${item.avatar || 'https://via.placeholder.com/36'}" class="reaction-user-avatar">
-                                <span style="font-weight:600; font-size:14px; color:#e4e6eb;">${item.username}</span>
+                                <img src="${item.avatar || 'https://via.placeholder.com/36'}" class="reaction-user-avatar"  onclick="redirectToSee('${item.email}')">
+                                <span style="font-weight:600; font-size:14px; color:#e4e6eb;"  onclick="redirectToSee('${item.email}')">${item.username}</span>
                             </div>
                             <span style="font-size:18px;">${item.reaction || '👍'}</span>
                         </div>
@@ -908,9 +1235,9 @@
                 if (res.ok && comments.length > 0) {
                     body.innerHTML = comments.map(c => `
                         <div class="comment-item" id="comment-${c.id}">
-                            <img src="${c.avatar || 'https://via.placeholder.com/34'}" class="comment-avatar">
+                            <img src="${c.avatar || 'https://via.placeholder.com/34'}" class="comment-avatar" onclick="redirectToSee('${c.email}')">
                             <div class="comment-content-box">
-                                <span class="comment-user">${c.username}</span>
+                                <span class="comment-user" onclick="redirectToSee('${c.email}')">${c.username}</span>
                                 <div class="comment-text" id="commentText-${c.id}">${c.comment}</div>
                                 <div class="comment-actions-row">
                                     <span>Just now</span>
@@ -931,6 +1258,8 @@
         }
 
         async function sendCom(postId) {
+    if(guest.isGuest = true) return guestWarn();
+
             const overlay = document.getElementById('bottomSheet');
             const textarea = overlay.querySelector(".comWord");
             const btn = overlay.querySelector(".comButton");
@@ -1138,6 +1467,45 @@ async function startServerPing() {
 
 startServerPing();
 
+
+    </script>
+    <script>
+ function offerGuest() {
+ document.getElementById('offerinf').classList.add('show');   
+}
+function cenMess() {
+ document.getElementById('offerinf').classList.remove('show');  
+ setTimeout(() => {offerGuest()}, 30000);
+}
+ 
+function guestWarn() {
+const fEl = document.getElementById('guestAlert');
+const sEl = document.getElementById('guestAlert-card');
+fEl.classList.toggle('show');
+sEl.classList.toggle('show');
+}
+
+    const guest = localStorage.getItem("guest");
+
+window.onload = function () {
+    const user = localStorage.getItem("user");
+    let u ="";
+
+    if (user) {
+        u = JSON.parse(user);
+    } else if (guest) {
+        u = JSON.parse(guest);
+        offerGuest(); 
+    } else {
+     alert('Please login first');
+     location.href = "sign_in.html";
+    }
+};
+
+
+function redirectToSee(email) {
+location.href = `asirnet.html?givenEmail=${encodeURIComponent(email)}`;
+}
 
     </script>
 </body>
