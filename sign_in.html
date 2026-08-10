@@ -454,6 +454,11 @@ form.addEventListener("submit", async (e) => {
         };
 
         localStorage.setItem("user", JSON.stringify(user));
+    if (localStorage.getItem("user")) {            
+
+    localStorage.removeItem("guest"); 
+} 
+
 
         loginBtn.innerText = "Success ✓";
 
@@ -543,11 +548,15 @@ async function resetPassword() {
 }
 
 function continueAsGuest() {
-    // প্রয়োজন হলে গেস্ট হিসেবে চিহ্নিত করার জন্য LocalStorage ব্যবহার করতে পারেন
-    localStorage.setItem("isGuest", "true");
     
-    // guest.html পেজে রিডাইরেক্ট
-    window.location.href = "guest.html";
+    const guest = {
+            isGuest: true, 
+            avatar: "https://i.ibb.co.com/27Nk0Tpk/guest-logo.png"
+        };
+
+        localStorage.setItem("guest", JSON.stringify(guest));  
+        localStorage.removeItem("user");  
+          window.location.href = "asirnet.html";
 }
 
 
