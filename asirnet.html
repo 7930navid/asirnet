@@ -4073,12 +4073,13 @@ const SPage = ` <br><br>
 
 /* ---------- Open / Close ---------- */
 function openGallery(){ 
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
+
 $("storyFile").click(); 
 }
 
 function openStoryPort(){ 
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
 BackManager.register(closeStoryPort, 'b');
 const page =  document.getElementById("stryPort");
@@ -4613,7 +4614,8 @@ function closealertAdv(id, postId) {
 
 // Open menu 
 function postMenu(e) { 
-if(guest.isGuest = true) return guestWarn();
+
+if(guest) return guestWarn();
 
 e.stopPropagation();
 
@@ -4638,7 +4640,7 @@ e.stopPropagation();
 let receiver_id ="";
 
 async function connect() {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
 const el = document.querySelector("#connectionBtn");
 
@@ -4691,7 +4693,7 @@ const sender_id = u.email;
 
 
 async function messageWithNexttalk() {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
   if (!receiver_id) {
     alert("Receiver ID parameter missing!");
@@ -4831,7 +4833,7 @@ document.getElementById("connectionBtn");
 
 function profile() {
 
-    if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
 const u = JSON.parse(localStorage.getItem("user"));
 const s = JSON.parse(styleString);
@@ -5189,12 +5191,12 @@ p.addEventListener("click", () => {
  }
 
 function setting() {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 location.href = 'setting.html';
   }
 
 function notification() {
-    if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
     
 location.href = 'notification.html';
   }
@@ -6334,7 +6336,7 @@ async function reactorsOnStory(postId) {
 
 
 function comSec(appear) {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
 const el = document.getElementById(`comPen${appear}`);
     el.classList.add("show");
@@ -6696,7 +6698,7 @@ async function sendStoryCom(postId) {
 }
 
 async function reactAppear(postId, emoji) {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
 document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "none");
   try {
@@ -7305,7 +7307,7 @@ function closeShareModal(e) {
 }
 
 async function sendvibe() {
-if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
     const u = JSON.parse(localStorage.getItem("user")) || {};
 
@@ -7511,7 +7513,7 @@ fEl.classList.toggle('show');
 sEl.classList.toggle('show');
 }
 
-    const guest = localStorage.getItem("guest");
+    const guest = localStorage.getItem("guest") || null;
 
 window.onload = function () {
     const user = localStorage.getItem("user");
