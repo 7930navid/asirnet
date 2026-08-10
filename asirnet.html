@@ -604,6 +604,9 @@ textarea,input:focus {
 }
 #searchresult {
     padding: 20px;
+    max-height: 800px;
+    overflow: auto;
+
 }
 
 #close {
@@ -3041,6 +3044,175 @@ textarea,input:focus {
     border: none;
     border-radius: 10px;
 }
+#guestAlert {
+    display: flex;
+    position: fixed;
+    z-index: 99999;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease;
+}
+#guestAlert.show {
+    opacity: 1;
+    visibility: visible;    
+}
+#guestAlert-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000000;
+    width: 0;
+    bottom: 10%;
+    left: 0;
+    background: transparent;
+    transition: width 0.4s ease-out;
+ }
+#guestAlert-card.show {
+    width: 100%;
+}
+#warnings-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    
+    background: linear-gradient(135deg, #ffffff, #dcfce7, #a7f3d0, #f0fdf4);
+    background-size: 300% 300%;
+    animation: smoothGradient 4s ease infinite;
+    
+    border: 2px solid green;
+    border-radius: 15px;
+    width: 80%;
+    height: 500px;
+    margin: 20px;
+    padding: 20px;
+}
+
+/* গ্র্যাডিয়েন্ট মুভ করার কি-ফ্রেম */
+@keyframes smoothGradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+#warnings-card img {
+    width: 30%;
+    background: none;
+}
+
+#warnings-card div {
+    width: 80%;
+    height: 200px;
+    background: rgba(255,255,255,0.7);
+    border: 15px solid white;
+    border-radius: 15px;
+    font-size: 25px;
+    font-weight: bold;
+    color: green;
+    padding: 16px;
+    overflow: auto;
+}
+
+#options-card {
+    width: 80%;
+    margin: 20px;
+    padding: 20px;    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#options-card button {
+    border: none;
+    width: 40%;
+    padding: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    margin: 30px;
+    border-radius: 20px;    
+}
+
+@keyframes attraction {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+    }
+    20% {
+        transform: scale(1.1) rotate(-8deg);
+    }
+    30% {
+        transform: scale(1.1) rotate(8deg);
+    }
+    40% {
+        transform: scale(1.1) rotate(-6deg);
+    }
+    50% {
+        transform: scale(1.1) rotate(6deg);
+    }
+    60% {
+        transform: scale(1.1) rotate(-3deg);
+    }
+    70% {
+        transform: scale(1.1) rotate(0deg);
+    }
+}
+
+#offerinf {
+    display: flex;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    bottom: 10%;
+    padding: 20px;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.4s ease-in-out;
+}
+#offerinf.show {
+    opacity: 1;
+    transform: scale(1); 
+}
+#offerinf div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: black;
+    border-radius: 10px;
+    padding: 8px;
+}
+#offerinf div div {
+    display: block;
+}
+#offerinf div div p{
+    font-size: 25px;
+    color: white;
+    font-weight: bold;
+    display: block;
+}
+#offerinf div div a {
+    border-radius: 8px;
+    font-size: 30px;
+    font-weight: bold;
+    text-shadow: 0 0 5px white;
+}
+#offerinf button {
+    background: none;
+    font-size: 60px;
+    border: none;
+    color: white;
+}
+
 
 
  </style>
@@ -3602,7 +3774,7 @@ at
         Profile
       </button>    
       
-      <button onclick=" window.location.assign('notification.html')"> 
+      <button onclick="notification()"> 
         <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" width="50"><br>
         Notifications
       </button>    
@@ -3653,6 +3825,30 @@ at
       <div style="width: 100%; text-align: left; padding-left: 50px;">Change video</div>
       </button>
     </div>
+</div>
+
+
+<div id="guestAlert">
+    <div id="guestAlert-card">
+  <div id="warnings-card">
+   <img src="https://i.ibb.co.com/27Nk0Tpk/guest-logo.png" alt="">
+   <div>You are not a member of AsirNet till now! On account of this, you cannot enjoy anything of this application.<br><br>
+So create an account or log in to AsirNet to enjoy it.</div>
+  </div>
+  <div id="options-card">
+  <button style="background: lightgray; color: white; box-shadow: 0 0 4px gray" onclick="guestWarn()"
+>Cencel</button>
+  <button style="background: red; color: white; box-shadow: 0 0 4px red;animation: attraction 2s ease-in infinite;" onclick="window.location.assign('sign_in.html')"
+>Go Log In</button>
+  </div>     
+    </div>
+</div>
+
+<div id="offerinf">
+  <div>
+ <div><p>You are enjoying limited joy here. Log in to enjoy all.</p><a href="sign_in.html">Log in</a></div>
+ <button onclick="cenMess()">×</button>
+  </div>
 </div>
 
 
@@ -3876,9 +4072,14 @@ const SPage = ` <br><br>
 `;
 
 /* ---------- Open / Close ---------- */
-function openGallery(){ $("storyFile").click(); }
+function openGallery(){ 
+if(guest.isGuest = true) return guestWarn();
+$("storyFile").click(); 
+}
 
 function openStoryPort(){ 
+if(guest.isGuest = true) return guestWarn();
+
 BackManager.register(closeStoryPort, 'b');
 const page =  document.getElementById("stryPort");
 page.style.transform = 'translateY(0)';
@@ -3895,6 +4096,7 @@ el.style.opacity = '0';
 
 /* ---------- Load video from gallery ---------- */
 function loadFromGallery(e){
+
   const file = e.target.files[0];
   if(!file) return;
 
@@ -4411,6 +4613,7 @@ function closealertAdv(id, postId) {
 
 // Open menu 
 function postMenu(e) { 
+if(guest.isGuest = true) return guestWarn();
 
 e.stopPropagation();
 
@@ -4435,6 +4638,8 @@ e.stopPropagation();
 let receiver_id ="";
 
 async function connect() {
+if(guest.isGuest = true) return guestWarn();
+
 const el = document.querySelector("#connectionBtn");
 
 const user = localStorage.getItem('user');
@@ -4486,6 +4691,8 @@ const sender_id = u.email;
 
 
 async function messageWithNexttalk() {
+if(guest.isGuest = true) return guestWarn();
+
   if (!receiver_id) {
     alert("Receiver ID parameter missing!");
     return;
@@ -4623,6 +4830,9 @@ document.getElementById("connectionBtn");
 
 
 function profile() {
+
+    if(guest.isGuest = true) return guestWarn();
+
 const u = JSON.parse(localStorage.getItem("user"));
 const s = JSON.parse(styleString);
 
@@ -4979,10 +5189,13 @@ p.addEventListener("click", () => {
  }
 
 function setting() {
+if(guest.isGuest = true) return guestWarn();
 location.href = 'setting.html';
   }
 
 function notification() {
+    if(guest.isGuest = true) return guestWarn();
+    
 location.href = 'notification.html';
   }
 
@@ -5936,6 +6149,7 @@ document.querySelectorAll(".appearFlex") .forEach(panel => {
    });
 
 async function reactors(postId) {
+
   try {
     const res = await fetch(
       `https://interacts-server-xpbo.onrender.com/likes/${postId}`
@@ -6015,6 +6229,7 @@ cap.innerText = caption;
 
 
 async function reactorsOnStory(postId) {
+
   try {
     const res = await fetch(
       `https://interacts-server-xpbo.onrender.com/likes/${postId}`
@@ -6119,6 +6334,8 @@ async function reactorsOnStory(postId) {
 
 
 function comSec(appear) {
+if(guest.isGuest = true) return guestWarn();
+
 const el = document.getElementById(`comPen${appear}`);
     el.classList.add("show");
   BackManager.register(closeComSec, appear);    
@@ -6479,6 +6696,7 @@ async function sendStoryCom(postId) {
 }
 
 async function reactAppear(postId, emoji) {
+if(guest.isGuest = true) return guestWarn();
 
 document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "none");
   try {
@@ -7087,7 +7305,8 @@ function closeShareModal(e) {
 }
 
 async function sendvibe() {
-    // 1. LocalStorage থেকে ইউজার অবজেক্ট নেওয়া
+if(guest.isGuest = true) return guestWarn();
+
     const u = JSON.parse(localStorage.getItem("user")) || {};
 
 let e = u?.email;
@@ -7260,13 +7479,53 @@ function closeVibeModal() {
 
 
 <script>
+    
+function getEmailFromUrl() {
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get('givenEmail');
+  
+  if (email) {
+    const decodedEmail = decodeURIComponent(email);
+    showOtherProf(decodedEmail);
+          }
+  
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  getEmailFromUrl();
+});
+
+
+ function offerGuest() {
+ document.getElementById('offerinf').classList.add('show');   
+}
+function cenMess() {
+ document.getElementById('offerinf').classList.remove('show');  
+ setTimeout(() => {offerGuest()}, 30000);
+}
+ 
+function guestWarn() {
+const fEl = document.getElementById('guestAlert');
+const sEl = document.getElementById('guestAlert-card');
+fEl.classList.toggle('show');
+sEl.classList.toggle('show');
+}
+
+    const guest = localStorage.getItem("guest");
+
 window.onload = function () {
     const user = localStorage.getItem("user");
+    let u ="";
 
-    if (!user) {
-        location.href = "sign_in.html";
+    if (user) {
+        u = JSON.parse(user);
+    } else if (guest) {
+        u = JSON.parse(guest);
+        offerGuest(); 
     } else {
-        const u = JSON.parse(user);
+     alert('Please login first');
+     location.href = "sign_in.html";
+    }
 
         document.getElementById('profPicture').innerHTML =
             `<img src="${u.avatar}">`;
@@ -7276,7 +7535,7 @@ window.onload = function () {
         document.querySelector('.story-inner').style.backgroundPosition = "center";
 
         loadPosts();
-    }
+    
 };
 
 const styleString = localStorage.getItem('style');
@@ -7399,6 +7658,7 @@ warning(() => {
 
 const isTurned = localStorage.getItem('dark');
 const isEnable = localStorage.getItem('notify');
+const isGuest = localStorage.getItem('isGuest');
 
 const endpoints = [
     "https://users-server-xyvg.onrender.com/get/users",
