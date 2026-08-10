@@ -1111,7 +1111,7 @@ So create an account or log in to AsirNet to enjoy it.</div>
 
         async function reactAppear(postId, emoji) {
 
-    if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
             hideReactionPopup(postId);
             try {
@@ -1258,7 +1258,7 @@ So create an account or log in to AsirNet to enjoy it.</div>
         }
 
         async function sendCom(postId) {
-    if(guest.isGuest = true) return guestWarn();
+if(guest) return guestWarn();
 
             const overlay = document.getElementById('bottomSheet');
             const textarea = overlay.querySelector(".comWord");
