@@ -2,7 +2,7 @@
 
 **AsirNet** is a simple, fast, and user-friendly social posting platform where users can create, edit, and delete posts easily.
 
-This project is built mainly for **learning purposes** and **real-world backend practice** using Node.js and PostgreSQL.
+This project is built using Node.js and PostgreSQL.
 
 ---
 
