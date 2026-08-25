@@ -4,9 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AsirNet Settings</title>
-
-<meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
-<link rel="icon" href="https://i.ibb.co.com/ccMxvp0S/asirnet-link-logo.png">
+    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
 
 <style>
 
@@ -42,13 +40,20 @@ body{
     margin-bottom:20px;
 }
 
-.profile-pic{
-    width:90px;
-    height:90px;
-    border-radius:50%;
-    object-fit:cover;
-
+.div-profile-pic{
+    width:100px;
+    height:100px;
+    border-radius: 50%;
     border:4px solid #8b5cf6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 3px;
+}
+
+.profile-pic{
+    height:100%;
+    border-radius: 50%;
 }
 
 .profile-info h2{
@@ -280,10 +285,12 @@ input:checked + .slider:before{
 <div class="settings-container">
 
     <div id="settings-header">
-
+        
+        <div class="div-profile-pic">
         <img
         class="profile-pic"
         id="profPic">
+        </div>
 
         <div class="profile-info">
             <h2 id="uName"></h2>
@@ -319,16 +326,17 @@ input:checked + .slider:before{
         <div class="setting-card">
 
             <div class="setting-left">
-                <div class="setting-icon">🔔</div>
+                <div class="setting-icon">🔘</div>
 
                 <div class="setting-text">
-                    <h4>Notifications</h4>
-                    <p>Receive important alerts</p>
+                    <h4>Quick ball</h4>
+                    <p>Turn on quick ball</p>
                 </div>
             </div>
 
             <label class="switch">
-                <input type="checkbox" checked onchange="notify(this)" id="notif">
+                <!-- এখানে ball(this) থেকে পরিবর্তন করে toggleBall(this) করা হয়েছে -->
+                <input type="checkbox" checked onchange="toggleBall(this)" id="ball">
                 <span class="slider"></span>
             </label>
 
@@ -386,23 +394,23 @@ const user = JSON.parse(localStorage.getItem('user'));
 document.getElementById('profPic').src = user.avatar;
 document.getElementById('uName').innerText = user.username;
 document.getElementById('uBio').innerText = user.bio;
-document.getElementById('settings-header').style.background = "url(user.cover_photo)";
+document.getElementById('settings-header').style.background = `url(${user.cover_photo}) no-repeat center/cover`;
 
  
 const dark = localStorage.getItem('dark') === 'true';
-const notif = localStorage.getItem('notify') === 'true';
+const ballState = localStorage.getItem('ball') === 'true';
+
 document.querySelector('#darkM').checked = dark;
-document.querySelector('#notif').checked = notif;
+document.querySelector('#ball').checked = ballState;
 
 
 function darkM(el) {
     localStorage.setItem('dark', el.checked);
-    }
+}
     
-
-function notify(el) {
-    localStorage.setItem('notify', el.checked);
-    }
+function toggleBall(el) {
+    localStorage.setItem('ball', el.checked);
+}
 
 function inconfirm(warn, func) {
 
@@ -431,11 +439,9 @@ function logOut() {
 }
 
 function logged() {
-        localStorage.removeItem("user");
-        location.href = "sign_in.html";
-
+    localStorage.removeItem("user");
+    location.href = "sign_in.html";
 }
-
 </script>
 
 </body>
