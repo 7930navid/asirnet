@@ -442,6 +442,49 @@ function logged() {
     localStorage.removeItem("user");
     location.href = "sign_in.html";
 }
+ 
+const endpoints = [
+    "https://users-server-xyvg.onrender.com/get/users",
+    "https://posts-server-kmha.onrender.com/get/posts",
+    "https://interacts-server-xpbo.onrender.com/get/interact",
+    "https://story-server-9d2k.onrender.com/get/story",
+    "https://nextalk-user-server.onrender.com/get/nextalk-users-server",
+    "https://connection-server-9bzk.onrender.com/get/connection",
+    "https://nextalk-9yw9.onrender.com/get/nextalk",
+    "https://reels-server-40uv.onrender.com/get/reels"
+];
+
+
+async function startServerPing() {
+
+    try {
+        const startTime = performance.now();
+
+        const responses = await Promise.all(
+            endpoints.map(url => 
+                fetch(url)
+                    .then(res => ({ url, status: res.status, ok: res.ok }))
+                    .catch(err => ({ url, ok: false, error: err.message }))
+            )
+        );
+
+        const duration = ((performance.now() - startTime) / 1000).toFixed(2);
+
+        responses.forEach(res => {
+            if (!res.ok) {
+                console.log(`❌ Failed: ${res.url} | Error: ${res.error || 'Bad Status'}`);
+            }
+        });
+
+    } catch (globalError) {
+        console.error("Critical error in ping cycle:", globalError);
+    } finally {
+        setTimeout(startServerPing, 5000);
+    }
+}
+
+startServerPing();
+
 </script>
 
 </body>
