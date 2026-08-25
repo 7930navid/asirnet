@@ -4,38 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
     <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
-    <link rel="icon" href="https://i.ibb.co.com/ccMxvp0S/asirnet-link-logo.png">
+    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
 
 
     <title>AsirNet</title>
     <style>
-* {
-    overscroll-behavior: contain;
-    user-select: none;
-    -webkit-user-select: none;
-}
+html {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+      -webkit-touch-callout: none;
 
-input,
-textarea {
-    user-select: text;
-    -webkit-user-select: text;
 }
-
-*::-webkit-scrollbar {
-    display: none;
+button, a, input, div {
+    -webkit-tap-highlight-color: transparent; 
+    outline: none;
 }
-
 
 :root {
     --primary-blue: #3b82f6;
     --text-dark: #1e293b;
     --text-gray: #64748b;
     --bg-light: #f8fafc;
+    --body-bg: #f0f2f5;
 }
 
 
 .loader-container {
-    background: #ffffff;
+    background: transparent;
     padding: 40px;
     border-radius: 24px;
     width: 100%;
@@ -61,7 +58,7 @@ textarea {
     position: absolute;
     width: 100%;
     height: 100%;
-    border: 3px solid #e2e8f0;
+    border: 3px solid rgba(255,255,255,0.3);
     border-top: 3px solid var(--primary-blue);
     border-radius: 50%;
     animation: spin 2s linear infinite;
@@ -90,13 +87,11 @@ textarea {
     width: 110px;
     height: 110px;
     border-radius: 50%;
-    background: #fff;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    background: transparent;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    border: 4px solid #f1f5f9;
     z-index: 2;
 }
 
@@ -109,14 +104,14 @@ textarea {
 /* --- Typography --- */
 .loader-title {
     font-size: 26px;
-    font-weight: 700;
-    color: var(--text-dark);
+    font-weight: bold;
+    color: gray;
     margin: 0 0 8px 0;
 }
 
 .loader-subtext {
     font-size: 15px;
-    color: var(--text-gray);
+    color: gray;
     margin: 0 0 24px 0;
 }
 
@@ -169,7 +164,7 @@ textarea {
 }
 
 .warning-card {
-    background: #f0f7ff;
+    background: transparent;
     border: 1px solid #e0f2fe;
     border-radius: 16px;
     padding: 14px 18px;
@@ -180,7 +175,9 @@ textarea {
     box-shadow: 0 4px 12px rgba(59, 130, 246, 0.03);
     animation: slideUp 0.4s ease-out;
 }
-
+.warning-card.dark {
+    background: gray;
+}
 .warning-left {
     display: flex;
     align-items: center;
@@ -204,14 +201,21 @@ textarea {
 .warning-main-text {
     font-size: 25px;
     font-weight: 600;
-    color: var(--text-dark);
+    color: gray;
+}
+.warning-main-text.dark {
+    color: white;
 }
 
 .warning-sub-text {
     font-size: 16px;
-    color: var(--text-gray);
+    color: gray;
     margin-top: 2px;
 }
+.warning-sub-text.dark {
+    color: white;
+}
+
 
 /* --- Modern Retry Button --- */
 .retryBtn {
@@ -444,18 +448,23 @@ textarea {
 </style>
     <style>
 body {
-    background: #f0f2f5;
+    background: white;
     display: flex;
     justify-content: center;
-    min-height: 100vh;
+    height: 100vh;
 }
+
+body.dark {
+    background: black;    
+}
+
 .app-con {
      width: 100%;
      max-width: 800px;
-     background-color: white;
-     min-height: 100vh;
+     background-color: rgba(255,255,255,0.2);
+     height: 100vh;
      position: relative;
-     overflow: hidden;
+     overflow: auto;
      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
         }
     
@@ -474,15 +483,26 @@ textarea,input:focus {
        padding-left: 20px;
        padding-right: 20px; 
        background: white; 
-       border-bottom:5px solid green; 
+       border-bottom: 5px solid green; 
        position: fixed;
        z-index: 998;
        top: 0;
        left: 0;
        right: 0;
        }
+#header.dark {
+    background: black;
+    border-bottom: 2px solid white; 
+}
+
 #header div {
     width: fit-content;
+}
+.headerBtn {
+    margin-right: 20px;
+}
+.headerBtn.dark {
+    filter: brightness(0) invert(1);
 }
 #profPicture {
     border: 2px solid green;
@@ -578,6 +598,10 @@ textarea,input:focus {
     font-size: 25px;
     color: red;
 }
+#search.dark {
+    background: black;
+    box-shadow: 0 0 5px white;
+}
 #btnsearch {
     height: 80px;
     border-radius: 90px;
@@ -588,8 +612,14 @@ textarea,input:focus {
     padding: 10px;
     padding-left: 30px;
     font-size: 25px;
-
     }
+#btnsearch.dark {
+    background: black;
+    box-shadow: 0 0 5px white;
+}
+#btnsearch img.dark {
+    filter: brightness(0) invert(1);
+} 
 #showBox {
     display: none;
     background: white;
@@ -598,6 +628,9 @@ textarea,input:focus {
     height: 70%;
     margin-top: 40px;
     animation: widthEnrich 0.2s ease-in
+}
+#showBox.dark {
+    background: black;
 }
 @keyframes widthEnrich {
     from {
@@ -624,7 +657,6 @@ textarea,input:focus {
     max-height: 800px;
     overflow: auto;
     overscroll-behavior: contain;
-
 }
 
 #close {
@@ -658,6 +690,9 @@ textarea,input:focus {
     opacity: 1;
     transform: translateY(0);
 }
+#postpage *.dark, #IMGpost *.dark {
+    color: white;
+}
 #postpad, #IMGpad {
     height: 80%;
     width: 650px;
@@ -666,6 +701,12 @@ textarea,input:focus {
     padding: 20px;
     overflow: auto;
     overscroll-behavior: contain;
+    box-shadow: 0 0 10px gray;
+}
+
+
+#postpad.dark, #IMGpad.dark {
+    background: black;    
 }
 .nameplate {
     width: 100%;
@@ -685,6 +726,9 @@ textarea,input:focus {
     font-size: 25px;
     border-bottom: 1px solid black;
     transition: 0.3s ease;
+}
+.uploadBtn img {
+    filter: brightness(0) invert(1);
 }
 #bottomBTN button {
     width: 45%;
@@ -727,11 +771,14 @@ textarea,input:focus {
     height: 500px;
     padding: 20px;
     font-size: 30px;
-    background: white;
+    background: transparent;
     color: black;
     text-align: justify;
     text-shadow: 0 0 5px white;
     font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+}
+#postword.dark {
+    color: white;
 }
 #Imgword {
     max-height: 200px;
@@ -742,19 +789,32 @@ textarea,input:focus {
     margin-top: 20px;
     width: 100%;
     border: none;
-    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;    
+    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
+    background: none;    
+}
+#Imgword.dark {
+    color: white;
 }
 .postshow {
     padding: 20px;
     text-align: justify;
     margin: 25px;
     border-radius: 20px;
-    background: white;
+    background: transparent;
     min-height: 100px;
     width: 90%;
     box-shadow: 0 0 5px gray;
     animation: postAppear 0.2s ease-in forwards;
 }
+
+.postshow.dark {
+    background: black;
+ }
+ 
+.postshow *.dark {
+    color: white;
+} 
+
 @keyframes postAppear {
     from {
         margin-top: 500px;
@@ -774,7 +834,6 @@ textarea,input:focus {
     font-size: 25px;
 }
 
-
 #footer {
     background: white;
     border: none;
@@ -787,35 +846,47 @@ textarea,input:focus {
     left: 0;
     padding: 20px;
 }
+#footer.dark {
+    background: black;
+    border-top: 2px solid white; 
+}
 #footerBtn {
     width: 90%;
 }
 #footerBtn td{
     text-align: center;
 }
-#footerBtn button {
+.footerBtn {
     width: 110px;
     height: 80px;
     border: none;
     background: none;
     border-radius: 20px;
     font-size: 25px;
+}
 
+#footerPlusBtn {
+    width: 90px;
+    height: 90px;
+    border: 2px solid black;
+    background: transparent;
+    border-radius: 50%;
+    font-size: 40px;
+    padding: 5px;
+    color: black;
+}
+#footerPlusBtn.dark {
+    color: white;
+    border: 2px solid white;    
+}
+#footerBtn button img.dark {
+    filter: brightness(0) invert(1);
 }
 #footerBtn button.inactive {
     border-top: 2px solid green;
 }
-#specialBtn {
-    width: 110px;
-    height: 110px;
-    border: 2px solid black;
-    background: none;
-    border-radius: 90px;
-    font-size: 35px;
-    padding: 5px;
-}
 #profdiv {
-    background: white;
+    background: none;
     padding: 20px;
     margin: 20px;
     border: none;
@@ -823,7 +894,7 @@ textarea,input:focus {
     background-size: cover;  
     background-position: center; 
     background-repeat: no-repeat;
-
+    position: relative;
 }
 #profdiv p{
     font-size: 50px;
@@ -852,8 +923,8 @@ textarea,input:focus {
 #editbtn {
     position: absolute;
     z-index: 100;
-    top: 310px;
-    left: 250px;
+    top: 60%;
+    left: 30%;
 }
 #editbtn button{
     border: none;
@@ -878,6 +949,10 @@ textarea,input:focus {
     width: 70%;
     margin-left: 15%;
 }
+#reactPanal.dark {
+    border: 1px solid white;
+}
+
 #reactPanal button {
     border: none;
     width: 33%;
@@ -885,6 +960,10 @@ textarea,input:focus {
     border-left: 1px solid green;
     background: none;
     cursor: pointer;
+}
+
+.imgChange.dark {
+    filter: brightness(0) invert(1);    
 }
 
 .appearFlex {
@@ -995,6 +1074,10 @@ textarea,input:focus {
     overflow: auto;
     overscroll-behavior: contain;
 }
+.Display.dark {
+    background: black;
+    border: 1px solid white;    
+}
 .Display hr {
     background: green;
 }
@@ -1039,19 +1122,36 @@ textarea,input:focus {
                 transform .4s ease;
     transform: translateX(-1000px);
 }
+
 .likeComCon.show {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
 }
-.comSecDiv{
+.comSecDiv {
   width: 80%;
   margin-bottom: 30px;
   background: #ffffff;
   border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.12);
+  box-shadow: 0 10px 35px rgba(0,0,0,0.4);
   padding: 15px 15px 18px;
   box-sizing: border-box;
+}
+.comSecDiv.dark {
+    background: black;
+    border: 1px solid white;
+}
+.comSecDiv button {
+  border-radius: 50%;   
+  border: 1px solid black; 
+}
+.comSecDiv textarea.dark::placeholder {
+  color: white;
+  opacity: 0.7;
+}
+.comSecDiv *.dark {
+    background: rgba(0,0,0,1.0);
+    color: white;
 }
 
 /* HEADER */
@@ -1111,6 +1211,10 @@ textarea,input:focus {
   border-color: #4caf50;
   box-shadow: 0 0 0 2px rgba(76,175,80,0.15);
 }
+.comWord.dark:focus{
+  border: 1px solid white;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.6);
+}
 
 /* SEND BUTTON */
 .comButton{
@@ -1118,7 +1222,7 @@ textarea,input:focus {
   height: 44px;
   border-radius: 50%;
   border: none;
-  background: white;
+  background: none;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1127,6 +1231,14 @@ textarea,input:focus {
 }
 .comButton img{
   width: 22px;
+}
+.comButton.dark {
+    border: 1px solid white;
+}
+.comButton img.dark {
+    filter: brightness(0) invert(1);
+    background: none;
+    border: none;
 }
 
 .comButton:focus{
@@ -1300,12 +1412,21 @@ textarea,input:focus {
     opacity: 0;
     transform: translateY(100%);
     transition: transform 0.45s ease, opacity 0.4s ease;
+     overscroll-behavior: contain;
 }
 #stryPort div{
     width: 90%;
     height: 80%;
     background: white;
     border-radius: 20px;
+    overscroll-behavior: contain;
+}
+#stryPort div.dark {
+    background: black;
+}
+.stryPort.dark {
+    background: black;
+    box-shadow: 0 0 7px white;
 }
 .videoBtn{
     padding: 20px;
@@ -1329,7 +1450,7 @@ textarea,input:focus {
     height: 320px;
     border-radius: 20px;
 }
-#submitpost:focus {
+.submitpost:focus {
     background: green;
 }
 #postLoading{
@@ -1538,7 +1659,9 @@ textarea,input:focus {
   overscroll-behavior: contain;
   padding: 30px;
 }
-
+#bgPost.dark {
+    background: black;
+}
 #textFont {
     background: white;
     border-top-right-radius: 40px;
@@ -1557,8 +1680,11 @@ textarea,input:focus {
     transform: translateY(700px); 
     padding: 20px;
     overflow: auto;
-  overscroll-behavior: contain;
+    overscroll-behavior: contain;
   }
+#textFont.dark {
+    background: black;
+}
 #innerChange input {
     border: none;
     border-bottom: 5px solid lightgray;
@@ -1569,6 +1695,7 @@ textarea,input:focus {
     color: red; 
     text-align: center;  
     font-weight: bold;
+    background: none;
 }
 #innerChange input:focus {
     border-bottom: 5px solid red;
@@ -1664,6 +1791,10 @@ textarea,input:focus {
     border-radius: 20px;
     background: white;
 }
+#loc-feel div.dark {
+    background: black;
+    box-shadow: 0 0 6px white;
+}
 #loc-feel input {
     background: none;
     border: none;
@@ -1678,6 +1809,10 @@ textarea,input:focus {
     border: none;
     border-bottom: 2px solid #4b6f5a;
     outline: none;
+}
+#loc-feel input.dark:focus {
+    border-bottom: 3px solid black;
+    box-shadow: 0 0 4px white;   
 }
 #loc-feel section {
     text-align: right;
@@ -1723,17 +1858,22 @@ textarea,input:focus {
     padding: 20px;
     transform: translateY(100%);
     transition: all 0.4s ease;
-  overscroll-behavior: contain;
+    overscroll-behavior: contain;
+}
+#tagPeople.dark {
+    background: black;
+    box-shadow: 0 0 6px white;
 }
 #tagPeople h1 {
     color: green;
+    background: transparent;
 }
 #searchTagged {
     position: fixed;
     display: block;
     width: 95%;
     z-index: 10000;
-    background: white;
+    background: transparent;
 }
 #searchTagged input {
     width: 90%;
@@ -1746,17 +1886,22 @@ textarea,input:focus {
     color: #4b6f5a;
     box-shadow: 0 0 9px gray;
 }
+#searchTagged input.dark {
+    color: white;
+    background: black;
+}
 #searchTagged input:focus {
     border-bottom: 5px solid #4b6f5a;
 }
 #faultMass {
     width: 95%;
-    background: white;
+    background: none;
     color: red;
     font-size: 25px;
     font-weight: bold;
     margin: 18px;
 }
+
 .tagIds {
     position: relative;
     width: 220px;
@@ -1895,7 +2040,10 @@ textarea,input:focus {
     overflow: auto;
     position: relative;
     border-radius: 10px;
-  overscroll-behavior: contain;
+    overscroll-behavior: contain;
+}
+#taggedShowDiv.dark {
+    background: black;
 }
 #taggedShowDiv h2 {
     color: green;
@@ -1904,7 +2052,7 @@ textarea,input:focus {
     position: absolute;
     z-index: 1014;
     width: 96%;
-    background: white;
+    background: none;
 }
 
 .tag-card {
@@ -1922,7 +2070,13 @@ textarea,input:focus {
   min-width: 260px;
   max-width: 500px;
 }
-
+.tag-card.dark {
+    background: black;
+}
+.tag-card *.dark {
+    background: black;
+    color: white;
+}
 .tag-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
@@ -2004,6 +2158,10 @@ textarea,input:focus {
     transition:0.4s;
     transform: translateY(150%); 
 }
+#postMenu.dark {
+    background: black;
+    border: 1px solid white;
+}
 #postMenu div {
     border: none;
     border-top: 1px solid gray;
@@ -2011,6 +2169,9 @@ textarea,input:focus {
     padding: 10px;
     font-size: 20px;
     background: none;  
+}
+#postMenu div.dark {
+    color: white;
 }
 .postInfo{
     margin-left: 15px;
@@ -2041,7 +2202,13 @@ textarea,input:focus {
 .hideAndSick button.active {
     transform: rotate(180deg);
 }
-
+.postedMenuDarl.dark {
+    background: black !important;
+    border: 1px solid white;
+}
+.postedMenuDarl *.dark {
+    background: none !important;
+}
 #otherProf{
     display: block;
     position: fixed;
@@ -2061,7 +2228,10 @@ textarea,input:focus {
     transform: translateY(100%); 
     transition: transform 0.5s ease,
                 opacity 0.3s ease;
-  overscroll-behavior: contain;
+    overscroll-behavior: contain;
+}
+#otherProf.dark {
+    background: black;
 }
 #otherProf.show {
     transform: translateY(0);
@@ -2094,6 +2264,7 @@ textarea,input:focus {
     background: none;
     width: fit-content;
     height: fit-content;
+    padding-left: 20px;
 }
 #othProfName {
     font-size: 30px;
@@ -2259,11 +2430,11 @@ textarea,input:focus {
     padding: 15px;
 }
 #onDisImg aside p {
-    font-size: 20px;
+    font-size: 30px;
     font-weigh: bold;
     overflow: auto;
     color: white;
-  overscroll-behavior: contain;
+    overscroll-behavior: contain;
 }
 /* Container & Existing Vibes Style */
 .vibes-container {
@@ -2574,7 +2745,7 @@ textarea,input:focus {
     white-space: pre-wrap;
     word-break: break-word;
 }
-#MainMenuAside{
+#MainMenuAside {
     display: block;
     position: fixed;
     width: 100%;
@@ -2586,6 +2757,8 @@ textarea,input:focus {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3s ease-out;
+    overflow: hidden;
+    overscroll-behavior: contain;
 }
 #MainMenuAside.show {
     opacity: 1;   
@@ -2593,15 +2766,17 @@ textarea,input:focus {
 }
 #MainMenuContent {
     width: 0;
-    max-width: 700px; 
+    max-width: 500px;
     height: 100%;
-    background: #ffffff;
+    background: white;
     padding: 20px;
     box-shadow: 5px 0 15px rgba(0, 0, 0, 0.2);
-    overflow-y: auto; 
     box-sizing: border-box;
-    transition: width 0.4s ease-in
-  overscroll-behavior: contain;
+    transition: width 0.4s ease-in;
+    overflow: auto;
+}
+#MainMenuContent.dark {
+    background: black;
 }
 #MainMenuContent.show {
     width: 80%;
@@ -2618,6 +2793,10 @@ textarea,input:focus {
     transition: transform 0.2s ease;
 }
 
+#MenuUpperBtn img.dark {
+    filter: brightness(0) invert(1);     
+}
+
 #MenuUpperBtn img:active {
     transform: scale(0.85);
 }
@@ -2629,33 +2808,37 @@ textarea,input:focus {
     margin-top: 20px;
 }
 
-#MenuBtnBox button {
+.MenuBtns {
     display: flex;
     align-items: center;
-    gap: 16px;
     width: 100%;
     padding: 14px 20px;
-    border: 1px solid #e2e8f0;
-    border-radius: 14px;
+    border: none;
     cursor: pointer;
-    font-size: 25px;
-    font-weight: 600;
-    color: #1e293b;
-    background: #f8fafc;
+    font-size: 28px;
+    font-weight: bold;
+    color: black;
+    background: none;
     text-align: left;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    overflow: auto;
 }
-
-#MenuBtnBox button:hover {
-    background: #e2e8f0;
-    transform: translateX(4px);
+.MenuBtns.dark {
+    color: white
 }
-
-#MenuBtnBox button img {
-    width: 42px;
-    height: 42px;
+.MenuBtns img {
+    width: 40px;
+    height: 40px;
     object-fit: contain;
+    margin-right: 27px;
+}
+.MenuBtns img.dark {
+    filter: brightness(0) invert(1);         
+}
+.MenuStatus {
+    font-size: 20px;
+    margin: 20px;
+    color: gray;
 }
 
 /* Spinner Style */
@@ -2694,15 +2877,14 @@ textarea,input:focus {
     border-radius: 50%;
     box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
     opacity: 1;
-    padding: 16px 24px;
-    background: white;
+    padding: 16px;
+    background: none;
     transition: border-radius 0.4s ease, box-shadow 0.4s ease, opacity, background 0.4s ease;
 }
-
 #nextalk-overlay img {
     background: white;
     width: 100px; 
-    height: auto;
+    height: 100px;
     border-radius: 50%;
 }
 
@@ -2714,6 +2896,7 @@ textarea,input:focus {
     width: 0;
     opacity: 0;
     overflow: hidden;
+    color: black;
     white-space: nowrap;
     transition: width 0.5s ease, opacity 0.4s ease, margin-left 0.4s ease;
 }
@@ -2723,11 +2906,20 @@ textarea,input:focus {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     border-radius: 35px;
     opacity: 1;
+    color: white;
+    text-shadow: 0 0 4px black;
 }
+#nextalk-overlay.open.dark {
+    background: transparent;  
+    backdrop-filter: blur(12px);  
+}
+
 #nextalk-overlay section.open {
     width: 350px; 
     opacity: 1;
     margin-left: 15px; 
+    color: white;
+    text-shadow: 0 0 4px black;
 }
 #stry-ongoing {
     display: none;
@@ -2748,6 +2940,12 @@ textarea,input:focus {
                 0 8px 10px -6px rgba(0, 0, 0, 0.01);
     border: 1px solid rgba(0, 0, 0, 0.05);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+.loadContainer.dark {
+    background: none;
+}
+.loadContainer *.dark {
+    color: white;
 }
 @keyframes fade-on {
     from {tramsform: scale(0.7) translateY(5px)}
@@ -2796,10 +2994,9 @@ textarea,input:focus {
     overflow-x: auto;
     padding: 10px 20px;
     gap: 15px;
-    background: rgba(255, 255, 255, 0.05);
+    background: none;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
     scrollbar-width: none; 
   overscroll-behavior: contain;
 }
@@ -2821,6 +3018,11 @@ textarea,input:focus {
     white-space: nowrap;
     transition: font-size 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.tab-items.dark, .tab-btns.dark {
+    background: gray;
+    color: black;
 }
 
 .tab-items.active, .tab-btns.active {
@@ -2912,7 +3114,9 @@ textarea,input:focus {
     overflow-y: auto;
   overscroll-behavior: contain;
 }
-
+#clip-take-overlay.dark {
+    background: black;
+}
 #clip-take-overlay.open {
     transform: translateY(0%);    
 }
@@ -2921,7 +3125,8 @@ textarea,input:focus {
     justify-content: space-between;
     align-items: center;
     padding: 16px 20px;
-    background: #ffffff;
+    background: none;
+    backdrop-filter: blur(12px);
     border-top-left-radius: 20px;
     border-top-right-radius: 20px;
     border-bottom: 1px solid #e4e6eb;
@@ -2950,7 +3155,9 @@ textarea,input:focus {
     font-weight: 600;
     margin: 0;
 }
-
+.clip-header h3.dark {
+    color: white;
+}
 .secondDiv {
     display: flex;
     align-items: center;
@@ -2995,6 +3202,9 @@ textarea,input:focus {
     background: transparent;
     color: #050505;
 }
+#clip-caption {
+    color: white;
+}
 
 #clip-caption::placeholder {
     color: #65676b;
@@ -3028,7 +3238,6 @@ textarea,input:focus {
     border-top: 1px solid #e4e6eb;
     padding-top: 14px;
 }
-
 .input-wrapper {
     display: flex;
     align-items: center;
@@ -3038,10 +3247,17 @@ textarea,input:focus {
     padding: 0 12px;
     transition: all 0.2s ease;
 }
-
+.input-wrapper.dark {
+    background: black;
+}
 .input-wrapper:focus-within {
     border-color: #1877f2;
     background: #ffffff;
+    box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+}
+.input-wrapper.dark:focus-within {
+    border-color: #1877f2;
+    background: rgba(255,255,255,0.2);
     box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
 }
 
@@ -3064,6 +3280,9 @@ textarea,input:focus {
 .clip-info input[type="text"]:focus {
     outline: none;
 }
+.clip-info input[type="text"].dark {
+    color: white;
+}
 #with-other {
     color: purple;
     text-decoration: underline;
@@ -3073,11 +3292,12 @@ textarea,input:focus {
     display: none;
 }
 .down-btn {
-    font-size: 35px;
+    font-size: 30px;
     width: 100%;
     height: 100px;
     border: none;
     border-radius: 10px;
+    background: transparent;
 }
 #guestAlert {
     display: flex;
@@ -3130,7 +3350,6 @@ textarea,input:focus {
     padding: 20px;
 }
 
-/* গ্র্যাডিয়েন্ট মুভ করার কি-ফ্রেম */
 @keyframes smoothGradient {
     0% {
         background-position: 0% 50%;
@@ -3248,14 +3467,12 @@ textarea,input:focus {
     border: none;
     color: white;
 }
-       /* Quick Ball স্টাইল */
-        .quick-ball {
+.quick-ball {
             position: fixed;
             width: 100px;
             height: 100px;
-            background: linear-gradient(145deg, #3b82f6, #1d4ed8);
             border-radius: 50%;
-            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
             cursor: pointer;
             display: none;
             justify-content: center;
@@ -3265,17 +3482,19 @@ textarea,input:focus {
             font-size: 25px;
             user-select: none;
             touch-action: none;
-            z-index: 1000;
+            z-index: 999;
+            background: linear-gradient(135deg, cyan, lightgreen, cyan, lightgreen);
+            background-size: 300% 300%;
+            animation: spin 5s linear infinite, smoothGradient 4s linear infinite;
         }
 
-        .quick-ball:active {
+.quick-ball:active {
             transform: scale(0.92);
-        }
+           }
 
-        /* পপআপ অ্যাপ মেনু ডিভ (Grid Layout, White BG, Max-Height & Overflow Auto) */
-        .quick-menu {
+.quick-menu {
             position: fixed;
-            width: 600px;
+            width: 450px;
             max-height: 600px;
             overflow-y: auto;
             background: #ffffff;
@@ -3289,26 +3508,23 @@ textarea,input:focus {
             opacity: 0;
             transform: scale(0.95);
             transition: opacity 0.2s ease, transform 0.2s ease;
-  overscroll-behavior: contain;
+            overscroll-behavior: contain;
         }
-
-        .quick-menu.active {
+.quick-menu.dark {
+            background: black;
+            box-shadow: 0 0 5px white;
+        }
+.quick-menu.active {
             display: flex;
             opacity: 1;
             transform: scale(1);
         }
 
-        /* স্ক্রোলবার কাস্টমাইজেশন */
-        .quick-menu::-webkit-scrollbar {
-            width: 5px;
-        }
-        .quick-menu::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 10px;
+.quick-menu::-webkit-scrollbar {
+            width: 0px;
         }
 
-        /* হেডার বা টাইটেল */
-        .quick-menu-header {
+.quick-menu-header {
             font-size: 26px;
             font-weight: 600;
             color: #64748b;
@@ -3317,30 +3533,47 @@ textarea,input:focus {
             letter-spacing: 0.5px;
         }
 
-        /* গ্রিড কন্টেইনার (প্রতি লাইনে ৪টি অ্যাপ বা আইটেম) */
-        .quick-apps-grid {
+.quick-apps-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 8px;
         }
 
-        /* অ্যাপ্লিকেশন বাটন স্টাইল (মোবাইল অ্যাপের মতো আইকন ও টেক্সট) */
-        .quick-app-item {
+.quick-app-item {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
             border-radius: 12px;
             padding: 8px 4px;
             display: flex;
             flex-direction: column;
+            width: 140px;
             align-items: center;
             justify-content: center;
             gap: 4px;
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
+            animation: smoothy 0.6s;
+        }
+.quick-app-item.dark {
+    background: rgba(0,0,0,0.4);
+}
+.quick-app-item *.dark {
+    color: white;
+    filter: brightness(0) invert(1);
+}        
+ @keyframes smoothy {
+      from {
+          transform: translateY(20px) scale(1.1);
+          opacity: 0;
+          }
+      to {
+          transform: translateY(0px) scale(1);
+          opacity: 1;
+          }
         }
 
-        .quick-app-item p {
+.quick-app-item p {
             margin: 0;
             font-size: 18px;
             font-weight: 500;
@@ -3351,30 +3584,35 @@ textarea,input:focus {
             width: 100%;
         }
 
-        .quick-app-item:hover {
+.quick-app-item:active {
             background: #eff6ff;
             border-color: #3b82f6;
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
         }
- 
-
+.storyErr.dark {color: white !important}
+.storyErr img.dark {filter: brightness(0) invert(1)}
+.todark.dark {background: black !important}
+.ondmode.dark {background: black !important}
+.ondmode *.dark {color: white}
 
  </style>
 <link rel="stylesheet" href="./asirnet.css">
 </head>
 <body id="body">
+
 <div class="app-con">
+    
 <div id="header">
  <div>
-    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="50px" id="bbcv">
+    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="45px" class="headerBtn" onclick ="menuOpen()">
 
-    <img src="https://i.ibb.co.com/wNpFN8qH/IMG-20251103-150220.jpg" width="200px">
+    <img src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png" width="200px">
     
 </div>
 <div style="display: flex;">
-<button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40"></button>
-<h1 id="profPicture"></h1>
+<button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40" class="headerBtn"></button>
+<h1 id="profPicture" onclick="profile(); loadProfile()"></h1>
 </div>
 </div>
 
@@ -3392,7 +3630,7 @@ textarea,input:focus {
 
 
 <div id="onDisImg">
-    <button onclick="onDisImg('','')">
+    <button onclick="closeOnDisImg()">
         ×
     </button>
     <img style="width:100%">
@@ -3445,7 +3683,7 @@ textarea,input:focus {
       </tr>
     </table>
 
- <div class="headerPre"><img id="idSign" width="60" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+ <div class="headerPre"><img id="idSign" width="60" style="border-radius: 50%; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
 <span id="idName"></span> 
 is feeling 
 <span id="feeling">___</span> 
@@ -3461,12 +3699,12 @@ at
     <section id="innerChange">
 <input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
     <div id="demo"><div>"it's a demo of post letters"</div></div>
- <button onclick="applySize()">
-     <img class="correctBtn" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ <button onclick="applySize()" class="correctBtn">
+     <img border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
  </button>
     </section>
    </section>
-    </div>
+   </div>
 
     <!-- ALERT -->
     <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
@@ -3495,7 +3733,13 @@ at
  <div id="pBG">
   <div id="bgPost">
  <h1 style="color: green; margin-left: 20px;">Choose your own background...</h1><hr style="background: green; height: 2px;">
-<div id="BGS"> 
+<div id="BGS">
+
+  <!-- ↕️Default↕️ -->
+  <p>Default: </p>
+
+<button style="background-image: url('https://i.ibb.co.com/V8jnq8f/20260825-115648.png')" onclick="textBG('none', 'none', '')"></button>
+ 
   <!-- ↕️Colors↕️ -->
   <p>Colors: </p>
 
@@ -3657,7 +3901,7 @@ at
 
 <div id="allChange">
 
- <h2 style="padding-left:15px;">Stories</h2><hr>
+ <h2 style="padding-left:25px;" class="storyErr">Stories</h2><hr>
 
 <div class="story-container">
     <table> <tr> <td>
@@ -3726,7 +3970,7 @@ at
     </div>
 </div>
 
-<hr>
+<hr style="margin-bottom: 30px;">
 
 <div id="showVibeText">
     <div id="showVibeText-card">
@@ -3776,27 +4020,38 @@ at
     <div>
         <table id="footerBtn">
             <tr>
-<td><button onclick="location.reload()"><img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40"></button></td>
-<td><button onclick="location.href='reels.html'" class="profile-btn"><img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0"></td>
-<td><button onclick="postMenu(event)" style="    
-    width: 90px;
-    height: 90px;
-    border: 2px solid black;
-    background: none;
-    border-radius: 90px;
-    font-size: 40px;
-    padding: 5px;
-    color: black;
-">+</button></td>
-<td><button onclick="notification();"><img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40"></button></td>
-<td><button onclick="profile(); loadProfile();"><img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40"></button></button></td>
+                
+    <td>
+        <button onclick="location.reload()" class="footerBtn">
+            <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
+         </button>
+     </td>
+     <td>
+        <button onclick="location.href='reels.html'" class="footerBtn">
+            <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0">
+         </button>
+     </td>
+     <td>
+         <button onclick="postMenu(event)" id="footerPlusBtn">+</button>
+     </td>
+     <td>
+         <button onclick="notification();" class="footerBtn">
+             <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40">
+          </button>
+      </td>
+      <td>
+          <button onclick="profile(); loadProfile();" class="footerBtn">
+              <img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40">
+           </button>
+       </td>
+       
             </tr>
         </table>
     </div>
 </footer>
 
 <div id="postMenu">
-   <div onclick="createpost('postpage');clzpostMenu()">Post plain text</div>
+   <div onclick="createpost('postpage');clzpostMenu()">Post text</div>
    <label>
    <div onclick="clzpostMenu()">
  <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">
@@ -3824,7 +4079,7 @@ at
     <button onclick="connect()" id="connectionBtn">Add Connection</button>
     <button onclick="messageWithNexttalk()" id="messageSending">Send Message</button>
     </div>
-    <h1>Connected ones</h1><hr>
+    <h1 class="storyErr">Connected ones</h1><hr>
     <div id="showOnes">
      <div class="friendShow">
   <div class="main-loading-focus"></div>
@@ -3906,28 +4161,86 @@ at
     
     <div id="MenuUpperBtn">
      
-      <img src="https://i.ibb.co.com/GfNT4MjW/back.png" width="60" onclick="fun()">
+      <img src="https://i.ibb.co.com/GfNT4MjW/back.png" width="60" onclick="menuClose()">
       <img src="https://i.ibb.co.com/1fpddb1t/loading.png" width="60" onclick="location.reload()">
     </div>
 
     <hr style="height: 1px; background: black;">  
 
     <div id="MenuBtnBox">
+        
+<div class="MenuStatus">Menu Buttons</div>      
 
-      <button onclick="profile()">
-        <img src="https://i.ibb.co.com/YgKxNZB/user.png" width="50"><br>
+      <button onclick="location.reload(); menuClose()" class="MenuBtns">
+        <img src="https://i.ibb.co.com/wZFh56jy/home.png" width="50">
+        Home
+      </button>    
+      
+      <button onclick="profile(); loadProfile(); menuClose()" class="MenuBtns"> 
+        <img src="https://i.ibb.co.com/YgKxNZB/user.png" width="50">
         Profile
       </button>    
       
-      <button onclick="notification()"> 
-        <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" width="50"><br>
+      <button onclick="notification(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" width="50">
         Notifications
-      </button>    
-      
-      <button onclick="setting()">    
-        <img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50"><br>
+      </button>
+      <button onclick="setting(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50">
         Settings
       </button>
+      <button onclick="location.href='reels.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/F4W5LC2f/video.png" width="50">
+        ClipNovas
+      </button>
+
+<div class="MenuStatus">Post Options</div>      
+      
+      <button onclick="openStoryPort(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/0Rk479f9/book.png" width="50">
+        Post Story
+      </button>
+      
+<label>
+    <button type="button" onclick="document.getElementById('imageInput').click(); menuClose()" class="MenuBtns">
+        
+        <input 
+            type="file" 
+            accept="video/*" 
+            id="imageInput" 
+            hidden 
+            onchange="loadReels(event)"
+        >
+
+        <img src="https://i.ibb.co.com/NdZ3MTD3/video-player.png" width="50">
+        Post Clip
+
+    </button>
+</label>
+   
+      <button onclick="createpost('postpage'); menuClose();" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/XZHcvRMN/add-post.png" width="50">
+        Post Text
+      </button>
+      
+<label>
+    <input 
+        type="file" 
+        accept="image/*" 
+        id="imageInput" 
+        hidden 
+        onchange="loadpostIMG(event)"
+    >
+
+    <button 
+        type="button"
+        onclick="document.getElementById('imageInput').click(); menuClose()" 
+        class="MenuBtns"
+    >
+        <img src="https://i.ibb.co.com/9mmh24xT/image.png" width="50">
+        Post photo
+    </button>
+</label>
       
     </div> 
 
@@ -3965,9 +4278,9 @@ at
             </div>
         </div>
         <button onclick="tag()" id="reel-tag-btn" class="down-btn">
-      <div style="width: 100%; text-align: left; padding-left: 50px;">Tag People</div>
+      <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Tag People</div>
        <button onclick="helperForLoad()" class="down-btn">
-      <div style="width: 100%; text-align: left; padding-left: 50px;">Change video</div>
+      <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Change video</div>
       </button>
     </div>
 </div>
@@ -3997,16 +4310,22 @@ So create an account or log in to AsirNet to enjoy it.</div>
 </div>
 
 
-    <div id="myQuickBall" class="quick-ball">Apps</div>
+<div id="myQuickBall" class="quick-ball"></div>
+
 
     <div id="myQuickMenu" class="quick-menu">
-        <div class="quick-menu-header">Quick Apps</div>
+        <div class="quick-menu-header">Menu</div>
         <div class="quick-apps-grid">
 
             
             <div class="quick-app-item" onclick="location.reload()">
 <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
 <p>Home</p>
+            </div>
+            
+            <div class="quick-app-item" onclick="location.reload()">
+<img src="https://i.ibb.co.com/1fpddb1t/loading.png" alt="" border="0" width="40">
+<p>Reload</p>
             </div>
             
 
@@ -4061,161 +4380,734 @@ So create an account or log in to AsirNet to enjoy it.</div>
 
 
 </div>
-    <script>
-        function initQuickBallWithGridMenu(ballId, menuId) {
-            const ball = document.getElementById(ballId);
-            const menu = document.getElementById(menuId);
-            if (!ball || !menu) return;
 
-            let isDragging = false;
-            let startX, startY;
-            let initialX, initialY;
-            let hasMoved = false;
+<script>
+function initQuickBallWithGridMenu(ballId, menuId) {
 
-            const defaultX = window.innerWidth - ball.offsetWidth - 20;
-            const defaultY = (window.innerHeight - ball.offsetHeight) / 2;
-            ball.style.left = defaultX + 'px';
-            ball.style.top = defaultY + 'px';
+    const ball = document.getElementById(ballId);
+    const menu = document.getElementById(menuId);
 
-            function dragStart(e) {
-                isDragging = true;
-                hasMoved = false;
-                menu.classList.remove('active');
-                ball.style.transition = 'none';
+    // .app-con এর প্রথম element নেওয়া
+    const entire = document.querySelector('.app-con');
 
-                const clientX = e.clientX || e.touches[0].clientX;
-                const clientY = e.clientY || e.touches[0].clientY;
+    if (!ball || !menu || !entire) return;
 
-                startX = clientX;
-                startY = clientY;
 
-                initialX = ball.offsetLeft;
-                initialY = ball.offsetTop;
+    /* =========================
+       VARIABLES
+    ========================== */
 
-                document.addEventListener('mousemove', drag);
-                document.addEventListener('touchmove', drag, { passive: false });
-                document.addEventListener('mouseup', dragEnd);
-                document.addEventListener('touchend', dragEnd);
-            }
+    let isDragging = false;
 
-            function drag(e) {
-                if (!isDragging) return;
-                e.preventDefault();
+    let startX = 0;
+    let startY = 0;
 
-                const clientX = e.clientX || e.touches[0].clientX;
-                const clientY = e.clientY || e.touches[0].clientY;
+    let initialX = 0;
+    let initialY = 0;
 
-                if (Math.abs(clientX - startX) > 5 || Math.abs(clientY - startY) > 5) {
-                    hasMoved = true;
-                }
+    let hasMoved = false;
 
-                const dx = clientX - startX;
-                const dy = clientY - startY;
 
-                let newX = initialX + dx;
-                let newY = initialY + dy;
+    /* =========================
+       CONTAINER POSITION
+    ========================== */
 
-                const topBottomGap = 80;
-                const sideGap = 15;
+    function getContainerRect() {
+        return entire.getBoundingClientRect();
+    }
 
-                const maxX = window.innerWidth - ball.offsetWidth - sideGap;
-                const minX = sideGap;
-                const maxY = window.innerHeight - ball.offsetHeight - topBottomGap;
-                const minY = topBottomGap;
 
-                newX = Math.max(minX, Math.min(newX, maxX));
-                newY = Math.max(minY, Math.min(newY, maxY));
+    /* =========================
+       BALL DEFAULT POSITION
+    ========================== */
 
-                ball.style.left = newX + 'px';
-                ball.style.top = newY + 'px';
-            }
+    const containerWidth = entire.clientWidth;
+    const containerHeight = entire.clientHeight;
 
-            function dragEnd() {
-                if (!isDragging) return;
-                isDragging = false;
+    const defaultX =
+        containerWidth -
+        ball.offsetWidth -
+        20;
 
-                document.removeEventListener('mousemove', drag);
-                document.removeEventListener('touchmove', drag);
-                document.removeEventListener('mouseup', dragEnd);
-                document.removeEventListener('touchend', dragEnd);
+    const defaultY =
+        (containerHeight -
+            ball.offsetHeight) / 2;
 
-                ball.style.transition = 'left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), transform 0.2s ease';
 
-                const currentX = ball.offsetLeft;
-                const currentY = ball.offsetTop;
-                const screenWidth = window.innerWidth;
-                const screenHeight = window.innerHeight;
-                const sideGap = 15;
-                const topBottomGap = 80;
-                const centerX = screenWidth / 2;
+    ball.style.left =
+        defaultX + "px";
 
-                let targetX = (currentX + ball.offsetWidth / 2 < centerX) ? sideGap : (screenWidth - ball.offsetWidth - sideGap);
-                let targetY = Math.max(topBottomGap, Math.min(currentY, screenHeight - ball.offsetHeight - topBottomGap));
+    ball.style.top =
+        defaultY + "px";
 
-                ball.style.left = targetX + 'px';
-                ball.style.top = targetY + 'px';
-            }
 
-            ball.addEventListener('mousedown', dragStart);
-            ball.addEventListener('touchstart', dragStart);
+    /* =========================
+       DRAG START
+    ========================== */
 
-            ball.addEventListener('click', (e) => {
-                if (!hasMoved) {
-                    e.stopPropagation();
-                    toggleMenu();
-                }
-            });
+    function dragStart(e) {
 
-            function toggleMenu() {
-                if (menu.classList.contains('active')) {
-                    menu.classList.remove('active');
-                } else {
-                    const ballRect = ball.getBoundingClientRect();
-                    const menuWidth = 280;
-                    const menuHeight = menu.offsetHeight || 220;
-                    const screenWidth = window.innerWidth;
-                    const screenHeight = window.innerHeight;
-                    const centerX = screenWidth / 2;
-                    const centerY = screenHeight / 2;
+        isDragging = true;
+        hasMoved = false;
 
-                    let menuTop, menuLeft;
+        menu.classList.remove("active");
 
-                    const isRight = (ballRect.left + ball.offsetWidth / 2) > centerX;
-                    const isBottom = (ballRect.top + ball.offsetHeight / 2) > centerY;
+        let clientX;
+        let clientY;
 
-                    if (isRight) {
-                        menuLeft = ballRect.left - menuWidth - 12; 
-                    } else {
-                        menuLeft = ballRect.right + 12;
-                    }
 
-                    if (isBottom) {
-                        menuTop = ballRect.bottom - menuHeight;
-                    } else {
-                        menuTop = ballRect.top; 
-                    }
+        if (
+            e.touches &&
+            e.touches.length > 0
+        ) {
 
-                    if (menuLeft < 15) menuLeft = 15;
-                    if (menuLeft + menuWidth > screenWidth - 15) menuLeft = screenWidth - menuWidth - 15;
-                    if (menuTop < 15) menuTop = 15;
-                    if (menuTop + menuHeight > screenHeight - 15) menuTop = screenHeight - menuHeight - 15;
+            clientX =
+                e.touches[0].clientX;
 
-                    menu.style.top = menuTop + 'px';
-                    menu.style.left = menuLeft + 'px';
+            clientY =
+                e.touches[0].clientY;
 
-                    menu.classList.add('active');
-                }
-            }
+        } else {
 
-            document.addEventListener('click', (e) => {
-                if (!ball.contains(e.target) && !menu.contains(e.target)) {
-                    menu.classList.remove('active');
-                }
-            });
+            clientX = e.clientX;
+            clientY = e.clientY;
         }
 
-        initQuickBallWithGridMenu('myQuickBall', 'myQuickMenu');
-    </script>
+
+        startX = clientX;
+        startY = clientY;
+
+
+        // Container-এর ভিতরের current position
+        initialX = ball.offsetLeft;
+        initialY = ball.offsetTop;
+
+
+        document.addEventListener(
+            "mousemove",
+            drag
+        );
+
+        document.addEventListener(
+            "touchmove",
+            drag,
+            { passive: false }
+        );
+
+        document.addEventListener(
+            "mouseup",
+            dragEnd
+        );
+
+        document.addEventListener(
+            "touchend",
+            dragEnd
+        );
+    }
+
+
+    /* =========================
+       DRAG
+    ========================== */
+
+    function drag(e) {
+
+        if (!isDragging) return;
+
+        e.preventDefault();
+
+
+        let clientX;
+        let clientY;
+
+
+        if (
+            e.touches &&
+            e.touches.length > 0
+        ) {
+
+            clientX =
+                e.touches[0].clientX;
+
+            clientY =
+                e.touches[0].clientY;
+
+        } else {
+
+            clientX = e.clientX;
+            clientY = e.clientY;
+        }
+
+
+        /* =========================
+           DETECT MOVEMENT
+        ========================== */
+
+        if (
+            Math.abs(clientX - startX) > 5 ||
+            Math.abs(clientY - startY) > 5
+        ) {
+
+            hasMoved = true;
+        }
+
+
+        const dx =
+            clientX - startX;
+
+        const dy =
+            clientY - startY;
+
+
+        let newX =
+            initialX + dx;
+
+        let newY =
+            initialY + dy;
+
+
+        /* =========================
+           CONTAINER SIZE
+        ========================== */
+
+        const containerWidth =
+            entire.clientWidth;
+
+        const containerHeight =
+            entire.clientHeight;
+
+
+        /* =========================
+           DRAG LIMIT
+        ========================== */
+
+        const sideGap = 15;
+
+        const topBottomGap = 20;
+
+
+        const minX =
+            sideGap;
+
+        const maxX =
+            containerWidth -
+            ball.offsetWidth -
+            sideGap;
+
+
+        const minY =
+            topBottomGap;
+
+        const maxY =
+            containerHeight -
+            ball.offsetHeight -
+            topBottomGap;
+
+
+        /* =========================
+           CLAMP POSITION
+        ========================== */
+
+        newX =
+            Math.max(
+                minX,
+                Math.min(
+                    newX,
+                    maxX
+                )
+            );
+
+
+        newY =
+            Math.max(
+                minY,
+                Math.min(
+                    newY,
+                    maxY
+                )
+            );
+
+
+        /* =========================
+           APPLY POSITION
+        ========================== */
+
+        ball.style.left =
+            newX + "px";
+
+        ball.style.top =
+            newY + "px";
+    }
+
+
+    /* =========================
+       DRAG END
+    ========================== */
+
+    function dragEnd() {
+
+        if (!isDragging) return;
+
+        isDragging = false;
+
+
+        /* =========================
+           REMOVE EVENTS
+        ========================== */
+
+        document.removeEventListener(
+            "mousemove",
+            drag
+        );
+
+        document.removeEventListener(
+            "touchmove",
+            drag
+        );
+
+        document.removeEventListener(
+            "mouseup",
+            dragEnd
+        );
+
+        document.removeEventListener(
+            "touchend",
+            dragEnd
+        );
+
+
+        /* =========================
+           TRANSITION
+        ========================== */
+
+        ball.style.transition =
+            "left 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), " +
+            "top 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), " +
+            "transform 0.2s ease";
+
+
+        /* =========================
+           CONTAINER SIZE
+        ========================== */
+
+        const containerWidth =
+            entire.clientWidth;
+
+        const containerHeight =
+            entire.clientHeight;
+
+
+        const currentX =
+            ball.offsetLeft;
+
+        const currentY =
+            ball.offsetTop;
+
+
+        const sideGap = 15;
+
+        const topBottomGap = 20;
+
+
+        /* =========================
+           CENTER
+        ========================== */
+
+        const centerX =
+            containerWidth / 2;
+
+
+        /* =========================
+           SNAP LEFT / RIGHT
+        ========================== */
+
+        let targetX;
+
+
+        if (
+            currentX +
+            ball.offsetWidth / 2 <
+            centerX
+        ) {
+
+            // LEFT SIDE
+
+            targetX =
+                sideGap;
+
+        } else {
+
+            // RIGHT SIDE
+
+            targetX =
+                containerWidth -
+                ball.offsetWidth -
+                sideGap;
+        }
+
+
+        /* =========================
+           VERTICAL POSITION
+        ========================== */
+
+        let targetY =
+            Math.max(
+                topBottomGap,
+                Math.min(
+                    currentY,
+                    containerHeight -
+                    ball.offsetHeight -
+                    topBottomGap
+                )
+            );
+
+
+        /* =========================
+           APPLY SNAP
+        ========================== */
+
+        ball.style.left =
+            targetX + "px";
+
+        ball.style.top =
+            targetY + "px";
+    }
+
+
+    /* =========================
+       BALL EVENTS
+    ========================== */
+
+    ball.addEventListener(
+        "mousedown",
+        dragStart
+    );
+
+
+    ball.addEventListener(
+        "touchstart",
+        dragStart,
+        { passive: false }
+    );
+
+
+    /* =========================
+       BALL CLICK
+    ========================== */
+
+    ball.addEventListener(
+        "click",
+        function(e) {
+        
+            if (hasMoved) {
+
+                hasMoved = false;
+
+                return;
+            }
+            e.stopPropagation(); 
+            toggleMenu();
+        }
+    );
+
+
+    /* =========================
+       TOGGLE MENU
+    ========================== */
+
+function toggleMenu() {
+
+    /* =========================
+       MENU CLOSE
+    ========================== */
+
+    if (menu.classList.contains("active")) {
+
+        menu.classList.remove("active");
+
+        return;
+    }
+
+
+    /* =========================
+       CONTAINER RECT
+    ========================== */
+
+    const containerRect =
+        entire.getBoundingClientRect();
+
+
+    const ballRect =
+        ball.getBoundingClientRect();
+
+
+    /* =========================
+       ACTIVATE FIRST
+       যাতে আসল width পাওয়া যায়
+    ========================== */
+
+    menu.classList.add("active");
+
+
+    /* =========================
+       REAL MENU SIZE
+    ========================== */
+
+    const menuWidth =
+        menu.offsetWidth;
+
+    const menuHeight =
+        menu.offsetHeight;
+
+
+    const gap = 12;
+
+    const sideGap = 15;
+
+    const topGap = 15;
+
+
+    /* =========================
+       BALL POSITION
+       CONTAINER-এর ভিতরে
+    ========================== */
+
+    const ballCenterX =
+        ballRect.left +
+        (ballRect.width / 2);
+
+
+    const containerCenterX =
+        containerRect.left +
+        (containerRect.width / 2);
+
+
+    const isRightSide =
+        ballCenterX > containerCenterX;
+
+
+    let menuLeft;
+    let menuTop;
+
+
+    /* =========================
+       RIGHT SIDE BALL
+       MENU LEFT
+    ========================== */
+
+    if (isRightSide) {
+
+        menuLeft =
+            ballRect.left -
+            containerRect.left -
+            menuWidth -
+            gap;
+
+    }
+
+
+    /* =========================
+       LEFT SIDE BALL
+       MENU RIGHT
+    ========================== */
+
+    else {
+
+        menuLeft =
+            ballRect.right -
+            containerRect.left +
+            gap;
+    }
+
+
+    /* =========================
+       HORIZONTAL LIMIT
+    ========================== */
+
+    const containerWidth =
+        entire.clientWidth;
+
+    if (menuWidth >= containerWidth) {
+
+        menuLeft =
+            (containerWidth -
+                menuWidth) / 2;
+
+    }
+
+    else {
+
+        menuLeft =
+            Math.max(
+                sideGap,
+                Math.min(
+                    menuLeft,
+                    containerWidth -
+                    menuWidth -
+                    sideGap
+                )
+            );
+    }
+
+
+    /* =========================
+       VERTICAL POSITION
+    ========================== */
+
+    menuTop =
+        ballRect.top -
+        containerRect.top;
+
+
+    const containerHeight =
+        entire.clientHeight;
+
+    if (
+        menuTop +
+        menuHeight >
+        containerHeight -
+        topGap
+    ) {
+
+        menuTop =
+            containerHeight -
+            menuHeight -
+            topGap;
+    }
+
+    if (menuTop < topGap) {
+
+        menuTop = topGap;
+    }
+
+
+    /* =========================
+       APPLY POSITION
+    ========================== */
+
+    menu.style.left =
+        menuLeft + "px";
+
+    menu.style.top =
+        menuTop + "px";
+
+
+        /* =========================
+           OPEN
+        ========================== */
+
+        menu.classList.add(
+            "active"
+        );
+    }
+
+
+    /* =========================
+       CLICK OUTSIDE
+    ========================== */
+
+    document.addEventListener(
+        "click",
+        function(e) {
+
+            if (
+                !ball.contains(e.target) &&
+                !menu.contains(e.target)
+            ) {
+
+                menu.classList.remove(
+                    "active"
+                );
+            }
+        }
+    );
+ 
+
+    /* =========================
+       CONTAINER RESIZE
+    ========================== */
+
+    const resizeObserver =
+        new ResizeObserver(
+            function() {
+
+                menu.classList.remove(
+                    "active"
+                );
+
+
+                const containerWidth =
+                    entire.clientWidth;
+
+                const containerHeight =
+                    entire.clientHeight;
+
+
+                const maxX =
+                    containerWidth -
+                    ball.offsetWidth -
+                    15;
+
+
+                const maxY =
+                    containerHeight -
+                    ball.offsetHeight -
+                    20;
+
+
+                let currentX =
+                    ball.offsetLeft;
+
+                let currentY =
+                    ball.offsetTop;
+
+
+                currentX =
+                    Math.max(
+                        15,
+                        Math.min(
+                            currentX,
+                            maxX
+                        )
+                    );
+
+
+                currentY =
+                    Math.max(
+                        20,
+                        Math.min(
+                            currentY,
+                            maxY
+                        )
+                    );
+
+
+                ball.style.left =
+                    currentX + "px";
+
+                ball.style.top =
+                    currentY + "px";
+            }
+        );
+
+
+    resizeObserver.observe(
+        entire
+    );
+}
+
+
+/* =========================
+   INITIALIZE
+========================= */
+
+initQuickBallWithGridMenu(
+    "myQuickBall",
+    "myQuickMenu"
+);
+
+</script>
+
 <script>
         const topSentinel = document.getElementById('top-sentinel');
         const overlay = document.getElementById('nextalk-overlay');
@@ -4237,21 +5129,26 @@ So create an account or log in to AsirNet to enjoy it.</div>
 
         observer.observe(topSentinel);
     
-    
- const btnMM = document.getElementById('bbcv');
- btnMM.addEventListener('click', (e) => {
-     fun();
- });
- 
+  
 /* function inactive(it) {
  let el = document.querySelector(it);
  el.classList.add('inactive');   
 }
  */
  
-function fun() {
-document.getElementById("MainMenuAside").classList.toggle('show');    
-document.getElementById("MainMenuContent").classList.toggle('show');    
+function menuOpen() {
+document.getElementById("MainMenuAside").classList.add('show');    
+document.getElementById("MainMenuContent").classList.add('show');  
+  BackManager.register(menuClose);  
+}
+
+function menuClose() {
+document.getElementById("MainMenuContent").classList.remove('show'); 
+    setTimeout(() => {   
+document.getElementById("MainMenuAside").classList.remove('show'); 
+    }, 400);   
+    
+   BackManager.unregister(menuClose);  
 }
 
 let postImgFiles = '';
@@ -4280,13 +5177,15 @@ function loadpostIMG(e) {
     wrapper.style.maxHeight = "500px";
     wrapper.style.borderBottomLeftRadius = "40px";
     wrapper.style.borderBottomRightRadius = "40px";
-    wrapper.style.overflow = "hidden";
+    wrapper.style.display= "flex";
+    wrapper.style.alignItems = "center";
+    wrapper.style.justifyContent = "center";
 
     const img = document.createElement("img");
     img.id = 'imgPost';
-    img.style.width = "100%";
-    img.style.height = "100%";
-    img.style.objectFit = "cover";
+    img.style.height = '100%';
+    img.style.maxHeight = '500px';
+    img.style.objectFit = "contain";
 
     wrapper.appendChild(img);
     imgcont.innerHTML = "";
@@ -4373,7 +5272,7 @@ let selectedVideoSrc = "";
 
 /* --------- Story Pages ------- */
 const FPage = `
-<div id="changePort">
+<div id="changePort" class="stryPort">
    <div id="port" style="display:block">
 <section style="text-align: right;" id="clsBtnDo">
   <button onclick="closeStoryPort('b')" style="display:flex;justify-content:center;align-items:center;padding:20px;font-size:30px;color:white;border:none;border-radius:90px;width:50px;height:50px;margin:90px;background:red;">×</button>
@@ -4405,18 +5304,17 @@ const SPage = ` <br><br>
     <video id="prepearVideo" muted style="width:200px;height:150px;border:5px solid red"></video></td>
     
     <td>
-<textarea id="storyCaption" placeholder="Write something about this video..." style=" height:150px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
-"></textarea>
+<textarea id="storyCaption" placeholder="Write something about this video..." style=" height:150px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif; background: none;" class="storyErr"></textarea>
 </td>
 
  </tr></table>
    
- <div style="text-align: right; width: 100%; height: 200px;">   
-<button id="submitpost" onclick="appClsBtn()" 
+ <div style="text-align: right; width: 100%; height: 200px; background: none;">   
+<button class="submitpost" onclick="appClsBtn()" 
     style="background: rgba(0,0,0,0.2); padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
     Cancel
 </button>
-<button id="submitpost" onclick="sendStory()" 
+<button class="submitpost" onclick="sendStory()" 
     style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
     Post Story
 </button>
@@ -4447,6 +5345,10 @@ const page =  document.getElementById("stryPort");
 page.style.transform = 'translateY(0)';
 page.style.opacity = '1';
 page.innerHTML = FPage;
+
+setTimeout(() => {
+    darkModeActivate(isDark);
+}, 0);
 }
 
 function closeStoryPort(o){
@@ -4484,6 +5386,9 @@ function loadFromGallery(e){
 /* ---------- Reset / Close story prep ---------- */
 function appClsBtn(){
   document.getElementById("stryPort").innerHTML = FPage;
+  setTimeout(() => {
+    darkModeActivate(isDark);
+   }, 0);
     const video = $("storyVideo");
   if(video){ 
       video.pause(); 
@@ -4502,14 +5407,15 @@ function prepearStory(){
 
   const pv = document.getElementById("prepearVideo");
   setTimeout(()=>pv.play().catch(()=>{}),1000);
+  darkModeActivate(isDark);
 }
 
 async function sendStory(){
   if(!selectedVideoFile) return onalert("No video selected");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
   
-  const btn = document.getElementById('submitpost');
-  btn.disabled = true;
+  const btn = document.querySelectorAll('.submitpost');
+  btn.forEach(b => {b.disabled = true});
 
   const fd = new FormData();
   fd.append("storyVideo", selectedVideoFile);
@@ -4529,18 +5435,18 @@ async function sendStory(){
       throw new Error(`Server error: ${response.status}`);
       onalert('something went wrong');
 document.getElementById('stry-ongoing').style.display = 'none';
-  btn.disabled = false;
+  btn.forEach(b => {b.disabled = false});
     }
 
     const data = await response.json();
     
     onalert("Story uploaded ✅");
 document.getElementById('stry-ongoing').style.display = 'none';
-  btn.disabled = false;
+  btn.forEach(b => {b.disabled = false});
     closeStoryPort();
   } catch (error) {
  document.getElementById('stry-ongoing').style.display = 'none';
-  btn.disabled = false;
+  btn.forEach(b => {b.disabled = false});
     console.error("Story upload failed:", error);
  onalert("Upload failed! Please try again.");
   }
@@ -4652,8 +5558,8 @@ let container = document.getElementById('container');
   } catch (err) {
     console.error(err);
        container.innerHTML = `<div class="story" style="margin-left: 10px; width: 400px; flex-direction: column;">
- <p style="font-size: 26px; text-align: center; color: black; font-weight: bold;">Network error</p>
- <p style="font-size: 18px; text-align: center; color: gray;">Couldn't load stories due to internet connection. Please check your internet connection first!</p>
+ <p style="font-size: 26px; text-align: center; color: gray; font-weight: bold;" class="storyErr">Network error</p>
+ <p style="font-size: 18px; text-align: center; color: gray; font-weight: bold;">Couldn't load stories due to internet connection. Please check your internet connection first!</p>
       </div>`;
       return;
    }
@@ -4815,6 +5721,7 @@ username.style.cssText = `
   /* -------- react panal --------- */
   const panal = document.createElement('div');
   panal.id = `stryReact${story.id}`;
+  panal.className = 'todark';
   panal.style =`
      position: fixed;
      background: white;
@@ -4831,7 +5738,7 @@ username.style.cssText = `
      transform: translateY(100%);
    `;
    panal.innerHTML = `
-    <h1 style="color: green; margin-left: 20px; position: relative; z-index: 10; width: 100%; background: rgba(255,255,255,0.4);"> Reactions: </h1><hr> 
+    <h1 style="color: green; margin-left: 20px; position: relative; z-index: 10; width: 100%; background: none; backdrop-filter: blur(12px); "> Reactions: </h1><hr> 
   <div id="appearReactors${story.id}" style="margin-top: 20px; padding: 30px;">Loading reactors...</div>    
    `;
   /* -------- Comment Box --------- */
@@ -4847,18 +5754,24 @@ username.style.cssText = `
      height: 60%;
      z-index: 1010;
      display: block;
-     bottom: 0;
-">
+     bottom: 0;"    
+     class="ondmode">
+  
 <div style="padding: 30px; overflow: auto">
-    <h1 style="color: green; position: relative; z-index: 10; width: 100%; background: rgba(255,255,255,0.4);"> Comments: </h1><hr>
- <div id="showStoryCom${story.id}" style="padding-top: 30px;"></div>
+    <h1 style="color: green; position: relative; z-index: 10; width: 100%; background: none; backdrop-filter: blur(12px);"> Comments: </h1>
+    <hr>
+ <div id="showStoryCom${story.id}" style="padding-top: 30px;">
+ </div>
+ </div>
+    <div style="position: fixed; display: flex; z-index: 1014; bottom: 0px; width: 100%; padding: 25px; background: transparent; border-top: 2px solid black;">
+    <input id="storycom" type="text" placeholder="Write a comment about this story..." style="font-size: 25px; padding: 25px; border-radius: 90px; width: 70%; box-shadow: 0 0 8px gray; border: none; background: none;" class="storyErr"/>
+        <button onclick="sendStoryCom(${story.id})" id="sendStoryCom${story.id}" style="background: none; margin-left: 30px; border: none; border-radius: 90px; box-shadow: 0 0 8px gray; padding: 0 20px;" class="storyErr">  
+           <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="" width="50">
+        </button>
+  </div>
 </div>
-<div style="position: fixed; display: flex; z-index: 1014; bottom: 0px; width: 100%; padding: 25px; background: white; border-top: 2px solid black;">
-    <input id="storycom" type="text" placeholder="Write a comment about this story..." style="font-size: 25px; padding: 25px; border-radius: 90px; width: 70%; box-shadow: 0 0 8px gray; border: none"/><button onclick="sendStoryCom(${story.id})" id="sendStoryCom${story.id}" style="background: none; margin-left: 30px; border: none; border-radius: 90px; box-shadow: 0 0 8px gray; padding: 0 20px;"> <img src="https://i.ibb.co.com/JZTLHkQ/send.png" alt="" width="50">
-</button>
-</div></div>
  `;
-comBox.style = `
+   comBox.style = `
     position: fixed;
     background: none;
     width: 100%;
@@ -4893,6 +5806,7 @@ comPort.addEventListener('click', () => {
   boxOfCom.style.transform = 'translateY(0)';
   boxOfCom.style.opacity = '1';
   prepearForCloseC(story.id);
+  darkModeActivate(isDark);
 });
 
 window.addEventListener('popstate', () => {
@@ -4906,6 +5820,7 @@ reactBtn.addEventListener('click', () => {
   reactPort.style.opacity = '1';
   reactorsOnStory(story.id);
   prepearForCloseR(story.id);
+  darkModeActivate(isDark);
 });
 
 }
@@ -4946,17 +5861,19 @@ function closeReactMmodal(id) {
   reactPort.style.transform = 'translateY(100%)';
   reactPort.style.opacity = '0';
   reactCounts(id);
+  BackManager.unregister(closeReactMmodal, id);
 }
 
 function prepearForCloseC(id) {
  BackManager.register(closeComMmodal, id);   
 }
 function closeComMmodal(id) {
- const reactPort = document.getElementById(`storyComPort${id}`);
+ const reactPort = document.getElementById(`commentBox${id}`);
     
   reactPort.style.transform = 'translateY(100%)';
   reactPort.style.opacity = '0';
   reactCounts(id);
+ BackManager.unregister(closeComMmodal, id);   
 }
 
 
@@ -4990,6 +5907,7 @@ const menu = document.getElementById("postMenu");
 // Close menu 
 function clzpostMenu() { 
 document.getElementById("postMenu") .style.transform = "translateY(150%)"; 
+    BackManager.unregister(clzpostMenu); 
 } 
 
  document.getElementById("postMenu") .addEventListener("click", (e) => { 
@@ -5072,15 +5990,14 @@ if(guest) return guestWarn();
     });
 
     const data = await response.text();
-    console.log(data);
-
+ 
     if (response.ok && data == 'yes') {
       startChatSession(receiver_id);
     } else if (response.ok && data == 'no') {
     onalert('Cannot send messages');
     } else {
       const errorMessage = data.message || "User does not exist in our database.";
-      console.log(`Cannot send message due to: ${errorMessage}`);
+      console.error(`Cannot send message due to: ${errorMessage}`);
     onalert('something went wrong');
     }
 
@@ -5130,7 +6047,7 @@ async function showOtherProf(email) {
          
     });
 
-    postsDiv.innerHTML = "<p>Loading posts...</p>";
+    postsDiv.innerHTML = "";
 
     const token = localStorage.getItem("token");
 
@@ -5151,11 +6068,14 @@ async function showOtherProf(email) {
         nameEl.innerText = user.username || "Unknown";
         bioEl.innerText = user.bio || "No bio";
         picEl.src = user.avatar || "";
+        picEl.addEventListener('click', (e) => {
+          disProf(user.avatar);   
+        });
         headerName.innerText = `Profile of "${user.username}"`;
         upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
 
 loadConnections(receiver_id, 'showOnes');
-
+loadProfilePosts(email, 'otherPosts')
     } catch (err) {
         console.error(err);
         postsDiv.innerHTML = "<p style='color:red;'>Failed to load posts</p>";
@@ -5189,6 +6109,7 @@ document.getElementById("connectionBtn");
     overlay.classList.remove("show");
     resetbtn.innerText = "Add Connection";
     resetbtn.disabled = false;
+    BackManager.unregister(remove);
 }
 
 
@@ -5202,15 +6123,22 @@ const s = JSON.parse(styleString);
     document.getElementById('allChange').innerHTML =`
  <div id="profdiv">
      <table align="center"><tr><td width="270">
-     <img id="profPic" onclick="disProf()"></div></td><td width="400">
+     <img id="profPic" onclick="disProf('${u.avatar}')">       
+      <div id="editbtn">
+         <a href="profileEdit.html">
+      <button>
+         <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" border="0" width="30">
+      </button>
+          </a>
+        </div>
+         </div>
+    </td><td width="400">
      <p id="userName"></p>
      <h3 id="profileBio"></h3>
   </td></tr></table>
-  <div id="editbtn"><a href="profileEdit.html">
-  <button><img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" border="0" width="30"></button>
-  </a></div></div>
+      </div>
   
-  <h1>Your Connected Persons</h1><hr>
+  <h1 class="storyErr">Your Connected Persons</h1><hr>
   <div id="connectionList">
 <div class="friendShow">
   <div class="main-loading-focus"></div>
@@ -5246,6 +6174,8 @@ warning(() => {
 }, 3000, 3000, 3000); 
 
 loadConnections(u.email, 'connectionList');
+darkModeActivate(isDark);
+loadProfilePosts(u.email, 'ownerPosts');
 }
 
 function home() {location.reload()}
@@ -5317,7 +6247,7 @@ function closeReelPage() {
         el.disabled = false;
         el.innerText = 'Post';
         el.style.background = 'blue';
-}
+    BackManager.register(closeReelPage);}
 
 async function uploadClip() {
     let el = qs('.clip-header button');
@@ -5366,7 +6296,6 @@ async function uploadClip() {
 
         if (response.ok) {
             onalert("Clip has been posted successfully");
-            console.log("New Reel:", data.reel);
 
         el.disabled = false;
         el.innerText = 'Post';
@@ -5411,7 +6340,6 @@ async function clipNovas(email, place) {
         loaderDiv.remove();
 
         if (response.ok) {
-            console.log("User Reels:", data);
           
             data.forEach(item => { // 변수 이름 conflict এড়াতে item দেওয়া হলো
                 const showClip = document.createElement('div');
@@ -5439,7 +6367,8 @@ async function clipNovas(email, place) {
         
         // শুধু নেটওয়ার্ক বা সার্ভার এরর হলেই এই মেসেজ দেখাবে
         let errMessage = document.createElement('div');
-        errMessage.innerText = 'Cannot load reel due to internet connection';
+        errMessage.innerText = 'Network error';
+        errMessage.style = 'color:red; margin: 30px; font-size: 20px; font-weight: bold';
         pl.appendChild(errMessage);
     }
 }
@@ -5502,7 +6431,6 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
                     });
 
                 const data = await res.json();
-console.log(JSON.stringify(res.json));
 
                 return {
                     ...f,
@@ -5538,18 +6466,21 @@ console.log(JSON.stringify(res.json));
     }
 }    
 
-function disProf() {
-  const user = localStorage.getItem("user");
-  const u = JSON.parse(user);
-document.getElementById("displayPic").src = u.avatar;
+function disProf(avatar) {
+document.getElementById("displayPic").src = avatar;
  let p = document.querySelector(".profDis");
  p.style.opacity = "1";
  p.style.visibility = "visible";
-p.addEventListener("click", () => {
+ p.addEventListener("click", () => {closeDisProf()});
+ BackManager.register(closeDisProf);
+}
+function closeDisProf() {
+ let p = document.querySelector(".profDis");
  p.style.opacity = "0";
  p.style.visibility = "hidden";    
-});
- }
+ BackManager.unregister(closeDisProf);
+    
+}
 
 function setting() {
 if(guest) return guestWarn();
@@ -5622,6 +6553,7 @@ function closeSearchPad() {
     setTimeout(() => {
         pad.style.display = "none";
     }, 450);
+    BackManager.unregister(closeSearchPad);
 }
 
 /* ========= POST PAGE EXAMPLE ========= */
@@ -5833,6 +6765,7 @@ function showTagged(c) {
             </button>
         </div>
     `).join("");
+    darkModeActivate(isDark); 
 }
 
 
@@ -6022,16 +6955,17 @@ function textBG(c1, c2, bg) {
     const i = document.getElementById("postword");
 
     if (c1 && c2) {
-        i.style.background = `linear-gradient(30deg, ${c1}, ${c2})`;
+        i.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
 
-        if (c1 === "white" && c2 === "white") {
-            i.style.color = "black";
+        if (c1 === "none" && c2 === "none") {
             i.style.textAlign = "justify";
-            i.style.textShadow = "0 0 10px white";
+            i.style.textShadow = "0 0 5px white";
+            i.style.background = 'none';
+            darkModeActivate(isDark);
         } else {
             i.style.color = "white";
             i.style.textAlign = "center";
-            i.style.textShadow = "0 0 10px gray";
+            i.style.textShadow = "0 0 5px gray";
         }
     } else if (bg) {
         i.style.background = "none";
@@ -6084,6 +7018,7 @@ function applySize() {
 function closeFontSize() {
     const f = document.getElementById("textFont");
     f.style.transform = "translateY(700px)";
+  BackManager.unregister(closeFontSize);    
 }
 
 function changeSize(size) {
@@ -6109,8 +7044,12 @@ function collectPostData() {
     if (!plainText || !plainText.value.trim()) {
     el = imagePost;
     }
+    
     const cs = window.getComputedStyle(el);
-
+    let textColor = cs.color;
+    if (textColor === 'white' || textColor === 'rgb(255, 255, 255)') {
+        textColor = 'black';
+    }
     return {
         text: el.value || el.innerText,
 
@@ -6121,7 +7060,7 @@ function collectPostData() {
         others: taggedEmailList || [],
 
         style: {
-            color: cs.color,
+            color: textColor,
             fontSize: cs.fontSize,
             fontWeight: cs.fontWeight,
             textAlign: cs.textAlign,
@@ -6214,7 +7153,7 @@ async function postsubmit() {
             return;
         }
 
-        loadPosts();
+        loadProfilePosts('', 'content')
         closePostpage();
 
         // UI Reset
@@ -6267,250 +7206,6 @@ function applyPostStyle(el, style) {
 }
 
 
-async function loadPosts() {
-
-    try {
-        const res = await fetch("https://posts-server-kmha.onrender.com/post");
-        const data = await res.json();
-        if (!res.ok) {
-            onalert(data.message || "Error loading posts!");
-            return;
-        }
-
-        const contentDiv = document.getElementById("content");
-        contentDiv.innerHTML = "";
-
-        data.forEach(post => {
-            const safeText = escapeHTML(post.post.text || "");
-            const htmlText = safeText.replace(/\n/g, "<br>");
-
-            const copyText = encodeURIComponent(post.post.text || "");
-            const emailSafe = encodeURIComponent(post.email || "");
-
-            const div = document.createElement("div");
-            div.className = "postshow";
-          
-            const safeOthers = encodeURIComponent(JSON.stringify(post.others || []));
-           const formattedTime = getShortTime(post.created_at);
-            
-            div.innerHTML = `
-<table><tr><td valign="top">
-<img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;" onclick="showOtherProf('${post.email}');">
-</td>
-
-<td style="width:460px;" >
-<h2 onclick="showOtherProf('${post.email}')">
-<button class="profileBtn"
- data-email="${emailSafe}"
-style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:40px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
-</button>
-</h2>
-
-<div class="othInfo" id="othInfo${post.id}content">
-<p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
-
-<p class="postInfo" id="locShow" style="display:${post.location ? 'block' : 'none'};"><img src="https://i.ibb.co.com/kgCWpqgc/map.png"> ${post.location}</p>
-
-<p class="postInfo"
-   style="display:${Array.isArray(post.others) && post.others.length ? 'block' : 'none'}; color:purple"
-   onclick="appOthers('${safeOthers}')">
-   <img src="https://i.ibb.co.com/39jD6F2q/customer.png">
-   <u style="color:purple">With other ones</u>
-</p>
-</div>
-</td>
-
-<td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}"
->
-  <button onclick="showMoreInfo('${post.id}', 'content')">
-   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50">
-  </button>
-</td>
-
-<td valign="top" onclick="">
-<button
- style="background:none;border:none; margin-top: 30px;"
- data-text="${copyText}">
-<img src="https://i.ibb.co.com/yBd6Bf4F/copy.png" width="30">
-</button>
-</td>
-</tr></table>
-
-<hr>
-
-
-<p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
-
-<div id="box${post.id}">
-    <img src="${post.post.image}" style="max-width: 100%; border: 1px solid black; border-radius: 6px;" onclick="onDisImg('${post.post.image}', '${post.post.text}')">
-</div>
-
-<div id="countReactions">
-<div id="countByOrder${post.id}" style="text-align:right">
-<button id="likeCount${post.id}" onclick="likeContainer('${post.id}'); reactors('${post.id}')"></button><br>
-<button id="commentCount${post.id}" onclick="appContainer('${post.id}'); comText('${post.id}')"></button>
-</div>
-</div>
-
-<div id="reactPanal">
-<button style="border-left:none;font-size:30px;" id="react${post.id}">
-<img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40">
-</button>
-
-<button onclick="comSec('${post.id}');" id="comSec${post.id}">
-<img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40">
-</button>
-<button>
-<img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" width="30">
-</button><br>
-</div>
-
-<div id="appearFlex${post.id}" class="appearFlex">
-<button onclick="reactAppear('${post.id}','👍')">👍</button>
-<button onclick="reactAppear('${post.id}','♥️')">♥️</button>
-<button onclick="reactAppear('${post.id}','🤣')">🤣</button>
-<button onclick="reactAppear('${post.id}','😁')">😁</button>
-<button onclick="reactAppear('${post.id}','🤔')">🤔</button>
-<button onclick="reactAppear('${post.id}','🥰')">🥰</button>
-<button onclick="reactAppear('${post.id}','😥')">😥</button>
-<button onclick="reactAppear('${post.id}','😡')">😡</button>
-</div>
-
-
-
-<div id="comPen${post.id}" class="likeComCon">
-<div class="comSecDiv">
-  <div class="comHeader">
-    <h2>Write a comment about this post</h2>
-    <button onclick="closeComSec('${post.id}')" class="crossBtn">×</button>
-  </div>
-  <hr>
-  <div class="comBody">
-    <textarea class="comWord" rows="8"></textarea>
-    <button onclick="sendCom('${post.id}')" class="comButton">
-      <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
-    </button>
-  </div>
-
-<div id="loaderCom" class="inlineLoader">
-    <div class="loadingBox">
-
-        <div class="spinner"></div>
-
-        <div class="textContainer">
-            <h2>Loading...</h2>
-            <p>Please wait...</p>
-        </div>
-
-    </div>
-
-    <div class="loading-line"></div>
-</div>
-
-
-
-
-</div>
-</div>
-
-<div id="commentContainer${post.id}" class="likeComCon">
-<div class="Display">
-<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
-<tr><td><h1>Comments</h1></td>
-<td><div style="text-align:right;">
-<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="containerClose('${post.id}')">×</button>
-</div></td></tr>
-</table>
-
-<div id="comText${post.id}" style="margin-top:140px"></div>
-</div>
-</div>
-
-<div id="likeContainer${post.id}" class="likeComCon" >
-    
-    
-    
-<div class="Display">
-<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
-<tr><td><h1>Reactions</h1></td>
-<td><div style="text-align:right;">
-<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="closeLikeContainer('${post.id}')">×</button>
-</div></td></tr>
-</table>
-
-<div id="reactors${post.id}" style="margin-top:140px;">Loading reactions...</div>
-</div>
-</div>
-
-`;
-
-
-            // text inject safe
-            div.querySelector(".postText").innerHTML = htmlText;
-
-            contentDiv.appendChild(div);
-
-            updateCounts(post.id);
-
-            applyPostStyle(div.querySelector(".postText"), post.post.style);
-
-
-
-const btn = document.getElementById(`react${post.id}`);
-const panel = document.getElementById(`appearFlex${post.id}`);
-
-
-btn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    //console.log("clicked");
-
-    const isOpen = panel.classList.contains("show");
-
-    document.querySelectorAll(".appearFlex").forEach(p => {
-        p.classList.remove("show");
-    });
-
-    if (!isOpen) {
-        panel.classList.add("show");
-    }
-});
-
-panel.addEventListener("click", (e) => {
-    e.stopPropagation();
-});
-
-document.addEventListener("click", () => {
-    document.querySelectorAll(".appearFlex").forEach(p => {
-        p.classList.remove("show");
-    });
-});
-
-
-});
-    } catch (err) {
-        console.error(err);
-
-        document.getElementById("content").innerHTML = `
-        <div style="justify-content:center;align-items:center;display:flex;width:100%;">
-            <div style="display:flex;flex-direction:column;align-items:center;">
-                <h2 style="color:red;font-size:20px">Network error</h2><br>
-                <button onclick="location.reload()" style="background:orange;color:white;padding:10px 25px;border-radius:14px;border:none;font-size:20px;">
-                    Retry
-                </button>
-            </div>
-        </div>`;
-    }
-}
-
-
-// Outside click → close all panels
-document.addEventListener("click", () => { 
-document.querySelectorAll(".appearFlex") .forEach(panel => { 
-    panel.classList.remove("show"); 
-    }); 
-   });
-
 async function reactors(postId) {
 
   try {
@@ -6548,7 +7243,7 @@ async function reactors(postId) {
             </tr>
           </table>
         `;
-      })
+          })
       .join("");
 
     container.innerHTML = listHTML;
@@ -6560,7 +7255,9 @@ container.innerHTML = `  <div style="display: flex; flex-direction: column; alig
   <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
   <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
         </div>`;
-  }
+  } finally {
+    darkModeActivate(isDark);
+    }
 }
 
 function showMoreInfo(id, value) {
@@ -6576,18 +7273,22 @@ function showMoreInfo(id, value) {
   });
 }
 
-
-
-
-
-
 function onDisImg(img, caption) {
 const el = qs('#onDisImg');
 const image = qs('#onDisImg img');
 const cap = qs('#onDisImg aside p');
-el.classList.toggle('show');
+el.classList.add('show');
 image.src = img;
 cap.innerText = caption;
+  BackManager.register(closeOnDisImg);  
+}
+
+function closeOnDisImg() {
+const el = qs('#onDisImg');
+const elEl = qs('#onDisImg *');
+el.classList.remove('show');
+elEl.forEach (e => {e.innerHTML = ""});
+    
 }
 
 
@@ -6605,7 +7306,7 @@ async function reactorsOnStory(postId) {
     const data = await res.json();
     const container = document.getElementById(`appearReactors${postId}`);
 
-    if (!container) return; // container না থাকলে সেফ এক্সিট
+    if (!container) return;
 
     if (!data.likes || data.likes.length === 0) {
       container.innerHTML = `<p>No likes yet 😐</p>`;
@@ -6616,7 +7317,6 @@ async function reactorsOnStory(postId) {
     // 🔹 Map likes to HTML (সরাসরি map-এর ভেতরে reaction লজিক বসানো হয়েছে)
     const listHTML = data.likes
       .map(l => {
-    console.log(l.reaction);
         if (l.reaction === '👍') {
           typeOfReact = '👍 — liked';
         } else if (l.reaction === '♥️') {
@@ -6628,7 +7328,7 @@ async function reactorsOnStory(postId) {
         return `
 <div style="
   display: flex;
-  background: rgba(255, 255, 255, 0.05); 
+  background: rgba(255, 255, 255, 0.4); 
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1); 
   border-radius: 16px; 
@@ -6658,7 +7358,7 @@ async function reactorsOnStory(postId) {
     gap: 4px;
     display: flex;
   ">
-    <strong style="color: black; font-weight: 600;">${l.username}</strong>
+    <strong style="color: black; font-weight: 600;" class="storyErr">${l.username}</strong>
     <span style="color: #94a3b8;">has</span>
     <span style="
       background: rgba(110, 231, 183, 0.12); 
@@ -6691,6 +7391,8 @@ async function reactorsOnStory(postId) {
           <button onclick="location.reload()" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange; cursor: pointer;">Reload Page</button>
         </div>`;
     }
+  } finally {
+    darkModeActivate(isDark);
   }
 }
 
@@ -6717,7 +7419,6 @@ async function comText(postId) {
         const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
 
         const comments = await res.json();
-//console.log(comments || "null");
         if (!comments || comments.length === 0) {
             box.innerHTML = "<p style='color: red;'>No comments yet</p>";
             return;
@@ -6759,15 +7460,15 @@ async function comText(postId) {
                         border-left: 5px solid gray;">
                       <table>
                         <tr>
-                          <td><h3 style="color: green; margin: 0; width: 470px;" onclick="showOtherProf('${c.email}'); closeComSec('${postId}')">${c.username}</h3></td>
+                          <td><h3 style="color: green; margin: 0; width: 470px;" onclick="showOtherProf('${c.email}'); closeComSec('${postId}')" class="storyErr">${c.username}</h3></td>
                           <td>
-                            ${menuHTML ? `<button class="dropdownBtn" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
+                            ${menuHTML ? `<button class="dropdownBtn storyErr" style="width: 20px; background: none; border: none; height: 40px; color: green; font-size: 20px; margin-left: 0px">⋮</button>` : ""}
                           </td>
                         </tr>
                       </table>
-                      <hr style="background: green;">
+                      <hr style="background: gray;">
                       
-   <div id="commentText${c.id}">                   
+   <div id="commentText${c.id}" >                   
                       <p style="text-align: justify; font-size: 18px; margin:0; box-shadow: none; background: 0; padding: 0; width: 100%;">${c.comment.replace(/\n/g, "<br>")}</p>
                       ${menuHTML}
                     </div>
@@ -6805,6 +7506,8 @@ async function comText(postId) {
   <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
   <button onclick="" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange;">Reload Page</button>
         </div>`;
+    } finally {
+ darkModeActivate(isDark);
     }
 }
 
@@ -7043,7 +7746,6 @@ async function sendStoryCom(postId) {
             return;
         }
 
-        //console.log("Saved comment:", data.comment);
 
         textarea.value = "";
         reactCounts(postId);
@@ -7061,7 +7763,10 @@ async function sendStoryCom(postId) {
 async function reactAppear(postId, emoji) {
 if(guest) return guestWarn();
 
-document.getElementById(`appearFlex${postId}`)?.style.setProperty("display", "none");
+document.querySelectorAll(".appearFlex").forEach(p => {
+        p.classList.remove("show");
+                });
+
   try {
     const user = JSON.parse(localStorage.getItem("user"));
     
@@ -7127,15 +7832,24 @@ function backtoprofile() {
 }
 
 async function loadProfilePosts(email, place) {
-    if (!email || !place) {
-        console.error("email and place arguments are required!");
+    if (!place) {
+        console.error("place argument is required!");
         return;
     }
         const contentDiv = document.getElementById(place);
-    contentDiv.innerHTML = "Loading posts..";    
 
     try {
-        const res = await fetch(`https://posts-server-kmha.onrender.com/postOfAnUser/${email}`);
+    
+        let res;
+        
+     if(!email) {
+         res = await fetch("https://posts-server-kmha.onrender.com/post");
+         
+      } else if (email) {
+      
+        res = await fetch(`https://posts-server-kmha.onrender.com/postOfAnUser/${email}`);
+    
+    }
         const data = await res.json();
 
         if (!res.ok) {
@@ -7144,13 +7858,13 @@ async function loadProfilePosts(email, place) {
         }
 
         const contentDiv = document.getElementById(place);
+
 if (!contentDiv) {
     alert(`Error: #${place} element is missing in HTML!`);
     return;
 }
 
-        contentDiv.innerHTML = "";
-
+    contentDiv.innerHTML = "";
         if (data.length === 0) {
             contentDiv.innerHTML = `<p style="text-align:center;font-size:20px;padding:20px;">No posts yet</p>`;
             return;
@@ -7181,7 +7895,7 @@ if (!contentDiv) {
 <button class="profileBtn"
  data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
-<div style="font-size:40px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
+<div style="font-size:30px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
 </button>
 </h2>
 
@@ -7201,15 +7915,16 @@ if (!contentDiv) {
 
 <td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}">
   <button onclick="showMoreInfo('${post.id}', '${place}')">
-   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50">
+   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50" class="imgChange">
   </button>
 </td>
 
 <td valign="top" style="position: relative">
 <button id="options${post.id}" style="background: none; border: none; margin-top: 15px;">   
-    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="40">
+    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="40" class="imgChange">
 </button>
-<div id="menu${post.id}" style="display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:300px; margin-right: 30px; z-index:1000; overflow:hidden; transform-origin: top right; animation: dropdownShow 0.4s ease;"> 
+
+<div id="menu${post.id}" style="display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:300px; margin-right: 30px; z-index:1000; overflow:hidden; transform-origin: top right; animation: dropdownShow 0.4s ease;" class="postedMenuDarl"> 
    
    ${place === 'ownerPosts' ? `
    <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:25px;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
@@ -7227,7 +7942,7 @@ if (!contentDiv) {
 </td>
 </tr></table>
 
-<hr>
+<hr style="background: gray; height: 2px;">
 
 <p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
 
@@ -7245,14 +7960,14 @@ ${post.post?.image ? `
 
 <div id="reactPanal">
 <button style="border-left:none;font-size:30px;" id="react${post.id}">
-<img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40">
+<img src="https://i.ibb.co.com/NgV9p5jg/like.png" width="40" class="imgChange">
 </button>
 
 <button onclick="comSec('${post.id}');" id="comSec${post.id}">
-<img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40">
+<img src="https://i.ibb.co.com/hRNSdTgD/comment.png" width="40" class="imgChange">
 </button>
 <button>
-<img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" width="30">
+<img src="https://i.ibb.co.com/C5fxp0rs/share-1.png" width="30" class="imgChange">
 </button><br>
 </div>
 
@@ -7275,7 +7990,7 @@ ${post.post?.image ? `
   </div>
   <hr>
   <div class="comBody">
-    <textarea class="comWord" rows="8"></textarea>
+    <textarea class="comWord" rows="8" placeholder="Enter text.."></textarea>
     <button onclick="sendCom('${post.id}')" class="comButton">
       <img src="https://i.ibb.co.com/JZTLHkQ/send.png">
     </button>
@@ -7297,7 +8012,7 @@ ${post.post?.image ? `
 
 <div id="commentContainer${post.id}" class="likeComCon">
 <div class="Display">
-<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<table style="width:700px; position:fixed; z-index:1000; background: none; backdrop-filter: blur(12px);">
 <tr><td><h1>Comments</h1></td>
 <td><div style="text-align:right;">
 <button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="containerClose('${post.id}')">×</button>
@@ -7310,10 +8025,10 @@ ${post.post?.image ? `
 
 <div id="likeContainer${post.id}" class="likeComCon">
 <div class="Display">
-<table style="width:700px;position:fixed;z-index:1000;background:rgba(255,255,255,0.8);">
+<table style="width:700px; position:fixed; z-index:1000; background: none; backdrop-filter: blur(12px);">
 <tr><td><h1>Reactions</h1></td>
 <td><div style="text-align:right;">
-<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="closeLikeContainer('${post.id}')">×</button>
+<button style="color:red; font-size:30px; border:none; background:none; cursor:pointer; " onclick="closeLikeContainer('${post.id}')">×</button>
 </div></td></tr>
 </table>
 
@@ -7339,8 +8054,10 @@ ${post.post?.image ? `
                 e.stopPropagation();
 
                 document.querySelectorAll(".appearFlex").forEach(p => {
-                    p.classList.remove("show");
-                });
+        p.classList.remove("show");
+
+ 
+               });
 
                 if (!reactPanel.classList.contains("show")) {
                     reactPanel.classList.add("show");
@@ -7385,6 +8102,10 @@ ${post.post?.image ? `
     </div>
 </div>`;
         }
+    } finally {
+    
+darkModeActivate(isDark);
+
     }
 }
 
@@ -7426,11 +8147,8 @@ function editPost(id) {
 // 🔹 Save Post (PUT)
 async function savePost(id) {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(JSON.stringify(user));
     const newText = document.getElementById(`editpost${id}`).value;
-console.log(newText);
 const payload = { post: newText };
-console.log(JSON.stringify(payload));
     try {
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, {
             method: "PUT",
@@ -7694,7 +8412,6 @@ if (!t) return onalert('Text required');
         avatar: av
     };
     
-   console.log(JSON.stringify(payload));
 
 try {
     const response = await fetch('https://posts-server-kmha.onrender.com/api/add-vibe', {
@@ -7721,7 +8438,7 @@ try {
 } catch (err) {
     console.error('Fetch error:', err);
     if (typeof onalert === 'function') {
-        onalert('Server connections problem or Network error!');
+        onalert('Network error!');
     }
 }
 
@@ -7897,7 +8614,7 @@ window.onload = function () {
         document.querySelector('.story-inner').style.backgroundSize = "cover";
         document.querySelector('.story-inner').style.backgroundPosition = "center";
 
-        loadPosts();
+        loadProfilePosts('', 'content')
     
 };
 
@@ -7916,7 +8633,7 @@ function showLoader(targetId = "content", title = "Loading posts...", message = 
             <div class="orbit-ring"></div>
             <div class="orbit-dot"></div>
             <div class="logo-box">
-                <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="Logo">
+                <img src="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png" alt="Logo">
             </div>
         </div>
 
@@ -8019,10 +8736,43 @@ warning(() => {
     });
 }, 3000, 3000, 3000); 
 
-const isTurned = localStorage.getItem('dark');
-const isEnable = localStorage.getItem('notify');
+
+const isDark = localStorage.getItem('dark');
+const isBall = localStorage.getItem('ball');
 const isGuest = localStorage.getItem('isGuest');
 
+
+function setRootProperty(property, value) {
+    document.documentElement.style.setProperty(property, value);
+}
+
+darkModeActivate(isDark);
+BallActivate(isBall);
+
+function darkModeActivate(isDark) {
+
+    const elements = document.querySelectorAll('*');
+
+    elements.forEach(el => {
+
+        if (isDark === 'true') {
+                el.classList.add('dark');
+        } else if (isDark === 'false') {
+                el.classList.remove('dark');
+        }
+    });
+}
+
+function BallActivate(state) {
+if (state === 'true') {
+ document.querySelector('.quick-ball').style.display = 'flex'; 
+ document.querySelector('.headerBtn').style.display = 'none'; 
+    document.getElementById('footer').style.display = 'none';  
+    document.getElementById('nextalk-overlay').style.bottom = '2%';  
+    document.getElementById('postMenu').style.display = 'none';  
+    }
+}  
+ 
 const endpoints = [
     "https://users-server-xyvg.onrender.com/get/users",
     "https://posts-server-kmha.onrender.com/get/posts",
