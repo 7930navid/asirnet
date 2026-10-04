@@ -1,0 +1,1988 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0,
+               maximum-scale=1.0, user-scalable=no">
+
+<title>AsirNet | 3D Rubik's Cube</title>
+<link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+
+
+<style>
+    
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    width:100%;
+    height:100%;
+    margin:0;
+    overflow:hidden;
+    background:#111;
+    font-family:Arial,sans-serif;
+    touch-action:none;
+    user-select:none;
+}
+
+body{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+/* =========================
+   TOP
+========================= */
+
+.header{
+    width:100%;
+    text-align:center;
+    color:white;
+    padding:12px 8px 4px;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.info{
+    color:#aaa;
+    font-size:12px;
+    text-align:center;
+    margin-bottom:5px;
+}
+
+/* =========================
+   SCENE
+========================= */
+
+.scene{
+    position:relative;
+    width:100%;
+    flex:1;
+    min-height:350px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    perspective:900px;
+    overflow:hidden;
+}
+
+/*
+   pivot = পুরো cube rotate হবে
+*/
+.pivot{
+    position:relative;
+    width:0;
+    height:0;
+
+    transform-style:preserve-3d;
+
+    transform:
+        rotateX(-25deg)
+        rotateY(-35deg);
+}
+
+/*
+   cube = cube-এর root
+*/
+.cube{
+    position:absolute;
+
+    left:0;
+    top:0;
+
+    width:0;
+    height:0;
+
+    transform-style:preserve-3d;
+}
+
+/* =========================
+   CUBIE
+========================= */
+
+.cubie{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    left:-30px;
+    top:-30px;
+
+    transform-style:preserve-3d;
+
+    transform-origin:center center;
+
+    will-change:transform;
+}
+
+/* =========================
+   BLACK CUBIE BODY
+========================= */
+
+.bodyFace{
+    position:absolute;
+
+    width:60px;
+    height:60px;
+
+    left:0;
+    top:0;
+
+    background:#050505;
+
+    border:1px solid #222;
+
+    backface-visibility:hidden;
+
+    pointer-events:auto;
+}
+
+.bodyFace.front{
+    transform:translateZ(30px);
+}
+
+.bodyFace.back{
+    transform:rotateY(180deg)
+             translateZ(30px);
+}
+
+.bodyFace.right{
+    transform:rotateY(90deg)
+             translateZ(30px);
+}
+
+.bodyFace.left{
+    transform:rotateY(-90deg)
+             translateZ(30px);
+}
+
+.bodyFace.top{
+    transform:rotateX(90deg)
+             translateZ(30px);
+}
+
+.bodyFace.bottom{
+    transform:rotateX(-90deg)
+             translateZ(30px);
+}
+
+/* =========================
+   STICKER
+========================= */
+
+.sticker{
+    position:absolute;
+
+    width:54px;
+    height:54px;
+
+    left:3px;
+    top:3px;
+
+    border-radius:7px;
+
+    border:2px solid rgba(0,0,0,.65);
+
+    box-shadow:
+        inset 0 0 5px rgba(255,255,255,.35),
+        0 0 2px rgba(0,0,0,.5);
+
+    backface-visibility:hidden;
+
+    pointer-events:auto;
+}
+
+/* -------------------------
+   FACE POSITION
+------------------------- */
+
+.sticker.front{
+    transform:translateZ(31px);
+}
+
+.sticker.back{
+    transform:
+        rotateY(180deg)
+        translateZ(31px);
+}
+
+.sticker.right{
+    transform:
+        rotateY(90deg)
+        translateZ(31px);
+}
+
+.sticker.left{
+    transform:
+        rotateY(-90deg)
+        translateZ(31px);
+}
+
+.sticker.top{
+    transform:
+        rotateX(90deg)
+        translateZ(31px);
+}
+
+.sticker.bottom{
+    transform:
+        rotateX(-90deg)
+        translateZ(31px);
+}
+
+/* =========================
+   REAL RUBIK COLORS
+========================= */
+
+.white{
+    background:#f7f7f7;
+}
+
+.yellow{
+    background:#ffd500;
+}
+
+.red{
+    background:#e21b23;
+}
+
+.orange{
+    background:#ff7900;
+}
+
+.blue{
+    background:#0051ba;
+}
+
+.green{
+    background:#009b48;
+}
+
+/* =========================
+   CONTROLS
+========================= */
+
+.controls{
+    width:100%;
+    padding:8px;
+
+    background:#181818;
+
+    border-top:1px solid #333;
+}
+
+.buttons{
+    display:grid;
+
+    grid-template-columns:
+        repeat(6,1fr);
+
+    gap:5px;
+
+    max-width:500px;
+    margin:auto;
+}
+
+button{
+    border:0;
+    border-radius:7px;
+
+    padding:9px 3px;
+
+    background:#292929;
+    color:white;
+
+    font-weight:bold;
+    font-size:13px;
+
+    touch-action:manipulation;
+}
+
+button:active{
+    transform:scale(.94);
+}
+
+.actionButtons{
+    display:flex;
+    gap:6px;
+
+    max-width:500px;
+    margin:7px auto 0;
+}
+
+.actionButtons button{
+    flex:1;
+    background:#333;
+}
+
+.scramble{
+    background:#0066cc !important;
+}
+
+.reset{
+    background:#444 !important;
+}
+
+.moveText{
+    text-align:center;
+
+    color:#aaa;
+
+    font-size:11px;
+
+    margin-top:6px;
+
+    min-height:14px;
+}
+
+/* =========================
+   SMALL SCREEN
+========================= */
+
+@media(max-width:380px){
+
+    .buttons{
+        gap:3px;
+    }
+
+    button{
+        padding:8px 2px;
+        font-size:11px;
+    }
+
+    .scene{
+        min-height:300px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    3D Rubik's Cube
+</div>
+
+<div class="info">
+    Drag Sticker = Face Move &nbsp; • &nbsp;
+    Drag Ouside = Cube Rotate
+</div>
+
+<div class="scene" id="scene">
+
+    <div class="pivot" id="pivot">
+
+        <div class="cube" id="cube"></div>
+
+    </div>
+
+</div>
+
+<div class="controls">
+
+    <div class="buttons">
+
+        <button data-move="U">U</button>
+        <button data-move="D">D</button>
+        <button data-move="L">L</button>
+        <button data-move="R">R</button>
+        <button data-move="F">F</button>
+        <button data-move="B">B</button>
+
+        <button data-move="U'">U′</button>
+        <button data-move="D'">D′</button>
+        <button data-move="L'">L′</button>
+        <button data-move="R'">R′</button>
+        <button data-move="F'">F′</button>
+        <button data-move="B'">B′</button>
+
+    </div>
+
+    <div class="actionButtons">
+
+        <button class="scramble" id="scramble">
+            SCRAMBLE
+        </button>
+
+        <button class="reset" id="reset">
+            RESET
+        </button>
+
+    </div>
+
+    <div class="moveText" id="moveText"></div>
+
+</div>
+
+
+<script>
+
+/* =========================================================
+   CONFIG
+========================================================= */
+
+const SIZE = 60;
+
+const cube = document.getElementById("cube");
+const pivot = document.getElementById("pivot");
+const scene = document.getElementById("scene");
+const moveText = document.getElementById("moveText");
+
+
+/* =========================================================
+   CUBIE DATA
+========================================================= */
+
+let cubies = [];
+
+let moveQueue = [];
+
+let moving = false;
+
+let pointerData = null;
+
+
+/*
+   পুরো cube rotation
+*/
+let cubeRX = -25;
+let cubeRY = -35;
+
+
+/* =========================================================
+   VECTOR
+========================================================= */
+
+function vec(x,y,z){
+    return {x,y,z};
+}
+
+
+/* =========================================================
+   VECTOR ROTATION
+========================================================= */
+
+function rotateVector(v, axis, dir){
+
+    let x = v.x;
+    let y = v.y;
+    let z = v.z;
+
+    /*
+       dir = +1 => +90°
+       dir = -1 => -90°
+    */
+
+    if(axis === "x"){
+
+        if(dir === 1){
+            return {
+                x:x,
+                y:-z,
+                z:y
+            };
+        }
+
+        return {
+            x:x,
+            y:z,
+            z:-y
+        };
+    }
+
+
+    if(axis === "y"){
+
+        if(dir === 1){
+            return {
+                x:z,
+                y:y,
+                z:-x
+            };
+        }
+
+        return {
+            x:-z,
+            y:y,
+            z:x
+        };
+    }
+
+
+    if(axis === "z"){
+
+        if(dir === 1){
+            return {
+                x:-y,
+                y:x,
+                z:z
+            };
+        }
+
+        return {
+            x:y,
+            y:-x,
+            z:z
+        };
+    }
+
+}
+
+
+/* =========================================================
+   NORMAL -> FACE
+========================================================= */
+
+function normalToFace(n){
+
+    if(n.x === 1) return "right";
+    if(n.x === -1) return "left";
+
+    if(n.y === 1) return "top";
+    if(n.y === -1) return "bottom";
+
+    if(n.z === 1) return "front";
+    if(n.z === -1) return "back";
+
+    return "";
+}
+
+
+/* =========================================================
+   ORIGINAL STICKER COLORS
+=========================================================
+
+   IMPORTANT:
+
+   এই color কখনো rotation-এর সময় পরিবর্তন হবে না।
+========================================================= */
+
+const FACE_COLOR = {
+
+    front: "green",
+    back: "blue",
+
+    right: "red",
+    left: "orange",
+
+    top: "white",
+    bottom: "yellow"
+};
+
+
+/* =========================================================
+   MOVE DEFINITIONS
+=========================================================
+
+   dir = clockwise direction
+   viewed from outside of that face
+========================================================= */
+
+const MOVES = {
+
+    U:{
+        axis:"y",
+        layer:1,
+        dir:-1
+    },
+
+    D:{
+        axis:"y",
+        layer:-1,
+        dir:1
+    },
+
+    R:{
+        axis:"x",
+        layer:1,
+        dir:-1
+    },
+
+    L:{
+        axis:"x",
+        layer:-1,
+        dir:1
+    },
+
+    F:{
+        axis:"z",
+        layer:1,
+        dir:-1
+    },
+
+    B:{
+        axis:"z",
+        layer:-1,
+        dir:1
+    }
+
+};
+
+
+/* =========================================================
+   CREATE BODY
+========================================================= */
+
+function createBodyFace(face){
+
+    const el = document.createElement("div");
+
+    el.className = "bodyFace " + face;
+
+    return el;
+}
+
+
+/* =========================================================
+   CREATE CUBIE
+========================================================= */
+
+function createCubie(x,y,z){
+
+    const el = document.createElement("div");
+
+    el.className = "cubie";
+
+    /*
+       Black 3D body
+    */
+
+    [
+        "front",
+        "back",
+        "right",
+        "left",
+        "top",
+        "bottom"
+
+    ].forEach(face => {
+
+        el.appendChild(
+            createBodyFace(face)
+        );
+
+    });
+
+
+    /*
+       Sticker data
+
+       color = permanent
+       normal = current direction
+    */
+
+    const stickers = [];
+
+
+    function addSticker(face,n){
+
+        stickers.push({
+
+            color:FACE_COLOR[face],
+
+            normal:n
+
+        });
+
+    }
+
+
+    /*
+       শুধু বাইরের cubie-তে sticker থাকবে
+    */
+
+    if(z === 1){
+
+        addSticker(
+            "front",
+            vec(0,0,1)
+        );
+
+    }
+
+    if(z === -1){
+
+        addSticker(
+            "back",
+            vec(0,0,-1)
+        );
+
+    }
+
+    if(x === 1){
+
+        addSticker(
+            "right",
+            vec(1,0,0)
+        );
+
+    }
+
+    if(x === -1){
+
+        addSticker(
+            "left",
+            vec(-1,0,0)
+        );
+
+    }
+
+    if(y === 1){
+
+        addSticker(
+            "top",
+            vec(0,1,0)
+        );
+
+    }
+
+    if(y === -1){
+
+        addSticker(
+            "bottom",
+            vec(0,-1,0)
+        );
+
+    }
+
+
+    const cubie = {
+
+        el,
+
+        x,
+        y,
+        z,
+
+        stickers
+
+    };
+
+
+    el._cubie = cubie;
+
+    return cubie;
+}
+
+
+/* =========================================================
+   RENDER CUBIE
+========================================================= */
+
+function renderCubie(cubie){
+
+    /*
+       y উল্টো করা হয়েছে যাতে
+       +Y = উপরে যায়
+    */
+
+    cubie.el.style.transform =
+        `translate3d(
+            ${cubie.x * SIZE}px,
+            ${-cubie.y * SIZE}px,
+            ${cubie.z * SIZE}px
+        )`;
+
+
+    /*
+       পুরনো stickers remove
+    */
+
+    cubie.el
+        .querySelectorAll(".sticker")
+        .forEach(el => el.remove());
+
+
+    /*
+       sticker আবার আঁকি
+
+       IMPORTANT:
+       এখানে color = sticker.color
+
+       face থেকে নতুন color নেওয়া হচ্ছে না।
+    */
+
+    cubie.stickers.forEach(sticker => {
+
+        const face =
+            normalToFace(sticker.normal);
+
+        const el =
+            document.createElement("div");
+
+        el.className =
+            `sticker ${face} ${sticker.color}`;
+
+        el._sticker = sticker;
+
+        cubie.el.appendChild(el);
+
+    });
+
+}
+
+
+/* =========================================================
+   BUILD 27 CUBIES
+========================================================= */
+
+function buildCube(){
+
+    cube.innerHTML = "";
+
+    cubies = [];
+
+
+    for(let x = -1; x <= 1; x++){
+
+        for(let y = -1; y <= 1; y++){
+
+            for(let z = -1; z <= 1; z++){
+
+                /*
+                   মোট 27 cubie
+                */
+
+                const cubie =
+                    createCubie(x,y,z);
+
+                cubies.push(cubie);
+
+                renderCubie(cubie);
+
+                cube.appendChild(
+                    cubie.el
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   GET LAYER
+========================================================= */
+
+function getLayer(move){
+
+    const def = MOVES[move];
+
+    return cubies.filter(cubie => {
+
+        return cubie[def.axis] === def.layer;
+
+    });
+
+}
+
+
+/* =========================================================
+   ROTATION CSS
+========================================================= */
+
+function rotationCSS(axis,angle){
+
+    if(axis === "x"){
+
+        return `rotateX(${angle}deg)`;
+
+    }
+
+    if(axis === "y"){
+
+        return `rotateY(${angle}deg)`;
+
+    }
+
+    return `rotateZ(${angle}deg)`;
+}
+
+
+/* =========================================================
+   PERFORM MOVE
+========================================================= */
+
+function performMove(moveName){
+
+    const baseMove =
+        moveName.replace("'","");
+
+    const inverse =
+        moveName.includes("'");
+
+    const def =
+        MOVES[baseMove];
+
+    if(!def) return;
+
+
+    /*
+       inverse হলে direction উল্টো
+    */
+
+    const dir =
+        inverse
+            ? -def.dir
+            : def.dir;
+
+
+    const selected =
+        getLayer(baseMove);
+
+
+    if(selected.length !== 9){
+
+        console.error(
+            "Layer error:",
+            selected.length
+        );
+
+        return;
+
+    }
+
+
+    moving = true;
+
+
+    /*
+       Temporary layer group
+    */
+
+    const layer =
+        document.createElement("div");
+
+    layer.style.position = "absolute";
+
+    layer.style.left = "0";
+
+    layer.style.top = "0";
+
+    layer.style.width = "0";
+
+    layer.style.height = "0";
+
+    layer.style.transformStyle =
+        "preserve-3d";
+
+    layer.style.transformOrigin =
+        "0 0 0";
+
+    layer.style.pointerEvents =
+        "none";
+
+
+    cube.appendChild(layer);
+
+
+    /*
+       Cubie-গুলো layer-এর ভিতরে
+    */
+
+    selected.forEach(cubie => {
+
+        /*
+           re-parent করার আগে
+           current transform একই থাকবে
+        */
+
+        layer.appendChild(
+            cubie.el
+        );
+
+    });
+
+
+    /*
+       Animation
+    */
+
+    const angle =
+        dir * 90;
+
+
+    /*
+       Browser animation
+    */
+
+    layer.style.transition =
+        "transform 280ms cubic-bezier(.2,.7,.2,1)";
+
+
+    requestAnimationFrame(() => {
+
+        layer.style.transform =
+            rotationCSS(
+                def.axis,
+                angle
+            );
+
+    });
+
+
+    setTimeout(() => {
+
+        /*
+           Logical state update
+        */
+
+        selected.forEach(cubie => {
+
+            const old =
+                vec(
+                    cubie.x,
+                    cubie.y,
+                    cubie.z
+                );
+
+
+            const next =
+                rotateVector(
+                    old,
+                    def.axis,
+                    dir
+                );
+
+
+            cubie.x = next.x;
+            cubie.y = next.y;
+            cubie.z = next.z;
+
+
+            /*
+               Sticker orientation update
+
+               COLOR untouched
+            */
+
+            cubie.stickers.forEach(
+                sticker => {
+
+                    sticker.normal =
+                        rotateVector(
+                            sticker.normal,
+                            def.axis,
+                            dir
+                        );
+
+                }
+            );
+
+        });
+
+
+        /*
+           আবার cube root-এ ফিরিয়ে আনি
+        */
+
+        selected.forEach(cubie => {
+
+            cube.appendChild(
+                cubie.el
+            );
+
+            renderCubie(cubie);
+
+        });
+
+
+        layer.remove();
+
+        moving = false;
+
+        processQueue();
+
+    },310);
+
+}
+
+
+/* =========================================================
+   MOVE QUEUE
+========================================================= */
+
+function queueMove(move){
+
+    moveQueue.push(move);
+
+    processQueue();
+
+}
+
+
+/* =========================================================
+   PROCESS QUEUE
+========================================================= */
+
+function processQueue(){
+
+    if(moving) return;
+
+    if(moveQueue.length === 0){
+
+        return;
+
+    }
+
+
+    const move =
+        moveQueue.shift();
+
+
+    moveText.textContent =
+        "Move: " + move;
+
+
+    performMove(move);
+
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+document
+    .querySelectorAll("[data-move]")
+    .forEach(button => {
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                queueMove(
+                    button.dataset.move
+                );
+
+            }
+        );
+
+    });
+
+
+/* =========================================================
+   WHOLE CUBE ROTATION
+========================================================= */
+
+function updateCubeRotation(){
+
+    pivot.style.transform =
+        `rotateX(${cubeRX}deg)
+         rotateY(${cubeRY}deg)`;
+
+}
+
+updateCubeRotation();
+
+
+/* =========================================================
+   POINTER DOWN
+========================================================= */
+
+function pointerDown(e){
+
+    if(e.pointerType === "mouse" &&
+       e.button !== 0){
+
+        return;
+
+    }
+
+
+    const sticker =
+        e.target.closest(".sticker");
+
+
+    pointerData = {
+
+        id:e.pointerId,
+
+        x:e.clientX,
+
+        y:e.clientY,
+
+        startX:e.clientX,
+
+        startY:e.clientY,
+
+        sticker,
+
+        face:sticker
+            ? normalToFace(
+                sticker._sticker.normal
+              )
+            : null
+
+    };
+
+
+    try{
+
+        scene.setPointerCapture(
+            e.pointerId
+        );
+
+    }catch(err){}
+
+}
+
+
+/* =========================================================
+   INVERSE CUBE ROTATION
+========================================================= */
+
+function inversePivotVector(v){
+
+    /*
+       CSS:
+
+       rotateX(rx)
+       rotateY(ry)
+
+       approximate inverse:
+       inverse X -> inverse Y
+    */
+
+
+    const rx =
+        cubeRX *
+        Math.PI /
+        180;
+
+    const ry =
+        cubeRY *
+        Math.PI /
+        180;
+
+
+    /*
+       inverse X
+    */
+
+    let y =
+        v.y * Math.cos(rx)
+        - v.z * Math.sin(rx);
+
+    let z =
+        v.y * Math.sin(rx)
+        + v.z * Math.cos(rx);
+
+    let x = v.x;
+
+
+    /*
+       inverse Y
+    */
+
+    const x2 =
+        x * Math.cos(ry)
+        + z * Math.sin(ry);
+
+    const z2 =
+        -x * Math.sin(ry)
+        + z * Math.cos(ry);
+
+
+    return {
+
+        x:x2,
+        y:y,
+        z:z2
+
+    };
+
+}
+
+
+/* =========================================================
+   FACE BASIS
+=========================================================
+
+   প্রতিটি face-এর নিজের
+   RIGHT এবং UP direction
+========================================================= */
+
+function faceBasis(face){
+
+    switch(face){
+
+        case "front":
+
+            return {
+                n:vec(0,0,1),
+                right:vec(1,0,0),
+                up:vec(0,1,0)
+            };
+
+
+        case "back":
+
+            return {
+                n:vec(0,0,-1),
+                right:vec(-1,0,0),
+                up:vec(0,1,0)
+            };
+
+
+        case "right":
+
+            return {
+                n:vec(1,0,0),
+                right:vec(0,0,-1),
+                up:vec(0,1,0)
+            };
+
+
+        case "left":
+
+            return {
+                n:vec(-1,0,0),
+                right:vec(0,0,1),
+                up:vec(0,1,0)
+            };
+
+
+        case "top":
+
+            return {
+                n:vec(0,1,0),
+                right:vec(1,0,0),
+                up:vec(0,0,-1)
+            };
+
+
+        case "bottom":
+
+            return {
+                n:vec(0,-1,0),
+                right:vec(1,0,0),
+                up:vec(0,0,1)
+            };
+
+    }
+
+}
+
+
+/* =========================================================
+   DOT
+========================================================= */
+
+function dot(a,b){
+
+    return (
+        a.x*b.x +
+        a.y*b.y +
+        a.z*b.z
+    );
+
+}
+
+
+/* =========================================================
+   CROSS
+========================================================= */
+
+function cross(a,b){
+
+    return {
+
+        x:a.y*b.z -
+          a.z*b.y,
+
+        y:a.z*b.x -
+          a.x*b.z,
+
+        z:a.x*b.y -
+          a.y*b.x
+
+    };
+
+}
+
+
+/* =========================================================
+   SIGN
+========================================================= */
+
+function sign(v){
+
+    if(v >= 0) return 1;
+
+    return -1;
+
+}
+
+
+/* =========================================================
+   GESTURE -> MOVE
+========================================================= */
+
+function gestureToMove(face,dx,dy){
+
+    if(!face) return null;
+
+
+    const basis =
+        faceBasis(face);
+
+
+    /*
+       Screen vector:
+
+       +X = right
+       +Y = up
+    */
+
+    const screenVector = {
+
+        x:dx,
+
+        y:-dy,
+
+        z:0
+
+    };
+
+
+    /*
+       Camera direction থেকে
+       cube-local direction
+    */
+
+    const swipe =
+        inversePivotVector(
+            screenVector
+        );
+
+
+    const horizontal =
+        dot(
+            swipe,
+            basis.right
+        );
+
+
+    const vertical =
+        dot(
+            swipe,
+            basis.up
+        );
+
+
+    let globalDir;
+
+
+    /*
+       Horizontal swipe
+    */
+
+    if(Math.abs(horizontal) >
+       Math.abs(vertical)){
+
+        /*
+           +rotation around outward
+           normal-এর movement
+        */
+
+        const movement =
+            cross(
+                basis.n,
+                basis.up
+            );
+
+
+        const localDir =
+            sign(
+                dot(
+                    basis.right,
+                    movement
+                ) *
+                sign(horizontal)
+            );
+
+
+        /*
+           outward normal -> global axis
+        */
+
+        if(basis.n.x !== 0){
+
+            globalDir =
+                localDir *
+                basis.n.x;
+
+        }
+
+        else if(basis.n.y !== 0){
+
+            globalDir =
+                localDir *
+                basis.n.y;
+
+        }
+
+        else{
+
+            globalDir =
+                localDir *
+                basis.n.z;
+
+        }
+
+    }
+
+    /*
+       Vertical swipe
+    */
+
+    else{
+
+        const movement =
+            cross(
+                basis.n,
+                basis.right
+            );
+
+
+        const localDir =
+            sign(
+                dot(
+                    basis.up,
+                    movement
+                ) *
+                sign(vertical)
+            );
+
+
+        if(basis.n.x !== 0){
+
+            globalDir =
+                localDir *
+                basis.n.x;
+
+        }
+
+        else if(basis.n.y !== 0){
+
+            globalDir =
+                localDir *
+                basis.n.y;
+
+        }
+
+        else{
+
+            globalDir =
+                localDir *
+                basis.n.z;
+
+        }
+
+    }
+
+
+    /*
+       Face name -> standard move
+    */
+
+    const faceMove = {
+
+        front:"F",
+
+        back:"B",
+
+        right:"R",
+
+        left:"L",
+
+        top:"U",
+
+        bottom:"D"
+
+    }[face];
+
+
+    /*
+       এই face-এর clockwise
+       global direction
+    */
+
+    const clockwiseDir = {
+
+        F:-1,
+        B:1,
+
+        R:-1,
+        L:1,
+
+        U:-1,
+        D:1
+
+    }[faceMove];
+
+
+    /*
+       globalDir এবং clockwiseDir
+       একই হলে normal move
+    */
+
+    if(globalDir === clockwiseDir){
+
+        return faceMove;
+
+    }
+
+    return faceMove + "'";
+
+}
+
+
+/* =========================================================
+   POINTER MOVE
+========================================================= */
+
+function pointerMove(e){
+
+    if(!pointerData) return;
+
+
+    const dx =
+        e.clientX -
+        pointerData.startX;
+
+    const dy =
+        e.clientY -
+        pointerData.startY;
+
+
+    /*
+       Sticker touch হলে
+       swipe detect করবো
+    */
+
+    if(pointerData.sticker){
+
+        return;
+
+    }
+
+
+    /*
+       Sticker নয়:
+
+       পুরো cube rotate
+    */
+
+    cubeRY += dx * 0.45;
+
+    cubeRX -= dy * 0.45;
+
+
+    /*
+       সীমাহীন X rotation না হলেও
+       user যেন উল্টাতে পারে
+    */
+
+    updateCubeRotation();
+
+
+    pointerData.startX =
+        e.clientX;
+
+    pointerData.startY =
+        e.clientY;
+
+}
+
+
+/* =========================================================
+   POINTER UP
+========================================================= */
+
+function pointerUp(e){
+
+    if(!pointerData) return;
+
+
+    const dx =
+        e.clientX -
+        pointerData.x;
+
+    const dy =
+        e.clientY -
+        pointerData.y;
+
+
+    /*
+       Sticker swipe
+    */
+
+    if(pointerData.sticker){
+
+        const distance =
+            Math.sqrt(
+                dx*dx +
+                dy*dy
+            );
+
+
+        if(distance > 18){
+
+            const move =
+                gestureToMove(
+                    pointerData.face,
+                    dx,
+                    dy
+                );
+
+
+            if(move){
+
+                queueMove(move);
+
+            }
+
+        }
+
+    }
+
+
+    try{
+
+        scene.releasePointerCapture(
+            e.pointerId
+        );
+
+    }catch(err){}
+
+
+    pointerData = null;
+
+}
+
+
+/* =========================================================
+   POINTER EVENTS
+========================================================= */
+
+scene.addEventListener(
+    "pointerdown",
+    pointerDown
+);
+
+scene.addEventListener(
+    "pointermove",
+    pointerMove
+);
+
+scene.addEventListener(
+    "pointerup",
+    pointerUp
+);
+
+scene.addEventListener(
+    "pointercancel",
+    pointerUp
+);
+
+
+/* =========================================================
+   PREVENT CONTEXT MENU
+========================================================= */
+
+scene.addEventListener(
+    "contextmenu",
+    e => e.preventDefault()
+);
+
+
+/* =========================================================
+   KEYBOARD
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    e => {
+
+        const key =
+            e.key.toUpperCase();
+
+
+        if(
+            ["U","D","L","R","F","B"]
+            .includes(key)
+        ){
+
+            /*
+               Shift + key = inverse
+            */
+
+            const move =
+                e.shiftKey
+                    ? key + "'"
+                    : key;
+
+
+            queueMove(move);
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   SCRAMBLE
+========================================================= */
+
+function scrambleCube(){
+
+    const faces =
+        ["U","D","L","R","F","B"];
+
+    const result = [];
+
+    let lastFace = null;
+
+
+    while(result.length < 20){
+
+        const face =
+            faces[
+                Math.floor(
+                    Math.random() *
+                    faces.length
+                )
+            ];
+
+
+        /*
+           একই face পরপর নয়
+        */
+
+        if(face === lastFace){
+
+            continue;
+
+        }
+
+
+        lastFace = face;
+
+
+        const random =
+            Math.floor(
+                Math.random() * 3
+            );
+
+
+        if(random === 0){
+
+            result.push(face);
+
+        }
+
+        else if(random === 1){
+
+            result.push(
+                face + "'"
+            );
+
+        }
+
+        else{
+
+            /*
+               U2 = U U
+            */
+
+            result.push(face);
+            result.push(face);
+
+        }
+
+    }
+
+
+    result.forEach(
+        move => moveQueue.push(move)
+    );
+
+
+    processQueue();
+
+}
+
+
+/* =========================================================
+   SCRAMBLE BUTTON
+========================================================= */
+
+document
+    .getElementById("scramble")
+    .addEventListener(
+        "click",
+        scrambleCube
+    );
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+document
+    .getElementById("reset")
+    .addEventListener(
+        "click",
+        () => {
+
+            /*
+               চলমান move শেষ না হওয়া পর্যন্ত
+               reset করবো না
+            */
+
+            if(moving){
+
+                return;
+
+            }
+
+
+            moveQueue = [];
+
+            moveText.textContent = "";
+
+            cubeRX = -25;
+
+            cubeRY = -35;
+
+            updateCubeRotation();
+
+            buildCube();
+
+        }
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+buildCube();
+
+</script>
+
+</body>
+</html>
