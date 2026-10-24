@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AsirNet | Flappy Bird Game</title>
+    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+    <style>
+        body {
+            background-color: #0f1015;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            touch-action: none;
+        }
+        h1 { margin: 5px; font-size: 22px; color: #00ffcc; text-shadow: 0 0 10px rgba(0,255,204,0.3); }
+        canvas {
+            background: #70c5ce;
+            border: 2px solid #2a2d3a;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0,255,204,0.2);
+            cursor: pointer;
+        }
+        .score-board {
+            font-size: 16px;
+            margin-bottom: 10px;
+            background: #1a1c23;
+            padding: 6px 15px;
+            border-radius: 15px;
+            border: 1px solid #2a2d3a;
+        }
+        .btn {
+            margin-top: 12px;
+            background-color: #00ffcc;
+            color: #000;
+            border: none;
+            padding: 8px 18px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,255,204,0.3);
+            transition: 0.2s;
+        }
+        .btn:hover { background-color: #00e6b8; }
+
+        #gameModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.85);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        .modal-box {
+            background: #161821;
+            padding: 30px;
+            border-radius: 14px;
+            border: 2px solid #00ffcc;
+            text-align: center;
+            width: 300px;
+            box-shadow: 0 0 30px rgba(0,255,204,0.4);
+        }
+        .modal-box h2 { color: #00ffcc; margin-top: 0; font-size: 24px; }
+        .modal-box p { color: #ddd; font-size: 15px; margin: 15px 0; }
+    </style>
+</head>
+<body>
+    <h1>FLAPPY BIRD ARCADE</h1>
+    <div class="score-board">Score: <span id="score">0</span></div>
+    <canvas id="gameCanvas" width="320" height="480"></canvas>
+    <button class="btn" onclick="restartGame()">Restart Game 🔄</button>
+
+    <div id="gameModal">
+        <div class="modal-box">
+            <h2>Game Over</h2>
+            <p id="modalText">Score: 0</p>
+            <button class="btn" onclick="restartGame()" style="width: 100%;">Play Again</button>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        let bird = {
+            x: 50,
+            y: 150,
+            width: 20,
+            height: 20,
+            gravity: 0.32,      // গ্র্যাভিটি আরও কমানো হয়েছে যাতে খুব ধীরে ও স্বাভাবিকভাবে নামে
+            lift: -5.8,         // জাম্প করার ধাক্কা বা সেন্সিটিভিটি কমানো হয়েছে (খুব বেশি উপরে উঠবে না)
+            velocity: 0
+        };
+
+        let pipes = [];
+        let pipeWidth = 50;
+        let pipeGap = 160;      // পাইপের মধ্যবর্তী ফাঁকা জায়গা আরও একটু বাড়ানো হয়েছে
+        let pipeSpeed = 1.8;    // পাইপগুলোর সামনের দিকে আসার গতি আরও কমানো হয়েছে
+        let score = 0;
+        let isGameOver = false;
+        let gameInterval = null;
+
+        document.addEventListener("keydown", function(e) {
+            if (e.code === "Space" || e.code === "ArrowUp") {
+                makeBirdJump();
+            }
+        });
+
+        canvas.addEventListener("click", function() {
+            makeBirdJump();
+        });
+
+        function makeBirdJump() {
+            if (!isGameOver) {
+                bird.velocity = bird.lift;
+            }
+        }
+
+        function spawnPipe() {
+            let minHeight = 50;
+            let maxHeight = canvas.height - pipeGap - 50;
+            let height = Math.floor(Math.random() * (maxHeight - minHeight + 1)) + minHeight;
+
+            pipes.push({
+                x: canvas.width,
+                top: height,
+                bottom: canvas.height - height - pipeGap,
+                passed: false
+            });
+        }
+
+        function updateGame() {
+            if (isGameOver) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            bird.velocity += bird.gravity;
+            bird.y += bird.velocity;
+
+            ctx.fillStyle = "#ffcc00";
+            ctx.fillRect(bird.x, bird.y, bird.width, bird.height);
+            ctx.strokeStyle = "#000";
+            ctx.strokeRect(bird.x, bird.y, bird.width, bird.height);
+
+            if (bird.y + bird.height >= canvas.height || bird.y <= 0) {
+                endGame();
+            }
+
+            if (pipes.length === 0 || pipes[pipes.length - 1].x <= canvas.width - 220) {
+                spawnPipe();
+            }
+
+            for (let i = pipes.length - 1; i >= 0; i--) {
+                pipes[i].x -= pipeSpeed;
+
+                ctx.fillStyle = "#73bf2e";
+                ctx.fillRect(pipes[i].x, 0, pipeWidth, pipes[i].top);
+                ctx.strokeStyle = "#000";
+                ctx.strokeRect(pipes[i].x, 0, pipeWidth, pipes[i].top);
+
+                ctx.fillRect(pipes[i].x, canvas.height - pipes[i].bottom, pipeWidth, pipes[i].bottom);
+                ctx.strokeRect(pipes[i].x, canvas.height - pipes[i].bottom, pipeWidth, pipes[i].bottom);
+
+                if (!pipes[i].passed && pipes[i].x + pipeWidth < bird.x) {
+                    score += 10;
+                    document.getElementById("score").innerText = score;
+                    pipes[i].passed = true;
+                }
+
+                if (
+                    bird.x < pipes[i].x + pipeWidth &&
+                    bird.x + bird.width > pipes[i].x &&
+                    (bird.y < pipes[i].top || bird.y + bird.height > canvas.height - pipes[i].bottom)
+                ) {
+                    endGame();
+                }
+
+                if (pipes[i].x + pipeWidth < 0) {
+                    pipes.splice(i, 1);
+                }
+            }
+
+            gameInterval = requestAnimationFrame(updateGame);
+        }
+
+        function endGame() {
+            isGameOver = true;
+            cancelAnimationFrame(gameInterval);
+            document.getElementById("modalText").innerText = "Your Total Score: " + score;
+            document.getElementById("gameModal").style.display = "flex";
+        }
+
+        function restartGame() {
+            document.getElementById("gameModal").style.display = "none";
+            bird.y = 150;
+            bird.velocity = 0;
+            pipes = [];
+            score = 0;
+            document.getElementById("score").innerText = score;
+            isGameOver = false;
+            updateGame();
+        }
+
+        updateGame();
+    </script>
+</body>
+</html>
