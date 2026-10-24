@@ -2,10 +2,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
     <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
     <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
-
+    
+     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+ 
 
     <title>AsirNet</title>
     <style>
@@ -17,6 +20,14 @@ html {
       -webkit-touch-callout: none;
 
 }
+  
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color .25s ease,
+                        color .25s ease,
+                        border-color .25s ease;
+        }
+
 button, a, input, div {
     -webkit-tap-highlight-color: transparent; 
     outline: none;
@@ -201,7 +212,7 @@ button, a, input, div {
 .warning-main-text {
     font-size: 25px;
     font-weight: 600;
-    color: gray;
+    color: red;
 }
 .warning-main-text.dark {
     color: white;
@@ -460,13 +471,13 @@ body.dark {
 
 .app-con {
      width: 100%;
-     max-width: 800px;
+     max-width: 1000px;
      background-color: rgba(255,255,255,0.2);
      height: 100vh;
      position: relative;
      overflow: auto;
      box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
-        }
+}
     
 textarea,input:focus {
     outline: none;
@@ -482,8 +493,10 @@ textarea,input:focus {
        padding:0px;
        padding-left: 20px;
        padding-right: 20px; 
-       background: white; 
-       border-bottom: 5px solid green; 
+       background: rgba(255,255,255,0.3); 
+       backdrop-filter: blur(12px);
+       border-bottom: 0.5px solid gray; 
+       box-shadow: 0 0 5px gray;
        position: fixed;
        z-index: 998;
        top: 0;
@@ -491,8 +504,8 @@ textarea,input:focus {
        right: 0;
        }
 #header.dark {
-    background: black;
-    border-bottom: 2px solid white; 
+    background: rgba(0,0,0,0.3); 
+    border-bottom: 0.5px solid gray; 
 }
 
 #header div {
@@ -572,7 +585,6 @@ textarea,input:focus {
     padding: 8px;
     border-radius: 12px;
     margin: 10px;
-    box-shadow: 0 0 5px gray;
 }
 .userShowing td{
     background: none;
@@ -599,7 +611,7 @@ textarea,input:focus {
     color: red;
 }
 #search.dark {
-    background: black;
+    background: rgb(30, 30, 30);
     box-shadow: 0 0 5px white;
 }
 #btnsearch {
@@ -614,7 +626,7 @@ textarea,input:focus {
     font-size: 25px;
     }
 #btnsearch.dark {
-    background: black;
+    background: rgb(30, 30, 30);
     box-shadow: 0 0 5px white;
 }
 #btnsearch img.dark {
@@ -630,7 +642,7 @@ textarea,input:focus {
     animation: widthEnrich 0.2s ease-in
 }
 #showBox.dark {
-    background: black;
+    background: rgb(30, 30, 30);
 }
 @keyframes widthEnrich {
     from {
@@ -676,11 +688,10 @@ textarea,input:focus {
        left:0; 
        width: 100%; 
        height:100%; 
-       background:rgba(0,0,0,0.5); 
+       background: none; 
        z-index:1000;
        display: flex;
        justify-content:center;
-       align-items: center; 
        opacity: 0;
        transform: translateY(100%);
        transition: opacity 0.4s ease, 
@@ -694,10 +705,11 @@ textarea,input:focus {
     color: white;
 }
 #postpad, #IMGpad {
-    height: 80%;
-    width: 650px;
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+    border-radius: 30px 30px 0px 0px;
     background: white;
-    border-radius: 20px;
     padding: 20px;
     overflow: auto;
     overscroll-behavior: contain;
@@ -706,7 +718,7 @@ textarea,input:focus {
 
 
 #postpad.dark, #IMGpad.dark {
-    background: black;    
+    background: rgb(30,30,30);  
 }
 .nameplate {
     width: 100%;
@@ -724,13 +736,16 @@ textarea,input:focus {
     width: 90%;
     padding: 20px;
     font-size: 25px;
-    border-bottom: 1px solid black;
+    border-bottom: 0.5px solid black;
     transition: 0.3s ease;
 }
-.uploadBtn img {
+.uploadBtn.dark {
+    border-bottom: 0.5px solid gray;    
+}
+.uploadBtn img.dark {
     filter: brightness(0) invert(1);
 }
-#bottomBTN button {
+.bottomBTN button {
     width: 45%;
     margin: 10px;
     padding: 5px;
@@ -740,7 +755,7 @@ textarea,input:focus {
     border-radius: 4px;
     background: linear-gradient(135deg, #c4b5fd, #bfdbfe);
 }
-#bottomBTN img {
+.bottomBTN img {
     width: 40px;
 }
 .postSubBtn {
@@ -796,21 +811,20 @@ textarea,input:focus {
     color: white;
 }
 .postshow {
-    padding: 20px;
-    text-align: justify;
-    margin: 25px;
-    border-radius: 20px;
+    padding: none;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
     background: transparent;
     min-height: 100px;
-    width: 90%;
-    box-shadow: 0 0 5px gray;
+    width: 100%;
+    border-bottom: 10px solid rgba(200,200,200,0.2);
     animation: postAppear 0.2s ease-in forwards;
 }
 
 .postshow.dark {
-    background: black;
- }
- 
+    border-bottom: 10px solid rgba(10,10,10,0.2);
+
+}
 .postshow *.dark {
     color: white;
 } 
@@ -827,63 +841,69 @@ textarea,input:focus {
 .postshow h2{
     color: green;
 }
-.postshow hr{
-    background: green;
-}
 .postshow p{
     font-size: 25px;
 }
 
 #footer {
-    background: white;
+    background: none;
     border: none;
-    border-top: 3px solid green;
+    border-top: 0.5px solid gray;
+    backdrop-filter: blur(5px);
     position: fixed;
     z-index: 999;
     width: 100%;
-    min-height: 70px;
-    bottom: 0;
+    height: 100px;
+    bottom: 8px;
     left: 0;
-    padding: 20px;
+    padding: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
 }
-#footer.dark {
-    background: black;
-    border-top: 2px solid white; 
-}
-#footerBtn {
-    width: 90%;
-}
-#footerBtn td{
-    text-align: center;
-}
+
 .footerBtn {
-    width: 110px;
-    height: 80px;
-    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: none;
-    border-radius: 20px;
-    font-size: 25px;
+    width: 100%;
+    height: 100%;
+}
+.footerBtn button {
+    width: 70px;
+    height: 70px;
+    background: rgba(90,90,90,0.04);
+    border: none;
+    border-radius: 50%;    
 }
 
 #footerPlusBtn {
-    width: 90px;
-    height: 90px;
-    border: 2px solid black;
-    background: transparent;
-    border-radius: 50%;
-    font-size: 40px;
-    padding: 5px;
-    color: black;
+    background: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-#footerPlusBtn.dark {
-    color: white;
-    border: 2px solid white;    
+
+#footerPlusBtn button {
+    border: none;
+    background: linear-gradient(135deg, #154dff, #5b15ff);
+    box-shadow: 0 0 2px pink;
+    border-radius: 20px;
+    padding: 10px 30px;
+    transform: translateY(-20px);
+    width: fit-content;
+    height: fit-content;
 }
-#footerBtn button img.dark {
+
+.footerBtn button img {
+    filter:
+        drop-shadow(3px 0 0 white)
+        drop-shadow(-3px 0 0 white)
+        drop-shadow(0 3px 0 white)
+        drop-shadow(0 -3px 0 white);
+}
+.footerBtn button img.dark {
     filter: brightness(0) invert(1);
-}
-#footerBtn button.inactive {
-    border-top: 2px solid green;
 }
 #profdiv {
     background: none;
@@ -1054,10 +1074,7 @@ textarea,input:focus {
     color: red;
     font-size: 14px;
 }
-.crossBtn {
-    background: none;
-    border: none;
-}
+
 #alert {
     color: red;
     font-size: 15px;
@@ -1104,45 +1121,119 @@ textarea,input:focus {
     margin-top: 20px;
 }
 
-.likeComCon {
-    position:fixed;
-    z-index:1100;
-    top:0;
-    left:0;
-    height:100%;
-    width:100%;
-    align-items: center;
-    justify-content:center;
-    background:rgba(0,0,0,0.4);
+.regards-panal {
+    position: fixed;
+    z-index: 1100;
+    top: 40px;
+    left: 0;
+    height: 98%;
+    width: 100%;
+    background: white;
+    border-radius: 40px 40px 0px 0px;
     display: flex;
-    opacity: 0;
+    flex-direction: column;
+    box-shadow: 0 0 10px gray;
     visibility: hidden;
-    transition: opacity .4s ease,
-                visibility .4s ease,
+    transition: visibility .4s ease,
                 transform .4s ease;
-    transform: translateX(-1000px);
+    transform: translateY(100%);
+ }
+
+.regards-panal main {
+    padding: 30px;
+}
+#reactors.show, #comments.show {
+    visibility: visible;
+    transform: translateY(0);
+} 
+
+.regards-panal header {
+    padding: 20px;
+    background: rgba(255,255,255, 0.5);
+    border-radius: 40px 40px 0px 0px;
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid gray;
+}
+.regards-panal header h1{
+    color: green;
+    background: none;
+}
+.regards-panal.dark {
+    background: black;
+    border: 1px solid white;
 }
 
-.likeComCon.show {
-    opacity: 1;
+.loading-likes div, .loading-comments div {
+    width: auto;
+    margin: 20px;
+    height: 60px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #a8ede0 0%, #d1e8e2 100%);
+;
+    background-size: 250% 250%;
+    animation: loading-bg 2s linear infinite;
+    overflow: hidden;
+} 
+
+.loading-comments > :nth-child(1) {
+    width: auto;
+}
+.loading-comments > :nth-child(2) {
+    width: 70%;
+    height: 200px;
+}
+.loading-comments > :nth-child(1) {
+    width: 50%;
+}
+@keyframes loading-bg {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 100% 100%;
+    }
+
+}
+
+
+.secDivCon {
+    position: fixed;
+    z-index: 1100;
+    top: 40px;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    visibility: hidden;
+    transition: visibility .4s ease,
+                transform .4s ease;
+    transform: translateX(-100%);        
+}
+.secDivCon.show {
     visibility: visible;
-    transform: translateX(0);
+    transform: translateX(0);        
 }
 .comSecDiv {
-  width: 80%;
-  margin-bottom: 30px;
-  background: #ffffff;
-  border-radius: 14px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.4);
-  padding: 15px 15px 18px;
-  box-sizing: border-box;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 0 10px gray;
+    background: white;
+    width: 80%;
+    height: fit-content;
 }
 .comSecDiv.dark {
     background: black;
     border: 1px solid white;
 }
 .comSecDiv button {
-  border-radius: 50%;   
+  border-radius: 50%; 
+  display: flex;
+  align-items: center;
+  justify-content: center;  
   border: 1px solid black; 
 }
 .comSecDiv textarea.dark::placeholder {
@@ -1404,7 +1495,6 @@ textarea,input:focus {
     height: 100%;
     display: flex;
     justify-content:center;
-    align-items:center;
     z-index: 1000;
     position: fixed;
     top: 0;
@@ -1414,18 +1504,21 @@ textarea,input:focus {
     transition: transform 0.45s ease, opacity 0.4s ease;
      overscroll-behavior: contain;
 }
-#stryPort div{
-    width: 90%;
-    height: 80%;
+#stryPort div {
+    margin-top: 40px;
+    width: 100%;
+    height: 100%;
     background: white;
-    border-radius: 20px;
+    border-radius: 30px 30px 0px 0px;
     overscroll-behavior: contain;
+    display: flex;
+    flex-direction: column;
 }
 #stryPort div.dark {
-    background: black;
+    background: rgb(30,30,30);
 }
 .stryPort.dark {
-    background: black;
+    background: rgb(30,30,30);
     box-shadow: 0 0 7px white;
 }
 .videoBtn{
@@ -1650,7 +1743,7 @@ textarea,input:focus {
   background:#fff;
   border-top-right-radius:40px;
   border-top-left-radius:40px;
-  box-shadow:0 20px 40px rgba(0,0,0,0.25);
+  box-shadow:0 0px 10px gray;
   opacity:0;
   transition:0.4s cubic-bezier(.22,1,.36,1);
   z-index:1002;
@@ -1660,7 +1753,7 @@ textarea,input:focus {
   padding: 30px;
 }
 #bgPost.dark {
-    background: black;
+    background: rgb(30,30,30);
 }
 #textFont {
     background: white;
@@ -1683,7 +1776,7 @@ textarea,input:focus {
     overscroll-behavior: contain;
   }
 #textFont.dark {
-    background: black;
+    background: rgb(30,30,30);
 }
 #innerChange input {
     border: none;
@@ -1711,10 +1804,12 @@ textarea,input:focus {
     font-weight: bold;
     max-width: 400px;
     text-align: center;
-    background: rgba(66, 133, 244, 0.35);;
-    color: inherit;
+    background: rgba(66, 133, 244, 0.35);
     width: fit-content;
     }
+#demo div.dark {
+    background: rgb(200,200,200);    
+}
 .correctBtn {
     border: none;
     background: none;
@@ -1901,6 +1996,28 @@ textarea,input:focus {
     font-weight: bold;
     margin: 18px;
 }
+.loadUsers {
+    width: 200px;
+    height: 200px;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #a8ede0 0%, #d1e8e2 100%);
+;
+    background-size: 250% 250%;
+    animation: loading-bg 1s linear infinite,
+               appear-smooth 0.5s ease;
+    overflow: hidden;
+}
+
+@keyframes appear-smooth {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
 
 .tagIds {
     position: relative;
@@ -2034,8 +2151,8 @@ textarea,input:focus {
 }
 #taggedShowDiv {
     background: white;
-    width: 70%;
-    height: 30%;
+    width: 85%;
+    height: 80%;
     padding: 10px;
     overflow: auto;
     position: relative;
@@ -2068,7 +2185,6 @@ textarea,input:focus {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
   transition: all 0.2s ease-in-out;
   min-width: 260px;
-  max-width: 500px;
 }
 .tag-card.dark {
     background: black;
@@ -2147,7 +2263,7 @@ textarea,input:focus {
 #postMenu {
     background: white;
     border: 1px solid gray;
-    box-shadow: 0 0 8px gray;
+    box-shadow: 0 0 8px rgba(0,0,0,0.03);
     border-radius: 4px;
     width: 300px;
     position: fixed;
@@ -2155,11 +2271,15 @@ textarea,input:focus {
     display: block;
     bottom: 10%;
     left: 40%;
-    transition:0.4s;
-    transform: translateY(150%); 
+    transition: 0.6s;
+    transform: translateY(400%); 
+}
+#postMenu.show {
+    transform: translateY(-20px); 
+
 }
 #postMenu.dark {
-    background: black;
+    background: rgb(40,40,40);
     border: 1px solid white;
 }
 #postMenu div {
@@ -2765,8 +2885,8 @@ textarea,input:focus {
     visibility: visible;
 }
 #MainMenuContent {
-    width: 0;
-    max-width: 500px;
+    position: relative;
+    width: 0px;    
     height: 100%;
     background: white;
     padding: 20px;
@@ -2776,16 +2896,17 @@ textarea,input:focus {
     overflow: auto;
 }
 #MainMenuContent.dark {
-    background: black;
+    background: rgb(40,40,40);
 }
 #MainMenuContent.show {
-    width: 80%;
+    width: 622px;
 }
 #MenuUpperBtn {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
+    min-height: 80px;
 }
 
 #MenuUpperBtn img {
@@ -2816,17 +2937,44 @@ textarea,input:focus {
     border: none;
     cursor: pointer;
     font-size: 28px;
-    font-weight: bold;
     color: black;
     background: none;
     text-align: left;
     transition: all 0.2s ease;
     overflow: auto;
 }
-.MenuBtns.dark {
-    color: white
+.MenuProds {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 14px 20px;
+    border: none;
+    cursor: pointer;
+    background: none;
+    text-align: left;
+    transition: all 0.2s ease;
+    overflow: auto;
 }
-.MenuBtns img {
+.MenuProds div {
+    display: block;
+    gap: 2px;
+}
+.MenuProds pre {
+    color: black;
+    font-size: 28px; 
+    margin: 0;
+    padding: 0;
+}
+.MenuProds p {
+    color: gray;
+    font-size: 20px;
+    margin: 0;
+    padding: 0;
+}
+.MenuBtns.dark, .MenuProds pre.dark{
+    color: white;
+}
+.MenuBtns img, .MenuProds img {
     width: 40px;
     height: 40px;
     object-fit: contain;
@@ -2841,6 +2989,58 @@ textarea,input:focus {
     color: gray;
 }
 
+#footerOnMenu {
+    position: fixed;
+    display: flex;
+    padding: 20px;
+    background: rgba(255,255,255,0.5);
+    backdrop-filter: blur(12px);
+    z-index: 1005;
+    border-radius: 15px 15px 0px 0px;
+    box-shadow: 0 0 10px gray;
+    border-top: 0.5px solid gray;
+    border: none;
+    bottom: 0;
+    left: 6px;
+    width: 80%;
+    max-width: 572px;
+    height: 70px;
+    flex-direction: row;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity, transform 0.9s ease-in-out; 
+    transform: translateY(400%);
+}
+
+#footerOnMenu.dark {
+    background: rgba(0,0,0,0.5);
+}
+
+#footerOnMenu.show {
+    transform: translateY(0);
+}
+
+#footerOnMenu div {
+    background: none;
+    border: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#footerOnMenu img {
+    width: 70px;
+    height: 70px;
+    background: none;
+    border: none;
+    border-radius: 50%;
+}
+
+.modeChange.dark {
+    filter: brightness(0) invert(1);
+}
+
 /* Spinner Style */
 .vibe-spinner {
     width: 55px;
@@ -2849,7 +3049,7 @@ textarea,input:focus {
     border-radius: 50%;
     border-top-color: green;
     animation: spin 2.6s infinite linear;
-    margin: 0 auto; /* Center alignment */
+    margin: 0 auto;
 }
 
 @keyframes spin {
@@ -2865,62 +3065,6 @@ textarea,input:focus {
       }
 }
 
-#nextalk-overlay {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 990;
-    right: 40px;
-    bottom: 12%;
-    max-width: 60%;
-    border-radius: 50%;
-    box-shadow: 0 0 4px rgba(128, 128, 128, 0.6);
-    opacity: 1;
-    padding: 16px;
-    background: none;
-    transition: border-radius 0.4s ease, box-shadow 0.4s ease, opacity, background 0.4s ease;
-}
-#nextalk-overlay img {
-    background: white;
-    width: 100px; 
-    height: 100px;
-    border-radius: 50%;
-}
-
-#nextalk-overlay section {
-    font-size: 30px; 
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    width: 0;
-    opacity: 0;
-    overflow: hidden;
-    color: black;
-    white-space: nowrap;
-    transition: width 0.5s ease, opacity 0.4s ease, margin-left 0.4s ease;
-}
-
-#nextalk-overlay.open {
-    background: white;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-    border-radius: 35px;
-    opacity: 1;
-    color: white;
-    text-shadow: 0 0 4px black;
-}
-#nextalk-overlay.open.dark {
-    background: transparent;  
-    backdrop-filter: blur(12px);  
-}
-
-#nextalk-overlay section.open {
-    width: 350px; 
-    opacity: 1;
-    margin-left: 15px; 
-    color: white;
-    text-shadow: 0 0 4px black;
-}
 #stry-ongoing {
     display: none;
     animation: fade-on 0.8s ease;
@@ -2981,12 +3125,13 @@ textarea,input:focus {
     margin: 15px;
     padding: 6px;
     border: none;
-    border-radius: 25%;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
     background: none;
-    min-width: 60px;
+    width: 60px;
+    height: 60px;
 }
 .tab-switching,.tab-switching-oth{
     margin: 40px auto;
@@ -3098,7 +3243,6 @@ textarea,input:focus {
 }
 #clip-take-overlay {
     width: 100%;
-    max-width: 880px;
     height: 95%;
     position: fixed;
     bottom: 0;
@@ -3112,7 +3256,8 @@ textarea,input:focus {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     transition: transform 0.3s ease;
     overflow-y: auto;
-  overscroll-behavior: contain;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
 }
 #clip-take-overlay.dark {
     background: black;
@@ -3508,12 +3653,25 @@ textarea,input:focus {
             opacity: 0;
             transform: scale(0.95);
             transition: opacity 0.2s ease, transform 0.2s ease;
+            animation: comingSmooth 0.5s;
             overscroll-behavior: contain;
+            transform-origin: top;
         }
 .quick-menu.dark {
             background: black;
             box-shadow: 0 0 5px white;
         }
+        
+@keyframes comingSmooth {
+            from {
+              opacity: 0;
+              transform: translateY(15px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0px);
+            }
+}
 .quick-menu.active {
             display: flex;
             opacity: 1;
@@ -3553,7 +3711,7 @@ textarea,input:focus {
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
-            animation: smoothy 0.6s;
+            animation: smoothy 0.6s ;
         }
 .quick-app-item.dark {
     background: rgba(0,0,0,0.4);
@@ -3590,18 +3748,154 @@ textarea,input:focus {
             transform: translateY(-2px);
             box-shadow: 0 4px 10px rgba(59, 130, 246, 0.15);
         }
+
 .storyErr.dark {color: white !important}
+
 .storyErr img.dark {filter: brightness(0) invert(1)}
+
 .todark.dark {background: black !important}
+
 .ondmode.dark {background: black !important}
+
 .ondmode *.dark {color: white}
+
+.editLowerBtns {
+    background: none;
+    padding: 10px;
+    width: 100%;
+}
+
+.editLowerBtns button {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: none;
+    padding: 25px;
+    font-size: 30px;
+    border: none;
+    width: 100%;
+}
+
+.editLowerBtns button * {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    background: none;
+    padding: 0px;
+    margin: 0px;
+    font-size: 30px;
+    border: none;
+    width: 50%;
+}
+
+.editLowerBtns button section {
+    text-decoration: underline;
+    color: purple;
+    display: none;
+}
+
+
+.editLowerBtns input[type='text'] {
+    background: none;
+    padding: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    border: none;
+    width: auto;
+    color: red;
+    transition: all 0.3s ease;
+}
+
+.editLowerBtns input:focus {
+    border-left: 10px solid red;
+    border-bottom: 2px solid red;
+    border-bottom-left-radius: 14px;
+}
+
+.editLowerBtns input::placeholder {
+    color: black;
+    font-weight: normal;
+}
+
+.editLowerBtns input:not(:placeholder-shown) {
+    border-left: 10px solid gray;
+    border-bottom: none;
+    border-bottom-left-radius: 0px;
+}
+
+.editBottomBtns {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 130px;
+    gap: 20px;
+}
+.editBottomBtns button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 30px;
+    min-width: 100px;
+    height: 70px;
+    font-size: 26px;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+#infoBtn.dark, #infoBtn *.dark{
+    color: white;    
+}
+
+.Id-information {
+    background: none;
+    padding: 15px;
+    margin: 10px;
+}
+.Id-information section {
+    font-weight: bold;
+    font-size: 30px;
+    border-left: 20px solid green;
+    color: green;
+    margin: 25px;
+    padding: 0;
+    padding-left: 10px;
+}
+.Id-information div {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+    padding: 30px;
+    background: rgb(245,245,245);
+    box-shadow: 3px 4px 15px rgb(190,190,190);
+    border-radius: 40px;
+    font-size: 25px;
+    font-weight: 1000;
+    color: gray;
+}
+.Id-information div.dark {
+    background: rgb(50,50,50);
+    box-shadow: 3px 4px 15px rgb(70,70,70);
+}
+.Id-information div img {
+    width: 30px;
+    background: none;
+    margin-right: 20px;
+}
+.Id-information div img.dark, #infoBtn img.dark {
+    filter: background(0) invert(1);
+}
+
 
  </style>
 <link rel="stylesheet" href="./asirnet.css">
 </head>
 <body id="body">
-
+    
 <div class="app-con">
+    
     
 <div id="header">
  <div>
@@ -3610,9 +3904,10 @@ textarea,input:focus {
     <img src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png" width="200px">
     
 </div>
-<div style="display: flex;">
-<button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40" class="headerBtn"></button>
-<h1 id="profPicture" onclick="profile(); loadProfile()"></h1>
+<div style="display: flex; align-items: center;">
+        <button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40" class="headerBtn"></button>
+
+        <h1 id="profPicture" onclick="profile(); loadProfile()"></h1>
 </div>
 </div>
 
@@ -3620,14 +3915,6 @@ textarea,input:focus {
 
 
 <div id="bio"></div>
-<div id="top-sentinel"></div>
-<a href="https://7930navid.github.io/nextalk/">
-    <div id="nextalk-overlay">
-        <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" alt="" width="80">
-        <section> Chat with NEXTALK </section>
-    </div>
-</a>
-
 
 <div id="onDisImg">
     <button onclick="closeOnDisImg()">
@@ -3694,23 +3981,13 @@ at
 
     <textarea id="postword" placeholder="What's on your mind?" ></textarea>
 
-    <section id="textFont">
-<h1 style="color:green; text-align: left;width: 100%;">Adjust here your post size properly...</h1><hr style="background:green; width: 100%; height: 3px;">
-    <section id="innerChange">
-<input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
-    <div id="demo"><div>"it's a demo of post letters"</div></div>
- <button onclick="applySize()" class="correctBtn">
-     <img border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
- </button>
-    </section>
-   </section>
    </div>
 
     <!-- ALERT -->
     <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
-  <div id="bottomBTN">
- <button onclick="postBG()"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 30px; color: red; margin-top: 10px;">Post Background</p></button>
- <button onclick="fontSize()"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 30px; color: green; margin-top: 10px;">Font Size</p></button>
+  <div class="bottomBTN">
+ <button onclick="postBG('postword')"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 30px; color: red; margin-top: 10px;">Post Background</p></button>
+ <button onclick="fontSize('postword')"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 30px; color: green; margin-top: 10px;">Font Size</p></button>
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
@@ -3728,6 +4005,18 @@ at
     <div id="filePreview" style="margin-top:10px;"></div>
   </div>
 </div>
+
+ <!-- Post Size -->
+    <section id="textFont">
+<h1 style="color:green; text-align: left;width: 100%;">Adjust here your post size properly...</h1><hr style="background:green; width: 100%; height: 3px;">
+    <section id="innerChange">
+<input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
+    <div id="demo"><div>"it's a demo of post letters"</div></div>
+ <button onclick="applySize()" class="correctBtn">
+     <img border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ </button>
+    </section>
+   </section>
 
  <!-- Post Background -->
  <div id="pBG">
@@ -3873,7 +4162,7 @@ at
 <p onclick="showTagged('')" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
 </div>
 
-    <textarea id="Imgword" placeholder="Write a caption about this image.." ></textarea>
+    <textarea id="Imgword" placeholder="Write a caption about this post..." ></textarea>
 
 <div id="imgcont"></div>
 
@@ -3881,12 +4170,14 @@ at
     <!-- ALERT -->
     <h2 class="onPicAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
 
+
     <div style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
 
    <label class="uploadBtn">
    <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">     
-       <img src="https://i.ibb.co.com/HfSqkppH/exchange.png"  style="margin-right: 20px" width="40"> Change image
+       <img src="https://i.ibb.co.com/HfSqkppH/exchange.png"  style="margin-right: 20px" width="40" > Select photo
    </label>
+   
    <label class="uploadBtn" onclick="input('feeling2', 'What\'s your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
    </label>
    <label class="uploadBtn" onclick="input('location2', 'What\'s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
@@ -3909,7 +4200,32 @@ at
 
   <div class="story-inner" onclick="openStoryPort(); appClsBtn()">
       <div style="background: rgba(0,0,0,0.5); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2.5px); ">
-       <div style="font-size: 60px; padding: 20px; border-radius: 90px; background: white; display: flex; align-items: center; justify-content: center; color: blue; font-weight: bold; width: 30px; height: 30px;">+</div>
+       <div style=" border-radius: 40px; background: linear-gradient(160deg, blue, #1332e5); display: flex; align-items: center; justify-content: center; width: 70px; height: 70px;">
+                        <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal Line -->
+  <line 
+    x1="8" 
+    y1="32" 
+    x2="56" 
+    y2="32" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+  
+  <!-- Vertical Line -->
+  <line 
+    x1="32" 
+    y1="8" 
+    x2="32" 
+    y2="56" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+</svg>
+
+       </div>
       </div>
   </div>    
 
@@ -4017,37 +4333,59 @@ at
 
 
 <footer id="footer">
-    <div>
-        <table id="footerBtn">
-            <tr>
-                
-    <td>
-        <button onclick="location.reload()" class="footerBtn">
-            <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
+    
+    
+    <div class="footerBtn">
+        <button onclick="home()">
+            <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="50">
          </button>
-     </td>
-     <td>
-        <button onclick="location.href='reels.html'" class="footerBtn">
-            <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0">
-         </button>
-     </td>
-     <td>
-         <button onclick="postMenu(event)" id="footerPlusBtn">+</button>
-     </td>
-     <td>
-         <button onclick="notification();" class="footerBtn">
-             <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40">
-          </button>
-      </td>
-      <td>
-          <button onclick="profile(); loadProfile();" class="footerBtn">
-              <img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40">
-           </button>
-       </td>
-       
-            </tr>
-        </table>
     </div>
+    <div class="footerBtn">
+        <button onclick="location.href='reels.html'">
+            <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="50" border="0">
+         </button>
+     </div>
+     
+     <div id="footerPlusBtn">
+         <button onclick="postMenu(event)">
+             <svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal Line -->
+  <line 
+    x1="8" 
+    y1="32" 
+    x2="56" 
+    y2="32" 
+    stroke="white" 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+  />
+  
+  <!-- Vertical Line -->
+  <line 
+    x1="32" 
+    y1="8" 
+    x2="32" 
+    y2="56" 
+    stroke="white" 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+  />
+</svg>
+         </button>
+         </div>
+
+    <div class="footerBtn">
+         <button onclick="notification();">
+             <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="50">
+          </button>
+     </div>
+     
+     <div class="footerBtn">
+          <button onclick="location.href='https://7930navid.github.io/nextalk/'">
+              <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" alt="" border="0" width="55">
+           </button>
+      </div>
+
 </footer>
 
 <div id="postMenu">
@@ -4079,6 +4417,42 @@ at
     <button onclick="connect()" id="connectionBtn">Add Connection</button>
     <button onclick="messageWithNexttalk()" id="messageSending">Send Message</button>
     </div>
+     <div class="Id-information" id="profileMore">
+
+<section>Address</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:map-pin.svg?color=%23475569">
+      <span id="othadd"></span>
+  </div> 
+  <section>Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:briefcase.svg?color=%23475569">
+      <span id="othstatus"></span>
+  </div>
+  <section>Marital Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:heart.svg?color=%23475569">
+      <span id="othmerst"></span>
+  </div> 
+  <section>Gender</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:user.svg?color=%23475569">
+      <span id="othgender"></span>
+  </div> 
+  <section>Language</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:languages.svg?color=%23475569">
+      <span id="othlang"></span>
+  </div>
+  <section>Education</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:graduation-cap.svg?color=%23475569">
+      <span id="othedu"></span>
+  </div>
+     
+  </div> 
+    <br><br><br> 
+
     <h1 class="storyErr">Connected ones</h1><hr>
     <div id="showOnes">
      <div class="friendShow">
@@ -4140,7 +4514,7 @@ at
  <input type="text" placeholder="Search users...." onkeyup="comeUsers()" id="searchBar">
  <div id="faultMass"></div>
  </div>
- <div id="comingUsers" style="margin-top:250px;display: grid;grid-template-columns: repeat(3, 1fr);gap: 16px;"></div>
+ <div id="comingUsers" style="margin-top:300px;display: grid;grid-template-columns: repeat(3, 1fr);gap: 16px;"></div>
  <button onclick="closeTagPage('a')" class="correctBtn">
      <img id="sizeSubmit" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
  </button>
@@ -4157,7 +4531,8 @@ at
 
 
 <div id="MainMenuAside"> 
-  <div id="MainMenuContent" onclick="">
+    
+  <div id="MainMenuContent">
     
     <div id="MenuUpperBtn">
      
@@ -4171,7 +4546,7 @@ at
         
 <div class="MenuStatus">Menu Buttons</div>      
 
-      <button onclick="location.reload(); menuClose()" class="MenuBtns">
+      <button onclick="home(); menuClose()" class="MenuBtns">
         <img src="https://i.ibb.co.com/wZFh56jy/home.png" width="50">
         Home
       </button>    
@@ -4193,6 +4568,25 @@ at
         <img src="https://i.ibb.co.com/F4W5LC2f/video.png" width="50">
         ClipNovas
       </button>
+ 
+<div class="MenuStatus">Productivities</div> 
+     
+      <button onclick="location.href='https://7930navid.github.io/nextalk/'; menuClose()" class="MenuProds">    
+        <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" width="60">
+        <div>
+            <pre>NexTalk</pre>
+            <p>A chatting app</p>
+        </div>
+      </button>
+
+      <button onclick="location.href='https://7930navid.github.io/nexchat/'; menuClose()" class="MenuProds">    
+        <img src="https://i.ibb.co.com/LXjZY8jh/nexchat.png" width="60">
+        <div>
+            <pre>NexChat</pre>
+            <p>A chatbot AI</p>
+        </div>
+      </button>
+
 
 <div class="MenuStatus">Post Options</div>      
       
@@ -4202,12 +4596,12 @@ at
       </button>
       
 <label>
-    <button type="button" onclick="document.getElementById('imageInput').click(); menuClose()" class="MenuBtns">
+    <button type="button" onclick="document.getElementById('videoInput').click(); menuClose()" class="MenuBtns">
         
         <input 
             type="file" 
             accept="video/*" 
-            id="imageInput" 
+            id="videoInput" 
             hidden 
             onchange="loadReels(event)"
         >
@@ -4238,15 +4632,58 @@ at
         class="MenuBtns"
     >
         <img src="https://i.ibb.co.com/9mmh24xT/image.png" width="50">
-        Post photo
+        Post Photo
     </button>
 </label>
-      
-    </div> 
 
-  </div>
+<div class="MenuStatus">FUN & GAMES</div>      
+
+      <button onclick="location.href='cube.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/QvmWD0Ts/cube-3d.png" width="50">
+        3×3 Rubik's Cube
+      </button>
+      
+
+      <button onclick="location.href='snake.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/zVwj2vSR/game.png" width="50">
+        Snake Game
+      </button>
+
+      <button onclick="location.href='bird.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/PzwSG8Nc/3d.png" width="50">
+        Flipping Game
+      </button>
+
+      <button onclick="location.href='bricks.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/TBpS1Wvg/brick-wall.png" width="50">
+        Brick Breaker Game
+      </button>
+      
+    </div>
+    
+    <div style="margin-top: 250px"></div> 
+    
+<nav id="footerOnMenu">
+            
+           <div style="width: 25%;">
+               <img id="footerMenuProf">
+           </div>
+           
+           <div style="width: 50%;">
+               <h1 id="footerMenuId" style="color: green; margin: none; padding-left: 0; margin-left: 0; text-shadow: 0 0 2px white; font-weight: bold; text-break: break; font-size: 30px;"></h1>
+           </div>
+        
+           <div style="width: 25%;" onclick="darkM()">
+     <img src="https://i.ibb.co.com/jkwHF52Q/20261024-152231.png" class="modeChange">          
+           </div>
+ 
+</nav>
+
+
 </div>
 </div>
+
+
 
 <div id="clip-take-overlay">
     <div class="clip-header">
@@ -4318,7 +4755,7 @@ So create an account or log in to AsirNet to enjoy it.</div>
         <div class="quick-apps-grid">
 
             
-            <div class="quick-app-item" onclick="location.reload()">
+            <div class="quick-app-item" onclick="home()">
 <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
 <p>Home</p>
             </div>
@@ -4373,21 +4810,44 @@ So create an account or log in to AsirNet to enjoy it.</div>
 <p>Create story</p>
 </div>
 
-
-        </div>   
-    </div>
-
+        </div>    
+  </div>
 
 
+
+<div class="regards-panal" id="reactors">
+    <header>
+        <h1>Reactions: </h1>
+    </header>
+    <main id="reactAppear">
+        <div class="loading-likes">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </main>
 </div>
 
+<div class="regards-panal" id="comments">
+    <header>
+        <h1>Comments: </h1>
+    </header>
+    <main id="commentAppear">        
+        <div class="loading-comments">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+</main>
+</div>
+
+</div>
 <script>
 function initQuickBallWithGridMenu(ballId, menuId) {
 
     const ball = document.getElementById(ballId);
     const menu = document.getElementById(menuId);
 
-    // .app-con এর প্রথম element নেওয়া
     const entire = document.querySelector('.app-con');
 
     if (!ball || !menu || !entire) return;
@@ -5109,43 +5569,21 @@ initQuickBallWithGridMenu(
 </script>
 
 <script>
-        const topSentinel = document.getElementById('top-sentinel');
-        const overlay = document.getElementById('nextalk-overlay');
-        const overlaySection = overlay.querySelector('section');
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    overlay.classList.add('open');
-                    overlaySection.classList.add('open');
-                } else {
-                    overlay.classList.remove('open');
-                    overlaySection.classList.remove('open');
-                }
-            });
-        }, {
-            threshold: 1.0 
-        });
-
-        observer.observe(topSentinel);
-    
-  
-/* function inactive(it) {
- let el = document.querySelector(it);
- el.classList.add('inactive');   
-}
- */
  
 function menuOpen() {
-document.getElementById("MainMenuAside").classList.add('show');    
-document.getElementById("MainMenuContent").classList.add('show');  
-  BackManager.register(menuClose);  
+    document.getElementById("MainMenuAside").classList.add('show');    
+    document.getElementById("footerOnMenu").classList.add('show');    
+    document.getElementById("MainMenuContent").classList.add('show');  
+
+      BackManager.register(menuClose);  
 }
 
 function menuClose() {
-document.getElementById("MainMenuContent").classList.remove('show'); 
-    setTimeout(() => {   
-document.getElementById("MainMenuAside").classList.remove('show'); 
+    document.getElementById("MainMenuContent").classList.remove('show'); 
+    document.getElementById("footerOnMenu").classList.remove('show');    
+
+       setTimeout(() => {   
+        document.getElementById("MainMenuAside").classList.remove('show'); 
     }, 400);   
     
    BackManager.unregister(menuClose);  
@@ -5188,6 +5626,7 @@ function loadpostIMG(e) {
     img.style.objectFit = "contain";
 
     wrapper.appendChild(img);
+    imgcont.style.display = "flex";
     imgcont.innerHTML = "";
     imgcont.appendChild(wrapper);
 
@@ -5273,21 +5712,34 @@ let selectedVideoSrc = "";
 /* --------- Story Pages ------- */
 const FPage = `
 <div id="changePort" class="stryPort">
-   <div id="port" style="display:block">
-<section style="text-align: right;" id="clsBtnDo">
-  <button onclick="closeStoryPort('b')" style="display:flex;justify-content:center;align-items:center;padding:20px;font-size:30px;color:white;border:none;border-radius:90px;width:50px;height:50px;margin:90px;background:red;">×</button>
-</section>
-<input type="file" id="storyFile" accept="video/*" style="display:none" onchange="loadFromGallery(event)">
-<div id="plusBtn" style="display:flex;justify-content: center; align-items: center;margin-left: 60px;">
-<button onclick="openGallery()" style="font-size:30px;width:400px;height:200px;background:linear-gradient(30deg,cyan,lightgreen);border:none;border-radius:20px;color:red;box-shadow:0 0 30px green;" id="shakeDesign">
-  Create Your Story
-</button>
-</div></div>
+    
+   <main style="display:flex; flex-direction: column; justify-content: center; align-items: center; margin: 30px;">
+       
+     <div id="port" style="display: flex; flex-direction: column; background: transparent; justify-content: center; align-items: center; ">
+       
+     <section style="width: 100%; margin-bottom: 40%;">
+       
+      <button onclick="closeStoryPort('b')" style="display: flex; justify-content: center; align-items: center; font-size: 90px; font-weight: bold; color: red; border: none; border-radius: 90px; margin: 90px; background: none; width: 70px; height: 70px;">
+          ×
+      </button>
+      </section>
+       
+      <input type="file" id="storyFile" accept="video/*" hidden onchange="loadFromGallery(event)">
+      
 
-<video id="storyVideo" controls style="width:100%;max-height:70%;border-radius:20px;display:none; margin-top: 30px;"></video>
+            <button onclick="openGallery()" style="font-size: 30px; width: 400px; height: 200px; background: linear-gradient(-30deg,indigo,blue); border: none; border-radius: 20px; color: white; box-shadow: 0 0 30px green; font-weight: bold;" id="shakeDesign">
+          Create Your Story
+            </button>
+    
+        </div>
+     
+ 
+    <div style="display: none" id="storyChange">
+  
+<video id="storyVideo" controls style="width: 100%; max-height: 70%;border-radius: 20px; display: none; margin-top: 30px; background: black;"></video>
 
 
-<section id="storyChange" style="display: none">
+<section style="overflow: auto">
   <table align="center">
     <tr>
       <td><button onclick="onconfirm('Do you want to cancel??', 'Are you sure to cancel current operation? Your current progress will be lost! Press OK button if you’re sure.', 'OK', closeStoryPort, '', '#4f46e5')" class="videoBtn">Close</button></td>
@@ -5297,11 +5749,15 @@ const FPage = `
   </table>
 </section>
 </div>
+
+ </main>
+
+</div>
 `;
 
 const SPage = ` <br><br>
- <table cellpadding="5"><tr><td>
-    <video id="prepearVideo" muted style="width:200px;height:150px;border:5px solid red"></video></td>
+ <table cellpadding="5" style="margin: 20px;"><tr><td>
+    <video id="prepearVideo" muted style="width: 200px; height: 150px; border: 5px solid red;"></video></td>
     
     <td>
 <textarea id="storyCaption" placeholder="Write something about this video..." style=" height:150px;border:none;padding:20px;font-size:30px;border-radius:20px; font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif; background: none;" class="storyErr"></textarea>
@@ -5309,16 +5765,17 @@ const SPage = ` <br><br>
 
  </tr></table>
    
- <div style="text-align: right; width: 100%; height: 200px; background: none;">   
+ <div style="width: 100%; height: 200px; background: none; display: flex; align-items: center; justify-content: flex-end; padding-right: 20px; flex-direction: row;">   
 <button class="submitpost" onclick="appClsBtn()" 
-    style="background: rgba(0,0,0,0.2); padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
+    style="background: rgba(0,0,0,0.2); padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px; width: fit-content;">
     Cancel
 </button>
 <button class="submitpost" onclick="sendStory()" 
-    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px;">
+    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px; width: fit-content;">
     Post Story
 </button>
 
+</div>
 <section id="stry-ongoing">
      <section class="loadContainer">
      <section class="main-loading-focus"></section>
@@ -5326,7 +5783,6 @@ const SPage = ` <br><br>
      </section>
 </section>
 
-</div>
 
 `;
 
@@ -5372,12 +5828,11 @@ function loadFromGallery(e){
   selectedVideoFile = file;
   selectedVideoSrc = URL.createObjectURL(file);
 
-  $("clsBtnDo").style.display = "none";
+  $("storyChange").style.display = "flex";
   const video = $("storyVideo");
   video.src = selectedVideoSrc;
   video.style.display = "block";
   qs('#port').style.display = "none";
-  document.getElementById('storyChange').style.display = 'flex';
 
   setTimeout(()=>video.play().catch(()=>{}),1000);
    BackManager.register(openStoryPort);
@@ -5899,14 +6354,14 @@ e.stopPropagation();
 
 const menu = document.getElementById("postMenu"); 
 
-        menu.style.transform = "translateY(0%)"; 
+        menu.classList.add('show'); 
 
         BackManager.register(clzpostMenu); 
     } 
 
 // Close menu 
 function clzpostMenu() { 
-document.getElementById("postMenu") .style.transform = "translateY(150%)"; 
+document.getElementById("postMenu").classList.remove('show'); 
     BackManager.unregister(clzpostMenu); 
 } 
 
@@ -6003,7 +6458,7 @@ if(guest) return guestWarn();
 
   } catch (error) {
     console.error("Network or server error:", error);
-    alert("Cannot send message due to a network connection issue. Please try again!");
+    onalert("Cannot send message due to a network connection issue. Please try again!");
   }
 }
 
@@ -6073,9 +6528,17 @@ async function showOtherProf(email) {
         });
         headerName.innerText = `Profile of "${user.username}"`;
         upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
+        
+        $('othadd').innerText = user.address;
+        $('othstatus').innerText = user.status;
+        $('othmerst').innerText = user.marital_status;
+        $('othgender').innerText = user.gender;
+        $('othlang').innerText = user.language;
+        $('othedu').innerText = user.education;
 
 loadConnections(receiver_id, 'showOnes');
 loadProfilePosts(email, 'otherPosts')
+
     } catch (err) {
         console.error(err);
         postsDiv.innerHTML = "<p style='color:red;'>Failed to load posts</p>";
@@ -6112,6 +6575,7 @@ document.getElementById("connectionBtn");
     BackManager.unregister(remove);
 }
 
+let allChange;
 
 function profile() {
 
@@ -6120,7 +6584,11 @@ if(guest) return guestWarn();
 const u = JSON.parse(localStorage.getItem("user"));
 const s = JSON.parse(styleString);
 
-    document.getElementById('allChange').innerHTML =`
+    const change = document.getElementById('allChange');
+    
+    allChange = change.outerHTML;  
+      
+    change.innerHTML =`
  <div id="profdiv">
      <table align="center"><tr><td width="270">
      <img id="profPic" onclick="disProf('${u.avatar}')">       
@@ -6137,8 +6605,54 @@ const s = JSON.parse(styleString);
      <h3 id="profileBio"></h3>
   </td></tr></table>
       </div>
-  
-  <h1 class="storyErr">Your Connected Persons</h1><hr>
+      
+      
+      <div style="position: relative; width: 100%;">
+       <a href="pickInfo.html" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 999; position: absolute; right: 30px; display: flex; align-items: center;" id="infoBtn">   
+
+<span> + Add More Info</span>
+
+</a>
+       
+       </div>
+    
+ <div class="Id-information" id="profileMore">
+
+<section>Address</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:map-pin.svg?color=%23475569">
+      <span id="add"></span>
+  </div> 
+  <section>Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:briefcase.svg?color=%23475569">
+      <span id="status"></span>
+  </div>
+  <section>Marital Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:heart.svg?color=%23475569">
+      <span id="merst"></span>
+  </div> 
+  <section>Gender</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:user.svg?color=%23475569">
+      <span id="gender"></span>
+  </div> 
+  <section>Language</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:languages.svg?color=%23475569">
+      <span id="lang"></span>
+  </div>
+  <section>Education</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:graduation-cap.svg?color=%23475569">
+      <span id="edu"></span>
+  </div>
+     
+  </div> 
+    <br><br><br> 
+ 
+  <h1 class="storyErr">Connected Persons</h1><hr>
   <div id="connectionList">
 <div class="friendShow">
   <div class="main-loading-focus"></div>
@@ -6156,6 +6670,28 @@ const s = JSON.parse(styleString);
  <div style="height: 300px;width: 100%;"></div> 
     
     `;
+    
+    const more = localStorage.getItem('info');
+    
+    if (!more || more === null) {
+     document.getElementById('profileMore').outerHTML = '' ;
+
+    } else {
+    
+    const m = JSON.parse(more);
+    
+    $('infoBtn').innerHTML = ` <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
+          <span> Edit info</span>` ;
+    
+    $('add').innerText = m.address;
+    $('status').innerText = m.status || m.status_custom;
+    $('merst').innerText = m.marital_status || m.marital_custom;
+    $('gender').innerText = m.gender || m.gender_custom;
+    $('lang').innerText = m.language || m.language_custom;
+    $('edu').innerText = m.education || m.education_custom;
+
+    }
+    
 
 document.getElementById('profPic').src =`${u.avatar}`;       
 document.getElementById('userName').innerHTML = `${u.username}`;       
@@ -6178,7 +6714,17 @@ darkModeActivate(isDark);
 loadProfilePosts(u.email, 'ownerPosts');
 }
 
-function home() {location.reload()}
+function home() {
+    const change = document.getElementById('allChange');
+    const m = localStorage.getItem('dark');
+    
+       if(allChange) {
+    change.innerHTML = allChange;           
+       } else {
+           location.reload();
+       }
+     darkModeActivate(m);
+}
 
 function ownerClips(email, avatar) {
     const allChange = document.getElementById('ownerPosts');
@@ -6556,23 +7102,7 @@ function closeSearchPad() {
     BackManager.unregister(closeSearchPad);
 }
 
-/* ========= POST PAGE EXAMPLE ========= */
 
-
-function closePostpage(){
-   const pad1 = document.getElementById("postpage");
-   const pad2 = document.getElementById("IMGpost");
-
- if(pad1) {
-     pad1.classList.remove("show");
- } if(pad2) {
-    pad2.classList.remove("show");
-  }
-    document.getElementById('location').innerText="___";
-    document.getElementById('feeling').innerText ="___";
-    postLocation ="";
-    feeling ="";
-  }
 
 function tag() {
     if(taggedEmailList.length == 0) {
@@ -6594,19 +7124,19 @@ document.getElementById('searchBar').value ="";
 document.getElementById('comingUsers').innerHTML ="";
 document.getElementById('tagPeople').style.transform = 'translateY(100%)'; 
 
-const taggedBtn = document.getElementById('taggedBtn'); 
-const taggedBtn2 = document.getElementById('taggedBtn2'); 
-const taggedBtn3 = document.getElementById('with-other'); 
+    const taggedBtn = document.getElementById('taggedBtn'); 
+    const taggedBtn2 = document.getElementById('taggedBtn2'); 
+    const taggedBtn3 = document.getElementById('with-other'); 
+    const taggedAllBtns = document.querySelectorAll('.editLowerBtns button section'); 
 
-if(taggedBtn) {
-     taggedBtn.style.display = 'block'   
-} 
-if (taggedBtn2) {
-     taggedBtn2.style.display = 'block'       
-}
-if (taggedBtn3) {
-     taggedBtn3.style.display = 'block'       
-}
+    if (taggedBtn) taggedBtn.style.display = 'block';
+    if (taggedBtn2) taggedBtn2.style.display = 'block';       
+    if (taggedBtn3) taggedBtn3.style.display = 'block';
+    
+    if (taggedAllBtns) {
+        taggedAllBtns.forEach(e => { e.style.display = 'block'; });
+    }
+       
 
     if(check != 'a') {
     taggedEmailList = [];
@@ -6617,20 +7147,21 @@ if (taggedBtn3) {
 
 function clearTags() {
     if(taggedEmailList.length == 0) {
+    
 const taggedBtn = document.getElementById('taggedBtn'); 
 const taggedBtn2 = document.getElementById('taggedBtn2'); 
 const taggedBtn3 = document.getElementById('with-other'); 
+const taggedAllBtns = document.querySelectorAll('.editLowerBtns button section');
 
-if(taggedBtn) {
-     taggedBtn.style.display = 'none'   
-} 
-if(taggedBtn2) {
-     taggedBtn2.style.display = 'none'       
-}
-if(taggedBtn3) {
-     taggedBtn3.style.display = 'none'       
-}
-    }            
+    if (taggedBtn) taggedBtn.style.display = 'none';
+    if (taggedBtn2) taggedBtn2.style.display = 'none';       
+    if (taggedBtn3) taggedBtn3.style.display = 'none';
+    
+    if (taggedAllBtns) {
+        taggedAllBtns.forEach(e => { e.style.display = 'none'});
+    }
+
+    }
 
 }
 
@@ -6658,14 +7189,18 @@ async function comeUsers() {
         alertShow("Please Write something here to search");
         return;
     }
+    
+    let token = 123;
 
-    // Token check
-    const token = localStorage.getItem("token");
-    if (!token) {
-        alertShow("Please login first");
-        return;
-    }
-
+    showingDisplay.innerHTML =`
+    <div class="loadUsers"></div>
+    <div class="loadUsers"></div>
+    <div class="loadUsers"></div>
+    <div class="loadUsers"></div>
+    <div class="loadUsers"></div>
+    <div class="loadUsers"></div>
+    `;  
+    
     try {
         const res = await fetch(
             `https://users-server-xyvg.onrender.com/search?q=${encodeURIComponent(searchElement)}`,
@@ -6708,15 +7243,12 @@ async function comeUsers() {
 
 
 let taggedEmailList = [];
-/* === ১. tagAdd (বাটনে ক্লিক করলে সিলেক্ট/ডি-সিলেক্ট হবে) === */
 function tagAdd(btn, email, name, avatar) {
-    // ১. বাটনের ভিজ্যুয়াল টগল
     
         btn.classList.toggle("selected");
         
     const userIndex = taggedEmailList.findIndex(user => user.email === email);
 
-    // ২. যদি আগে থেকে না থাকে তবে অ্যাড হবে, থাকলে রিমুভ হবে
     if (userIndex === -1) {
         taggedEmailList.push({
             email: email || "",
@@ -6728,7 +7260,6 @@ function tagAdd(btn, email, name, avatar) {
     }
 }
 
-/* === ২. showTagged (UI-তে লিস্ট দেখানোর জন্য) === */
 function showTagged(c) {
     const taggedShow = document.getElementById('taggedShow');
     const container = document.getElementById('personWise');
@@ -6751,19 +7282,25 @@ function showTagged(c) {
     container.innerHTML = taggedEmailList.map(i => `
         <div class="tag-card">
     <div onclick="showOtherProf('${i.email}'); closeTagged('${c}')">
-   <img src="${i.avatar}" alt="">
+   <div style="display: flex; gap: 10px; flex-direction: row; align-items: center">
+           <div>
+               <img src="${i.avatar}" alt="">
+           </div>
             <div>
                 <h3>${i.name || 'User'}</h3>
                 <p>${i.email || ''}</p>
             </div>
-            </div>
+     </div>
+   </div>
             <button
                 onclick="removeTag('${i.email}')"
                 style="display:${c === 'r' ? 'none' : 'block'}"
                 class="tagCloseBtn">
                 ✕
             </button>
+            
         </div>
+     
     `).join("");
     darkModeActivate(isDark); 
 }
@@ -6817,7 +7354,7 @@ function alertShow(alert) {
    },4000); 
 }
 
-function postBG() {
+function postBG(id) {
  const p = document.getElementById("pBG");
  p.style.opacity = '1';
  p.style.visibility = 'visible';
@@ -6825,6 +7362,7 @@ function postBG() {
  m.style.opacity = '1';
  m.style.bottom = '0px';
     BackManager.register(closePostBG);
+    postOrEdit = id;
 
 }
 
@@ -6835,6 +7373,20 @@ function closePostBG() {
  const m = document.getElementById("bgPost");
  m.style.opacity = '0';
  m.style.bottom = '-300px';    
+    postOrEdit = "";
+}
+
+function removePostingImg() {
+    document.getElementById('imgcont').style.display = 'none';
+    
+    const El = document.getElementById('Imgword');
+     
+    El.style.fontSize = '30px';  
+    El.style.color = 'black';  
+    El.style.textShadow = 'none';  
+    El.style.textAlign = 'left';  
+    El.style.background = 'none';  
+    El.style.fontWeight = 'normal'; 
 }
 
 async function pad(v) {
@@ -6925,7 +7477,6 @@ document.getElementById("searchresult").innerHTML = `<div style="color: red; fon
         }, 2000) 
 }
 
-
 function createpost(id) {
     const user = localStorage.getItem("user");
     const u = JSON.parse(user);
@@ -6943,17 +7494,34 @@ function createpost(id) {
     setTimeout(() => {
         document.getElementById(id).classList.add("show");
     }, 10);
+    
 
     BackManager.register(closePostpage);
 }
 
+function closePostpage(){
+   const pad1 = document.getElementById("postpage");
+   const pad2 = document.getElementById("IMGpost");
+            
+    pad1.classList.remove("show");
+    pad2.classList.remove("show");
+   
+    document.getElementById('location').innerText="___";
+    document.getElementById('feeling').innerText ="___";
+    postLocation ="";
+    feeling ="";
+ }
+
+
+let postOrEdit;
 
 /* =========================
    BACKGROUND + TEXT STYLE
 ========================= */
 function textBG(c1, c2, bg) {
-    const i = document.getElementById("postword");
-
+    const i = document.getElementById(postOrEdit);
+    
+   
     if (c1 && c2) {
         i.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
 
@@ -6977,15 +7545,19 @@ function textBG(c1, c2, bg) {
         i.style.textAlign = "center";
         i.style.textShadow = "0 0 10px black";
     }
+
 }
+
 
 /* =========================
    FONT SIZE PANEL
 ========================= */
-function fontSize() {
+function fontSize(el) {
     const f = document.getElementById("textFont");
     f.style.transform = "translate(0)";
-  BackManager.register(closeFontSize);    
+  BackManager.register(closeFontSize);
+  
+  postOrEdit = el;    
 }
 
 function demoShow() {
@@ -6999,30 +7571,33 @@ function demoShow() {
           onalert('Size must be between 20px and 70px');
       }
    }
-function applySize() {
+
+function applySize(el) {
 
    const givenSize = document.getElementById('textSize');
-   const appliedSize = document.getElementById('postword');
-
+   const appliedSize = document.getElementById(postOrEdit);
+   
   if(givenSize.value <= 70 && givenSize.value >= 20){
     appliedSize.style.fontSize = givenSize.value + "px";
-    closeFontSize();
     changeSize(givenSize.value);
+    closeFontSize();
     } else if (!givenSize.value) { 
     onalert('Please type a size first!');
     } else {
     onalert('Font size must be between 20px and 70px');
     }
+  
  }
 
 function closeFontSize() {
     const f = document.getElementById("textFont");
     f.style.transform = "translateY(700px)";
-  BackManager.unregister(closeFontSize);    
+  BackManager.unregister(closeFontSize);
+  postOrEdit = "";    
 }
 
 function changeSize(size) {
-    const i = document.getElementById("postword");
+    const i = document.getElementById(postOrEdit);
     i.style.fontSize = size;
     let s = Number(size);
     if(s >= 35) {
@@ -7076,23 +7651,6 @@ function collectPostData() {
 }
 
 
-/* =========================
-   APPLY STYLE (SERVER → UI)
-========================= */
-function applyPostStyle(el, style) {
-    if (!style) return;
-
-    el.style.color = style.color;
-    el.style.fontSize = style.fontSize;
-    el.style.fontWeight = style.fontWeight;
-    el.style.textAlign = style.textAlign;
-    el.style.textShadow = style.textShadow;
-
-    el.style.background = style.background;
-    el.style.backgroundImage = style.backgroundImage;
-    el.style.backgroundSize = style.backgroundSize;
-    el.style.backgroundPosition = style.backgroundPosition;
-}
 
 
 /* === 1. POST SUBMIT (CLEAN & PRODUCTION READY) === */
@@ -7199,12 +7757,16 @@ function escapeHTML(str = "") {
 }
 
 function applyPostStyle(el, style) {
-  if (!style) return;
+
+  if (!style) return console.error('Style missing');
+  
   Object.keys(style).forEach(k => {
     el.style[k] = style[k];
   });
 }
 
+
+let reactorsSetup;
 
 async function reactors(postId) {
 
@@ -7214,7 +7776,8 @@ async function reactors(postId) {
     );
     const data = await res.json();
 
-    const container = document.getElementById(`reactors${postId}`);
+    const container = document.getElementById('reactAppear');
+    reactorsSetup = container.innerHTML;
     container.innerHTML = ""; // clear previous
 
     if (!data.likes || data.likes.length === 0) {
@@ -7285,9 +7848,9 @@ cap.innerText = caption;
 
 function closeOnDisImg() {
 const el = qs('#onDisImg');
-const elEl = qs('#onDisImg *');
+const elEl = document.querySelectorAll('#onDisImg *');
+elEl.forEach(e => {e.innerHTML = ""});
 el.classList.remove('show');
-elEl.forEach (e => {e.innerHTML = ""});
     
 }
 
@@ -7388,7 +7951,7 @@ async function reactorsOnStory(postId) {
         <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
           <p style="color: red; font-weight: bold; font-size: 30px; text-align: center; background: none; box-shadow: none;">Network error</p>
           <p style="color: gray; background: none; box-shadow: none; text-align: center; font-size: 20px;">Couldn't load comments due to internet connection. Please check your connection!</p>
-          <button onclick="location.reload()" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange; cursor: pointer;">Reload Page</button>
+          <button onclick="home()" style="border: none; border-radius: 10px; color: white; padding: 20px; font-size: 28px; background: orange; cursor: pointer;">Reload Page</button>
         </div>`;
     }
   } finally {
@@ -7411,9 +7974,11 @@ const el = document.getElementById(`comPen${close}`);
     el.classList.remove("show");
 }
 
+let comSetup;
 async function comText(postId) {
-    const box = document.getElementById(`comText${postId}`);
-     box.innerHTML = "Loading comments...";
+    const box = document.getElementById('commentAppear');
+    comSetup = box.innerHTML;
+
   BackManager.register(containerClose, postId);    
     try {
         const res = await fetch(`https://interacts-server-xpbo.onrender.com/comments/${postId}`);
@@ -7831,6 +8396,8 @@ function backtoprofile() {
     document.querySelector('#backbtn').innerHTML = "";
 }
 
+function closealert(id) {id.style.display = 'none'}
+
 async function loadProfilePosts(email, place) {
     if (!place) {
         console.error("place argument is required!");
@@ -7859,10 +8426,10 @@ async function loadProfilePosts(email, place) {
 
         const contentDiv = document.getElementById(place);
 
-if (!contentDiv) {
-    alert(`Error: #${place} element is missing in HTML!`);
+        if (!contentDiv) {
+    console.log(`Error: #${place} element is missing in HTML!`);
     return;
-}
+        }
 
     contentDiv.innerHTML = "";
         if (data.length === 0) {
@@ -7878,19 +8445,20 @@ if (!contentDiv) {
             const copyText = encodeURIComponent(post.post?.text || "");
             const emailSafe = encodeURIComponent(post.email || "");
             const safeOthers = encodeURIComponent(JSON.stringify(post.others || []));
+            const safePost = encodeURIComponent(JSON.stringify(post || {}));
 
             const div = document.createElement("div");
             div.className = "postshow";
+            div.id = `showPost${post.id}`;
 
             const formattedTime = getShortTime(post.created_at);
 
 
             div.innerHTML = `
-<table><tr><td valign="top">
+    <div style="display:flex; width: 100%;">
 <img src="${post.avatar}" style="width:60px;height:60px;box-shadow:3px 3px green;border-radius:90px;border:4px solid white; margin:10px;" onclick="showOtherProf('${post.email}')">
-</td>
 
-<td style="width:460px;">
+
 <h2 onclick="showOtherProf('${post.email}')">
 <button class="profileBtn"
  data-email="${emailSafe}"
@@ -7898,6 +8466,46 @@ if (!contentDiv) {
 <div style="font-size:30px;text-align:left;">${post.username}<span style="color:gray; font-size:30px"> • ${formattedTime}</span></div>
 </button>
 </h2>
+
+<div style="position: relative; flex-grow: 1;  display: flex; justify-content: flex-end;">
+    
+<div style="display: flex; justify-content: flex-end; gap: 10px">
+    
+<div class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}">
+  <button onclick="showMoreInfo('${post.id}', '${place}')">
+   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50" class="imgChange">
+  </button>
+</div>
+ 
+<button id="options${post.id}" style="background: none; border: none; margin-top: 15px;">   
+    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="40" class="imgChange">
+</button>
+
+<button onclick="closealert('showPost${post.id}')" style="background: none; border: none; margin-top: 15px;">   
+    <img src="https://i.ibb.co.com/Gvf0ydqH/close.png" width="40" class="imgChange">
+</button>
+
+</div>
+
+<div id="menu${post.id}" style="display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:300px; margin-right: 30px; z-index:1000; overflow:hidden; transform-origin: top right; animation: dropdownShow 0.4s ease;" class="postedMenuDarl"> 
+   
+   ${place === 'ownerPosts' ? `
+   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:25px;" 
+onclick="editPost('${safePost}'); closealert('menu${post.id}')">Edit</button>
+   <hr>
+   ` : ''}
+
+   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:25px;" onclick="navigator.clipboard.writeText(decodeURIComponent('${copyText}')); closealert('menu${post.id}')">Copy</button>
+
+   ${place === 'ownerPosts' ? `
+   <hr>
+   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;color:red;font-size:25px;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
+   ` : ''}
+
+</div>
+</div>
+
+</div>
 
 <div class="othInfo" id="othInfo${post.id}${place}">
 <p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
@@ -7911,46 +8519,19 @@ if (!contentDiv) {
    <u style="color:purple">With other ones</u>
 </p>
 </div>
-</td>
 
-<td class="hideAndSick" style="display:${(post.feelings || post.location || (post.others?.length > 0)) ? 'block' : 'none'}">
-  <button onclick="showMoreInfo('${post.id}', '${place}')">
-   <img src="https://i.ibb.co.com/Z6JbsJqd/down-arrow.png" width="50" class="imgChange">
-  </button>
-</td>
 
-<td valign="top" style="position: relative">
-<button id="options${post.id}" style="background: none; border: none; margin-top: 15px;">   
-    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="40" class="imgChange">
-</button>
+<hr style="background: gray; height: 1.3px">
 
-<div id="menu${post.id}" style="display:none; position:absolute; right:0; top:45px; background:white; border:1px solid gray; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.2); width:300px; margin-right: 30px; z-index:1000; overflow:hidden; transform-origin: top right; animation: dropdownShow 0.4s ease;" class="postedMenuDarl"> 
-   
-   ${place === 'ownerPosts' ? `
-   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:25px;" onclick="editPost('${post.id}'); closealert('menu${post.id}')">Edit</button>
-   <hr>
-   ` : ''}
-
-   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;font-size:25px;" onclick="navigator.clipboard.writeText(decodeURIComponent('${copyText}')); closealert('menu${post.id}')">Copy</button>
-
-   ${place === 'ownerPosts' ? `
-   <hr>
-   <button style="position:relative;width:100%;padding:10px;border:none;background:none;text-align:left;color:red;font-size:25px;" onclick="deletePost('${post.id}'); closealert('menu${post.id}')">Delete</button>
-   ` : ''}
-
-</div>
-</td>
-</tr></table>
-
-<hr style="background: gray; height: 2px;">
-
-<p class="postText" style="font-size:30px; padding:20px; border-radius:5px;"></p>
+<p class="postText" id="textPost${post.id}" style="font-size:30px; padding:20px; border-radius:5px;"></p>
 
 ${post.post?.image ? `
-<div id="box${post.id}">
+<div id="box${post.id}" style="display: flex; justify-content: center; align-items: center; background: black;">
     <img src="${post.post.image}" style="max-width: 100%; border: 1px solid black; border-radius: 6px; cursor:pointer;" onclick="onDisImg('${post.post.image}', '${post.post.text || ''}')">
 </div>` : ''}
 
+    <div id="remove${post.id}">
+    
 <div id="countReactions">
 <div id="countByOrder${post.id}" style="text-align:right">
 <button id="likeCount${post.id}" onclick="likeContainer('${post.id}'); reactors('${post.id}')"></button><br>
@@ -7982,11 +8563,11 @@ ${post.post?.image ? `
 <button onclick="reactAppear('${post.id}','😡')">😡</button>
 </div>
 
-<div id="comPen${post.id}" class="likeComCon">
+<div id="comPen${post.id}" class="secDivCon">
 <div class="comSecDiv">
   <div class="comHeader">
     <h2>Write a comment about this post</h2>
-    <button onclick="closeComSec('${post.id}')" class="crossBtn">×</button>
+    <button onclick="closeComSec('${post.id}')" style="background: none; border: none; padding: 0px; font-size: 30px;">×</button>
   </div>
   <hr>
   <div class="comBody">
@@ -8010,35 +8591,10 @@ ${post.post?.image ? `
 </div>
 </div>
 
-<div id="commentContainer${post.id}" class="likeComCon">
-<div class="Display">
-<table style="width:700px; position:fixed; z-index:1000; background: none; backdrop-filter: blur(12px);">
-<tr><td><h1>Comments</h1></td>
-<td><div style="text-align:right;">
-<button style="color:red;font-size:30px;border:none;background:none;cursor:pointer;" onclick="containerClose('${post.id}')">×</button>
-</div></td></tr>
-</table>
-
-<div id="comText${post.id}" style="margin-top:140px"></div>
-</div>
-</div>
-
-<div id="likeContainer${post.id}" class="likeComCon">
-<div class="Display">
-<table style="width:700px; position:fixed; z-index:1000; background: none; backdrop-filter: blur(12px);">
-<tr><td><h1>Reactions</h1></td>
-<td><div style="text-align:right;">
-<button style="color:red; font-size:30px; border:none; background:none; cursor:pointer; " onclick="closeLikeContainer('${post.id}')">×</button>
-</div></td></tr>
-</table>
-
-<div id="reactors${post.id}" style="margin-top:140px;">Loading reactions...</div>
-</div>
-</div>
+        </div>
 `;
 
-            // Text inject safely
-            div.querySelector(".postText").innerHTML = htmlText;
+div.querySelector(".postText").innerHTML = htmlText;
 
             contentDiv.appendChild(div);
 
@@ -8109,73 +8665,280 @@ darkModeActivate(isDark);
     }
 }
 
-// Global listener to close reaction panels and options dropdowns on outside click
 document.addEventListener("click", () => {
     document.querySelectorAll(".appearFlex").forEach(p => p.classList.remove("show"));
     document.querySelectorAll('[id^="menu"]').forEach(m => m.style.display = "none");
 });
 
 
+function loadEditIMG(e, id) {
+    postImgFiles = '';
 
-// 🔹 Edit Post
-function editPost(id) {
-    const el = document.getElementById(`posttext${id}`);
-    if (!el) {
-        console.error("Element not found for id:", id);
+    const file = e.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+        onalert("Sorry, video isn’t supported ");
         return;
     }
-    const textareaId = `editpost${id}`;
-    const postText = el.innerText;
 
-    el.outerHTML = `
-        <table style="width: 100%;">
-            <tr>
-                <td>
-                    <textarea id="${textareaId}" style="width: 85%; margin-topte0px; border: 1px solid green; border-radius: 10px; height: 300px; padding: 20px; font-size: 30px; color: red;    font-family: 'SolaimanLipi', 'Noto Sans Bengali', Arial, sans-serif;
-">${postText}</textarea>
-                </td>
-                <td>
-                    <button onclick="savePost('${id}')" style="background:white;width:100px;height:50px;border:1px solid green;border-radius:10px;color:green;margin-bottom:20px;">Save</button>
-                    <br>
-                    <button onclick="" style="background:white;width:100px;height:50px;border:1px solid red;border-radius:10px;color:red;">Cancel</button>
-                </td>
-            </tr>
-        </table>
-    `;
+    postImgFiles = file;
+    
+    const img = document.querySelector(`#box${id} img`);
+
+    const reader = new FileReader();
+
+    reader.onload = function(evt) {
+        const tempImg = new Image();
+
+        tempImg.onload = function() {
+            const canvas = document.createElement("canvas");
+            canvas.width = tempImg.width;
+            canvas.height = tempImg.height;
+
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+
+            const base64 = canvas.toDataURL("image/jpeg", 0.5);
+
+            postImageBase64 = base64; 
+
+            img.src = base64;
+        };
+
+        tempImg.src = evt.target.result;
+    };
+
+    reader.readAsDataURL(file);
 }
 
+let safeStorage = {
+    postText: '',
+    html: '',
+    picture: '',
+    style: {}
+}
+
+
+// 🔹 Edit Post
+function editPost(postObj) {
+    const post = JSON.parse(decodeURIComponent(postObj));
+
+    const oldDiv = document.getElementById(`textPost${post.id}`);
+
+    safeStorage.postText = oldDiv.innerText;    
+
+    const inputElement = document.createElement('textarea');
+
+    const computedStyle = window.getComputedStyle(oldDiv);
+    
+    for (let i = 0; i < computedStyle.length; i++) {
+    const property = computedStyle[i];
+    const value = computedStyle.getPropertyValue(property);
+    inputElement.style.setProperty(property, value);
+    safeStorage.style[property] = value;
+    }
+    
+if (computedStyle.fontSize) {
+    let currentSize = parseInt(computedStyle.fontSize);
+    let newSize = currentSize - 10;
+    let inputSize = currentSize - 10;
+    
+    inputElement.style.setProperty('font-size', inputSize + 'px', 'important');
+    safeStorage.style['font-size'] = newSize + 'px';
+}
+    
+    safeStorage.picture = document.querySelector(`#box${post.id} img`)?.src;
+
+    inputElement.style.display = 'block';
+    inputElement.style.width = '96%';
+    inputElement.id = `edit${post.id}`;
+    inputElement.value = oldDiv.innerText;
+    oldDiv.replaceWith(inputElement);
+    
+    const changeEl = document.getElementById(`remove${post.id}`);
+    
+    safeStorage.html = changeEl.innerHTML;
+
+    changeEl.innerHTML = `
+    <div class="editLowerBtns" id="btnsDiv${post.id}">
+    <button onclick="postBG('edit${post.id}')">Change Background</button>    
+    <button onclick="fontSize('edit${post.id}')">Adjust Font Size</button>    
+    <input type="text" placeholder="Add / Edit location" id="loc${post.id}">    
+    <input type="text" placeholder="Add / Edit feeling" id="feel${post.id}"> 
+        <button>   
+    <div onclick="tag()">Tag people</div>    
+    <section onclick="showTagged('')">With other ones</section>    
+        </button>
+        <label>
+    <button onclick="document.getElementById('imageEdit${post.id}').click()">Change image
+       <input type="file" accept="image/*" id="imageEdit${post.id}" onchange="loadEditIMG(event, '${post.id}')" style="display: none">  
+        </button> 
+       </label>
+        </div>
+        
+    <div class="editBottomBtns">
+        
+      <button onclick="cancelChange('${post.id}')" style="background: red;">Cancel</button>
+      <button onclick="savePost('${post.id}')" style="background: green;" id="editBtn${post.id}">Save</button>
+    
+    </div>     
+    `; 
+    
+    const closings = document.querySelectorAll('.editLowerBtns button');
+
+    if (post.post.image) {
+
+        closings[0].style.setProperty('display', 'none', 'important');
+        closings[1].style.setProperty('display', 'none', 'important');
+    
+        inputElement.style.height = '200px';
+    
+    } else {
+    
+        closings[3].style.display = 'none';
+        inputElement.style.height = '400px';
+    
+    }  
+     
+ }
+ 
+ 
+function cancelChange(postId) {
+    const editInput = document.getElementById(`edit${postId}`);
+    
+    const originalDiv = document.createElement('div');
+    originalDiv.id = `textPost${postId}`;
+    originalDiv.innerText = safeStorage.postText;
+    
+    for (let property in safeStorage.style) {
+        originalDiv.style.setProperty(property, safeStorage.style[property]);
+    }
+    
+    editInput.replaceWith(originalDiv);
+    
+    const changeEl = document.getElementById(`remove${postId}`);
+    changeEl.innerHTML = safeStorage.html;
+    
+    const imgElement = document.querySelector(`#box${postId} img`);
+    if (imgElement && safeStorage.picture) {
+        imgElement.src = safeStorage.picture;
+    }
+}
+
+
+function collectEditData(id) {
+    const el = document.getElementById(`edit${id}`);
+    const image = document.querySelector(`#box${id} img`);
+    const feel = document.getElementById(`feel${id}`);
+    const location = document.getElementById(`loc${id}`);
+    
+    const cs = window.getComputedStyle(el);
+    let textColor = cs.color;
+    if (textColor === 'white' || textColor === 'rgb(255, 255, 255)') {
+        textColor = 'black';
+    }
+    
+    
+    return {
+        post: el.value || el.innerText,
+
+        feelings: feel.value || "",
+
+        location: location.value || "",
+
+        others: taggedEmailList || [],
+
+        style: {
+            color: textColor,
+            fontSize: cs.fontSize,
+            fontWeight: cs.fontWeight,
+            textAlign: cs.textAlign,
+            textShadow: cs.textShadow,
+            background: cs.background,
+            backgroundImage: cs.backgroundImage,
+            backgroundSize: cs.backgroundSize,
+            backgroundPosition: cs.backgroundPosition
+        },
+
+        image: postImageBase64 || safeStorage.picture || ""
+    };
+}
+
+ 
+ 
 // 🔹 Save Post (PUT)
 async function savePost(id) {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const newText = document.getElementById(`editpost${id}`).value;
-const payload = { post: newText };
+    const editBtn = document.getElementById(`editBtn${id}`);
+    const user = JSON.parse(localStorage.getItem('user'));
+    
+    editBtn.innerHTML = `
+        <div style="border: 3px solid gray; border-top: 3px solid white; height: 80%; aspect-ratio: 1 / 1; border-radius: 50%;  animation: spin 1.5s linear infinite;"></div>`;
+
+    const postData = collectEditData(id);
+
     try {
+
+    const payload = {
+            post: {
+                text: postData.post || "",
+                style: postData.style || {},
+                image: postData.image || ""
+            },
+            feelings: postData.feelings || null,
+            location: postData.location || null,
+            others: Array.isArray(postData.others) ? postData.others : []
+            };
+        
+        
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ post: newText })
+            body: JSON.stringify(payload)
         });
+        
         const data = await res.json();
+        editBtn.innerHTML = 'Done';
         onalert(data.message);
+        loadProfilePosts(user.email, 'ownerPosts');
+
     } catch(err) {
+        editBtn.innerHTML = 'Save';
         console.error("Error saving post:", err);
         onalert("Failed to save post.");
     }
 }
 
 // 🔹 Delete Post
-async function deletePost(id) {
+function deletePost(id) {
      onconfirm("","Are you sure to delete this post?", "Delete", DeletePost, id, "red");
     }
+    
 async function DeletePost(id){
     const user = JSON.parse(localStorage.getItem("user"));
+    const deleteDiv = document.getElementById(`showPost${id}`);
+    
+    let preserve = deleteDiv.innerHTML;
+    
+    deleteDiv.innerHTML = `<div style="display: flex; justify-content: center; align-items: center; padding: 30px; font-size: 30px; color: red; background: none; width: 100%;">Post Deleting...<br>
+        <div style="border: 3px solid lightgray; border-top: 3px solid red; height: 40px; aspect-ratio: 1 / 1; border-radius: 50%;  animation: spin 1.5s linear infinite;"></div></div>`;
+
     try {
         const res = await fetch(`https://posts-server-kmha.onrender.com/post/${user.email}/${id}`, { method: "DELETE" });
+        if (!res.ok) {
+        onalert("Failed to delete post.");
+        deleteDiv.innerHTML = preserve;
+        console.error("Error deleting post: res has not been sent");
+          }        
         const data = await res.json();
         onalert(data.message);
-    } catch(err) {
-        console.error("Error deleting post:", err);
+        loadProfilePosts(user.email, 'ownerPosts');
+
+    } catch (err) {
         onalert("Failed to delete post.");
+        deleteDiv.innerHTML = preserve;
+        console.error("Error deleting post:", err);
     }
 }
 
@@ -8280,27 +9043,34 @@ function closeImoji(id) {
 }
 
 function containerClose(container){
-const el = document.getElementById(`commentContainer${container}`);
+const el = document.getElementById('comments');
     el.classList.remove("show");
+
+const port = document.getElementById('commentAppear');
+    port.innerHTML = comSetup; 
+    
     updateCounts(container);
 }
 
 function appContainer(container) {
-const el = document.getElementById(`commentContainer${container}`);
+const el = document.getElementById('comments');
     el.classList.add("show");
 
 }
 
 function likeContainer(container) {
-const el = document.getElementById(`likeContainer${container}`);
+const el = document.getElementById('reactors');
     el.classList.add("show");
 BackManager.register(closeLikeContainer, container);
-    document.getElementById(`reactors${container}`).innerText = 'Loading reactions...';
 }
 
 function closeLikeContainer(container){
-const el = document.getElementById(`likeContainer${container}`);
+const el = document.getElementById('reactors');
     el.classList.remove("show");
+
+const port = document.getElementById('reactAppear');
+    port.innerHTML = reactorsSetup; // clear previous
+
     updateCounts(container);
 }
 
@@ -8583,7 +9353,7 @@ function cenMess() {
  document.getElementById('offerinf').classList.remove('show');  
  setTimeout(() => {offerGuest()}, 30000);
 }
- 
+
 function guestWarn() {
 const fEl = document.getElementById('guestAlert');
 const sEl = document.getElementById('guestAlert-card');
@@ -8595,6 +9365,8 @@ sEl.classList.toggle('show');
 
 window.onload = function () {
     const user = localStorage.getItem("user");
+    const info = localStorage.getItem("info");
+
     let u ="";
 
     if (user) {
@@ -8603,13 +9375,18 @@ window.onload = function () {
         u = JSON.parse(guest);
         offerGuest(); 
     } else {
-     alert('Please login first');
      location.href = "sign_in.html";
     }
 
+    if(!info && !guest) {
+     location.href = "pickInfo.html";        
+    }
         document.getElementById('profPicture').innerHTML =
             `<img src="${u.avatar}">`;
 
+document.getElementById('footerMenuProf').src = u.avatar;
+
+document.getElementById('footerMenuId').innerHTML = u.username;
         document.querySelector('.story-inner').style.backgroundImage = `url(${u.avatar})`;
         document.querySelector('.story-inner').style.backgroundSize = "cover";
         document.querySelector('.story-inner').style.backgroundPosition = "center";
@@ -8732,15 +9509,14 @@ showLoader("content", "Loading posts...");
 
 warning(() => {
     showWarning(".warn", "Network seems slow.", "Check your connection and try again.", () => { 
-        location.reload();
+        loadHome();
     });
 }, 3000, 3000, 3000); 
 
 
-const isDark = localStorage.getItem('dark');
+let isDark = localStorage.getItem('dark');
 const isBall = localStorage.getItem('ball');
 const isGuest = localStorage.getItem('isGuest');
-
 
 function setRootProperty(property, value) {
     document.documentElement.style.setProperty(property, value);
@@ -8749,8 +9525,65 @@ function setRootProperty(property, value) {
 darkModeActivate(isDark);
 BallActivate(isBall);
 
+function darkM() {
+
+    let darkMode;
+    
+    if(isDark === 'false') {
+       darkMode = 'true';
+       darkModeActivate('true');
+    } else {
+       darkMode = 'false';
+       darkModeActivate('false');
+    }
+       localStorage.setItem('dark', darkMode);
+       isDark = darkMode;
+    
+}
+
+
+function postDivMode(dark) {
+  const els = document.querySelectorAll('.postText');
+
+  els.forEach((e) => {
+    const s = window.getComputedStyle(e);
+    const bg = s.backgroundColor;
+    
+    if(s.backgroundImage === 'none') {
+
+    if (dark === 'false') {
+
+      if (bg === 'rgb(255, 255, 255)') {
+        e.style.background = 'rgba(0, 0, 0, 0)';
+        e.style.color = 'rgb(0, 0, 0)';
+      } else if (bg === 'rgba(0, 0, 0, 0)') {
+        e.style.color = 'rgb(0, 0, 0)';
+      }
+
+      
+    } else {
+
+      if (bg === 'rgb(0, 0, 0)') {
+        e.style.background = 'rgba(0, 0, 0, 0)';
+        e.style.color = 'rgb(255, 255, 255)';
+      } else if (bg === 'rgba(0, 0, 0, 0)') {
+        e.style.color = 'rgb(255, 255, 255)';
+      }
+
+    }
+        
+    }
+
+  });
+
+}
+
+
+
 function darkModeActivate(isDark) {
 
+    postDivMode(isDark);
+    
     const elements = document.querySelectorAll('*');
 
     elements.forEach(el => {
@@ -8768,9 +9601,14 @@ if (state === 'true') {
  document.querySelector('.quick-ball').style.display = 'flex'; 
  document.querySelector('.headerBtn').style.display = 'none'; 
     document.getElementById('footer').style.display = 'none';  
-    document.getElementById('nextalk-overlay').style.bottom = '2%';  
-    document.getElementById('postMenu').style.display = 'none';  
+        document.getElementById('postMenu').style.display = 'none';  
     }
+}
+
+function loadHome() {
+    loadProfilePosts('', 'content');
+    loadVibes();
+    loadAllStories();
 }  
  
 const endpoints = [
