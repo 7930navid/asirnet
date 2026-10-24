@@ -1,0 +1,1373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f6f7fb">
+    <meta name="color-scheme" content="light">
+    <title>Profile Details | AsirNet</title>
+
+    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <style>
+        :root {
+            --primary: #5756e8;
+            --primary-dark: #4544cb;
+            --primary-soft: #eeeeff;
+            --text: #191d32;
+            --muted: #858ba0;
+            --border: #e6e8f0;
+            --surface: #ffffff;
+            --page: #f6f7fb;
+            --success: #13865c;
+            --danger: #d94050;
+            --radius: 16px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Inter, "Segoe UI", sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            min-height: 100vh;
+            min-height: 100dvh;
+            background:
+                radial-gradient(ellipse at 10% 0%, #e9eaff 0, transparent 35%),
+                radial-gradient(ellipse at 100% 100%, #e9f0ff 0, transparent 32%),
+                var(--page);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 16px;
+        }
+
+        button, input {
+            font: inherit;
+        }
+
+        button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .page-shell {
+            width: 100%;
+            max-width: 510px;
+            margin: auto;
+            animation: appear .45s ease-out both;
+        }
+
+        @keyframes appear {
+            from {
+                opacity: 0;
+                transform: translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 23px;
+        }
+
+        .brand img {
+            width: 38px;
+            height: 38px;
+            object-fit: contain;
+        }
+
+        .brand-name {
+            font-size: 23px;
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
+
+        .brand-name span {
+            color: var(--primary);
+        }
+
+        .profile-card {
+            background: var(--surface);
+            border: 1px solid rgba(226, 228, 240, .85);
+            border-radius: 23px;
+            box-shadow:
+                0 18px 55px rgba(33, 39, 85, .065),
+                0 2px 8px rgba(33, 39, 85, .025);
+            overflow: visible;
+        }
+
+        .card-header {
+            padding: 30px 30px 24px;
+            border-bottom: 1px solid #f0f1f6;
+        }
+
+        .header-icon {
+            width: 49px;
+            height: 49px;
+            display: grid;
+            place-items: center;
+            border-radius: 15px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-size: 20px;
+            margin-bottom: 17px;
+        }
+
+        .card-header h1 {
+            font-size: clamp(23px, 5vw, 28px);
+            line-height: 1.3;
+            letter-spacing: -.8px;
+            font-weight: 800;
+        }
+
+        .card-header p {
+            color: var(--muted);
+            font-size: 13px;
+            line-height: 1.7;
+            margin-top: 8px;
+        }
+
+        .form-content {
+            padding: 8px 30px 30px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 22px 0 15px;
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.1px;
+            color: #737a92;
+        }
+
+        .section-heading::after {
+            content: "";
+            height: 1px;
+            flex: 1;
+            background: #eceef5;
+        }
+
+        .field {
+            margin-bottom: 19px;
+            min-width: 0;
+        }
+
+        .field-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #353b51;
+        }
+
+        .required {
+            color: var(--danger);
+            margin-left: 2px;
+        }
+
+        .control {
+            position: relative;
+            width: 100%;
+        }
+
+        .control-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9197ad;
+            font-size: 15px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .text-input,
+        .select-trigger {
+            width: 100%;
+            min-height: 51px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fbfcfe;
+            color: var(--text);
+            font-size: 13px;
+            transition:
+                border-color .2s ease,
+                box-shadow .2s ease,
+                background .2s ease;
+        }
+
+        .text-input {
+            padding: 0 14px 0 43px;
+            outline: none;
+        }
+
+        .text-input::placeholder {
+            color: #a5aabd;
+        }
+
+        .text-input:hover,
+        .select-trigger:hover {
+            border-color: #c7c8f5;
+        }
+
+        .text-input:focus,
+        .select-trigger:focus-visible,
+        .custom-option:focus-visible {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(87, 86, 232, .10);
+            background: #fff;
+        }
+
+        .custom-select {
+            position: relative;
+            width: 100%;
+        }
+
+        .select-trigger {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 0 15px 0 43px;
+            text-align: left;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .selected-value {
+            flex: 1;
+            min-width: 0;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .select-arrow {
+            color: #8b91a7;
+            font-size: 12px;
+            transition: transform .22s ease;
+        }
+
+        .custom-select.open .select-trigger {
+            background: #fff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(87, 86, 232, .08);
+        }
+
+        .custom-select.open .select-arrow {
+            transform: rotate(180deg);
+            color: var(--primary);
+        }
+
+        .options-menu {
+            position: absolute;
+            z-index: 20;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            padding: 6px;
+            border: 1px solid #e9eaf3;
+            border-radius: 14px;
+            background: #fff;
+            box-shadow: 0 15px 40px rgba(28, 34, 72, .13);
+            max-height: 235px;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transform: translateY(-5px) scale(.99);
+            transform-origin: top;
+            transition:
+                opacity .16s ease,
+                transform .16s ease,
+                visibility .16s;
+        }
+
+        .custom-select.open .options-menu {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            transform: translateY(0) scale(1);
+        }
+
+        .custom-option {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            min-height: 42px;
+            gap: 10px;
+            padding: 10px 12px;
+            background: transparent;
+            border: 1px solid transparent;
+            border-radius: 9px;
+            text-align: left;
+            color: #42485f;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background .15s ease, color .15s ease;
+        }
+
+        .custom-option:hover {
+            background: #f6f6ff;
+            color: var(--primary);
+        }
+
+        .custom-option[aria-selected="true"] {
+            background: var(--primary-soft);
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .option-check {
+            margin-left: auto;
+            font-size: 12px;
+            opacity: 0;
+        }
+
+        .custom-option[aria-selected="true"] .option-check {
+            opacity: 1;
+        }
+
+        .other-field {
+            display: none;
+            margin-top: 10px;
+            animation: reveal .2s ease-out;
+        }
+
+        .other-field.visible {
+            display: block;
+        }
+
+        @keyframes reveal {
+            from {
+                opacity: 0;
+                transform: translateY(-4px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .other-field .text-input {
+            background: #fff;
+        }
+
+        .helper-text {
+            color: var(--muted);
+            font-size: 11px;
+            margin-top: 7px;
+            line-height: 1.6;
+        }
+
+        .submit-btn {
+            width: 100%;
+            min-height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 27px;
+            padding: 14px 18px;
+            border: 0;
+            border-radius: 12px;
+            color: #fff;
+            background: linear-gradient(135deg, #6664f2, #4c4bd5);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 7px 18px rgba(87, 86, 232, .20);
+            transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 23px rgba(87, 86, 232, .28);
+        }
+
+        .submit-btn:active:not(:disabled) {
+            transform: scale(.99);
+        }
+
+        .submit-btn:disabled {
+            cursor: wait;
+            opacity: .75;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, .4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin .65s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .status-message {
+            display: none;
+            padding: 12px 13px;
+            margin-top: 15px;
+            border-radius: 10px;
+            font-size: 12px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
+        }
+
+        .status-message.visible {
+            display: block;
+            animation: reveal .2s ease-out;
+        }
+
+        .status-message.success {
+            color: var(--success);
+            background: #effaf5;
+            border: 1px solid #d4f2e3;
+        }
+
+        .status-message.error {
+            color: var(--danger);
+            background: #fff2f3;
+            border: 1px solid #ffe0e3;
+        }
+
+        .status-message.info {
+            color: #4e50c6;
+            background: #f2f2ff;
+            border: 1px solid #e1e1ff;
+        }
+
+        .privacy-note {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 7px;
+            padding: 17px 12px 0;
+            color: #9096a9;
+            font-size: 11px;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .privacy-note i {
+            color: #6e70cb;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 21px;
+            color: #9298ab;
+            font-size: 11px;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 19px 12px 25px;
+            }
+
+            .brand {
+                margin-bottom: 17px;
+            }
+
+            .profile-card {
+                border-radius: 19px;
+            }
+
+            .card-header {
+                padding: 24px 21px 20px;
+            }
+
+            .form-content {
+                padding: 4px 21px 24px;
+            }
+
+            .header-icon {
+                width: 44px;
+                height: 44px;
+                margin-bottom: 14px;
+            }
+
+            .section-heading {
+                margin-top: 21px;
+            }
+
+            .text-input,
+            .select-trigger {
+                min-height: 49px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                transition-duration: .01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="page-shell">
+
+    <div class="brand">
+        <img
+            src="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png"
+            alt="AsirNet logo"
+        >
+        <div class="brand-name">Asir<span>Net</span></div>
+    </div>
+
+    <main class="profile-card">
+        <header class="card-header">
+            <div class="header-icon">
+                <i class="fa-solid fa-user-pen" aria-hidden="true"></i>
+            </div>
+
+            <h1>Complete your profile</h1>
+            <p>
+                Tell us a little about yourself. Your information helps
+                AsirNet personalize your experience.
+            </p>
+        </header>
+
+        <form id="profileForm" class="form-content">
+
+            <div class="section-heading">Personal information</div>
+
+            <!-- Address -->
+            <div class="field">
+                <label class="field-label" for="address">
+                    Address <span class="required">*</span>
+                </label>
+
+                <div class="control">
+                    <i class="fa-solid fa-location-dot control-icon"
+                       aria-hidden="true"></i>
+
+                    <input
+                        class="text-input"
+                        id="address"
+                        name="address"
+                        type="text"
+                        placeholder="Enter your address"
+                        autocomplete="street-address"
+                        maxlength="250"
+                        required
+                    >
+                </div>
+            </div>
+
+            <!-- Occupation -->
+            <div class="field">
+                <label class="field-label" id="status-label">
+                    Status / Occupation
+                </label>
+
+                <div class="custom-select" data-name="status">
+                    <input type="hidden" name="status" value="Student">
+
+                    <button
+                        type="button"
+                        class="select-trigger"
+                        aria-labelledby="status-label"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-briefcase control-icon"
+                           aria-hidden="true"></i>
+
+                        <span class="selected-value">Student</span>
+                        <i class="fa-solid fa-chevron-down select-arrow"
+                           aria-hidden="true"></i>
+                    </button>
+
+                    <div class="options-menu" role="listbox"
+                         aria-label="Status or occupation">
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Student"
+                                aria-selected="true">
+                            Student
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Employed"
+                                aria-selected="false">
+                            Employed
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Jobseeker"
+                                aria-selected="false">
+                            Job Seeker
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Businessman"
+                                aria-selected="false">
+                            Businessman
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Freelancer"
+                                aria-selected="false">
+                            Freelancer
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="other"
+                                aria-selected="false">
+                            Other
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="other-field" data-other-for="status">
+                    <div class="control">
+                        <i class="fa-solid fa-pen control-icon"
+                           aria-hidden="true"></i>
+
+                        <input
+                            class="text-input"
+                            type="text"
+                            name="status_custom"
+                            placeholder="Specify your occupation"
+                            maxlength="100"
+                            disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Marital status -->
+            <div class="field">
+                <label class="field-label" id="marital-label">
+                    Marital status
+                </label>
+
+                <div class="custom-select" data-name="marital_status">
+                    <input type="hidden" name="marital_status"
+                           value="Married">
+
+                    <button
+                        type="button"
+                        class="select-trigger"
+                        aria-labelledby="marital-label"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-heart control-icon"
+                           aria-hidden="true"></i>
+
+                        <span class="selected-value">Married</span>
+                        <i class="fa-solid fa-chevron-down select-arrow"
+                           aria-hidden="true"></i>
+                    </button>
+
+                    <div class="options-menu" role="listbox"
+                         aria-label="Marital status">
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Married"
+                                aria-selected="true">
+                            Married
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Unmarried"
+                                aria-selected="false">
+                            Unmarried
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Engaged"
+                                aria-selected="false">
+                            Engaged
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Divorced"
+                                aria-selected="false">
+                            Divorced
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="other"
+                                aria-selected="false">
+                            Other
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="other-field" data-other-for="marital_status">
+                    <div class="control">
+                        <i class="fa-solid fa-pen control-icon"
+                           aria-hidden="true"></i>
+
+                        <input
+                            class="text-input"
+                            type="text"
+                            name="marital_status_custom"
+                            placeholder="Specify marital status"
+                            maxlength="100"
+                            disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gender -->
+            <div class="field">
+                <label class="field-label" id="gender-label">
+                    Gender
+                </label>
+
+                <div class="custom-select" data-name="gender">
+                    <input type="hidden" name="gender" value="Male">
+
+                    <button
+                        type="button"
+                        class="select-trigger"
+                        aria-labelledby="gender-label"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-user control-icon"
+                           aria-hidden="true"></i>
+
+                        <span class="selected-value">Male</span>
+                        <i class="fa-solid fa-chevron-down select-arrow"
+                           aria-hidden="true"></i>
+                    </button>
+
+                    <div class="options-menu" role="listbox"
+                         aria-label="Gender">
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Male"
+                                aria-selected="true">
+                            Male
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Female"
+                                aria-selected="false">
+                            Female
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="other"
+                                aria-selected="false">
+                            Other
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="other-field" data-other-for="gender">
+                    <div class="control">
+                        <i class="fa-solid fa-pen control-icon"
+                           aria-hidden="true"></i>
+
+                        <input
+                            class="text-input"
+                            type="text"
+                            name="gender_custom"
+                            placeholder="Specify gender"
+                            maxlength="100"
+                            disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-heading">Preferences & education</div>
+
+            <!-- Language -->
+            <div class="field">
+                <label class="field-label" id="language-label">
+                    Primary language
+                </label>
+
+                <div class="custom-select" data-name="language">
+                    <input type="hidden" name="language" value="Bangla">
+
+                    <button
+                        type="button"
+                        class="select-trigger"
+                        aria-labelledby="language-label"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-language control-icon"
+                           aria-hidden="true"></i>
+
+                        <span class="selected-value">Bangla</span>
+                        <i class="fa-solid fa-chevron-down select-arrow"
+                           aria-hidden="true"></i>
+                    </button>
+
+                    <div class="options-menu" role="listbox"
+                         aria-label="Primary language">
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Bangla"
+                                aria-selected="true">
+                            Bangla
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="English"
+                                aria-selected="false">
+                            English
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Hindi"
+                                aria-selected="false">
+                            Hindi
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Arabic"
+                                aria-selected="false">
+                            Arabic
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="other"
+                                aria-selected="false">
+                            Other
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="other-field" data-other-for="language">
+                    <div class="control">
+                        <i class="fa-solid fa-pen control-icon"
+                           aria-hidden="true"></i>
+
+                        <input
+                            class="text-input"
+                            type="text"
+                            name="language_custom"
+                            placeholder="Specify your language"
+                            maxlength="100"
+                            disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Education -->
+            <div class="field">
+                <label class="field-label" id="education-label">
+                    Education level
+                </label>
+
+                <div class="custom-select" data-name="education">
+                    <input type="hidden" name="education" value="College">
+
+                    <button
+                        type="button"
+                        class="select-trigger"
+                        aria-labelledby="education-label"
+                        aria-haspopup="listbox"
+                        aria-expanded="false"
+                    >
+                        <i class="fa-solid fa-graduation-cap control-icon"
+                           aria-hidden="true"></i>
+
+                        <span class="selected-value">College</span>
+                        <i class="fa-solid fa-chevron-down select-arrow"
+                           aria-hidden="true"></i>
+                    </button>
+
+                    <div class="options-menu" role="listbox"
+                         aria-label="Education level">
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="College"
+                                aria-selected="true">
+                            College
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="School"
+                                aria-selected="false">
+                            School
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="University"
+                                aria-selected="false">
+                            University
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Diploma"
+                                aria-selected="false">
+                            Diploma
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Phd"
+                                aria-selected="false">
+                            PhD
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="Masters"
+                                aria-selected="false">
+                            Masters
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+
+                        <button type="button" class="custom-option"
+                                role="option" data-value="other"
+                                aria-selected="false">
+                            Other
+                            <i class="fa-solid fa-check option-check"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="other-field" data-other-for="education">
+                    <div class="control">
+                        <i class="fa-solid fa-pen control-icon"
+                           aria-hidden="true"></i>
+
+                        <input
+                            class="text-input"
+                            type="text"
+                            name="education_custom"
+                            placeholder="Specify your education"
+                            maxlength="100"
+                            disabled
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                <i class="fa-solid fa-check" aria-hidden="true"></i>
+                <span>Save changes</span>
+            </button>
+
+            <div
+                id="statusMessage"
+                class="status-message"
+                role="status"
+                aria-live="polite"
+            ></div>
+
+            <p class="privacy-note">
+                <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+                Your profile details are handled through your AsirNet account.
+            </p>
+        </form>
+    </main>
+
+    <footer class="footer">
+        © <span id="currentYear"></span> AsirNet. All rights reserved.
+    </footer>
+</div>
+
+<script>
+(() => {
+    "use strict";
+
+    const form = document.getElementById("profileForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const statusMessage = document.getElementById("statusMessage");
+    const buttonText = submitBtn.querySelector("span");
+
+    const API_BASE = "https://users-server-xyvg.onrender.com";
+
+    document.getElementById("currentYear").textContent =
+        new Date().getFullYear();
+
+    // ---------- Custom dropdowns ----------
+
+    const dropdowns = [...document.querySelectorAll(".custom-select")];
+
+    function closeDropdown(dropdown) {
+        dropdown.classList.remove("open");
+
+        const trigger = dropdown.querySelector(".select-trigger");
+        trigger.setAttribute("aria-expanded", "false");
+    }
+
+    function closeAllDropdowns(except = null) {
+        dropdowns.forEach(dropdown => {
+            if (dropdown !== except) {
+                closeDropdown(dropdown);
+            }
+        });
+    }
+
+    function selectOption(dropdown, option) {
+        const value = option.dataset.value;
+        const hiddenInput = dropdown.querySelector('input[type="hidden"]');
+        const selectedValue = dropdown.querySelector(".selected-value");
+
+        hiddenInput.value = value;
+        selectedValue.textContent = option.textContent.trim()
+            .replace(/\s+/g, " ")
+            .replace(/✓/g, "")
+            .trim();
+
+        dropdown.querySelectorAll(".custom-option").forEach(item => {
+            item.setAttribute(
+                "aria-selected",
+                String(item === option)
+            );
+        });
+
+        const fieldName = dropdown.dataset.name;
+        const otherField = document.querySelector(
+            `[data-other-for="${fieldName}"]`
+        );
+
+        if (otherField) {
+            const customInput = otherField.querySelector("input");
+            const isOther = value === "other";
+
+            otherField.classList.toggle("visible", isOther);
+            customInput.disabled = !isOther;
+            customInput.required = isOther;
+
+            if (!isOther) {
+                customInput.value = "";
+            }
+        }
+
+        closeDropdown(dropdown);
+    }
+
+    dropdowns.forEach(dropdown => {
+        const trigger = dropdown.querySelector(".select-trigger");
+        const options = [...dropdown.querySelectorAll(".custom-option")];
+
+        trigger.addEventListener("click", () => {
+            const willOpen = !dropdown.classList.contains("open");
+
+            closeAllDropdowns();
+
+            if (willOpen) {
+                dropdown.classList.add("open");
+                trigger.setAttribute("aria-expanded", "true");
+            }
+        });
+
+        options.forEach((option, index) => {
+            option.addEventListener("click", () => {
+                selectOption(dropdown, option);
+            });
+
+            option.addEventListener("keydown", event => {
+                let nextIndex = index;
+
+                if (event.key === "ArrowDown") {
+                    nextIndex = (index + 1) % options.length;
+                } else if (event.key === "ArrowUp") {
+                    nextIndex = (index - 1 + options.length) % options.length;
+                } else if (event.key === "Escape") {
+                    closeDropdown(dropdown);
+                    trigger.focus();
+                    return;
+                } else {
+                    return;
+                }
+
+                event.preventDefault();
+                options[nextIndex].focus();
+            });
+        });
+
+        trigger.addEventListener("keydown", event => {
+            if (event.key === "ArrowDown" || event.key === "Enter"
+                || event.key === " ") {
+                event.preventDefault();
+
+                closeAllDropdowns();
+                dropdown.classList.add("open");
+                trigger.setAttribute("aria-expanded", "true");
+
+                const selected = options.find(
+                    option => option.getAttribute("aria-selected") === "true"
+                );
+
+                (selected || options[0]).focus();
+            }
+
+            if (event.key === "Escape") {
+                closeDropdown(dropdown);
+            }
+        });
+    });
+
+    document.addEventListener("click", event => {
+        if (!event.target.closest(".custom-select")) {
+            closeAllDropdowns();
+        }
+    });
+
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape") {
+            closeAllDropdowns();
+        }
+    });
+
+    // ---------- Status messages ----------
+
+    function showMessage(message, type) {
+        statusMessage.textContent = message;
+        statusMessage.className = `status-message visible ${type}`;
+    }
+
+    function clearMessage() {
+        statusMessage.textContent = "";
+        statusMessage.className = "status-message";
+    }
+
+    function setLoading(isLoading) {
+        submitBtn.disabled = isLoading;
+
+        if (isLoading) {
+            submitBtn.replaceChildren();
+
+            const spinner = document.createElement("span");
+            spinner.className = "spinner";
+            spinner.setAttribute("aria-hidden", "true");
+
+            const label = document.createElement("span");
+            label.textContent = "Saving your profile...";
+
+            submitBtn.append(spinner, label);
+        } else {
+            submitBtn.replaceChildren();
+
+            const icon = document.createElement("i");
+            icon.className = "fa-solid fa-check";
+            icon.setAttribute("aria-hidden", "true");
+
+            const label = document.createElement("span");
+            label.textContent = "Save changes";
+
+            submitBtn.append(icon, label);
+        }
+    }
+
+    // ---------- Form submission ----------
+
+    form.addEventListener("submit", async event => {
+        event.preventDefault();
+
+        if (submitBtn.disabled) return;
+
+        clearMessage();
+        closeAllDropdowns();
+
+        const formData = new FormData(form);
+        const data = {};
+
+        for (const [key, value] of formData.entries()) {
+            if (key.endsWith("_custom")) continue;
+
+            if (value === "other") {
+                const customValue = String(
+                    formData.get(`${key}_custom`) || ""
+                ).trim();
+
+                if (!customValue) {
+                    showMessage(
+                        "Please fill in the custom field for your selected option.",
+                        "error"
+                    );
+
+                    form.querySelector(`[name="${key}_custom"]`)?.focus();
+                    return;
+                }
+
+                data[key] = customValue;
+            } else {
+                data[key] = String(value).trim();
+            }
+        }
+
+        if (!data.address) {
+            showMessage("Please enter your address.", "error");
+            document.getElementById("address").focus();
+            return;
+        }
+
+        // Check the existing AsirNet login session.
+        let user;
+
+        try {
+            const userString = localStorage.getItem("user");
+
+            if (!userString) {
+                showMessage(
+                    "Your login session was not found. Please log in again.",
+                    "error"
+                );
+                return;
+            }
+
+            user = JSON.parse(userString);
+
+            if (
+                !user ||
+                typeof user.email !== "string" ||
+                !user.email.trim()
+            ) {
+                showMessage(
+                    "Your login session is invalid. Please log in again.",
+                    "error"
+                );
+                return;
+            }
+        } catch (error) {
+            console.error("Session read error:", error);
+
+            showMessage(
+                "Unable to read your login session. Please log in again.",
+                "error"
+            );
+            return;
+        }
+
+        setLoading(true);
+        showMessage("Saving your profile and syncing with AsirNet...", "info");
+
+        try {
+            const email = encodeURIComponent(user.email.trim());
+
+            const headers = {
+                "Content-Type": "application/json"
+            };
+
+            // Add a token if your authentication flow stores one.
+            const token = user.token || localStorage.getItem("token");
+
+            if (token) {
+                headers.Authorization = `Bearer ${token}`;
+            }
+
+            const response = await fetch(
+                `${API_BASE}/api/profile/${email}`,
+                {
+                    method: "PUT",
+                    headers,
+                    body: JSON.stringify(data)
+                }
+            );
+
+            let result = {};
+
+            try {
+                result = await response.json();
+            } catch {
+                // The API may return an empty response.
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    result.message ||
+                    result.error ||
+                    `Unable to save profile (HTTP ${response.status}).`
+                );
+            }
+
+            // Preserve the existing localStorage data structure.
+            try {
+                localStorage.setItem("info", JSON.stringify(data, null, 2));
+            } catch (storageError) {
+                console.error("LocalStorage write error:", storageError);
+
+                showMessage(
+                    "Your profile was saved on the server, but local storage could not be updated.",
+                    "error"
+                );
+
+                return;
+            }
+
+            showMessage(
+                "Your profile has been saved successfully!",
+                "success"
+            );
+
+            // Redirect only after the server confirms success.
+            window.setTimeout(() => {
+                window.location.href = "asirnet.html";
+            }, 1100);
+
+        } catch (error) {
+            console.error("Profile save error:", error);
+
+            showMessage(
+                error.message ||
+                "Unable to save your profile. Please check your internet connection and try again.",
+                "error"
+            );
+        } finally {
+            setLoading(false);
+        }
+    });
+})();
+</script>
+
+</body>
+</html>
