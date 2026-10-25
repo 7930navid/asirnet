@@ -745,19 +745,47 @@ textarea,input:focus {
 .uploadBtn img.dark {
     filter: brightness(0) invert(1);
 }
-.bottomBTN button {
-    width: 45%;
-    margin: 10px;
-    padding: 5px;
-    background: none;
-    border: none;
-    box-shadow: 0 0 10px gray;
-    border-radius: 4px;
-    background: linear-gradient(135deg, #c4b5fd, #bfdbfe);
+.bottomBTN {
+    display: flex;
+    align-items: center;
+    overflow-x: auto;
+    padding: 10px;
+    gap: 10px;
 }
+.bottomBTN button {
+    padding: 8px 12px;
+    border: 1px solid rgb(20,20,20);
+    border-radius: 20px;
+    background: rgba(200,200,200,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.bottomBTN button.dark {
+    border: 1px solid rgb(200,200,200);
+    background: rgba(30,30,30,0.2);
+}
+
+.bottomBTN button * {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .bottomBTN img {
+    width: 30px;
+    margin-right: 8px;
+}
+
+.bottomBTN > nth-child(1) img {
     width: 40px;
 }
+
+.bottomBTN button.dark {
+    background: rgb(40,40,40);    
+}
+
+
 .postSubBtn {
     background: blue;
     padding: 10px;
@@ -3888,6 +3916,361 @@ textarea,input:focus {
     filter: background(0) invert(1);
 }
 
+#ai-box,
+#ai-box * {
+    box-sizing: border-box;
+}
+
+#ai-box {
+    --ai-bg: #ffffff;
+    --ai-surface: #ffffff;
+    --ai-text: #202124;
+    --ai-muted: #8b919a;
+    --ai-border: #eceef1;
+    --ai-green: #16a34a;
+    --ai-green-hover: #15803d;
+    --ai-input: #f7f8fa;
+
+    position: fixed;
+    inset: auto 0 0;
+
+    width: 100%;
+    height: 98%;
+    height: 98dvh;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    background: var(--ai-bg);
+    color: var(--ai-text);
+
+    border: 1px solid var(--ai-border);
+    border-bottom: none;
+    border-radius: 26px 26px 0 0;
+
+    box-shadow: 0 -8px 35px rgba(20, 30, 45, 0.08);
+
+    font-family: Inter, "Segoe UI", Roboto, Arial, sans-serif;
+
+    isolation: isolate;
+    z-index: 1010;
+
+    -webkit-font-smoothing: antialiased;
+    
+    transition: transform 0.4s ease;
+    transform: translateY(100%);
+}
+
+#ai-box.show {
+    transform: translateY(0);
+}
+
+#ai-box.dark {
+    --ai-bg: #141619;
+    --ai-surface: #191c20;
+    --ai-text: #f4f5f6;
+    --ai-muted: #9ba2ac;
+    --ai-border: #2b2f35;
+    --ai-green: #4ade80;
+    --ai-green-hover: #22c55e;
+    --ai-input: #202328;
+
+    box-shadow: 0 -8px 35px rgba(0, 0, 0, 0.30);
+}
+
+
+#ai-box .ai-box-header {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    gap: 26px;
+
+    width: 100%;
+    min-height: 140px;
+
+    padding: 24px 32px;
+
+    background: var(--ai-surface);
+    border-bottom: 1px solid var(--ai-border);
+
+    position: relative;
+    z-index: 5;
+}
+
+#ai-box .ai-box-header img {
+    display: block;
+    flex: 0 0 84px;
+
+    width: 84px;
+    height: 84px;
+
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+
+    border: none;
+    border-radius: 24px;
+
+    filter: drop-shadow(
+        0 3px 7px rgba(22, 163, 74, 0.12)
+    );
+
+    transition: transform 0.2s ease;
+}
+
+#ai-box .ai-box-header img:active {
+    transform: scale(0.96);
+}
+
+#ai-box .ai-box-header h1 {
+    margin: 0;
+    padding: 0;
+
+    font-size: 46px;
+    font-weight: 750;
+    line-height: 1.2;
+
+    letter-spacing: -1.4px;
+
+    color: var(--ai-green);
+    background: none;
+    text-shadow: none;
+}
+
+#ai-box #conversasion-box {
+    position: relative;
+
+    flex: 1 1 0%;
+    min-width: 0;
+    min-height: 0;
+
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+
+    width: 100%;
+    margin: 0;
+    padding: 48px 40px;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    background: var(--ai-bg);
+    color: var(--ai-text);
+
+    border: none;
+
+    font-size: 32px;
+    overflow-wrap: anywhere;
+    overscroll-behavior: contain;
+
+    scrollbar-width: thin;
+    scrollbar-color: #d7dce2 transparent;
+
+    scroll-behavior: smooth;
+}
+
+#ai-box.dark #conversasion-box {
+    scrollbar-color: #424750 transparent;
+}
+
+#ai-box #conversasion-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+#ai-box #conversasion-box::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+#ai-box #conversasion-box::-webkit-scrollbar-thumb {
+    background: #d7dce2;
+    border-radius: 20px;
+}
+
+#ai-box.dark #conversasion-box::-webkit-scrollbar-thumb {
+    background: #424750;
+}
+
+
+#ai-box .ai-box-footer {
+    flex: 0 0 auto;
+
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+
+    width: 100%;
+    min-width: 0;
+
+    margin: 0;
+    padding: 28px 36px;
+
+    padding-bottom: max(
+        32px,
+        env(safe-area-inset-bottom)
+    );
+
+    background: var(--ai-surface);
+    border-top: 1px solid var(--ai-border);
+
+    position: relative;
+    z-index: 5;
+}
+
+#ai-box .ai-input-wrapper,
+#ai-box .ai-box-footer > div {
+    display: flex;
+    flex: 1 1 0%;
+
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 20px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+#ai-box #message-to-ai {
+    display: block;
+
+    flex: 1 1 0%;
+    width: 0;
+    min-width: 0;
+    max-width: none;
+
+    height: 104px;
+    min-height: 104px;
+    max-height: 320px;
+
+    margin: 0;
+    padding: 30px 34px;
+
+    border: 2px solid var(--ai-border);
+    border-radius: 32px;
+
+    outline: none;
+    resize: none;
+
+    background: var(--ai-input);
+    color: var(--ai-text);
+
+    font-family: inherit;
+    font-size: 32px;
+    font-weight: 400;
+    line-height: 1.45;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+#ai-box #message-to-ai::placeholder {
+    color: var(--ai-muted);
+    opacity: 1;
+}
+
+#ai-box #message-to-ai:focus {
+    border-color: var(--ai-green);
+
+    box-shadow: 0 0 0 4px rgba(22, 163, 74, 0.09);
+}
+
+#ai-box.dark #message-to-ai,
+#ai-box #message-to-ai.dark {
+    background: var(--ai-input);
+    color: var(--ai-text);
+    border-color: var(--ai-border);
+}
+
+#ai-box .ai-box-footer button {
+    position: relative;
+
+    flex: 0 0 104px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 104px;
+    min-width: 104px;
+    max-width: 104px;
+
+    height: 104px;
+    min-height: 104px;
+    max-height: 104px;
+
+    margin: 0;
+    padding: 0;
+
+    border: none;
+    border-radius: 30px;
+
+    background: var(--ai-green);
+    color: #ffffff;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 20px rgba(22, 163, 74, 0.18);
+
+    -webkit-tap-highlight-color: transparent;
+
+    transition:
+        background 0.2s ease,
+        transform 0.18s ease,
+        box-shadow 0.2s ease;
+}
+
+#ai-box #action-icon {
+    display: block;
+
+    margin: 0;
+    padding: 0;
+
+    font-size: 42px;
+    line-height: 1;
+
+    color: #ffffff;
+}
+
+@media (hover: hover) {
+    #ai-box .ai-box-footer button:hover {
+        background: var(--ai-green-hover);
+
+        box-shadow: 0 8px 24px rgba(22, 163, 74, 0.24);
+    }
+}
+
+#ai-box .ai-box-footer button:active {
+    transform: scale(0.94);
+}
+
+#ai-box .ai-box-footer button:focus-visible {
+    outline: 4px solid rgba(22, 163, 74, 0.25);
+    outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    #ai-box *,
+    #ai-box *::before,
+    #ai-box *::after {
+        scroll-behavior: auto;
+        transition: none;
+    }
+}
+
+
+
+
 
  </style>
 <link rel="stylesheet" href="./asirnet.css">
@@ -3985,9 +4368,30 @@ at
 
     <!-- ALERT -->
     <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+
   <div class="bottomBTN">
- <button onclick="postBG('postword')"><img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png"><br><p style="font-size: 30px; color: red; margin-top: 10px;">Post Background</p></button>
- <button onclick="fontSize('postword')"><img src="https://i.ibb.co.com/3ydKfr22/font.png" alt=""><br><p style="font-size: 30px; color: green; margin-top: 10px;">Font Size</p></button>
+
+ <button onclick="aires('post')">
+     <img src="https://i.ibb.co.com/LXjZY8jh/nexchat.png" alt="">
+     <p style="font-size: 25px; display: flex; width: 200px;">
+         Ask Nexchat
+      </p>
+ </button>
+ 
+ <button onclick="postBG('postword')">
+     <img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png">
+     <p style="font-size: 25px; display: flex; width: 250px">
+         Post Background
+     </p>
+  </button>
+
+ <button onclick="fontSize('postword')">
+     <img src="https://i.ibb.co.com/3ydKfr22/font.png" alt="">
+     <p style="font-size: 25px; display: flex; width: 150px">
+         Font Size
+      </p>
+ </button>
+ 
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
@@ -4841,7 +5245,631 @@ So create an account or log in to AsirNet to enjoy it.</div>
 </main>
 </div>
 
+
+
+<div id="ai-box">
+
+    <header class="ai-box-header">
+        <img
+            src="https://i.ibb.co.com/LXjZY8jh/nexchat.png"
+            alt="NexChat AI"
+        >
+        <h1>ASK AI...</h1>
+    </header>
+
+    <div id="conversasion-box"></div>
+
+    <footer class="ai-box-footer">
+        <div class="ai-input-wrapper">
+
+            <textarea
+                id="message-to-ai"
+                placeholder="Ask AI..."
+                maxlength="700"
+                rows="1"
+            ></textarea>
+
+            <button
+                type="button"
+                onclick="sendToAi()"
+                aria-label="Send message"
+            >
+                <i
+                    class="fa-solid fa-arrow-up"
+                    id="action-icon"
+                ></i>
+            </button>
+
+        </div>
+    </footer>
+
 </div>
+
+
+
+</div>
+
+<script>
+    
+function aires(pos) {
+     const el = document.getElementById('ai-box');
+     
+     el.classList.add('show');
+     BackManager.register(closeRes);
+}
+
+function closeRes() {
+     const el = document.getElementById('ai-box');
+     
+     el.classList.remove('show');
+     BackManager.unregister(closeRes);
+}
+
+
+
+(() => {
+    'use strict';
+
+    // ======================================
+    // CONFIGURATION
+    // ======================================
+
+    const AI_API =
+        'https://nexchat-server-qhm5.onrender.com/api/chat';
+
+    const input = document.getElementById('message-to-ai');
+    const conversation = document.getElementById('conversasion-box');
+    const sendButton = document.querySelector(
+        '[onclick="sendToAi()"]'
+    );
+    const actionIcon = document.getElementById('action-icon');
+
+    if (!input || !conversation) {
+        console.error(
+            'NexChat: Required chat elements were not found.'
+        );
+        return;
+    }
+
+    // ======================================
+    // SESSION
+    // ======================================
+
+    function createSessionId() {
+        if (window.crypto?.randomUUID) {
+            return window.crypto.randomUUID();
+        }
+
+        return 'session-' + Date.now().toString(36) +
+            '-' + Math.random().toString(36).slice(2);
+    }
+
+    let sessionId;
+
+    try {
+        sessionId = sessionStorage.getItem('nexchat_session_id');
+
+        if (!sessionId) {
+            sessionId = createSessionId();
+
+            sessionStorage.setItem(
+                'nexchat_session_id',
+                sessionId
+            );
+        }
+    } catch {
+        sessionId = createSessionId();
+    }
+
+    // ======================================
+    // LOAD CSS AND JS CDN LIBRARIES
+    // ======================================
+
+    function loadCSS(url) {
+        return new Promise(resolve => {
+            const link = document.createElement('link');
+
+            link.rel = 'stylesheet';
+            link.href = url;
+
+            link.onload = () => resolve(true);
+            link.onerror = () => {
+                console.warn('CSS CDN failed:', url);
+                resolve(false);
+            };
+
+            document.head.appendChild(link);
+        });
+    }
+
+    const loadedScripts = {};
+
+    function loadScript(url, globalName) {
+        if (globalName && window[globalName]) {
+            return Promise.resolve(true);
+        }
+
+        if (loadedScripts[url]) {
+            return loadedScripts[url];
+        }
+
+        loadedScripts[url] = new Promise(resolve => {
+            const script = document.createElement('script');
+
+            script.src = url;
+            script.async = true;
+
+            script.onload = () => {
+                resolve(
+                    !globalName || Boolean(window[globalName])
+                );
+            };
+
+            script.onerror = () => {
+                console.warn('JS CDN failed:', url);
+                resolve(false);
+            };
+
+            document.head.appendChild(script);
+        });
+
+        return loadedScripts[url];
+    }
+
+    const librariesReady = (async () => {
+        await Promise.all([
+            loadCSS(
+                'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css'
+            ),
+            loadCSS(
+                'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/github-dark.min.css'
+            )
+        ]);
+
+        const purifierOK = await loadScript(
+            'https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.2.6/purify.min.js',
+            'DOMPurify'
+        );
+
+        const markedOK = await loadScript(
+            'https://cdn.jsdelivr.net/npm/marked@15.0.7/marked.min.js',
+            'marked'
+        );
+
+        const highlightOK = await loadScript(
+            'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js',
+            'hljs'
+        );
+
+        const katexOK = await loadScript(
+            'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js',
+            'katex'
+        );
+
+        let autoRenderOK = false;
+
+        if (katexOK) {
+            autoRenderOK = await loadScript(
+                'https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js',
+                'renderMathInElement'
+            );
+        }
+
+        return {
+            purifierOK,
+            markedOK,
+            highlightOK,
+            katexOK,
+            autoRenderOK
+        };
+    })();
+
+    // ======================================
+    // COPY UTILITIES
+    // ======================================
+
+    async function copyText(text) {
+        try {
+            if (navigator.clipboard && window.isSecureContext) {
+                await navigator.clipboard.writeText(text);
+                showToast('Copied!');
+                return true;
+            }
+        } catch {
+            // Use fallback
+        }
+
+        const temp = document.createElement('textarea');
+
+        temp.value = text;
+        temp.readOnly = true;
+        temp.style.position = 'fixed';
+        temp.style.opacity = '0';
+
+        document.body.appendChild(temp);
+        temp.select();
+        temp.setSelectionRange(0, temp.value.length);
+
+        let copied = false;
+
+        try {
+            copied = document.execCommand('copy');
+        } catch {
+            copied = false;
+        }
+
+        temp.remove();
+
+        showToast(copied ? 'Copied!' : 'Copy failed. Try again.');
+
+        return copied;
+    }
+
+    function showToast(message) {
+        document.querySelector('.nc-copy-toast')?.remove();
+
+        const toast = document.createElement('div');
+
+        toast.className = 'nc-copy-toast';
+        toast.textContent = message;
+
+        document.body.appendChild(toast);
+
+        setTimeout(() => toast.remove(), 1800);
+    }
+
+    // ======================================
+    // CREATE MESSAGE ELEMENTS
+    // ======================================
+
+    function createMessageRow(type, label) {
+        const row = document.createElement('div');
+        row.className = `nc-message-row ${type}`;
+
+        const avatar = document.createElement('div');
+        avatar.className = 'nc-avatar';
+        avatar.textContent = type === 'ai' ? 'N' : 'U';
+        avatar.setAttribute('aria-hidden', 'true');
+
+        const main = document.createElement('div');
+        main.className = 'nc-message-main';
+
+        const name = document.createElement('div');
+        name.className = 'nc-message-label';
+        name.textContent = label;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'nc-bubble';
+
+        main.append(name, bubble);
+
+        if (type === 'ai') {
+            row.append(avatar, main);
+        } else {
+            row.append(main, avatar);
+        }
+
+        conversation.appendChild(row);
+
+        return { row, bubble, main };
+    }
+
+    // ======================================
+    // RENDER AI RESPONSE
+    // ======================================
+
+    async function renderAIResponse(bubble, text) {
+        const libs = await librariesReady;
+
+        if (!libs.markedOK || !window.marked) {
+            bubble.textContent = text;
+            return;
+        }
+
+        try {
+            const rawHTML = window.marked.parse(text, {
+                gfm: true,
+                breaks: true
+            });
+
+            // Never inject untrusted HTML without sanitizing it.
+            if (!libs.purifierOK || !window.DOMPurify) {
+                bubble.textContent = text;
+                return;
+            }
+
+            bubble.innerHTML = window.DOMPurify.sanitize(rawHTML, {
+                USE_PROFILES: { html: true }
+            });
+
+            bubble.querySelectorAll('a').forEach(link => {
+                link.target = '_blank';
+                link.rel = 'noopener noreferrer';
+            });
+
+            // Syntax highlighting and copy-code controls
+            bubble.querySelectorAll('pre').forEach(pre => {
+                const code = pre.querySelector('code');
+
+                if (!code) return;
+
+                if (
+                    pre.parentElement?.classList.contains(
+                        'nc-code-wrap'
+                    )
+                ) {
+                    return;
+                }
+
+                if (libs.highlightOK && window.hljs) {
+                    try {
+                        window.hljs.highlightElement(code);
+                    } catch (error) {
+                        console.warn('Highlight error:', error);
+                    }
+                }
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'nc-code-wrap';
+
+                const top = document.createElement('div');
+                top.className = 'nc-code-top';
+
+                const langClass = [...code.classList].find(
+                    cls => cls.startsWith('language-')
+                );
+
+                const language = document.createElement('span');
+                language.textContent = langClass
+                    ? langClass.replace('language-', '')
+                    : 'Code';
+
+                const copyButton = document.createElement('button');
+                copyButton.type = 'button';
+                copyButton.className = 'nc-copy-code';
+                copyButton.textContent = 'Copy code';
+
+                copyButton.addEventListener('click', async () => {
+                    const success = await copyText(code.textContent);
+
+                    if (success) {
+                        copyButton.textContent = 'Copied!';
+
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copy code';
+                        }, 1500);
+                    }
+                });
+
+                top.append(language, copyButton);
+
+                pre.parentNode.insertBefore(wrapper, pre);
+                wrapper.append(top, pre);
+            });
+
+            // KaTeX math rendering
+            if (
+                libs.katexOK &&
+                libs.autoRenderOK &&
+                typeof window.renderMathInElement === 'function'
+            ) {
+                try {
+                    window.renderMathInElement(bubble, {
+                        delimiters: [
+                            { left: '$$', right: '$$', display: true },
+                            { left: '\\[', right: '\\]', display: true },
+                            { left: '\\(', right: '\\)', display: false }
+                        ],
+                        throwOnError: false,
+                        strict: 'ignore'
+                    });
+                } catch (error) {
+                    console.warn('Math render error:', error);
+                }
+            }
+        } catch (error) {
+            console.warn('Markdown render error:', error);
+            bubble.textContent = text;
+        }
+    }
+
+    // ======================================
+    // AI MESSAGE COPY BUTTON
+    // ======================================
+
+    function addAIActions(main, responseText) {
+        const actions = document.createElement('div');
+        actions.className = 'nc-message-actions';
+
+        const copyButton = document.createElement('button');
+        copyButton.type = 'button';
+        copyButton.className = 'nc-action-btn';
+        copyButton.textContent = '▢ Copy';
+
+        copyButton.addEventListener('click', async () => {
+            const success = await copyText(responseText);
+
+            if (success) {
+                copyButton.textContent = '✓ Copied';
+
+                setTimeout(() => {
+                    copyButton.textContent = '▢ Copy';
+                }, 1500);
+            }
+        });
+
+        actions.appendChild(copyButton);
+        main.appendChild(actions);
+    }
+
+    // ======================================
+    // LOADING INDICATOR
+    // ======================================
+
+    function showLoading() {
+        const message = createMessageRow('ai', 'NexChat AI');
+
+        const dots = document.createElement('div');
+        dots.className = 'nc-thinking';
+        dots.setAttribute('aria-label', 'AI is thinking');
+
+        for (let i = 0; i < 3; i++) {
+            dots.appendChild(document.createElement('span'));
+        }
+
+        message.bubble.appendChild(dots);
+
+        return message;
+    }
+
+    // ======================================
+    // SEND MESSAGE
+    // ======================================
+
+    let isSending = false;
+
+    window.sendToAi = async function sendToAi() {
+        if (isSending) return;
+
+        const prompt = input.value.trim();
+
+        if (!prompt) return;
+
+        isSending = true;
+
+        if (sendButton) {
+            sendButton.disabled = true;
+            sendButton.style.opacity = '0.6';
+        }
+
+        if (actionIcon) {
+            actionIcon.style.opacity = '0.6';
+        }
+
+        // Show user message
+        const userMessage = createMessageRow('user', 'You');
+        userMessage.bubble.textContent = prompt;
+
+        input.value = '';
+
+        // Show loading
+        const loading = showLoading();
+        conversation.scrollTop = conversation.scrollHeight;
+
+        try {
+            const response = await fetch(AI_API, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt,
+                    sessionId
+                })
+            });
+
+            const responseText = await response.text();
+
+            let data;
+
+            try {
+                data = JSON.parse(responseText);
+            } catch {
+                throw new Error(
+                    response.ok
+                        ? 'Server returned an invalid response.'
+                        : `Server error: ${response.status}`
+                );
+            }
+
+            if (!response.ok) {
+                throw new Error(
+                    data.error || `Request failed: ${response.status}`
+                );
+            }
+
+            if (typeof data.reply !== 'string') {
+                throw new Error('API response does not contain a reply.');
+            }
+
+            if (data.sessionId) {
+                sessionId = data.sessionId;
+
+                try {
+                    sessionStorage.setItem(
+                        'nexchat_session_id',
+                        sessionId
+                    );
+                } catch {
+                    // Continue without storage
+                }
+            }
+
+            loading.row.remove();
+
+            const aiMessage = createMessageRow('ai', 'NexChat AI');
+
+            await renderAIResponse(aiMessage.bubble, data.reply);
+            addAIActions(aiMessage.main, data.reply);
+
+            conversation.scrollTop = conversation.scrollHeight;
+
+        } catch (error) {
+            console.error('NexChat API error:', error);
+
+            loading.row.remove();
+
+            const errorMessage = createMessageRow('ai', 'NexChat AI');
+
+            errorMessage.bubble.classList.add('nc-error');
+
+            errorMessage.bubble.textContent =
+                error.message === 'Failed to fetch'
+                    ? 'Cannot connect to the server. Check your internet, API URL, and CORS settings.'
+                    : error.message || 'Something went wrong.';
+
+            conversation.scrollTop = conversation.scrollHeight;
+
+        } finally {
+            isSending = false;
+
+            if (sendButton) {
+                sendButton.disabled = false;
+                sendButton.style.opacity = '1';
+            }
+
+            if (actionIcon) {
+                actionIcon.style.opacity = '1';
+            }
+        }
+    };
+
+    // ======================================
+    // ENTER TO SEND
+    // SHIFT + ENTER FOR NEW LINE
+    // ======================================
+
+    if (!input.dataset.ncEnterBound) {
+        input.addEventListener('keydown', event => {
+            if (
+                event.key === 'Enter' &&
+                !event.shiftKey &&
+                !event.isComposing
+            ) {
+                event.preventDefault();
+                window.sendToAi();
+            }
+        });
+
+        input.dataset.ncEnterBound = 'true';
+    }
+
+    console.log('NexChat AI initialized.');
+
+})();
+
+</script>
+
 <script>
 function initQuickBallWithGridMenu(ballId, menuId) {
 
