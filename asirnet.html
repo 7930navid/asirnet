@@ -752,10 +752,14 @@ button:active {
     filter: brightness(0) invert(1);
 }
 .bottomBTN {
-    display: flex;
-    align-items: center;
     overflow-x: auto;
     padding: 10px;
+}
+.helper {
+    background: none;
+    width: 800px;
+    display: flex;
+    align-items: center;
     gap: 10px;
 }
 .bottomBTN button {
@@ -772,10 +776,14 @@ button:active {
     background: rgba(30,30,30,0.2);
 }
 
-.bottomBTN button * {
+.bottomBTN button p {
     display: flex;
     align-items: center;
     justify-content: center;
+    background: none;
+    padding: none;
+    margin: none;
+    font-size: 25px;
 }
 
 .bottomBTN img {
@@ -4703,7 +4711,7 @@ button:active {
     width: 600px;
 }
 #ai-prompt.show {
-    height: 100px;    
+    height: 200px;    
     transform: translateY(0px) rotateY(0deg);
 }
 
@@ -4717,19 +4725,22 @@ button:active {
 }
 
 #postGeneration textarea {
-    height: 100px;    
+    height: 200px;    
     display: flex;
     margin: 20px;
     padding: 10px;
-    border: 1px solid #56cf83;
+    border: 1px solid black;
     border-radius: 20px;
-    color: #56cf83;
+    color: black;
     font-size: 20px;
     font-weight: 600;
     width: 500px;
     background: rgba(255,255,255,0.2);
 }
-
+#postGeneration textarea.dark {
+    color: white;
+    border: 1px solid white;
+}
 
 /* css end */ 
  </style>
@@ -4844,28 +4855,32 @@ at
     <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
 
   <div class="bottomBTN">
+      
+      <div class="helper">
 
  <button onclick="aires('post')">
      <img src="https://i.ibb.co.com/LXjZY8jh/nexchat.png" alt="">
-     <p style="font-size: 25px; display: flex; width: 200px;">
+     <p>
          Ask Nexchat
       </p>
  </button>
  
  <button onclick="postBG('postword')">
      <img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png">
-     <p style="font-size: 25px; display: flex; width: 250px">
+     <p>
          Post Background
      </p>
   </button>
 
  <button onclick="fontSize('postword')">
      <img src="https://i.ibb.co.com/3ydKfr22/font.png" alt="">
-     <p style="font-size: 25px; display: flex; width: 150px">
+     <p>
          Font Size
       </p>
  </button>
  
+     </div>
+     
   </div>
 
     <!-- FILE UPLOAD BUTTONS -->
