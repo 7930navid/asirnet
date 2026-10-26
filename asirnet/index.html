@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.5, user-scalable=no">
+    <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
+    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+    
+     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
+ 
+   <link rel="stylesheet" href="./style.css">
+
+     <title>AsirNet</title>
+
+</head>
+<body id="body">
+    
+<div class="app-con">
+    
+    
+<div id="header">
+ <div>
+    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="45px" class="headerBtn" onclick ="menuOpen()">
+
+    <img src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png" width="200px">
+    
+</div>
+<div style="display: flex; align-items: center;">
+        <button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40" class="headerBtn"></button>
+
+        <h1 id="profPicture" onclick="profile(); loadProfile()"></h1>
+</div>
+</div>
+
+
+
+
+<div id="bio"></div>
+
+<div id="onDisImg">
+    <button onclick="closeOnDisImg()">
+        ×
+    </button>
+    <img style="width:100%">
+    <aside>
+        <p></p>
+    </aside>
+</div>
+
+
+<div id="searchpad">
+<div style="background: none; width: 100%;">
+    <div style="text-align: right; padding-right: 70px;">
+        <button onclick="closeSearchPad();" id="close" class="profile-btn">×</button>
+    </div>
+   <table><tr><td>
+    <input onkeyup="pad('n')" type="text" id="search" style="width: 600px;" placeholder="Search here any ID or email.."/></td><td>
+    <button onclick="pad('y');" id="btnsearch"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="25"></button>
+    </td></tr></table>
+
+
+          <div id="showBox">
+              <div>
+              <div id="showheader">
+              <h2>
+                 Search Result
+              </h2>
+              </div>
+              <div id="searchresult">
+  <div style="display: flex; justify-content: center; align-items: center;">
+      <div class="main-loading-focus"></div>
+  </div>
+              </div>
+          </div>
+          </div>
+
+ </div>
+    </div>
+
+ <div id="postpage">
+  <div id="postpad">
+   <div>
+    <table border="0" class="nameplate" style="width:100%;">
+      <tr>
+        <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
+        <td>
+          <div style="text-align: right">
+      <button onclick="postsubmit()" id="postsubmit" class="postSubBtn">Post</button>
+          </div> 
+        </td> 
+      </tr>
+    </table>
+
+ <div class="headerPre"><img id="idSign" width="60" style="border-radius: 50%; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+<span id="idName"></span> 
+is feeling 
+<span id="feeling">___</span> 
+at 
+<span id="location">___</span> 
+<p onclick="showTagged('')" id="taggedBtn" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:pulple">with other ones</u></p>
+</div>
+
+   <div id="postBox">
+      <div id="postGeneration" onclick="postGenarate(event)">
+       <section>
+           <i><u>
+           Generate Post With AI
+           </u></i>
+       </section>
+       <div id="ai-prompt">
+       <textarea placeholder="Prompt here..."></textarea>
+       <button onclick="askAi()">Create</button>
+      </div>
+       </div>
+    <textarea id="postword" placeholder=""></textarea>
+   
+   </div>
+
+   </div>
+
+    <!-- ALERT -->
+    <h2 class="onPostAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+
+  <div class="bottomBTN">
+      
+      <div class="helper">
+
+ <button onclick="aires('post')">
+     <img src="https://i.ibb.co.com/LXjZY8jh/nexchat.png" alt="">
+     <p>
+         Ask AI
+      </p>
+ </button>
+ 
+ <button onclick="postBG('postword')">
+     <img src="https://i.ibb.co.com/tPDBQgFQ/transparent.png">
+     <p>
+         Post Background
+     </p>
+  </button>
+
+ <button onclick="fontSize('postword')">
+     <img src="https://i.ibb.co.com/3ydKfr22/font.png" alt="">
+     <p>
+         Font Size
+      </p>
+ </button>
+ 
+     </div>
+     
+  </div>
+
+    <!-- FILE UPLOAD BUTTONS -->
+    <div id="postBtn" style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
+   <label class="uploadBtn" onclick="input('feeling', 'What’s        ‌‌‌‌‌‌‌‌‌ your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
+   </label>
+   <label class="uploadBtn" onclick="input('location', 'What’s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
+   </label>
+   <label class="uploadBtn" onclick="tag()"><img src="https://i.ibb.co.com/3yjGy002/tag.png" width="40" style="margin-right: 20px"> Tag Peoples
+   </label>
+
+    </div>
+
+    <!-- FILE PREVIEW -->
+    <div id="filePreview" style="margin-top:10px;"></div>
+  </div>
+</div>
+
+ <!-- Post Size -->
+    <section id="textFont">
+<h1 style="color:green; text-align: left;width: 100%;">Adjust here your post size properly...</h1><hr style="background:green; width: 100%; height: 3px;">
+    <section id="innerChange">
+<input type="number" id="textSize" value="30" placeholder="type here.." onkeyup="demoShow()">
+    <div id="demo"><div>"it's a demo of post letters"</div></div>
+ <button onclick="applySize()" class="correctBtn">
+     <img border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ </button>
+    </section>
+   </section>
+
+ <!-- Post Background -->
+ <div id="pBG">
+  <div id="bgPost">
+ <h1 style="color: green; margin-left: 20px;">Choose your own background...</h1><hr style="background: green; height: 2px;">
+<div id="BGS">
+
+  <!-- ↕️Default↕️ -->
+  <p>Default: </p>
+
+<button style="background-image: url('https://i.ibb.co.com/V8jnq8f/20260825-115648.png')" onclick="textBG('none', 'none', '')"></button>
+ 
+  <!-- ↕️Colors↕️ -->
+  <p>Colors: </p>
+
+<button style="background: linear-gradient(135deg, #ffb3ba, #ffb3ba)" onclick="textBG('#ffb3ba', '#ffb3ba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffdfba, #ffdfba)" onclick="textBG('#ffdfba', '#ffdfba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffffba, #ffffba)" onclick="textBG('#ffffba', '#ffffba', '')"></button>
+
+<button style="background: linear-gradient(135deg, #baffc9, #baffc9)" onclick="textBG('#baffc9', '#baffc9', '')"></button>
+
+<button style="background: linear-gradient(135deg, #bae1ff, #bae1ff)" onclick="textBG('#bae1ff', '#bae1ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #d5b3ff, #d5b3ff)" onclick="textBG('#d5b3ff', '#d5b3ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffc9de, #ffc9de)" onclick="textBG('#ffc9de', '#ffc9de', '')"></button>
+
+<button style="background: linear-gradient(135deg, #c7f0db, #c7f0db)" onclick="textBG('#c7f0db', '#c7f0db', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f3d1ff, #f3d1ff)" onclick="textBG('#f3d1ff', '#f3d1ff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffd6a5, #ffd6a5)" onclick="textBG('#ffd6a5', '#ffd6a5', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a0e7e5, #a0e7e5)" onclick="textBG('#a0e7e5', '#a0e7e5', '')"></button>
+
+<button style="background: linear-gradient(135deg, #b4f8c8, #b4f8c8)" onclick="textBG('#b4f8c8', '#b4f8c8', '')"></button>
+
+<!-- ↕️Gradients↕️ -->
+ <p>Gradients: </p>
+
+<button style="background: linear-gradient(135deg, red, pink)" onclick="textBG('red', 'pink', '')"></button>
+
+<button style="background: linear-gradient(135deg, lightgreen, green)" onclick="textBG('lightgreen', 'green', '')"></button>
+
+<button style="background: linear-gradient(135deg, white, gray)" onclick="textBG('white', 'gray', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ff9a9e, #fad0c4);" onclick="textBG('#ff9a9e', '#fad0c4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a18cd1, #fbc2eb);" onclick="textBG('#a18cd1', '#fbc2eb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #84fab0, #8fd3f4);" onclick="textBG('#84fab0', '#8fd3f4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f6d365, #fda085);" onclick="textBG('#f6d365', '#fda085', '')"></button>
+
+<button style="background: linear-gradient(135deg, #667eea, #764ba2);" onclick="textBG('#667eea', '#764ba2', '')"></button>
+
+<button style="background: linear-gradient(135deg, #43e97b, #38f9d7);" onclick="textBG('#43e97b', '#38f9d7', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fa709a, #fee140);" onclick="textBG('#fa709a', '#fee140', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffecd2, #fcb69f);" onclick="textBG('#ffecd2', '#fcb69f', '')"></button>
+
+<button style="background: linear-gradient(135deg, #ffdee9, #b5fffc);" onclick="textBG('#ffdee9', '#b5fffc', '')"></button>
+
+<button style="background: linear-gradient(135deg, #cfd9df, #e2ebf0);" onclick="textBG('#cfd9df', '#e2ebf0', '')"></button>
+
+<button style="background: linear-gradient(135deg, #a1c4fd, #c2e9fb);" onclick="textBG('#a1c4fd', '#c2e9fb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #d4fc79, #96e6a1);" onclick="textBG('#d4fc79', '#96e6a1', '')"></button>
+
+<button style="background: linear-gradient(135deg, #84fab0, #8fd3f4);" onclick="textBG('#84fab0', '#8fd3f4', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fccb90, #d57eeb);" onclick="textBG('#fccb90', '#d57eeb', '')"></button>
+
+<button style="background: linear-gradient(135deg, #e0c3fc, #8ec5fc);" onclick="textBG('#e0c3fc', '#8ec5fc', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f093fb, #f5576c);" onclick="textBG('#f093fb', '#f5576c', '')"></button>
+
+<button style="background: linear-gradient(135deg, #4facfe, #00f2fe);" onclick="textBG('#4facfe', '#00f2fe', '')"></button>
+
+<button style="background: linear-gradient(135deg, #43e97b, #38f9d7);" onclick="textBG('#43e97b', '#38f9d7', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fa709a, #fee140);" onclick="textBG('#fa709a', '#fee140', '')"></button>
+
+<button style="background: linear-gradient(135deg, #30cfd0, #330867);" onclick="textBG('#30cfd0', '#330867', '')"></button>
+
+<button style="background: linear-gradient(135deg, #5ee7df, #b490ca);" onclick="textBG('#5ee7df', '#b490ca', '')"></button>
+
+<button style="background: linear-gradient(135deg, #f6d365, #fda085);" onclick="textBG('#f6d365', '#fda085', '')"></button>
+
+<button style="background: linear-gradient(135deg, #96fbc4, #f9f586);" onclick="textBG('#96fbc4', '#f9f586', '')"></button>
+
+<button style="background: linear-gradient(135deg, #c471f5, #fa71cd);" onclick="textBG('#c471f5', '#fa71cd', '')"></button>
+
+<button style="background: linear-gradient(135deg, #48c6ef, #6f86d6);" onclick="textBG('#48c6ef', '#6f86d6', '')"></button>
+
+<button style="background: linear-gradient(135deg, #fddb92, #d1fdff);" onclick="textBG('#fddb92', '#d1fdff', '')"></button>
+
+<button style="background: linear-gradient(135deg, #9890e3, #b1f4cf);" onclick="textBG('#9890e3', '#b1f4cf', '')"></button>
+
+<!-- ↕️Themes↕️ -->
+
+ <p>Themes: </p>
+     <div class="postThemes">
+ <button onclick="textBG('','','https://i.ibb.co.com/pG2GfyL/Pink-And-Green-Watercolor-Blank-Background-Instagram-Post-20260529-213836-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/pG2GfyL/Pink-And-Green-Watercolor-Blank-Background-Instagram-Post-20260529-213836-0000.png"></button>
+
+ <button onclick="textBG('','','https://i.ibb.co.com/JWx4Ksh8/Black-and-White-Scrapbook-Background-Instagram-Post-20260529-214059-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/JWx4Ksh8/Black-and-White-Scrapbook-Background-Instagram-Post-20260529-214059-0000.png"></button>
+
+ <button onclick="textBG('','','https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png')" class="imgbg">
+     <img src="https://i.ibb.co.com/tPxSNr8b/Green-Watercolor-Background-Blank-Instagram-Post-20260529-220104-0000.png"></button>
+
+    </div>
+</div>
+   </div>
+ </div>
+
+
+
+<div id="IMGpost">
+  <div id="IMGpad">
+
+    <table border="0" class="nameplate" style="width:100%;">
+      <tr>
+        <td><h2 style="text-align: left; color: green;">Create your mind here..</h2></td>
+        <td>
+          <div style="text-align: right">
+      <button onclick="postsubmit()" id="IMGsubmit" class="postSubBtn">Post</button>
+          </div> 
+        </td> 
+      </tr>
+    </table>
+
+ <div class="headerPre"><img id="accSign" style="border-radius: 50%; margin-right: 25px; border: 2px solid green; object-fit: cover; width: 50px; height: 50px;">
+<span id="accName"></span> 
+is feeling 
+<span id="feeling2">___</span> 
+at 
+<span id="location2">___</span> 
+<p onclick="showTagged('')" id="taggedBtn2" style="display: none; margin: 0; padding: 0; color: purple;"><u style="color:purple">with other ones</u></p>
+</div>
+
+    <textarea id="Imgword" placeholder="Write a caption about this post..." ></textarea>
+
+<div id="imgcont"></div>
+
+
+    <!-- ALERT -->
+    <h2 class="onPicAlert" style="color: red; font-size: 26px; margin:5px 0;"></h2>
+
+
+    <div style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
+
+   <label class="uploadBtn">
+   <input type="file" accept="image/*" id="imageInput" hidden onchange="loadpostIMG(event)">     
+       <img src="https://i.ibb.co.com/HfSqkppH/exchange.png"  style="margin-right: 20px" width="40" > Select photo
+   </label>
+   
+   <label class="uploadBtn" onclick="input('feeling2', 'What\'s your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
+   </label>
+   <label class="uploadBtn" onclick="input('location2', 'What\'s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
+   </label>
+   <label class="uploadBtn" onclick="tag()"><img src="https://i.ibb.co.com/3yjGy002/tag.png" width="40" style="margin-right: 20px"> Tag Peoples
+   </label>
+
+  </div>  
+</div>
+</div>
+
+
+<div id="allChange">
+
+ <h2 style="padding-left:25px;" class="storyErr">Stories</h2><hr>
+
+<div class="story-container">
+    <table> <tr> <td>
+<div class="story">
+
+  <div class="story-inner" onclick="openStoryPort(); appClsBtn()">
+      <div style="background: rgba(0,0,0,0.5); width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(2.5px); ">
+       <div style=" border-radius: 40px; background: linear-gradient(160deg, blue, #1332e5); display: flex; align-items: center; justify-content: center; width: 70px; height: 70px;">
+                        <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal Line -->
+  <line 
+    x1="8" 
+    y1="32" 
+    x2="56" 
+    y2="32" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+  
+  <!-- Vertical Line -->
+  <line 
+    x1="32" 
+    y1="8" 
+    x2="32" 
+    y2="56" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+</svg>
+
+       </div>
+      </div>
+  </div>    
+
+</div>
+</td>
+<td>
+  <div id="container">
+     <div>
+       <table cellpadding="9">
+             <tr>
+        <td><div class="storyLoader">Loading story..</div></td>             
+        <td><div class="storyLoader">Loading story..</div></td>             
+        </tr>
+         </table>
+     </div>
+  </div>
+</td></tr></table>
+</div>
+
+<hr>
+
+<div class="vibes-container">
+    <div class="vibes-div share-trigger-card" onclick="openShareModal()">
+        <div class="add-icon">+</div>
+        <div class="share-btn-text">Share Your Vibe</div>
+        <div class="vibes-footer">
+            <div> — Post New</div>
+        </div>
+    </div>
+    
+    <div class="vibes-div" id="vibe-error"  style="background: rgba(255,0,0,0.2); display: none;">
+       <div style="color: red; font-size: 23px; font-weight: bold; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">SOMETHING WENT WRONG</div> 
+        <div class="vibes-footer" style="background: red;">
+            <div> — ERR_CONNECTION</div>
+        </div>
+    </div> 
+    
+    <div class="vibes-div" id="vibe-loader" style="display: none;">
+        <div class="vibe-spinner"></div>
+        <div class="vibes-footer">
+            <div> — Loading...</div>
+        </div>
+    </div>
+   
+   
+  
+    <div id="vibes-show" style="display: flex;"></div>
+</div>
+<div id="vibeModal" class="modal-overlay" onclick="closeShareModal(event)">
+    <div class="modal-card">
+        <span class="close-btn" onclick="closeModalDirect()">&times;</span>
+        <h3>Share Your Vibe ✨</h3>
+  <hr style="background:green;height:2px">
+        <form id="modalShareForm" onsubmit="event.preventDefault(); sendvibe(); closeModalDirect();">
+            <textarea id="modalText" placeholder="Write your vibe here..." required maxlength="499"></textarea>
+            <button type="submit" class="btn-submit-vibe">Post Vibe</button>
+        </form>
+    </div>
+</div>
+
+<hr style="margin-bottom: 30px;">
+
+<div id="showVibeText">
+    <div id="showVibeText-card">
+        <button class="vibe-close-btn" onclick="closeVibeModal()">&times;</button>
+
+        <div class="vibe-header">
+            <img id="urAvatar" src="" alt="User Avatar" />
+            <div class="vibe-user-info">
+                <h3 id="urName"></h3>
+            </div>
+        </div>
+
+<hr style="background-color: green; height: 2px; border: none; margin: 15px 0;">
+
+        <div class="vibe-body">
+            <p id="urVibe"></p>
+        </div>
+    </div>
+</div>
+
+
+<div id="postLoading">
+<div class="posting-box">
+    <div class="header">
+        <div class="img-wrapper">
+            <img src="https://i.ibb.co/67Tcn3S8/IMG-20251216-151652.png" alt="">
+        </div>
+
+        <div class="text">
+ <h2>Posting, Keep AsirNet Open</h2>
+ <p>Please wait while your post is uploading...</p>
+        </div>
+    </div>
+
+    <div class="loading-line"></div>
+
+</div>
+</div>
+<div id="content"></div>
+</div>
+
+<div id="stryPort"></div>
+
+
+
+<footer id="footer">
+    
+    
+    <div class="footerBtn">
+        <button onclick="home()">
+            <img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="50">
+         </button>
+    </div>
+    <div class="footerBtn">
+        <button onclick="location.href='../reels.html'">
+            <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="50" border="0">
+         </button>
+     </div>
+     
+     <div id="footerPlusBtn">
+         <button onclick="postMenu(event)">
+             <svg width="60" height="60" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal Line -->
+  <line 
+    x1="8" 
+    y1="32" 
+    x2="56" 
+    y2="32" 
+    stroke="white" 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+  />
+  
+  <!-- Vertical Line -->
+  <line 
+    x1="32" 
+    y1="8" 
+    x2="32" 
+    y2="56" 
+    stroke="white" 
+    stroke-width="2.5" 
+    stroke-linecap="round"
+  />
+</svg>
+         </button>
+         </div>
+
+    <div class="footerBtn">
+         <button onclick="notification();">
+             <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="50">
+          </button>
+     </div>
+     
+     <div class="footerBtn">
+          <button onclick="location.href='https://7930navid.github.io/nextalk/'">
+              <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" alt="" border="0" width="55">
+           </button>
+      </div>
+
+</footer>
+
+<div id="postMenu">
+   <div onclick="createpost('postpage');clzpostMenu()">Post text</div>
+   <label>
+   <div onclick="clzpostMenu()">
+ <input type="file" accept="image/*"hidden onchange="loadpostIMG(event)">
+ Post photo</div></label>
+   <div onclick="openStoryPort()">Post story</div>
+   <label>
+   <div onclick="clzpostMenu()">
+ <input type="file" accept="video/*"hidden onchange="loadReels(event)">
+ Post clip</div></label>
+</div>
+
+<div class="profDis">
+    <img id="displayPic">
+</div>
+
+<div id="otherProf">
+    <h2 id="headerName"></h2>
+    <hr style="background: green; height: 2px;">
+    <div id="othProfInfo">
+    <img id="othProfPic" src="">
+    <section><h1 id="othProfName"></h1>
+    <h3 id="otherProfdiv"></h3></section>
+    </div>
+    <div id="connectBTN">
+    <button onclick="connect()" id="connectionBtn">Add Connection</button>
+    <button onclick="messageWithNexttalk()" id="messageSending">Send Message</button>
+    </div>
+     <div class="Id-information" id="profileMore">
+
+<section>Address</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:map-pin.svg?color=%23475569">
+      <span id="othadd"></span>
+  </div> 
+  <section>Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:briefcase.svg?color=%23475569">
+      <span id="othstatus"></span>
+  </div>
+  <section>Marital Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:heart.svg?color=%23475569">
+      <span id="othmerst"></span>
+  </div> 
+  <section>Gender</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:user.svg?color=%23475569">
+      <span id="othgender"></span>
+  </div> 
+  <section>Language</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:languages.svg?color=%23475569">
+      <span id="othlang"></span>
+  </div>
+  <section>Education</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:graduation-cap.svg?color=%23475569">
+      <span id="othedu"></span>
+  </div>
+     
+  </div> 
+    <br><br><br> 
+
+    <h1 class="storyErr">Connected ones</h1><hr>
+    <div id="showOnes">
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+</div>      
+    </div><hr>
+      <div class="tab-switching-oth">
+      
+    <div class="tab-btns active" id="postTab">Posts</div>
+    <div class="tab-btns"  id="clipTab">ClipNovas</div>
+  </div>
+
+    <div id="otherPosts" style="display:flex; flex-wrap:wrap;"></div>
+</div>    
+
+
+<div class="warning" id="warnOverlay">
+       <div id="wordSet"></div>
+</div>
+
+<!-- OVERLAY -->
+<div class="alert-overlay" id="alertOverlay" onclick="closeAlert()"></div>
+
+<!-- ALERT -->
+<div class="custom-alert" id="customAlert">
+  <div class="alert-header">
+    <div class="alert-icon">?</div>
+    <div class="alert-title" id="confirm-text"></div>
+  </div>
+
+  <div class="alert-message" id="confirm-word">
+  </div>
+
+  <div class="alert-actions">
+    <button class="btn-cancel" onclick="closeAlert()">Cancel</button><div id="confirm-btn"></div>
+  </div>
+</div>
+
+<div id="loc-feel">
+     <div>
+   <h2 id="inputText" style="color:green"></h2>
+   <hr style="background: green; height: 2px;">
+ <input type="text" id="dataInput" placeholder="Enter here....">
+ <section>
+   <button id="removeData" style="background: red;">Remove</button>
+   <button onclick="cancel()" style="background: red;">Cancel</button>
+   <button id="inputData" style="background: blue;">Input</button>
+ </section>
+    </div>
+</div>
+
+
+<div id="tagPeople">
+ <div id="searchTagged">
+ <h1>Select People to tag them: </h1>
+ <hr>
+ <input type="text" placeholder="Search users...." onkeyup="comeUsers()" id="searchBar">
+ <div id="faultMass"></div>
+ </div>
+ <div id="comingUsers" style="margin-top:300px;display: grid;grid-template-columns: repeat(3, 1fr);gap: 16px;"></div>
+ <button onclick="closeTagPage('a')" class="correctBtn">
+     <img id="sizeSubmit" border="none" width="70" height="70" src="https://i.ibb.co.com/Y4g6GMNJ/checked.png" alt="">
+ </button>
+</div>
+
+<div id="taggedShow">
+    <div id="taggedShowDiv">
+    <h2>Tagged Peoples:</h2>
+    <section id="personWise" style="margin-top: 100px"></section>
+    </div>
+</div>
+
+
+
+
+<div id="MainMenuAside"> 
+    
+  <div id="MainMenuContent">
+    
+    <div id="MenuUpperBtn">
+     
+      <img src="https://i.ibb.co.com/GfNT4MjW/back.png" width="60" onclick="menuClose()">
+      <img src="https://i.ibb.co.com/1fpddb1t/loading.png" width="60" onclick="location.reload()">
+    </div>
+
+    <hr style="height: 1px; background: black;">  
+
+    <div id="MenuBtnBox">
+        
+<div class="MenuStatus">Menu Buttons</div>      
+
+      <button onclick="home(); menuClose()" class="MenuBtns">
+        <img src="https://i.ibb.co.com/wZFh56jy/home.png" width="50">
+        Home
+      </button>    
+      
+      <button onclick="profile(); loadProfile(); menuClose()" class="MenuBtns"> 
+        <img src="https://i.ibb.co.com/YgKxNZB/user.png" width="50">
+        Profile
+      </button>    
+      
+      <button onclick="notification(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/Z17PbGrp/notification.png" width="50">
+        Notifications
+      </button>
+      <button onclick="setting(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50">
+        Settings
+      </button>
+      <button onclick="location.href='../reels.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/F4W5LC2f/video.png" width="50">
+        ClipNovas
+      </button>
+ 
+<div class="MenuStatus">Productivities</div> 
+     
+      <button onclick="location.href='https://7930navid.github.io/nextalk/'; menuClose()" class="MenuProds">    
+        <img src="https://i.ibb.co.com/B2gn0kLp/20260724-162833.png" width="60">
+        <div>
+            <pre>NexTalk</pre>
+            <p>A chatting app</p>
+        </div>
+      </button>
+
+      <button onclick="location.href='https://7930navid.github.io/nexchat/'; menuClose()" class="MenuProds">    
+        <img src="https://i.ibb.co.com/LXjZY8jh/nexchat.png" width="60">
+        <div>
+            <pre>NexChat</pre>
+            <p>A chatbot AI</p>
+        </div>
+      </button>
+
+
+<div class="MenuStatus">Post Options</div>      
+      
+      <button onclick="openStoryPort(); menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/0Rk479f9/book.png" width="50">
+        Post Story
+      </button>
+      
+<label>
+    <button type="button" onclick="document.getElementById('videoInput').click(); menuClose()" class="MenuBtns">
+        
+        <input 
+            type="file" 
+            accept="video/*" 
+            id="videoInput" 
+            hidden 
+            onchange="loadReels(event)"
+        >
+
+        <img src="https://i.ibb.co.com/NdZ3MTD3/video-player.png" width="50">
+        Post Clip
+
+    </button>
+</label>
+   
+      <button onclick="createpost('postpage'); menuClose();" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/XZHcvRMN/add-post.png" width="50">
+        Post Text
+      </button>
+      
+<label>
+    <input 
+        type="file" 
+        accept="image/*" 
+        hidden 
+        onchange="loadpostIMG(event)"
+    >
+
+    <button 
+        type="button"
+        onclick="document.getElementById('imageInput').click(); menuClose()" 
+        class="MenuBtns"
+    >
+        <img src="https://i.ibb.co.com/9mmh24xT/image.png" width="50">
+        Post Photo
+    </button>
+</label>
+
+<div class="MenuStatus">FUN & GAMES</div>      
+
+      <button onclick="location.href='../cube.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/QvmWD0Ts/cube-3d.png" width="50">
+        3×3 Rubik's Cube
+      </button>
+      
+
+      <button onclick="location.href='../snake.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/zVwj2vSR/game.png" width="50">
+        Snake Game
+      </button>
+
+      <button onclick="location.href='../bird.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/PzwSG8Nc/3d.png" width="50">
+        Flipping Game
+      </button>
+
+      <button onclick="location.href='../bricks.html'; menuClose()" class="MenuBtns">    
+        <img src="https://i.ibb.co.com/TBpS1Wvg/brick-wall.png" width="50">
+        Brick Breaker Game
+      </button>
+      
+    </div>
+    
+    <div style="margin-top: 250px"></div> 
+    
+<nav id="footerOnMenu">
+            
+           <div style="width: 25%;">
+               <img id="footerMenuProf">
+           </div>
+           
+           <div style="width: 50%;">
+               <h1 id="footerMenuId" style="color: green; margin: none; padding-left: 0; margin-left: 0; text-shadow: 0 0 2px white; font-weight: bold; text-break: break; font-size: 30px;"></h1>
+           </div>
+        
+           <div style="width: 25%;" onclick="darkM()">
+     <img src="https://i.ibb.co.com/jkwHF52Q/20261024-152231.png" class="modeChange">          
+           </div>
+ 
+</nav>
+
+
+</div>
+</div>
+
+
+
+<div id="clip-take-overlay">
+    <div class="clip-header">
+        <div class="firstDiv">
+            <img src="" alt="Profile Picture" id="reel-prof-img"> 
+            <h3 id="reel-prof-name"></h3>
+            <h3 id="with-other" onclick="showTagged('')">with other ones</h3>
+        </div>
+        <div class="secondDiv">
+            <button onclick="uploadClip();">Post</button>
+        </div>
+    </div>
+    
+    <div class="clip-info">
+        <textarea id="clip-caption" placeholder="Write something about the video..."></textarea>
+        
+        <div class="video-container">
+            <video id="clip-nova" controls></video>
+        </div>
+        
+        <div class="input-group">
+            <div class="input-wrapper">
+                <span class="input-icon">📍</span>
+                <input type="text" id="clip-location" placeholder="Add location">
+            </div>
+            <div class="input-wrapper">
+                <span class="input-icon">😊</span>
+                <input type="text" id="clip-feeling" placeholder="Feeling / Activity">
+            </div>
+        </div>
+        <button onclick="tag()" id="reel-tag-btn" class="down-btn">
+      <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Tag People</div>
+       <button onclick="helperForLoad()" class="down-btn">
+      <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Change video</div>
+      </button>
+    </div>
+</div>
+
+
+<div id="guestAlert">
+    <div id="guestAlert-card">
+  <div id="warnings-card">
+   <img src="https://i.ibb.co.com/27Nk0Tpk/guest-logo.png" alt="">
+   <div>You are not a member of AsirNet till now! On account of this, you cannot enjoy anything of this application.<br><br>
+So create an account or log in to AsirNet to enjoy it.</div>
+  </div>
+  <div id="options-card">
+  <button style="background: lightgray; color: white; box-shadow: 0 0 4px gray" onclick="guestWarn()"
+>Cencel</button>
+  <button style="background: red; color: white; box-shadow: 0 0 4px red;animation: attraction 2s ease-in infinite;" onclick="window.location.assign('sign_in.html')"
+>Go Log In</button>
+  </div>     
+    </div>
+</div>
+
+<div id="offerinf">
+  <div>
+ <div><p>You are enjoying limited joy here. Log in to enjoy all.</p><a href="sign_in.html">Log in</a></div>
+ <button onclick="cenMess()">×</button>
+  </div>
+</div>
+
+
+<div id="myQuickBall" class="quick-ball"></div>
+
+
+    <div id="myQuickMenu" class="quick-menu">
+        <div class="quick-menu-header">Menu</div>
+        <div class="quick-apps-grid">
+
+            
+            <div class="quick-app-item" onclick="home()">
+<img src="https://i.ibb.co.com/wZFh56jy/home.png" alt="" border="0" width="40">
+<p>Home</p>
+            </div>
+            
+            <div class="quick-app-item" onclick="location.reload()">
+<img src="https://i.ibb.co.com/1fpddb1t/loading.png" alt="" border="0" width="40">
+<p>Reload</p>
+            </div>
+            
+
+            <div class="quick-app-item" onclick="profile(); loadProfile();">
+<img src="https://i.ibb.co.com/YgKxNZB/user.png" alt="" border="0" width="40">                <p>Profile</p>
+            </div>
+            
+            <div class="quick-app-item" onclick="notification();">
+<img src="https://i.ibb.co.com/Z17PbGrp/notification.png" alt="" border="0" width="40">
+<p>Notifications</p>
+            </div>
+
+            <div class="quick-app-item" onclick="location.href='../reels.html'">
+<img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="40" border="0">
+<p>Clipnovas</p>
+            </div>
+
+            <div class="quick-app-item" onclick="setting();">
+<img src="https://i.ibb.co.com/F4RcTPbR/setting.png" width="50">
+<p>Settings</p>
+            </div>
+                                    
+             <div class="quick-app-item" onclick="createpost('postpage');">
+<img src="https://i.ibb.co.com/XZHcvRMN/add-post.png" width="50">
+<p>Post Text</p>
+</div>
+
+<label>
+ <input type="file" accept="image/*"hidden onchange="loadpostIMG(event)">                        
+             <div class="quick-app-item" onclick="">
+<img src="https://i.ibb.co.com/9mmh24xT/image.png" width="50">
+<p>Post Photo</p>
+</div></label>
+
+<label>
+ <input type="file" accept="video/*"hidden onchange="loadReels(event)">                        
+             <div class="quick-app-item" onclick="">
+<img src="https://i.ibb.co.com/NdZ3MTD3/video-player.png" width="50">
+<p>Post Clip</p>
+</div></label>
+
+                        
+             <div class="quick-app-item" onclick="openStoryPort()">
+<img src="https://i.ibb.co.com/0Rk479f9/book.png" width="50">
+<p>Create story</p>
+</div>
+
+        </div>    
+  </div>
+
+
+
+<div class="regards-panal" id="reactors">
+    <header>
+        <h1>Reactions: </h1>
+    </header>
+    <main id="reactAppear">
+        <div class="loading-likes">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </main>
+</div>
+
+<div class="regards-panal" id="comments">
+    <header>
+        <h1>Comments: </h1>
+    </header>
+    <main id="commentAppear">        
+        <div class="loading-comments">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+</main>
+</div>
+
+
+
+<div id="ai-box">
+
+    <header class="ai-box-header">
+        <img
+            src="https://i.ibb.co.com/LXjZY8jh/nexchat.png"
+            alt="NexChat AI"
+        >
+        <h1>ASK AI...</h1>
+    </header>
+
+    <div id="conversasion-box"></div>
+
+    <footer class="ai-box-footer">
+        <div class="ai-input-wrapper">
+
+            <textarea
+                id="message-to-ai"
+                placeholder="Ask AI..."
+                maxlength="700"
+                rows="1"
+            ></textarea>
+
+            <button
+                type="button"
+                onclick="sendToAi()"
+                aria-label="Send message"
+                id="message-send-btn"
+            >
+                <i
+                    class="fa-solid fa-arrow-up"
+                    id="action-icon"
+                ></i>
+            </button>
+
+        </div>
+    </footer>
+
+</div>
+
+
+
+</div>
+
+    <!------ Javascript functions ------>
+
+    <script src="./nexchat.js"></script>
+    <script src="./quickBall.js"></script>
+    <script src="./initialize.js"></script>
+    <script src="./script.js"></script>
+
+</body>
+</html>
