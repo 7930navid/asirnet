@@ -102,16 +102,81 @@ async function askAi() {
 
 
 
-function summery(message) {
+function summery(json) {
 
     const pad = document.getElementById('message-to-ai');
     const btn = document.getElementById('message-send-btn');
+    const text =  JSON.parse(decodeURIComponent(json));
     
-    pad.value = `'${message}' \n\n write something about this post.`;
+    pad.value = `'${text.post.text}' \n\n write something about this post.`;
     btn.click();
     aires();
     
 }
+
+async function tr(json, lang, place) {
+    const post = JSON.parse(decodeURIComponent(json));
+    const pad = document.getElementsByName(`textPost${post.id}${place}`)[0];
+    const btn = document.getElementById(`trBtn${post.id}${place}`);
+
+    try {        
+        const languages = ['Bangla', 'English', 'Arabic', 'Turkish', 'Germany', 'Hindi', 'French'];
+        const langs = ['bn', 'en', 'ar', 'tr', 'de', 'hi', 'fr'];
+        const trLang = languages.indexOf(lang);
+        
+        if (trLang === -1) {
+            throw new Error("Invalid language selected");
+        }
+        
+        if (btn) {
+            btn.innerText = "🌐 Translating...";
+            btn.disabled = true;
+        }
+        
+        const text = post.post.text;
+        const to = langs[trLang];    
+        const payload = { text, to };
+        
+        const res = await fetch('https://translation-d10z.onrender.com/api/translate/auto', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+        
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error(data.error || 'Something went wrong while translating');
+        }
+        
+       if (pad) {
+           pad.innerText = data.translatedText;
+           if (btn) {
+               btn.innerText = "🌐 See original";
+               btn.disabled = false;
+               btn.onclick = () => originalText(json, lang, place, text, pad, btn);
+           }
+       } else {
+           console.error('pad is required');
+       }
+        
+    } catch (error) {
+        console.error(error);
+        onalert(error.message);
+        if (btn) {
+            btn.innerText = "🌐 Translate to " + lang;
+            btn.disabled = false;
+        }
+    }
+}
+
+function originalText(json, lang, place, originalTextContent, pad, btn) {
+    pad.innerText = originalTextContent;
+    btn.innerText = "🌐 Translate to " + lang;
+    btn.onclick = () => tr(json, lang, place);
+}
+
+
  
 function menuOpen() {
     document.getElementById("MainMenuAside").classList.add('show');    
@@ -146,7 +211,7 @@ function loadpostIMG(e) {
     }
 
     if (!file.type.startsWith("image/")) {
-        onalert("Sorry, video isn’t supported 😥");
+        onalert("Sorry, video isn’t supported");
         return;
     }
 
@@ -875,12 +940,13 @@ function closeComMmodal(id) {
 }
 
 
-
-function closealert(id) {
-document.getElementById(id).classList.remove("show");
-setTimeout(()=>{
-  document.getElementById(id).style.display = "none";
-},400);
+function removePost(el) {
+    const target = document.getElementById(el);
+    if (target && target.parentElement) {
+        target.parentElement.classList.add('remove');
+    } else {
+        console.error("Element or Parent not found!");
+    }
 }
 
 function closealertAdv(id, postId) {
@@ -1214,6 +1280,10 @@ const s = JSON.parse(styleString);
     
     `;
     
+
+    loadConnections(u.email, 'connectionList');
+    darkModeActivate(isDark);
+    loadProfilePosts(u.email, 'ownerPosts');
     const more = localStorage.getItem('info');
     
     if (!more || more === null) {
@@ -1244,17 +1314,6 @@ document.getElementById('profdiv').style.backgroundImage =
 
     BackManager.register(home);      
 
-showLoader("ownerPosts", "Loading owner posts...");
-
-warning(() => {
-    showWarning(".warn", "Network seems slow.", "Check your connection and try again.", () => { 
-        profile();
-    });
-}, 3000, 3000, 3000); 
-
-loadConnections(u.email, 'connectionList');
-darkModeActivate(isDark);
-loadProfilePosts(u.email, 'ownerPosts');
 }
 
 function home() {
@@ -2075,7 +2134,13 @@ function textBG(c1, c2, bg) {
             i.style.textAlign = "justify";
             i.style.textShadow = "0 0 5px white";
             i.style.background = 'none';
-            darkModeActivate(isDark);
+            
+            if(isDark === 'false') {
+                i.style.color = 'rgb(0,0,0)';                
+            } else {
+                i.style.color = 'rgb(255,255,255l';                                
+            }
+            
         } else {
             i.style.color = "white";
             i.style.textAlign = "center";
@@ -2942,7 +3007,6 @@ function backtoprofile() {
     document.querySelector('#backbtn').innerHTML = "";
 }
 
-function closealert(id) {id.style.display = 'none'}
 
 async function loadProfilePosts(email, place) {
     if (!place) {
@@ -2950,6 +3014,12 @@ async function loadProfilePosts(email, place) {
         return;
     }
         const contentDiv = document.getElementById(place);
+        
+        contentDiv.innerHTML = `
+        <div class="postLoad"></div>
+        <div class="postLoad"></div>
+        <div class="postLoad"></div>
+        `;
 
     try {
     
@@ -2967,22 +3037,19 @@ async function loadProfilePosts(email, place) {
 
         if (!res.ok) {
             onalert(data.message || "Error to fetch posts!");
+            throw new Error('res is not ok');
             return;
         }
 
-        const contentDiv = document.getElementById(place);
-
-        if (!contentDiv) {
-    console.log(`Error: #${place} element is missing in HTML!`);
-    return;
-        }
-
-    contentDiv.innerHTML = "";
         if (data.length === 0) {
             contentDiv.innerHTML = `<p style="text-align:center;font-size:20px;padding:20px;">No posts yet</p>`;
             return;
         }
-
+        
+        const info = JSON.parse(localStorage.getItem('info'));
+        const lang = info.language || info.language_custom;
+        
+        contentDiv.innerHTML = '';
         data.forEach(post => {
 
             const safeText = escapeHTML(post.post?.text || "");
@@ -2994,13 +3061,16 @@ async function loadProfilePosts(email, place) {
             const safePost = encodeURIComponent(JSON.stringify(post || {}));
 
             const div = document.createElement("div");
-            div.className = "postshow";
+            div.className = 'postshow';
             div.id = `showPost${post.id}`;
 
             const formattedTime = getShortTime(post.created_at);
 
 
             div.innerHTML = `
+
+ <div style="visibility: hidden" id="postDiv${post.id}${place}"></div>
+
     <div style="display: flex; width: 100%;">
 <img src="${post.avatar}" style="width: 60px; height: 60px; border-radius: 90px; border: 4px solid white; margin:10px;" onclick="showOtherProf('${post.email}')">
 
@@ -3027,7 +3097,7 @@ async function loadProfilePosts(email, place) {
     <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="40" class="imgChange">
 </button>
 
-<button onclick="closealert('showPost${post.id}')" style="background: none; border: none; margin-top: 15px;">   
+<button onclick="removePost('postDiv${post.id}${place}')" style="background: none; border: none; margin-top: 15px;">   
     <img src="https://i.ibb.co.com/Gvf0ydqH/close.png" width="40" class="imgChange">
 </button>
 
@@ -3069,7 +3139,7 @@ onclick="editPost('${safePost}'); closealert('menu${post.id}')">Edit</button>
 
 <hr style="background: gray; height: 1.3px; margin: 20px;">
 
-<p class="postText" id="textPost${post.id}" style="font-size:30px; padding:20px; border-radius:5px;"></p>
+<p class="postText" id="textPost${post.id}" name="textPost${post.id}${place}" style="font-size:30px; padding:20px; border-radius:5px;"></p>
 
 ${post.post?.image ? `
 <div id="box${post.id}" style="display: flex; justify-content: center; align-items: center; background: black;">
@@ -3077,10 +3147,10 @@ ${post.post?.image ? `
 </div>` : ''}
 
  <div class="post-prods">
-     <button onclick="tr()">
-         🌐 Translate to bengali
+     <button onclick="tr('${safePost}', '${lang}', '${place}')" id="trBtn${post.id}${place}">
+         🌐 Translate to ${lang}
      </button>
-     <button id="aibtn${post.id}"">
+     <button onclick="summery('${safePost}')">
          ✨ Ask AI
      </button>
  </div>
@@ -3108,12 +3178,11 @@ ${post.post?.image ? `
 <div id="appearFlex${post.id}" class="appearFlex">
 <button onclick="reactAppear('${post.id}','👍')">👍</button>
 <button onclick="reactAppear('${post.id}','♥️')">♥️</button>
-<button onclick="reactAppear('${post.id}','🤣')">🤣</button>
-<button onclick="reactAppear('${post.id}','😁')">😁</button>
-<button onclick="reactAppear('${post.id}','🤔')">🤔</button>
-<button onclick="reactAppear('${post.id}','🥰')">🥰</button>
-<button onclick="reactAppear('${post.id}','😥')">😥</button>
-<button onclick="reactAppear('${post.id}','😡')">😡</button>
+
+<div id="reactsMore${post.id}${place}" class="moreReacts"></div>
+
+<button onclick="reactPlus()" style="font-size: 30px; color: red;">+</button>
+
 </div>
 
 <div id="comPen${post.id}" class="secDivCon">
@@ -3145,15 +3214,25 @@ ${post.post?.image ? `
 </div>
 
         </div>
+        
 `;
 
-   document.getElementById(`aibtn${post.id}`).addEventListener('click', () => {
-      summery(post.post.text);
-   });
 
 div.querySelector(".postText").innerHTML = htmlText;
-
+            
             contentDiv.appendChild(div);
+
+            const reacts = JSON.parse(localStorage.getItem('reacts')) || [];
+            const reactDiv = document.getElementById(`reactsMore${post.id}${place}`);
+
+            reacts.forEach((r) => {
+                const reactBtn = document.createElement('button');
+                reactBtn.innerText = r;
+                reactBtn.onclick = () => reactAppear(post.id, r)
+
+                reactDiv.appendChild(reactBtn);                    
+            });
+
             updateCounts(post.id);
             darkModeActivate(isDark);
             applyPostStyle(div.querySelector(".postText"), post.post?.style);
@@ -3211,17 +3290,20 @@ div.querySelector(".postText").innerHTML = htmlText;
     } catch (err) {
         console.error(err);
 
-        const contentDiv = document.getElementById(place);
-        if (contentDiv) {
-            contentDiv.innerHTML = `
-<div style="justify-content: center;align-items: center; display: flex; width: 100%;">
-    <div style="justify-content: center;align-items: center; display: flex; flex-direction: column;">
-        <h2 style="color: red; font-size: 20px">Network error</h2><br>
-        <button onclick="loadProfilePosts('${email}', '${place}')" style="background: orange; color: white; padding: 10px 25px; border-radius: 14px; border: none; font-size: 20px;">Retry</button>
-    </div>
-</div>`;
-        }
-    }
+    contentDiv.innerHTML = '';
+    contentDiv.innerHTML = `
+    
+    <div style="display: flex; justify-content: center; align-items: center; width: 100%; min-height: 250px; padding: 20px;">
+        <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(200,200,200,0.2);">
+            <div style="font-size: 45px; margin-bottom: 10px;">⚠️</div>
+            <h2 style="color: #ff4d4d; font-size: 20px; margin-bottom: 8px;">Network Error</h2>
+            <p style="color: gray; font-size: 15px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
+            <button onclick="loadProfilePosts('${email || ''}', '${place}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
+                🔄 Retry
+            </button>
+        </div>
+    </div>`;
+       }
 }
 
 document.addEventListener("click", () => {
@@ -3588,12 +3670,6 @@ async function deleteCom(commentId, postId) {
     }
 }
 
-// 🔹 Close dropdown
-function closealert(menuId) {
-    const el = document.getElementById(menuId);
-    if(el) el.style.display = "none";
-}
-
 
 let closePlace = document.querySelector('#body');
 
@@ -3636,7 +3712,7 @@ const port = document.getElementById('reactAppear');
 
 
 function appLink(postId) {
-onalert('😥 under contraction!');
+onalert('under constraction!');
 }
 
 function copyPost(postWord) {
@@ -3688,16 +3764,6 @@ function onconfirm(text, word, btn, func, innB, color) {
   confirmBtn.appendChild(button);
 }
 
-function closeAlert(){
-  document.getElementById("alertOverlay").classList.remove("show");
-  document.getElementById("customAlert").classList.remove("show");
-}
-
-function autoAlert(time = 3000){
-  openAlert();
-  setTimeout(closeAlert, time);
-}
-
 function openShareModal() {
     document.getElementById('vibeModal').style.display = 'flex';
   BackManager.register(closeModalDirect);
@@ -3719,20 +3785,19 @@ if(guest) return guestWarn();
 
     const u = JSON.parse(localStorage.getItem("user")) || {};
 
-let e = u?.email;
-let un = u?.username;
-let av = u?.avatar || '';
-let t = document.getElementById('modalText')?.value?.trim();
+    let e = u?.email;
+    let un = u?.username;
+    let av = u?.avatar || '';
+    let t = document.getElementById('modalText')?.value?.trim();
 
-if (!e) return onalert('Email required');
-if (!un) return onalert('Username required');
-if (!t) return onalert('Text required');
+    if (!e) return onalert('Email required');
+    if (!un) return onalert('Username required');
+    if (!t) return onalert('Text required');
 
     if (!t.trim()) {
         alert("Please write something before posting!");
         return;
     }
-
 
     const payload = {
         email: e,
@@ -3777,7 +3842,7 @@ async function loadVibes() {
     const vibesContainer = document.querySelector('#vibes-show');  
     if (!vibesContainer) return;
  
- document.getElementById('vibe-loader').style.display = 'block';
+ document.getElementById('vibe-loader').style.display = 'flex';
 
     try {
         const response = await fetch('https://posts-server-kmha.onrender.com/api/get-vibes');
@@ -3840,7 +3905,6 @@ document.getElementById('vibe-error').style.display = 'block';
 }
 
 
-
 const vibesContainer = document.querySelector('#vibes-show');
 if (vibesContainer) {
     vibesContainer.addEventListener('click', (event) => {
@@ -3852,7 +3916,7 @@ if (vibesContainer) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', loadVibes);
+document.addEventListener('DOMContentLoaded', loadHome);
 
 function vibeDisShow(e, u, a, v) {
     const overlay = document.getElementById('showVibeText');
@@ -3882,4 +3946,151 @@ function closeVibeModal() {
 
     card.classList.remove('show', 'bounce');
     overlay.classList.remove('show');
+}
+
+const emojisList = [
+    // Dislike / Negative
+    "👎", "🙄", "😒", "🤨", "😑",
+    // Care / Support / Hug
+    "🫂", "🫶", "🤗", "🤲", "🤝",
+    // Haha / Laugh
+    "😂", "🤣", "😆", "😅", "😹",
+    // Sad / Cry
+    "😢", "😭", "😥", "😞", "😔", "💧",
+    // Angry / Frustrated
+    "😡", "😠", "🤬", "😤", "👿",
+    // Wow / Shocked
+    "😲", "😮", "🤯", "😯", "😳",
+    // Thinking / Curious
+    "🤔", "🧐", "🤫", "🤷‍♂️", "🤷‍♀️",
+    // Cool / Fire / Energy
+    "🔥", "😎", "🚀", "⚡", "💯",
+    // Celebrate / Party / Fun
+    "🎉", "🥳", "👏", "🙌", "✨", "🍻",
+    // Cute / Funny / Extra
+    "🤡", "👻", "💀", "💩", "🦄", "👀"
+];
+
+
+function reactPlus() {
+    let overlay = document.getElementById("reactPlusOverlay");
+    if (!overlay) {
+        const htmlTemplate = `
+        <div id="reactPlusOverlay" class="react-plus-overlay">
+            <div id="reactPlusModal" class="react-plus-modal">
+                <div class="react-plus-header">
+                    <h3>Select Reactions <span id="reactCount">(0/12)</span></h3>
+                    <button class="react-plus-close" onclick="closeReactPlus()">×</button>
+                </div>
+                <div class="react-plus-selected-preview" id="reactPreviewContainer"></div>
+                <div class="react-plus-grid" id="reactPlusGrid"></div>
+                <div class="react-plus-footer">
+                    <button class="react-plus-ok-btn" id="reactPlusOkBtn">OK</button>
+                </div>
+            </div>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', htmlTemplate);
+        overlay = document.getElementById("reactPlusOverlay");
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) closeReactPlus();
+        });
+    }
+
+    // Load saved emojis from localStorage
+    let savedReacts = [];
+    try {
+        const stored = localStorage.getItem('reacts');
+        if (stored) {
+            savedReacts = JSON.parse(stored);
+            if (!Array.isArray(savedReacts)) savedReacts = [];
+        }
+    } catch (err) {
+        savedReacts = [];
+    }
+
+    let currentSelected = [...savedReacts];
+
+    // Render Function
+    const renderGridAndPreview = () => {
+        const grid = document.getElementById("reactPlusGrid");
+        const previewContainer = document.getElementById("reactPreviewContainer");
+        const countSpan = document.getElementById("reactCount");
+
+        // 1. Update Preview Chip Container
+        previewContainer.innerHTML = "";
+        countSpan.innerText = `(${currentSelected.length}/12)`;
+
+        currentSelected.forEach(emoji => {
+            const chip = document.createElement("div");
+            chip.className = "preview-chip";
+            chip.innerHTML = `
+                <span>${emoji}</span>
+                <span class="remove-chip-btn">×</span>
+            `;
+
+            // Click chip cross to remove
+            chip.querySelector(".remove-chip-btn").addEventListener("click", () => {
+                currentSelected = currentSelected.filter(e => e !== emoji);
+                renderGridAndPreview();
+            });
+
+            previewContainer.appendChild(chip);
+        });
+
+        // Auto-scroll preview to rightmost
+        previewContainer.scrollLeft = previewContainer.scrollWidth;
+
+        // 2. Update Emoji Grid items
+        grid.innerHTML = "";
+        emojisList.forEach(emoji => {
+            const item = document.createElement("div");
+            item.className = "emoji-item";
+            item.innerText = emoji;
+
+            if (currentSelected.includes(emoji)) {
+                item.classList.add("selected");
+            }
+
+            item.addEventListener("click", () => {
+                if (currentSelected.includes(emoji)) {
+                    currentSelected = currentSelected.filter(e => e !== emoji);
+                } else {
+                    if (currentSelected.length >= 12) {
+                        alert("You can select a maximum of 12 reactions!");
+                        return;
+                    }
+                    currentSelected.push(emoji);
+                }
+                renderGridAndPreview();
+            });
+
+            grid.appendChild(item);
+        });
+    };
+
+    renderGridAndPreview();
+
+    // OK Button Event
+    const okBtn = document.getElementById("reactPlusOkBtn");
+    const newOkBtn = okBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+
+    newOkBtn.addEventListener("click", () => {
+        localStorage.setItem('reacts', JSON.stringify(currentSelected));
+        closeReactPlus();
+        window.location.reload();
+    });
+
+    // Display animation
+    setTimeout(() => {
+        overlay.classList.add("show");
+    }, 10);
+}
+
+function closeReactPlus() {
+    const overlay = document.getElementById("reactPlusOverlay");
+    if (overlay) {
+        overlay.classList.remove("show");
+    }
 }
