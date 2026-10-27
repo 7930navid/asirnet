@@ -6,9 +6,9 @@
     <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
     <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
     
-     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <!--  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
- 
+   -->
    <link rel="stylesheet" href="./style.css">
 
      <title>AsirNet</title>
@@ -153,7 +153,7 @@ at
 
     <!-- FILE UPLOAD BUTTONS -->
     <div id="postBtn" style="display:flex; gap:15px; margin-top:10px; flex-direction: column;">
-   <label class="uploadBtn" onclick="input('feeling', 'What’s        ‌‌‌‌‌‌‌‌‌ your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
+   <label class="uploadBtn" onclick="input('feeling', 'What’s your feeling about this post?')"><img src="https://i.ibb.co.com/YzrSfrV/emoticons.png"  style="margin-right: 20px" width="40"> Share your feelings
    </label>
    <label class="uploadBtn" onclick="input('location', 'What’s your location here?')"><img src="https://i.ibb.co.com/jPsLRznp/location.png" width="40"  style="margin-right: 20px"> Add your location
    </label>
@@ -185,12 +185,12 @@ at
  <h1 style="color: green; margin-left: 20px;">Choose your own background...</h1><hr style="background: green; height: 2px;">
 <div id="BGS">
 
-  <!-- ↕️Default↕️ -->
+  <!-- Default -->
   <p>Default: </p>
 
 <button style="background-image: url('https://i.ibb.co.com/V8jnq8f/20260825-115648.png')" onclick="textBG('none', 'none', '')"></button>
  
-  <!-- ↕️Colors↕️ -->
+  <!-- Colors -->
   <p>Colors: </p>
 
 <button style="background: linear-gradient(135deg, #ffb3ba, #ffb3ba)" onclick="textBG('#ffb3ba', '#ffb3ba', '')"></button>
@@ -217,7 +217,7 @@ at
 
 <button style="background: linear-gradient(135deg, #b4f8c8, #b4f8c8)" onclick="textBG('#b4f8c8', '#b4f8c8', '')"></button>
 
-<!-- ↕️Gradients↕️ -->
+<!-- Gradients -->
  <p>Gradients: </p>
 
 <button style="background: linear-gradient(135deg, red, pink)" onclick="textBG('red', 'pink', '')"></button>
@@ -424,17 +424,38 @@ at
         </div>
     </div> 
     
-    <div class="vibes-div" id="vibe-loader" style="display: none;">
-        <div class="vibe-spinner"></div>
+    <div id="vibe-loader" style="display: none;">
+        
+    <div class="vibes-div">
+        <div class="vibe-loading"></div>
         <div class="vibes-footer">
             <div> — Loading...</div>
         </div>
     </div>
    
+    <div class="vibes-div">
+        <div class="vibe-loading"></div>
+        <div class="vibes-footer">
+            <div> — Loading...</div>
+        </div>
+    </div>
+   
+    <div class="vibes-div">
+        <div class="vibe-loading"></div>
+        <div class="vibes-footer">
+            <div> — Loading...</div>
+        </div>
+    </div>
+
+   
+   
+</div>
    
   
     <div id="vibes-show" style="display: flex;"></div>
 </div>
+
+
 <div id="vibeModal" class="modal-overlay" onclick="closeShareModal(event)">
     <div class="modal-card">
         <span class="close-btn" onclick="closeModalDirect()">&times;</span>
@@ -1040,6 +1061,26 @@ So create an account or log in to AsirNet to enjoy it.</div>
         </div>
     </footer>
 
+</div>
+
+<!-- ReactPlus Modal Template (Dynamic Injection Ready) -->
+<div id="reactPlusOverlay" class="react-plus-overlay">
+    <div id="reactPlusModal" class="react-plus-modal">
+        <div class="react-plus-header">
+            <h3>Select Reactions <span id="reactCount">(0/12)</span></h3>
+            <button class="react-plus-close" onclick="closeReactPlus()">×</button>
+        </div>
+        
+        <!-- Selected emojis preview area -->
+        <div class="react-plus-selected-preview" id="reactPreviewContainer"></div>
+        
+        <!-- 40+ Emoji Grid -->
+        <div class="react-plus-grid" id="reactPlusGrid"></div>
+        
+        <div class="react-plus-footer">
+            <button class="react-plus-ok-btn" id="reactPlusOkBtn">OK</button>
+        </div>
+    </div>
 </div>
 
 
