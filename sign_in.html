@@ -5,11 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>AsirNet Login</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<!-- FontAwesome for Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+  <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
 
-
+ 
 <style>
 *{
     margin:0;
@@ -124,16 +125,28 @@ body::after{
     font-size:14px;
 }
 
-/* Inputs */
+/* Inputs with Icons & Floating Label Fix */
 
 .input-group{
     position:relative;
     margin-bottom:28px;
 }
 
+.input-group i {
+    position: absolute;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    font-size: 16px;
+    transition: .3s;
+    z-index: 2;
+    pointer-events: none;
+}
+
 .input-group input{
     width:100%;
-    padding:16px 18px;
+    padding:16px 18px 16px 48px;
     background:rgba(255,255,255,0.05);
     border:1px solid rgba(255,255,255,0.08);
     outline:none;
@@ -145,31 +158,35 @@ body::after{
 
 .input-group input:focus{
     border-color:#00f7ff;
-    box-shadow:
-    0 0 15px rgba(0,247,255,.35);
+    box-shadow: 0 0 15px rgba(0,247,255,.35);
     transform:translateY(-2px);
+}
+
+.input-group input:focus ~ i {
+    color: #00f7ff;
 }
 
 .input-group label{
     position:absolute;
-    left:18px;
+    left:48px;
     top:50%;
     transform:translateY(-50%);
     color:#94a3b8;
     pointer-events:none;
     transition:.3s;
     background:transparent;
+    padding: 0 4px;
 }
 
-.input-group input:focus + label,
-.input-group input:valid + label{
-    top:-10px;
-    left:14px;
-    font-size:12px;
-    padding:0 6px;
-    color:#00f7ff;
-    background:#0f172a;
-    border-radius:6px;
+.input-group input:focus ~ label,
+.input-group input:not(:placeholder-shown) ~ label {
+    top: 0px;
+    left: 14px;
+    font-size: 12px;
+    color: #00f7ff;
+    background: #0f172a;
+    border-radius: 4px;
+    transform: translateY(-50%);
 }
 
 /* Button */
@@ -207,9 +224,7 @@ body::after{
 
 .login-btn:hover{
     transform:translateY(-3px) scale(1.02);
-    box-shadow:
-    0 12px 25px rgba(124,58,237,.4),
-    0 0 20px rgba(0,247,255,.35);
+    box-shadow: 0 12px 25px rgba(124,58,237,.4), 0 0 20px rgba(0,247,255,.35);
 }
 
 .login-btn:active{
@@ -236,10 +251,6 @@ body::after{
         width:92%;
         padding:40px 25px;
     }
-
-    .logo h1{
-        font-size:32px;
-    }
 }
 
 section {
@@ -251,45 +262,16 @@ section button {
     color: red;
     font-size: 15px;
     padding: 0;
+    cursor: pointer;
 }
 section button:focus {
     outline: none;
-
     color: #00e5ff;
-
     transform: translateY(-2px);
-
-    text-shadow:
-        0 0 10px rgba(0,229,255,0.6),
-        0 0 20px rgba(124,58,237,0.4);
-
+    text-shadow: 0 0 10px rgba(0,229,255,0.6);
     position: relative;
 }
 
-section button:focus::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: -6px;
-    width: 100%;
-    height: 2px;
-
-    background: linear-gradient(90deg, #00e5ff, #7c3aed);
-    border-radius: 10px;
-
-    animation: underlineGlow 0.4s ease forwards;
-}
-
-@keyframes underlineGlow {
-    from {
-        transform: scaleX(0);
-        opacity: 0;
-    }
-    to {
-        transform: scaleX(1);
-        opacity: 1;
-    }
-}
 .guest-btn {
     width: 100%;
     margin-top: 12px;
@@ -300,55 +282,28 @@ section button:focus::after {
     font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    
-    /* Animated Gradient Background */
     background: linear-gradient(135deg, rgba(0, 247, 255, 0.15), rgba(124, 58, 237, 0.25), rgba(0, 247, 255, 0.15));
     background-size: 200% 200%;
-    
-    /* Glow effect & Animations */
     box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
     animation: gradientShift 4s ease infinite, breath 2.5s ease-in-out infinite;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover করলে অ্যানিমেশন থামবে এবং সুন্দর শাইন করবে */
 .guest-btn:hover {
-    animation-play-state: paused;
     transform: scale(1.03) translateY(-2px);
     border-color: #00f7ff;
-    box-shadow: 
-        0 0 20px rgba(0, 247, 255, 0.5),
-        0 0 10px rgba(124, 58, 237, 0.4);
+    box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
 }
 
-/* Click করলে হালকা ছোট হবে */
-.guest-btn:active {
-    transform: scale(0.98);
-}
-
-/* Keyframes 1: Smooth Background Gradient Shift */
 @keyframes gradientShift {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
-/* Keyframes 2: Breathing Effect (ধীরে ধীরে বড়-ছোট হওয়া) */
 @keyframes breath {
-    0%, 100% {
-        transform: scale(1);
-        box-shadow: 0 0 12px rgba(0, 247, 255, 0.2);
-    }
-    50% {
-        transform: scale(1.02);
-        box-shadow: 0 0 22px rgba(0, 247, 255, 0.45);
-    }
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
 }
 
 </style>
@@ -359,41 +314,42 @@ section button:focus::after {
 <div class="login-box">
 
     <div class="logo">
-        <img src="https://i.ibb.co/wNpFN8qH/IMG-20251103-150220.jpg" alt="AsirNet Logo">
+        <img src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png" alt="AsirNet Logo">
         <p>Secure Premium Access</p>
     </div>
 
     <form>
 
         <div class="input-group">
-            <input type="email" required>
+            <input type="email" placeholder=" " required>
+            <i class="fa-solid fa-envelope"></i>
             <label>Email Address</label>
         </div>
 
         <div class="input-group">
-            <input type="password" required>
+            <input type="password" placeholder=" " required>
+            <i class="fa-solid fa-lock"></i>
             <label>Passkey</label>
         </div>
         
-
         <button class="login-btn">
             Login
         </button>
 
     </form>
-          <!-- Guest Login Button -->
-<button type="button" class="guest-btn" onclick="continueAsGuest()">
-    Continue as Guest
+
+    <!-- Guest Login Button -->
+    <button type="button" class="guest-btn" onclick="continueAsGuest()">
+        Continue as Guest
     </button>
 
-            <section>
-         <button onclick="forgot()">Forgot password?</button>
-         <a href="register.html"><button>Create a new account?</button></a>
-        </section>
-
+    <section>
+         <button type="button" onclick="forgot()">Forgot password?</button>
+         <a href="register.html"><button type="button">Create a new account?</button></a>
+    </section>
 
     <div class="bottom-text">
-        Protected by <span>AsirNet Security</span>
+        Protected by <span>W-deploy</span>
     </div>
 
 </div>
@@ -434,16 +390,15 @@ form.addEventListener("submit", async (e) => {
 
         if (!res.ok) {
             alert(data.message || "Login failed");
-
             loginBtn.disabled = false;
             loginBtn.innerText = "Login";
             return;
         }
 
-        // 🔐 SAVE TOKEN (MOST IMPORTANT)
+        // 🔐 1. SAVE TOKEN
         localStorage.setItem("token", data.token);
 
-        // 🔐 SAFE USER SAVE (NO PASSWORD)
+        // 🔐 2. SAFE USER SAVE (NO PASSWORD)
         const user = {
             id: data.user.id,
             username: data.user.username,
@@ -452,28 +407,42 @@ form.addEventListener("submit", async (e) => {
             avatar: data.user.avatar,
             cover_photo: data.user.cover_photo
         };
-
         localStorage.setItem("user", JSON.stringify(user));
-    if (localStorage.getItem("user")) {            
 
-    localStorage.removeItem("guest"); 
-} 
-
+        // 🔐 3. FETCH & SAVE USER'S PAGES ARRAY (/user-by-email route)
+        loginBtn.innerText = "Loading Pages...";
+        try {
+            const pagesRes = await fetch(`https://page-server-jqce.onrender.com/user-by-email?email=${encodeURIComponent(email)}`, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${data.token}`,
+                    "Content-Type": "application/json"
+                }
+            });
+            
+            if (pagesRes.ok) {
+                const pagesData = await pagesRes.json();
+                
+                const pagesArray = Array.isArray(pagesData.data) ? pagesData.data : (pagesData.pages || []);
+                localStorage.setItem("page", JSON.stringify(pagesArray));
+            } else {
+                localStorage.setItem("page", JSON.stringify([]));
+            }
+        } catch (pageErr) {
+            console.error("Could not fetch pages:", pageErr);
+            localStorage.setItem("page", JSON.stringify([]));
+        }
 
         loginBtn.innerText = "Success ✓";
-
         alert("Login successful!");
 
-        // redirect
         setTimeout(() => {
             window.location.href = "asirnet";
         }, 800);
 
     } catch (err) {
         console.error(err);
-
         alert("Network / server error");
-
         loginBtn.disabled = false;
         loginBtn.innerText = "Login";
     }
@@ -495,11 +464,7 @@ async function forgot() {
       body: JSON.stringify({ email })
     });
 
-    console.log("::forgot 1st");
     const data = await res.json();
-    console.log("::forgot 2nd");
-    console.log(data + "::forgot");
-
     alert(data.message || "Check your email");
   } catch (err) {
     console.error(err);
@@ -507,58 +472,10 @@ async function forgot() {
   }
 }
 
-function getToken() {
-  return new URLSearchParams(window.location.search).get("token");
-}
-
-async function resetPassword() {
-  const token = getToken();
-  const newPassword = document.querySelector("#newPassword").value;
-
-  if (!newPassword) {
-    alert("Enter new password");
-    return;
-  }
-
-  try {
-    const res = await fetch("https://users-server-xyvg.onrender.com/reset-password", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        token,
-        newPassword
-      })
-    });
-
-    console.log("::reset 1st");
-    const data = await res.json();
-    console.log("::reset 2nd");
-    console.log(data + "::reset");
-
-    alert(data.message);
-
-    if (res.ok) {
-      window.location.href = "login.html";
-    }
-
-  } catch (err) {
-    console.error(err);
-    alert("Server error");
-  }
-}
-
 function continueAsGuest() {
-    
-    const guest = {
-            isGuest: true, 
-            avatar: "https://i.ibb.co.com/27Nk0Tpk/guest-logo.png"
-        };
-
-        localStorage.setItem("guest", JSON.stringify(guest));  
-        localStorage.removeItem("user");  
-          window.location.href = "asirnet.html";
+    localStorage.setItem("isGuest", "true");
+    window.location.href = "guest.html";
 }
-
 
 </script>
 </html>
