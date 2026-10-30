@@ -1,7 +1,3 @@
-
-
-'use strict';
-    
     
 function getEmailFromUrl() {
   const params = new URLSearchParams(window.location.search);
@@ -34,37 +30,66 @@ fEl.classList.toggle('show');
 sEl.classList.toggle('show');
 }
 
-    const guest = localStorage.getItem("guest") || null;
 
-window.onload = function () {
-    const user = localStorage.getItem("user");
+function activeUser() {
+    let user;
+    const userId = JSON.parse(localStorage.getItem('user'));
+    
+    const userPages = JSON.parse(localStorage.getItem('page')) || [];
+    
+    const group = JSON.parse(localStorage.getItem('group')) || {};
+    
+    const activePage = JSON.parse(localStorage.getItem('active')) || {};
+    
+    if (Array.isArray(userPages) && userPages.length > 0 && activePage.type === 'page') {
+      userPages.forEach(p => {
+          if (p.id === activePage.id) {
+              user = p;
+          }
+      });  
+    } else if (activePage.type === 'group') { 
+        user = group;
+    } else {
+        user = userId;
+        document.getElementById('back-to-account').style.display = 'none';
+    }
+    
+    return user || null;
+}
+
+
+
+    const guest = localStorage.getItem("guest") || null;
+    const user = activeUser();
+
     const info = localStorage.getItem("info");
 
     let u ="";
 
     if (user) {
-        u = JSON.parse(user);
+        u = user;
     } else if (guest) {
         u = JSON.parse(guest);
         offerGuest(); 
     } else {
-     location.href = "sign_in.html";
+       location.href = "../sign_in.html";
     }
 
     if(!info && !guest) {
-     location.href = "pickInfo.html";        
+     location.href = "../pickInfo.html";        
     }
-        document.getElementById('profPicture').innerHTML =
+
+document.getElementById('footerMenuId').innerHTML = u.username || u.groupname;
+                document.getElementById('profPicture').innerHTML =
             `<img src="${u.avatar}">`;
 
 document.getElementById('footerMenuProf').src = u.avatar;
 
-document.getElementById('footerMenuId').innerHTML = u.username;
-        document.querySelector('.story-inner').style.backgroundImage = `url(${u.avatar})`;
+document.querySelector('.story-inner').style.backgroundImage = `url(${u.avatar})`;
         document.querySelector('.story-inner').style.backgroundSize = "cover";
         document.querySelector('.story-inner').style.backgroundPosition = "center";
 
-};
+
 
 const styleString = localStorage.getItem('style');
 if (styleString) {
@@ -178,7 +203,8 @@ const endpoints = [
     "https://nextalk-user-server.onrender.com/get/nextalk-users-server",
     "https://connection-server-9bzk.onrender.com/get/connection",
     "https://nextalk-9yw9.onrender.com/get/nextalk",
-    "https://reels-server-40uv.onrender.com/get/reels"
+    "https://reels-server-40uv.onrender.com/get/reels",
+ "https://nexchat-server-qhm5.onrender.com/"   
 ];
 
 
