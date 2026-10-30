@@ -2158,11 +2158,12 @@ function moreInfoGroup() {
     const more = returnUser();
     const members = more.members_email || [];
     const admins = more.admin_email || [];
+    const account = JSON.parse(localStorage.getItem('user'));
     
     container.innerHTML = `
 
       <div style="position: relative; width: 100%;">
-       <button onclick="location.href = '../groupEdit.html'" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 900; position: absolute; right: 30px; display: flex; align-items: center; border: none;" id="infoBtn">   
+       <button onclick="location.href = '../groupEdit.html'" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 900; position: absolute; right: 30px; display: none; align-items: center; border: none;" id="infoBtn">   
 
  <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
           <span> Edit group </span>
@@ -2236,7 +2237,14 @@ function moreInfoGroup() {
      `;
      div.innerText = more.short_discription;
      moreEl.appendChild(div);
-    }    
+    }  
+   
+    const adminArray = JSON.parse(decodeURIComponent(admins)); 
+
+    if(adminArray.includes(account.email)) {
+     const editBtn = document.getElementById('infoBtn'); 
+     editBtn.style.display = 'flex';
+    }  
 }
 
 
