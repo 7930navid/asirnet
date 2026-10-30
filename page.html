@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Create | AsirNet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
+  <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+  <style>
+    :root {
+      --bg: #090d0b;
+      --card-bg: rgba(18, 26, 22, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --text-subtle: #6b7280;
+      --accent: #10b981;
+      --accent-glow: #34d399;
+      --accent-gradient: linear-gradient(135deg, #34d399 0%, #059669 100%);
+      --danger: #f43f5e;
+      --shadow-elevation: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      --radius-lg: 32px;
+      --radius-md: 20px;
+      --radius-sm: 14px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: var(--bg);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      color: var(--text-main);
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      z-index: -1;
+      background: radial-gradient(circle at 50% 50%, #0c1410 0%, #090d0b 100%);
+    }
+
+    .blob {
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.25;
+      animation: float 14s infinite ease-in-out;
+      pointer-events: none;
+    }
+
+    .blob1 { background: #10b981; top: -150px; left: -150px; }
+    .blob2 { background: #6366f1; bottom: -150px; right: -150px; animation-delay: 4s; }
+    .blob3 { background: #06b6d4; top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: 8s; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-30px) scale(1.08); }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 740px;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 44px;
+      box-shadow: var(--shadow-elevation);
+      overflow: hidden;
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .logo {
+      width: 220px;
+      height: 60px;
+      margin: 5px;
+      object-fit: contain;
+      border-radius: var(--radius-sm);
+      animation: logoFloat 5s infinite ease-in-out;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .title {
+      margin-top: 28px;
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+      background: linear-gradient(180deg, #ffffff 0%, #d1d5db 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      margin-top: 12px;
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    form {
+      margin-top: 36px;
+    }
+
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #e5e7eb;
+      letter-spacing: 0.3px;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: var(--radius-md);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      color: var(--text-main);
+      padding: 16px 18px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .input-wrap input:read-only {
+      opacity: 0.7;
+      cursor: not-allowed;
+      background: rgba(255, 255, 255, 0.01);
+    }
+
+    .input-wrap input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .input-wrap input:focus {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.04);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.12), 0 0 20px rgba(16, 185, 129, 0.15);
+      transform: translateY(-1px);
+    }
+
+    .icon {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      transform: translateY(-50%);
+      opacity: 0.6;
+      font-size: 17px;
+    }
+
+    /* =========================
+       PREMIUM WEBSITE CARDS UI
+       ========================= */
+    .website-card {
+      background: rgba(255, 255, 255, 0.025);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
+      padding: 18px;
+      margin-bottom: 14px;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      animation: fadeInCard 0.35s ease;
+    }
+
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .website-card:hover {
+      border-color: rgba(16, 185, 129, 0.35);
+      background: rgba(255, 255, 255, 0.04);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    .website-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .website-card-index {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .remove-web-btn {
+      background: rgba(244, 63, 94, 0.08);
+      color: var(--danger);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      border-radius: 10px;
+      width: 32px;
+      height: 32px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+    }
+
+    .remove-web-btn:hover {
+      background: var(--danger);
+      color: white;
+      transform: scale(1.08);
+      box-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
+    }
+
+    .website-inputs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media(max-width: 550px) {
+      .website-inputs {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .website-inputs input {
+      width: 100%;
+      border: none;
+      outline: none;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-main);
+      padding: 13px 15px;
+      font-size: 14px;
+      font-family: inherit;
+      transition: all 0.25s ease;
+    }
+
+    .website-inputs input::placeholder {
+      color: var(--text-subtle);
+    }
+
+    .website-inputs input:focus {
+      border-color: var(--accent);
+      background: rgba(16, 185, 129, 0.04);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+    }
+
+    .add-web-btn {
+      width: 100%;
+      padding: 14px;
+      border: 2px dashed rgba(16, 185, 129, 0.35);
+      background: rgba(16, 185, 129, 0.02);
+      color: var(--accent);
+      border-radius: var(--radius-md);
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .add-web-btn:hover {
+      background: rgba(16, 185, 129, 0.07);
+      border-color: var(--accent);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(16, 185, 129, 0.15);
+    }
+
+    .tray {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: var(--radius-md);
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tray:hover {
+      transform: translateY(-3px);
+      border-color: rgba(16, 185, 129, 0.4);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .avatar-preview {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    .avatar-preview img {
+      width: 52px;
+      height: 52px;
+      object-fit: cover;
+      border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .submit {
+      width: 100%;
+      height: 60px;
+      margin-top: 32px;
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      color: #04261c;
+      background: var(--accent-gradient);
+      box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 35px rgba(16, 185, 129, 0.45);
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(5, 8, 7, 0.8);
+      backdrop-filter: blur(16px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal.show { display: flex; }
+
+    .modal-card {
+      width: 100%;
+      max-width: 850px;
+      max-height: 85vh;
+      overflow-y: auto;
+      background: #111814;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 36px 36px 0 0;
+      padding: 36px;
+    }
+
+    .modal-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .modal-top button {
+      width: 44px;
+      height: 44px;
+      border: none;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      color: white;
+      cursor: pointer;
+    }
+
+    .upload-box {
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px dashed rgba(16, 185, 129, 0.35);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 28px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 16px;
+    }
+
+    .grid button {
+      border: none;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      cursor: pointer;
+      padding: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 2px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .grid img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .footer {
+      margin-top: 28px;
+      text-align: center;
+      color: var(--text-subtle);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .loader-wrap {
+      position: fixed;
+      inset: 0;
+      background: rgba(9, 13, 11, 0.95);
+      backdrop-filter: blur(20px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 28px;
+      z-index: 999999;
+      transition: 0.5s;
+    }
+
+    .loader-wrap.hide { opacity: 0; visibility: hidden; }
+
+    .loader {
+      position: relative;
+      width: 130px;
+      height: 130px;
+    }
+
+    .loader span {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      border: 4px solid transparent;
+      animation: rotate 2s linear infinite;
+    }
+
+    .loader span:nth-child(1) { border-top-color: #10b981; }
+    .loader span:nth-child(2) { inset: 12px; border-top-color: #6366f1; animation-direction: reverse; }
+    .loader span:nth-child(3) { inset: 24px; border-top-color: #06b6d4; animation-duration: 1.5s; }
+
+    @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+    .loader-logo {
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 20px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .loading-text {
+      font-size: 14px;
+      color: var(--text-muted);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADER -->
+  <div class="loader-wrap" id="loader">
+    <div class="loader">
+      <span></span>
+      <span></span>
+      <span></span>
+      <img class="loader-logo" src="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+    </div>
+    <div class="loading-text">Loading Premium Assets...</div>
+  </div>
+
+  <div class="bg">
+    <div class="blob blob1"></div>
+    <div class="blob blob2"></div>
+    <div class="blob blob3"></div>
+  </div>
+
+  <div class="container">
+    <div class="card">
+      <img class="logo" src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png">
+
+      <h1 class="title">Create A Page</h1>
+      <p class="subtitle">Create a secure and elegant profile space with your own personalized theme.</p>
+
+      <form id="signupForm">
+        <div class="field">
+          <label>Full Name</label>
+          <div class="input-wrap">
+            <input type="text" id="name" placeholder="John Doe">
+            <span class="icon">👤</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Email Address</label>
+          <div class="input-wrap">
+            <input type="email" id="email" placeholder="john@example.com" readonly>
+            <span class="icon">✉</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="input-wrap">
+            <input type="password" id="password" placeholder="Minimum 8 characters">
+            <span class="icon" onclick="togglePassword()" style="cursor:pointer;" title="Toggle Password">👁</span>
+          </div>
+        </div>
+
+        <!-- PREMIUM DYNAMIC WEBSITES SECTION (UP TO 5) -->
+        <div class="field">
+          <label>Your Links (optinal)</label>
+          <div id="websitesContainer"></div>
+          <button type="button" class="add-web-btn" id="addWebBtn" onclick="addWebsiteField()">
+            <span>＋</span> Add Links 
+          </button>
+        </div>
+
+        <!-- AVATAR -->
+        <div class="tray" onclick="openAvatarModal()">
+          <div class="avatar-preview" id="avatarPreview">Choose profile avatar</div>
+          <div>🖼</div>
+        </div>
+
+        <!-- THEME -->
+        <div class="tray" onclick="openThemeModal()">
+          <div class="avatar-preview" id="themePreview">Choose cover theme</div>
+          <div>🎨</div>
+        </div>
+
+        <button class="submit" type="submit">Create Account</button>
+      </form>
+
+      <div class="footer">
+        Protected with secure encryption. Your data stays private.
+        <br>Copyright by @W-deploy
+      </div>
+    </div>
+  </div>
+
+  <!-- AVATAR MODAL -->
+  <div class="modal" id="avatarModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h2>Select or Upload Avatar</h2>
+        <button onclick="closeAvatarModal()">✕</button>
+      </div>
+
+      <label class="upload-box" for="avatarFileInput">
+        <span>📁</span>
+        <p>Upload Photo from Device</p>
+        <small>Image will be automatically compressed (0.3 Quality Base64)</small>
+        <input type="file" id="avatarFileInput" accept="image/*" style="display:none;" onchange="handleCustomFileUpload(event)">
+      </label>
+
+      <div class="grid" id="avatarGrid"></div>
+    </div>
+  </div>
+
+  <!-- THEME MODAL -->
+  <div class="modal" id="themeModal">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h2>Select Theme</h2>
+        <button onclick="closeThemeModal()">✕</button>
+      </div>
+      <div class="grid" id="themeGrid"></div>
+    </div>
+  </div>
+
+  <script>
+    const API_AVATAR = "https://sett-serve.onrender.com/avatar";
+    const API_THEME  = "https://sett-serve.onrender.com/themes";
+    const API_SIGNUP = "https://page-server-jqce.onrender.com/signup";
+
+    let avatars = [];
+    let themes = [];
+    let selectedAvatar = "";
+    let selectedTheme = "";
+    let avatarLoaded = false;
+    let themeLoaded = false;
+    let ID = crypto.randomUUID();
+
+    // Auto load email from localStorage 'user'
+    window.addEventListener("DOMContentLoaded", () => {
+      try {
+        const storedUser = localStorage.getItem("user");
+        if (storedUser) {
+          const u = JSON.parse(storedUser);
+          if (u && u.email) {
+            document.getElementById("email").value = u.email;
+          }
+        }
+      } catch (err) {
+        console.error("Failed to parse user from localStorage:", err);
+      }
+
+      // Add initial website field
+      addWebsiteField();
+    });
+
+    // Dynamic Website Cards Controller (Max 5)
+    function addWebsiteField() {
+      const container = document.getElementById("websitesContainer");
+      const currentCards = container.getElementsByClassName("website-card");
+
+      if (currentCards.length >= 5) return;
+
+      const card = document.createElement("div");
+      card.className = "website-card";
+      card.innerHTML = `
+        <div class="website-card-header">
+          <span class="website-card-index">Link #1</span>
+          <button type="button" class="remove-web-btn" onclick="removeWebsiteField(this)" title="Remove website">✕</button>
+        </div>
+        <div class="website-inputs">
+          <input type="text" class="web-title" placeholder="Link Title (e.g. Facebook)">
+          <input type="url" class="web-url" placeholder="https://example.com">
+        </div>
+      `;
+      container.appendChild(card);
+
+      updateWebsiteLabels();
+      toggleAddButtonState();
+    }
+
+    function removeWebsiteField(btn) {
+      btn.closest(".website-card").remove();
+      updateWebsiteLabels();
+      toggleAddButtonState();
+    }
+
+    function updateWebsiteLabels() {
+      const cards = document.querySelectorAll(".website-card");
+      cards.forEach((card, index) => {
+        const label = card.querySelector(".website-card-index");
+        if (label) {
+          label.textContent = `Link #${index + 1}`;
+        }
+      });
+    }
+
+    function toggleAddButtonState() {
+      const container = document.getElementById("websitesContainer");
+      const addBtn = document.getElementById("addWebBtn");
+      if (container.getElementsByClassName("website-card").length >= 5) {
+        addBtn.style.display = "none";
+      } else {
+        addBtn.style.display = "flex";
+      }
+    }
+
+    async function safeFetch(url){
+      try {
+        const res = await fetch(url);
+        if(!res.ok) throw new Error("Network error");
+        return await res.json();
+      } catch(err) {
+        console.error("Fetch failed:", err);
+        return [];
+      }
+    }
+
+    async function loadAvatars(){
+      const data = await safeFetch(API_AVATAR);
+      avatars = data.map(item => item.avatar);
+      renderAvatars();
+      avatarLoaded = true;
+      checkLoader();
+    }
+
+    async function loadThemes(){
+      const data = await safeFetch(API_THEME);
+      themes = data.map(item => item.img);
+      renderThemes();
+      themeLoaded = true;
+      checkLoader();
+    }
+
+    function checkLoader(){
+      if(avatarLoaded && themeLoaded){
+        setTimeout(()=>{
+          const loader = document.getElementById("loader");
+          if(loader) loader.classList.add("hide");
+        }, 600);
+      }
+    }
+
+    function renderAvatars(){
+      const grid = document.getElementById("avatarGrid");
+      if(!grid) return;
+      grid.innerHTML = "";
+
+      avatars.forEach(url => {
+        const btn = document.createElement("button");
+        const img = document.createElement("img");
+        img.src = url;
+        img.loading = "lazy";
+        img.alt = "avatar";
+        btn.appendChild(img);
+
+        btn.onclick = () => {
+          selectedAvatar = url;
+          document.getElementById("avatarPreview").innerHTML = `
+            <img src="${url}" alt="avatar">
+            <div>Avatar Selected</div>
+          `;
+          closeAvatarModal();
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function handleCustomFileUpload(event){
+      const file = event.target.files[0];
+      if(!file) return;
+
+      if(!file.type.startsWith("image/")){
+        alert("Please select a valid image file!");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e){
+        const img = new Image();
+        img.src = e.target.result;
+        img.onload = function(){
+          const canvas = document.createElement("canvas");
+          const ctx = canvas.getContext("2d");
+
+          const MAX_WIDTH = 300;
+          const MAX_HEIGHT = 300;
+          let width = img.width;
+          let height = img.height;
+
+          if (width > height) {
+            if (width > MAX_WIDTH) {
+              height *= MAX_WIDTH / width;
+              width = MAX_WIDTH;
+            }
+          } else {
+            if (height > MAX_HEIGHT) {
+              width *= MAX_HEIGHT / height;
+              height = MAX_HEIGHT;
+            }
+          }
+
+          canvas.width = width;
+          canvas.height = height;
+
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = "high";
+          ctx.drawImage(img, 0, 0, width, height);
+
+          const compressedBase64 = canvas.toDataURL("image/jpeg", 0.3);
+          selectedAvatar = compressedBase64;
+
+          document.getElementById("avatarPreview").innerHTML = `
+            <img src="${compressedBase64}" alt="custom photo">
+            <div>Custom Photo Selected</div>
+          `;
+          closeAvatarModal();
+        };
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function renderThemes(){
+      const grid = document.getElementById("themeGrid");
+      if(!grid) return;
+      grid.innerHTML = "";
+
+      themes.forEach(url => {
+        const btn = document.createElement("button");
+        const img = document.createElement("img");
+        img.src = url;
+        img.loading = "lazy";
+        img.alt = "theme";
+        btn.appendChild(img);
+
+        btn.onclick = () => {
+          selectedTheme = url;
+          document.getElementById("themePreview").innerHTML = `
+            <img src="${url}" alt="theme">
+            <div>Theme Selected</div>
+          `;
+          closeThemeModal();
+        };
+        grid.appendChild(btn);
+      });
+    }
+
+    function openAvatarModal(){
+      document.getElementById("avatarModal").classList.add("show");
+      if(avatars.length === 0) loadAvatars();
+    }
+    function closeAvatarModal(){
+      document.getElementById("avatarModal").classList.remove("show");
+    }
+    function openThemeModal(){
+      document.getElementById("themeModal").classList.add("show");
+      if(themes.length === 0) loadThemes();
+    }
+    function closeThemeModal(){
+      document.getElementById("themeModal").classList.remove("show");
+    }
+
+    function togglePassword(){
+      const pass = document.getElementById("password");
+      pass.type = pass.type === "password" ? "text" : "password";
+    }
+
+    const form = document.getElementById("signupForm");
+    const submitBtn = document.querySelector(".submit");
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+
+      const websites = [];
+      document.querySelectorAll(".website-card").forEach(card => {
+        const title = card.querySelector(".web-title").value.trim();
+        const url = card.querySelector(".web-url").value.trim();
+        if (url) {
+          websites.push({ title: title || "Link", url });
+        }
+      });
+
+      if(!username || !email || !password){
+        alert("Please complete all required fields");
+        return;
+      }
+
+      if(password.length < 8){
+        alert("Password must be at least 8 characters");
+        return;
+      }
+
+      if(!selectedAvatar || !selectedTheme){
+        alert("Please select avatar & theme");
+        return;
+      }
+
+      submitBtn.innerText = "Creating...";
+      submitBtn.disabled = true;
+
+      try {
+        const response = await fetch(API_SIGNUP, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username,
+            email,
+            password,
+            websites,
+            avatar: selectedAvatar,
+            cover_photo: selectedTheme,
+            type: 'page',
+            id: ID
+          })
+        });
+
+        const data = await response.json();
+
+        if(!response.ok){
+          alert(data.message || "Signup failed");
+          submitBtn.innerText = "Create Account";
+          submitBtn.disabled = false;
+          return;
+        }
+
+        const pageData = {
+          username,
+          email,
+          websites,
+          avatar: selectedAvatar,
+          cover_photo: selectedTheme,
+          type: 'page',
+          id: ID
+        };
+
+        const previousPage = localStorage.getItem("page");
+        
+        let pages = [];
+        
+        if(previousPage) {
+            pages = JSON.parse(previousPage);
+            pages.push(pageData);
+        } else {
+            pages.push(pageData);            
+        }
+        
+        localStorage.setItem('page', JSON.stringify(pages));
+
+        localStorage.setItem('active', JSON.stringify({
+          type: 'page',
+          id: ID 
+        }));
+        
+
+        if(data.token){
+          localStorage.setItem("token", data.token);
+        }
+
+        submitBtn.innerText = "Success ✓";
+        alert("Account created successfully");
+
+        setTimeout(() => {
+          location.href = "asirnet";
+        }, 1000);
+
+      } catch(err) {
+        console.error(err);
+        alert("Server error");
+        submitBtn.innerText = "Create Account";
+        submitBtn.disabled = false;
+      }
+    });
+
+    loadAvatars();
+    loadThemes();
+  </script>
+</body>
+</html>
