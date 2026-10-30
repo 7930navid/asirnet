@@ -1,0 +1,1935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit Group | AsirNet</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+    font-family:Inter,sans-serif;
+    background:#f5f7fb;
+    color:#202938;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+
+/* FULL PAGE LOADING */
+
+#pageLoader{
+    position:fixed;
+    inset:0;
+    z-index:9999;
+    background:#f5f7fb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    gap:16px;
+}
+
+.loader-spinner{
+    width:43px;
+    height:43px;
+    border:4px solid #e1e9fa;
+    border-top-color:#3478f6;
+    border-radius:50%;
+    animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg)}
+}
+
+#loaderText{
+    font-size:13px;
+    color:#778398;
+    font-weight:600;
+}
+
+#loaderError{
+    display:none;
+    text-align:center;
+    max-width:300px;
+    padding:20px;
+}
+
+#loaderError p{
+    color:#df4545;
+    font-size:13px;
+    line-height:1.7;
+    margin-bottom:14px;
+}
+
+#loaderError button{
+    padding:10px 20px;
+    background:#3478f6;
+    color:white;
+    border:0;
+    border-radius:9px;
+}
+
+/* PAGE */
+
+.page{
+    display:none;
+    width:100%;
+    max-width:850px;
+    margin:35px auto;
+    padding:0 16px 50px;
+}
+
+.page.ready{
+    display:block;
+    animation:pageIn .3s ease;
+}
+
+@keyframes pageIn{
+    from{opacity:0;transform:translateY(7px)}
+    to{opacity:1;transform:translateY(0)}
+}
+
+.header{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    margin-bottom:25px;
+}
+
+.back-btn{
+    width:42px;
+    height:42px;
+    border:1px solid #e5e9f0;
+    border-radius:13px;
+    background:white;
+    font-size:21px;
+}
+
+.header h1{font-size:23px;font-weight:800}
+.header p{color:#8490a1;font-size:12px;margin-top:4px}
+
+.card{
+    background:white;
+    border:1px solid #e9edf3;
+    border-radius:19px;
+    padding:23px;
+    margin-bottom:18px;
+    box-shadow:0 5px 25px #19284609;
+}
+
+.section-title{
+    font-size:16px;
+    font-weight:800;
+    margin-bottom:18px;
+}
+
+.field{margin-bottom:19px}
+
+.field label,.admin-label{
+    display:block;
+    font-size:12px;
+    font-weight:700;
+    color:#586477;
+    margin-bottom:8px;
+}
+
+.field input,.field textarea{
+    width:100%;
+    border:1px solid #e2e7ef;
+    border-radius:12px;
+    outline:none;
+    padding:13px 14px;
+    font-size:14px;
+    color:#253044;
+    background:white;
+    transition:.2s;
+}
+
+.field input:focus,.field textarea:focus,
+.admin-search:focus,.category-search:focus{
+    border-color:#477df5;
+    box-shadow:0 0 0 3px #477df515;
+}
+
+.field textarea{resize:vertical;min-height:90px}
+
+.helper{
+    font-size:11px;
+    color:#929cac;
+    margin-top:7px;
+}
+
+/* IMAGE PREVIEW */
+
+.cover-preview{
+    height:175px;
+    width:100%;
+    border-radius:14px;
+    overflow:hidden;
+    background:#eef1f7;
+    margin-bottom:12px;
+}
+
+.cover-preview img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.avatar-preview{
+    width:105px;
+    height:105px;
+    border-radius:23px;
+    object-fit:cover;
+    background:#eef1f7;
+    border:3px solid white;
+    box-shadow:0 2px 12px #0001;
+    margin-bottom:12px;
+}
+
+.upload-btn{
+    border:1px solid #dfe5ee;
+    background:#f8faff;
+    color:#42516a;
+    padding:10px 15px;
+    border-radius:10px;
+    font-size:12px;
+    font-weight:700;
+}
+
+/* GALLERY */
+
+.gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(90px,1fr));
+    gap:11px;
+    margin-top:15px;
+}
+
+.gallery-item{
+    position:relative;
+    border:2px solid transparent;
+    border-radius:12px;
+    overflow:hidden;
+    background:#f1f4f9;
+    height:85px;
+    padding:0;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.gallery-item.selected{
+    border-color:#3978f6;
+    box-shadow:0 0 0 3px #3978f620;
+}
+
+.gallery-message{
+    font-size:12px;
+    color:#8792a3;
+    padding:10px 0;
+}
+
+/* DROPDOWNS */
+
+.category-select,.admin-member-select{position:relative}
+
+.category-trigger,.admin-select-trigger{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border:1px solid #e2e7ef;
+    background:white;
+    border-radius:12px;
+    padding:13px;
+    color:#344157;
+    font-size:13px;
+    text-align:left;
+}
+
+.category-dropdown,.admin-dropdown{
+    display:none;
+    position:absolute;
+    top:calc(100% + 7px);
+    left:0;
+    width:100%;
+    background:white;
+    border:1px solid #e6eaf1;
+    border-radius:13px;
+    padding:10px;
+    box-shadow:0 12px 35px #15213b18;
+    z-index:30;
+}
+
+.category-dropdown.active,.admin-dropdown.active{
+    display:block;
+}
+
+.category-search,.admin-search{
+    width:100%;
+    border:1px solid #e3e8ef;
+    border-radius:9px;
+    outline:none;
+    padding:11px;
+    font-size:12px;
+    margin-bottom:9px;
+}
+
+.category-options{
+    max-height:220px;
+    overflow-y:auto;
+}
+
+.category-option{
+    width:100%;
+    padding:10px;
+    border:0;
+    border-radius:8px;
+    background:white;
+    text-align:left;
+    font-size:12px;
+    color:#42516a;
+}
+
+.category-option:hover{background:#f1f5ff}
+
+.empty-state{
+    padding:14px;
+    color:#929cac;
+    font-size:12px;
+    text-align:center;
+}
+
+/* ADMIN MEMBERS */
+
+.admin-options{
+    max-height:260px;
+    overflow-y:auto;
+}
+
+.admin-option{
+    width:100%;
+    display:flex;
+    align-items:center;
+    gap:11px;
+    padding:9px;
+    border:0;
+    background:white;
+    border-radius:10px;
+    text-align:left;
+}
+
+.admin-option:hover{background:#f3f6fc}
+
+.admin-option img{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    object-fit:cover;
+    background:#edf1f7;
+}
+
+.admin-info{
+    min-width:0;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+}
+
+.admin-info strong{
+    font-size:12px;
+    color:#273449;
+}
+
+.admin-info small{
+    font-size:10px;
+    color:#8a95a6;
+    overflow-wrap:anywhere;
+}
+
+.admin-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:14px;
+}
+
+.primary-btn,.secondary-btn,.danger-btn{
+    border:0;
+    border-radius:11px;
+    padding:12px 17px;
+    font-size:12px;
+    font-weight:700;
+    transition:.2s;
+}
+
+.primary-btn{background:#3478f6;color:white}
+.primary-btn:hover{background:#2466e4}
+.secondary-btn{background:#edf3ff;color:#3471dc}
+.danger-btn{background:#fff0f0;color:#dc4545}
+
+.status-message{
+    margin-top:12px;
+    font-size:12px;
+    color:#718096;
+    line-height:1.6;
+    overflow-wrap:anywhere;
+}
+
+.save-btn{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:13px;
+    background:#3478f6;
+    color:white;
+    font-size:14px;
+    font-weight:800;
+    box-shadow:0 5px 15px #3478f633;
+}
+
+.delete-btn{
+    width:100%;
+    padding:14px;
+    margin-top:12px;
+    border:1px solid #ffdada;
+    border-radius:13px;
+    background:white;
+    color:#df4545;
+    font-size:13px;
+    font-weight:700;
+}
+
+@media(max-width:550px){
+    .page{margin-top:20px}
+    .card{padding:17px;border-radius:15px}
+    .header h1{font-size:20px}
+    .cover-preview{height:135px}
+}
+</style>
+</head>
+
+<body>
+
+<!-- FULL PAGE LOADER -->
+
+<div id="pageLoader">
+
+    <div class="loader-spinner" id="loaderSpinner"></div>
+
+    <p id="loaderText">Loading group information...</p>
+
+    <div id="loaderError">
+        <p id="loaderErrorText"></p>
+        <button type="button" onclick="location.reload()">
+            Try Again
+        </button>
+    </div>
+
+</div>
+
+
+<div class="page" id="mainPage">
+
+<header class="header">
+    <button class="back-btn" id="backBtn" type="button">‹</button>
+
+    <div>
+        <h1>Edit Group</h1>
+        <p>Manage your group information and settings</p>
+    </div>
+</header>
+
+
+<!-- BASIC INFORMATION -->
+
+<section class="card">
+
+    <h2 class="section-title">Basic Information</h2>
+
+    <div class="field">
+        <label for="groupname">Group Name</label>
+        <input id="groupname" type="text" placeholder="Enter group name">
+    </div>
+
+    <div class="field">
+        <label for="purpose">Purpose</label>
+        <input id="purpose" type="text" placeholder="What is this group about?">
+    </div>
+
+    <div class="field">
+        <label for="description">Short Description</label>
+        <textarea id="description" placeholder="Write a short description..."></textarea>
+    </div>
+
+    <div class="field">
+
+        <label>Group Category</label>
+
+        <div class="category-select">
+
+            <button type="button" class="category-trigger" id="categoryTrigger">
+                <span id="selectedCategoryText">Select a category</span>
+                <span>⌄</span>
+            </button>
+
+            <div class="category-dropdown" id="categoryDropdown">
+                <input type="search" class="category-search"
+                    id="categorySearch"
+                    placeholder="Search categories...">
+
+                <div class="category-options" id="categoryOptions"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GROUP AVATAR -->
+
+<section class="card">
+
+    <h2 class="section-title">Group Avatar</h2>
+
+    <img id="avatarPreview" class="avatar-preview" src="" alt="Group avatar">
+
+    <div>
+        <button type="button" class="upload-btn" id="avatarUploadBtn">
+            Upload from device
+        </button>
+
+        <input type="file" id="avatarFile" accept="image/*" hidden>
+    </div>
+
+    <p class="helper">Or choose an avatar from the gallery.</p>
+
+    <div class="gallery" id="avatarGallery"></div>
+
+</section>
+
+
+<!-- COVER PHOTO -->
+
+<section class="card">
+
+    <h2 class="section-title">Cover Photo</h2>
+
+    <div class="cover-preview">
+        <img id="coverPreview" src="" alt="Group cover">
+    </div>
+
+    <p class="helper">Choose a cover from the available gallery.</p>
+
+    <div class="gallery" id="coverGallery"></div>
+
+</section>
+
+
+<!-- ADMIN MANAGEMENT -->
+
+<section class="card">
+
+    <h2 class="section-title">Admin Management</h2>
+
+    <div class="field">
+
+        <label class="admin-label">Promote a group member</label>
+
+        <div class="admin-member-select">
+
+            <button type="button" class="admin-select-trigger" id="adminSelectTrigger">
+                <span id="adminSelectedMember">Select a group member</span>
+                <span>⌄</span>
+            </button>
+
+            <div class="admin-dropdown" id="adminMemberDropdown">
+
+                <input type="search"
+                    class="admin-search"
+                    id="adminMemberSearch"
+                    placeholder="Search members by name or email...">
+
+                <div class="admin-options" id="adminMemberOptions"></div>
+
+            </div>
+
+        </div>
+
+        <p class="helper">
+            Select a member from your group to promote them to admin.
+        </p>
+
+        <div class="admin-actions">
+
+            <button type="button" class="primary-btn" id="promoteAdminBtn" disabled>
+                Promote to Admin
+            </button>
+
+            <button type="button" class="danger-btn" id="leaveAdminBtn" disabled>
+                Leave Admin Role
+            </button>
+
+        </div>
+
+        <p class="status-message" id="adminActionMessage"></p>
+
+    </div>
+
+</section>
+
+
+<!-- SAVE / DELETE -->
+
+<section class="card">
+
+    <button type="button" class="save-btn" id="saveGroupBtn">
+        Save Changes
+    </button>
+
+    <button type="button" class="delete-btn" id="deleteGroupBtn">
+        Delete This Group
+    </button>
+
+    <p class="status-message" id="mainMessage"></p>
+
+</section>
+
+</div>
+
+
+<script>
+
+// =====================================================
+// API CONFIGURATION
+// =====================================================
+
+const GROUP_API =
+    'https://group-server-xlcs.onrender.com/api/groups';
+
+const USER_API =
+    'https://users-server-xyvg.onrender.com/';
+
+const SETTINGS_API =
+    'https://sett-serve.onrender.com';
+
+
+// =====================================================
+// LOCAL STORAGE
+// =====================================================
+
+let currentUser = null;
+let currentGroup = null;
+
+try {
+    currentUser = JSON.parse(localStorage.getItem('user'));
+    currentGroup = JSON.parse(localStorage.getItem('group'));
+} catch(error) {
+    console.error('Local storage error:', error);
+}
+
+
+// =====================================================
+// ELEMENTS
+// =====================================================
+
+const $ = selector => document.querySelector(selector);
+
+const pageLoader = $('#pageLoader');
+const loaderText = $('#loaderText');
+const loaderSpinner = $('#loaderSpinner');
+const loaderError = $('#loaderError');
+const loaderErrorText = $('#loaderErrorText');
+
+const mainPage = $('#mainPage');
+
+const groupnameInput = $('#groupname');
+const purposeInput = $('#purpose');
+const descriptionInput = $('#description');
+
+const avatarPreview = $('#avatarPreview');
+const coverPreview = $('#coverPreview');
+
+const mainMessage = $('#mainMessage');
+
+const avatarGallery = $('#avatarGallery');
+const coverGallery = $('#coverGallery');
+
+const categoryTrigger = $('#categoryTrigger');
+const categoryDropdown = $('#categoryDropdown');
+const categorySearch = $('#categorySearch');
+const categoryOptions = $('#categoryOptions');
+const selectedCategoryText = $('#selectedCategoryText');
+
+const adminSelectTrigger = $('#adminSelectTrigger');
+const adminMemberDropdown = $('#adminMemberDropdown');
+const adminSelectedMember = $('#adminSelectedMember');
+const adminMemberSearch = $('#adminMemberSearch');
+const adminMemberOptions = $('#adminMemberOptions');
+
+const promoteAdminBtn = $('#promoteAdminBtn');
+const leaveAdminBtn = $('#leaveAdminBtn');
+const adminActionMessage = $('#adminActionMessage');
+
+
+// =====================================================
+// STATE
+// =====================================================
+
+let selectedGroupCategory = '';
+let selectedAvatar = '';
+let selectedCover = '';
+
+let groupMembers = [];
+let selectedMember = null;
+
+
+// =====================================================
+// CATEGORIES
+// =====================================================
+
+const categories = [
+    "General Discussion",
+    "Education & Study Groups",
+    "Gaming & Esports",
+    "Artificial Intelligence & ChatGPT",
+    "Technology & Programming",
+    "Career & Job Opportunities",
+    "Friends & Community",
+    "Buy & Sell",
+    "Entertainment & Memes",
+    "Islamic Knowledge & Learning",
+    "University & College",
+    "School Friends",
+    "Exam Preparation",
+    "Science & Mathematics",
+    "English Learning",
+    "Language Learning",
+    "Books & Literature",
+    "Research & Projects",
+    "Web Development",
+    "Mobile App Development",
+    "Programming Help & Support",
+    "Open Source Projects",
+    "Cybersecurity",
+    "Robotics & Electronics",
+    "Data Science",
+    "Freelancing & Remote Work",
+    "Mobile Gaming",
+    "PC & Console Gaming",
+    "Football & Sports",
+    "Movies & TV Shows",
+    "Anime & Manga",
+    "Music & Artists",
+    "Funny Videos & Memes",
+    "Art & Creativity",
+    "Business & Entrepreneurship",
+    "Startups & Projects",
+    "Digital Marketing",
+    "Online Earning",
+    "Job Circulars",
+    "Professional Networking",
+    "E-commerce",
+    "Personal Finance",
+    "Local Community",
+    "Buy & Sell Marketplace",
+    "Photography & Videography",
+    "Fashion & Lifestyle",
+    "Health & Fitness",
+    "Food & Cooking",
+    "Travel & Adventure",
+    "Parenting & Family",
+    "Love & Relationships",
+    "Motivation & Self-Improvement",
+    "Quran & Hadith Studies",
+    "Islamic History",
+    "Writing & Poetry",
+    "Philosophy & History",
+    "News & Current Affairs",
+    "Environment & Nature",
+    "Science Fiction",
+    "Other"
+];
+
+
+// =====================================================
+// HELPERS
+// =====================================================
+
+function escapeHTML(value = '') {
+
+    return String(value).replace(/[&<>"']/g, char => ({
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#039;'
+    })[char]);
+
+}
+
+
+function normalizeEmail(email) {
+    return String(email || '').trim().toLowerCase();
+}
+
+
+function parseEmailList(value) {
+
+    if (Array.isArray(value)) {
+        return value.map(normalizeEmail).filter(Boolean);
+    }
+
+    if (typeof value === 'string') {
+
+        try {
+
+            const parsed = JSON.parse(value);
+
+            if (Array.isArray(parsed)) {
+                return parsed.map(normalizeEmail).filter(Boolean);
+            }
+
+        } catch(error) {}
+
+        return value.split(',').map(normalizeEmail).filter(Boolean);
+    }
+
+    return [];
+}
+
+
+function getGroupResponse(data) {
+
+    return data.group || data.data || data;
+
+}
+
+
+function setMainMessage(message) {
+    mainMessage.textContent = message;
+}
+
+
+function getGroupAdmins() {
+    return parseEmailList(currentGroup?.admin_email);
+}
+
+
+function showLoadingError(message) {
+
+    loaderSpinner.style.display = 'none';
+    loaderText.style.display = 'none';
+
+    loaderErrorText.textContent = message;
+    loaderError.style.display = 'block';
+
+}
+
+
+function showPage() {
+
+    pageLoader.style.display = 'none';
+    mainPage.classList.add('ready');
+
+}
+
+
+// =====================================================
+// UPDATE LOCAL GROUP
+// =====================================================
+
+function updateLocalGroup(group) {
+
+    if (!group || !group.id) return;
+
+    currentGroup = {
+        ...currentGroup,
+        ...group
+    };
+
+    localStorage.setItem('group', JSON.stringify(currentGroup));
+
+    updateAdminButtons();
+
+}
+
+
+function updateAdminButtons() {
+
+    if (!currentUser || !currentGroup) return;
+
+    const admins = getGroupAdmins();
+    const currentEmail = normalizeEmail(currentUser.email);
+
+    leaveAdminBtn.disabled = !(
+        admins.includes(currentEmail) &&
+        admins.length > 1
+    );
+
+}
+
+
+// =====================================================
+// INITIAL VALIDATION
+// =====================================================
+
+function validateInitialData() {
+
+    if (!currentUser || !currentUser.email) {
+        throw new Error('Please sign in first.');
+    }
+
+    if (!currentGroup || !currentGroup.id) {
+        throw new Error('Group information not found.');
+    }
+
+}
+
+
+// =====================================================
+// FETCH JSON HELPER
+// =====================================================
+
+async function fetchJSON(url, options = {}) {
+
+    const res = await fetch(url, options);
+
+    let data;
+
+    try {
+        data = await res.json();
+    } catch(error) {
+        throw new Error('Invalid server response.');
+    }
+
+    if (!res.ok) {
+        throw new Error(
+            data.message || `Request failed (${res.status})`
+        );
+    }
+
+    return data;
+
+}
+
+
+// =====================================================
+// LOAD GROUP INFORMATION
+// =====================================================
+
+async function loadGroupInfo() {
+
+    const response = await fetchJSON(
+        `${GROUP_API}/${encodeURIComponent(currentGroup.id)}`
+    );
+
+    const group = getGroupResponse(response);
+
+    if (!group || !group.id) {
+        throw new Error('Invalid group information received.');
+    }
+
+    updateLocalGroup(group);
+
+    // Check admin permission using latest server data
+
+    const admins = getGroupAdmins();
+
+    if (!admins.includes(normalizeEmail(currentUser.email))) {
+        throw new Error('Only group admins can edit this group.');
+    }
+
+    // Set form values
+
+    groupnameInput.value = currentGroup.groupname || '';
+
+    purposeInput.value = currentGroup.purpus || '';
+
+    descriptionInput.value =
+        currentGroup.short_discription || '';
+
+    selectedGroupCategory = currentGroup.type || '';
+
+    selectedAvatar = currentGroup.avatar || '';
+
+    selectedCover = currentGroup.cover_photo || '';
+
+    selectedCategoryText.textContent =
+        selectedGroupCategory || 'Select a category';
+
+    avatarPreview.src = selectedAvatar || '';
+
+    coverPreview.src = selectedCover || '';
+
+    renderCategories();
+
+    return currentGroup;
+
+}
+
+
+// =====================================================
+// CATEGORY DROPDOWN
+// =====================================================
+
+function renderCategories(search = '') {
+
+    const filtered = categories.filter(category =>
+        category.toLowerCase().includes(search.toLowerCase())
+    );
+
+    if (!filtered.length) {
+
+        categoryOptions.innerHTML =
+            '<div class="empty-state">No category found.</div>';
+
+        return;
+    }
+
+    categoryOptions.innerHTML = filtered.map(category => `
+
+        <button type="button"
+            class="category-option"
+            data-category="${escapeHTML(category)}">
+
+            ${escapeHTML(category)}
+
+        </button>
+
+    `).join('');
+
+    categoryOptions.querySelectorAll('.category-option')
+        .forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                selectedGroupCategory = button.dataset.category;
+
+                selectedCategoryText.textContent =
+                    selectedGroupCategory;
+
+                categoryDropdown.classList.remove('active');
+
+            });
+
+        });
+
+}
+
+
+categoryTrigger.addEventListener('click', () => {
+
+    categoryDropdown.classList.toggle('active');
+
+});
+
+
+categorySearch.addEventListener('input', () => {
+
+    renderCategories(categorySearch.value);
+
+});
+
+
+// =====================================================
+// GALLERY DATA EXTRACTION (FIXED FOR DIRECT ARRAYS)
+// =====================================================
+
+function extractGalleryItems(data, type) {
+    // If the API directly returns an array
+    if (Array.isArray(data)) {
+        return data;
+    }
+
+    // If it's wrapped inside an object
+    if (type === 'avatar') {
+        return Array.isArray(data.avatar) ? data.avatar : (Array.isArray(data.data) ? data.data : []);
+    }
+
+    if (type === 'cover') {
+        return Array.isArray(data.img) ? data.img : (Array.isArray(data.data) ? data.data : []);
+    }
+
+    return [];
+}
+
+
+// =====================================================
+// GET IMAGE VALUE
+// =====================================================
+
+function getImageValue(item, type) {
+
+    if (!item || typeof item !== 'object') {
+        return '';
+    }
+
+    if (type === 'avatar') {
+        return item.avatar || item.url || '';
+    }
+
+    if (type === 'cover') {
+        return item.img || item.url || '';
+    }
+
+    return '';
+
+}
+
+
+// =====================================================
+// RENDER GALLERY
+// =====================================================
+
+function renderGallery(container, items, selected, type) {
+
+    const validItems = items
+        .map(item => ({
+            id: item.id,
+            url: getImageValue(item, type)
+        }))
+        .filter(item => item.url);
+
+    if (!validItems.length) {
+
+        container.innerHTML =
+            '<div class="gallery-message">No images available.</div>';
+
+        return;
+
+    }
+
+    container.innerHTML = validItems.map(item => `
+
+        <button type="button"
+            class="gallery-item ${item.url === selected ? 'selected' : ''}"
+            data-id="${escapeHTML(item.id)}"
+            data-url="${escapeHTML(item.url)}">
+
+            <img
+                src="${escapeHTML(item.url)}"
+                alt="${type}"
+                loading="lazy">
+
+        </button>
+
+    `).join('');
+
+    container.querySelectorAll('.gallery-item')
+        .forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                const url = button.dataset.url;
+
+                if (type === 'avatar') {
+
+                    selectedAvatar = url;
+                    avatarPreview.src = url;
+
+                } else {
+
+                    selectedCover = url;
+                    coverPreview.src = url;
+
+                }
+
+                container.querySelectorAll('.gallery-item')
+                    .forEach(item => {
+                        item.classList.remove('selected');
+                    });
+
+                button.classList.add('selected');
+
+            });
+
+        });
+
+}
+
+
+// =====================================================
+// LOAD AVATAR GALLERY
+// =====================================================
+
+async function loadAvatarGallery() {
+
+    const data = await fetchJSON(
+        `${SETTINGS_API}/avatar`
+    );
+
+    const items = extractGalleryItems(data, 'avatar');
+
+    renderGallery(
+        avatarGallery,
+        items,
+        selectedAvatar,
+        'avatar'
+    );
+
+}
+
+
+// =====================================================
+// LOAD COVER GALLERY
+// =====================================================
+
+async function loadCoverGallery() {
+
+    const data = await fetchJSON(
+        `${SETTINGS_API}/themes`
+    );
+
+    const items = extractGalleryItems(data, 'cover');
+
+    renderGallery(
+        coverGallery,
+        items,
+        selectedCover,
+        'cover'
+    );
+
+}
+
+
+// =====================================================
+// AVATAR DEVICE UPLOAD
+// =====================================================
+
+$('#avatarUploadBtn').addEventListener('click', () => {
+
+    $('#avatarFile').click();
+
+});
+
+
+$('#avatarFile').addEventListener('change', event => {
+
+    const file = event.target.files[0];
+
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+
+        alert('Please select a valid image.');
+
+        event.target.value = '';
+
+        return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+        const image = new Image();
+
+        image.onload = () => {
+
+            const canvas = document.createElement('canvas');
+
+            const maxSize = 600;
+
+            let width = image.width;
+            let height = image.height;
+
+            if (width > height && width > maxSize) {
+
+                height = Math.round(height * maxSize / width);
+                width = maxSize;
+
+            } else if (height > maxSize) {
+
+                width = Math.round(width * maxSize / height);
+                height = maxSize;
+
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(image, 0, 0, width, height);
+
+            selectedAvatar = canvas.toDataURL('image/jpeg', 0.5);
+
+            avatarPreview.src = selectedAvatar;
+
+            avatarGallery.querySelectorAll('.gallery-item')
+                .forEach(item => {
+                    item.classList.remove('selected');
+                });
+
+        };
+
+        image.onerror = () => {
+            alert('Could not process this image.');
+        };
+
+        image.src = reader.result;
+
+    };
+
+    reader.onerror = () => {
+        alert('Could not read this image.');
+    };
+
+    reader.readAsDataURL(file);
+
+});
+
+
+// =====================================================
+// LOAD GROUP MEMBERS
+// =====================================================
+
+async function loadGroupMembers() {
+
+    const emails = parseEmailList(currentGroup.members_email);
+
+    const adminEmails = parseEmailList(currentGroup.admin_email);
+
+    // Exclude existing admins
+
+    const availableEmails = [
+        ...new Set(
+            emails.filter(email =>
+                email && !adminEmails.includes(email)
+            )
+        )
+    ];
+
+    if (!availableEmails.length) {
+
+        groupMembers = [];
+
+        renderAdminMembers();
+
+        return;
+
+    }
+
+    const token = localStorage.getItem('token');
+
+    const results = await Promise.all(
+
+        availableEmails.map(async email => {
+
+            try {
+
+                const user = await fetchJSON(
+
+                    `${USER_API}me?email=${encodeURIComponent(email)}`,
+
+                    {
+                        method: 'GET',
+
+                        headers: {
+                            Authorization: `Bearer ${token || ''}`
+                        }
+                    }
+
+                );
+
+                const profile = user.data || user;
+
+                return {
+
+                    email: profile.email || email,
+
+                    username: profile.username || email,
+
+                    avatar: profile.avatar || ''
+
+                };
+
+            } catch(error) {
+
+                console.error(
+                    `Profile fetch failed: ${email}`,
+                    error
+                );
+
+                return {
+                    email,
+                    username: email,
+                    avatar: ''
+                };
+
+            }
+
+        })
+
+    );
+
+    groupMembers = results.filter(Boolean);
+
+    renderAdminMembers();
+
+}
+
+
+// =====================================================
+// RENDER ADMIN MEMBERS
+// =====================================================
+
+function renderAdminMembers(search = '') {
+
+    const filtered = groupMembers.filter(member => {
+
+        const text =
+            `${member.username} ${member.email}`.toLowerCase();
+
+        return text.includes(search.toLowerCase());
+
+    });
+
+    if (!filtered.length) {
+
+        adminMemberOptions.innerHTML =
+            '<div class="empty-state">No available members found.</div>';
+
+        return;
+
+    }
+
+    adminMemberOptions.innerHTML = filtered.map((member, index) => {
+
+        const avatar = member.avatar ||
+            'https://placehold.co/80x80?text=U';
+
+        return `
+
+            <button type="button"
+                class="admin-option"
+                data-email="${escapeHTML(member.email)}">
+
+                <img
+                    src="${escapeHTML(avatar)}"
+                    alt=""
+                    onerror="this.src='https://placehold.co/80x80?text=U'">
+
+                <span class="admin-info">
+
+                    <strong>${escapeHTML(member.username)}</strong>
+
+                    <small>${escapeHTML(member.email)}</small>
+
+                </span>
+
+            </button>
+
+        `;
+
+    }).join('');
+
+    adminMemberOptions.querySelectorAll('.admin-option')
+        .forEach(button => {
+
+            button.addEventListener('click', () => {
+
+                const email = normalizeEmail(button.dataset.email);
+
+                const member = filtered.find(
+                    item => normalizeEmail(item.email) === email
+                );
+
+                if (!member) return;
+
+                selectedMember = member;
+
+                adminSelectedMember.textContent = member.username;
+
+                promoteAdminBtn.disabled = false;
+
+                adminMemberDropdown.classList.remove('active');
+
+            });
+
+        });
+
+}
+
+
+// =====================================================
+// ADMIN DROPDOWN EVENTS
+// =====================================================
+
+adminSelectTrigger.addEventListener('click', () => {
+
+    adminMemberDropdown.classList.toggle('active');
+
+});
+
+
+adminMemberSearch.addEventListener('input', () => {
+
+    renderAdminMembers(adminMemberSearch.value);
+
+});
+
+
+// =====================================================
+// PROMOTE MEMBER TO ADMIN
+// =====================================================
+
+promoteAdminBtn.addEventListener('click', async () => {
+
+    if (!selectedMember) {
+
+        adminActionMessage.textContent =
+            'Please select a member first.';
+
+        return;
+
+    }
+
+    const selectedEmail = normalizeEmail(selectedMember.email);
+
+    const selectedUsername = selectedMember.username;
+
+    promoteAdminBtn.disabled = true;
+
+    const originalText = promoteAdminBtn.textContent;
+
+    promoteAdminBtn.textContent = 'Promoting...';
+
+    adminActionMessage.textContent = 'Promoting member...';
+
+    try {
+
+        const data = await fetchJSON(
+
+            `${GROUP_API}/${encodeURIComponent(currentGroup.id)}/promote-admin`,
+
+            {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    email: currentUser.email,
+
+                    promote_email: selectedEmail
+
+                })
+
+            }
+
+        );
+
+        if (!data.group) {
+
+            throw new Error('Updated group data was not returned.');
+
+        }
+
+        updateLocalGroup(data.group);
+
+        groupMembers = groupMembers.filter(
+            member =>
+                normalizeEmail(member.email) !== selectedEmail
+        );
+
+        selectedMember = null;
+
+        adminSelectedMember.textContent =
+            'Select a group member';
+
+        adminActionMessage.textContent =
+            `${selectedUsername} has been promoted to admin successfully. You can now leave your admin role.`;
+
+        renderAdminMembers(adminMemberSearch.value);
+
+    } catch(error) {
+
+        console.error('Promote admin error:', error);
+
+        adminActionMessage.textContent = error.message;
+
+    } finally {
+
+        promoteAdminBtn.textContent = originalText;
+
+        promoteAdminBtn.disabled = !selectedMember;
+
+    }
+
+});
+
+
+// =====================================================
+// LEAVE ADMIN ROLE
+// =====================================================
+
+leaveAdminBtn.addEventListener('click', async () => {
+
+    const admins = getGroupAdmins();
+
+    const currentEmail = normalizeEmail(currentUser.email);
+
+    if (!admins.includes(currentEmail)) {
+
+        adminActionMessage.textContent =
+            'You are no longer an admin of this group.';
+
+        return;
+
+    }
+
+    if (admins.length <= 1) {
+
+        adminActionMessage.textContent =
+            'Promote another member before leaving your admin role.';
+
+        return;
+
+    }
+
+    const confirmed = confirm(
+
+        'Are you sure you want to leave your admin role? You will become a normal group member.'
+
+    );
+
+    if (!confirmed) return;
+
+    leaveAdminBtn.disabled = true;
+
+    const originalText = leaveAdminBtn.textContent;
+
+    leaveAdminBtn.textContent = 'Leaving...';
+
+    adminActionMessage.textContent =
+        'Updating admin permissions...';
+
+    try {
+
+        const data = await fetchJSON(
+
+            `${GROUP_API}/${encodeURIComponent(currentGroup.id)}/leave-admin`,
+
+            {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    email: currentUser.email
+                })
+
+            }
+
+        );
+
+        if (!data.group) {
+
+            throw new Error('Updated group data was not returned.');
+
+        }
+
+        updateLocalGroup(data.group);
+
+        adminActionMessage.textContent =
+            'You have successfully left the admin role.';
+
+        setTimeout(() => {
+            history.back();
+        }, 1200);
+
+    } catch(error) {
+
+        console.error('Leave admin error:', error);
+
+        adminActionMessage.textContent = error.message;
+
+        leaveAdminBtn.disabled = false;
+
+    } finally {
+
+        leaveAdminBtn.textContent = originalText;
+
+    }
+
+});
+
+
+// =====================================================
+// UPDATE GROUP INFORMATION
+// =====================================================
+
+$('#saveGroupBtn').addEventListener('click', updateGroup);
+
+
+async function updateGroup() {
+
+    const groupname = groupnameInput.value.trim();
+
+    const purpus = purposeInput.value.trim();
+
+    const short_discription = descriptionInput.value.trim();
+
+    if (!groupname) {
+
+        setMainMessage('Please enter a group name.');
+
+        groupnameInput.focus();
+
+        return;
+
+    }
+
+    if (!selectedGroupCategory) {
+
+        setMainMessage('Please select a group category.');
+
+        return;
+
+    }
+
+    const saveBtn = $('#saveGroupBtn');
+
+    saveBtn.disabled = true;
+
+    saveBtn.textContent = 'Saving...';
+
+    setMainMessage('');
+
+    try {
+
+        const data = await fetchJSON(
+
+            `${GROUP_API}/${encodeURIComponent(currentGroup.id)}`,
+
+            {
+
+                method: 'PUT',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+
+                    email: currentUser.email,
+
+                    groupname,
+
+                    purpus,
+
+                    short_discription,
+
+                    type: selectedGroupCategory,
+
+                    avatar: selectedAvatar,
+
+                    cover_photo: selectedCover
+
+                })
+
+            }
+
+        );
+
+        if (data.group) {
+
+            updateLocalGroup(data.group);
+
+        } else {
+
+            updateLocalGroup({
+
+                ...currentGroup,
+
+                groupname,
+
+                purpus,
+
+                short_discription,
+
+                type: selectedGroupCategory,
+
+                avatar: selectedAvatar,
+
+                cover_photo: selectedCover
+
+            });
+
+        }
+
+        setMainMessage('Group updated successfully!');
+
+    } catch(error) {
+
+        console.error(error);
+
+        setMainMessage(error.message);
+
+    } finally {
+
+        saveBtn.disabled = false;
+
+        saveBtn.textContent = 'Save Changes';
+
+    }
+
+}
+
+
+// =====================================================
+// DELETE GROUP
+// =====================================================
+
+$('#deleteGroupBtn').addEventListener('click', deleteGroup);
+
+
+async function deleteGroup() {
+
+    const confirmed = confirm(
+
+        'Are you sure you want to permanently delete this group?'
+
+    );
+
+    if (!confirmed) return;
+
+    const deleteBtn = $('#deleteGroupBtn');
+
+    deleteBtn.disabled = true;
+
+    deleteBtn.textContent = 'Deleting...';
+
+    try {
+
+        await fetchJSON(
+
+            `${GROUP_API}/${encodeURIComponent(currentGroup.id)}`,
+
+            {
+
+                method: 'DELETE',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    email: currentUser.email
+                })
+
+            }
+
+        );
+
+        localStorage.removeItem('group');
+
+        alert('Group deleted successfully.');
+
+        history.back();
+
+    } catch(error) {
+
+        alert(error.message);
+
+        deleteBtn.disabled = false;
+
+        deleteBtn.textContent = 'Delete This Group';
+
+    }
+
+}
+
+
+// =====================================================
+// BACK BUTTON
+// =====================================================
+
+$('#backBtn').addEventListener('click', () => {
+
+    history.back();
+
+});
+
+
+// =====================================================
+// INITIALIZE PAGE
+// =====================================================
+
+async function initializePage() {
+
+    try {
+
+        // Step 1: Validate local data
+
+        validateInitialData();
+
+        // Step 2: Fetch latest group information
+
+        loaderText.textContent = 'Loading group information...';
+
+        await loadGroupInfo();
+
+        // Step 3: Load all independent resources together
+
+        loaderText.textContent = 'Preparing your group settings...';
+
+        await Promise.all([
+
+            loadAvatarGallery(),
+
+            loadCoverGallery(),
+
+            loadGroupMembers()
+
+        ]);
+
+        // Step 4: Everything is ready. Show complete UI.
+
+        updateAdminButtons();
+
+        showPage();
+
+    } catch(error) {
+
+        console.error('Page initialization failed:', error);
+
+        showLoadingError(
+            error.message || 'Could not load group settings.'
+        );
+
+    }
+
+}
+
+
+initializePage();
+
+</script>
+
+</body>
+</html>
