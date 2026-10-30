@@ -1,6 +1,133 @@
-
-'use strict';
+let postOrEdit;
+returnUser(); 
     
+function returnUser() {
+
+    let user;
+    let userOth;
+    let unique;
+    
+    const userId = JSON.parse(localStorage.getItem('user'));
+    
+    const userPages = JSON.parse(localStorage.getItem('page')) || [];
+
+    const group = JSON.parse(localStorage.getItem('group')) || {};
+
+    const activePage = JSON.parse(localStorage.getItem('active')) || {};
+    
+    const pagesContainer = document.querySelector('#pages main');
+    
+    if (Array.isArray(userPages) && userPages.length > 0 && activePage.type === 'page') {
+
+      userPages.forEach(p => {
+          if (p.id === activePage.id) {
+              unique = p.id;
+              userOth = p;
+        }
+       });
+
+
+    } else if (activePage.type === 'group') {
+        unique = group.id;        
+        userOth = {
+            username: group.groupname,
+            email: group.id,
+            avatar: group.avatar,
+            cover_photo: group.cover_photo,
+            bio: group.type,
+            admin_email: encodeURIComponent(JSON.stringify(group.admin_email)),
+            members_email: encodeURIComponent(JSON.stringify(group.members_email)),
+            short_discription: group.short_discription,
+            purpus: group.purpus,
+            type: 'group'
+      };        
+    } else {
+        unique = u.email;
+        userOth = userId;
+    }
+    
+    userPages.forEach(p => {
+              if (pagesContainer) {
+              pagesContainer.innerHTML = '';
+              const page = document.createElement('button');
+              page.style = `
+                  padding: 0;
+                  margin: 20px 0;
+                  border: 1px solid black;
+                  border-radius: 20px;
+                  height: 100px;
+              `;
+              page.innerHTML = `
+                  <nav class="page-card" onclick="switchToPage('${p.id}')">
+                      <section>
+                          <img src="${p.avatar}" alt="">
+                      </section>
+                      <label>${p.username}</label>
+                  </nav>
+              `;
+              pagesContainer.appendChild(page);
+          }
+      });  
+
+    
+    user = {
+        unique: unique,
+          ...userOth
+    };
+    
+    
+    return user || null;
+}
+
+function switchToPage(id) {
+    localStorage.setItem('active', JSON.stringify({
+        id: id,
+        type: 'page'
+    }));
+    
+    location.reload();
+}
+
+function prepearUserForSend(status) {
+
+   const userInfo = returnUser();
+   const userId = JSON.parse(localStorage.getItem('user'));
+    
+   let email = userInfo.email;
+   let username = userInfo.username;
+   let avatar = userInfo.avatar;
+   
+   if(status != 'allowed') {
+        email = userId.email;
+        username = userId.username;
+        avatar = userId.avatar;       
+   }
+
+   if (userInfo.type && userInfo.type == 'page' && status === 'allowed') {
+        email = userInfo.id;
+   }
+    
+   const info = {
+        username: username,
+        email: email,
+        avatar: avatar,
+        from: userInfo.type || 'id'
+   };
+    
+   return info || null;
+}
+
+function switchAccount() {
+    const el = document.getElementById('accounts-div-container');
+    el.classList.add('show');
+    BackManager.register(removeSwitchAccount);
+}
+
+function removeSwitchAccount() {
+    const el = document.getElementById('accounts-div-container');
+    el.classList.remove('show');
+    BackManager.unregister(removeSwitchAccount);
+}
 
 function postGenarate(e) {
   e.stopPropagation();
@@ -23,6 +150,118 @@ function createSessionId() {
             '-' + Math.random().toString(36).slice(2);
     }
 
+
+function onActiveGroup(info) {
+    const i = decodeURIComponent(info);
+    
+    localStorage.setItem('group', i);
+    localStorage.setItem('active', JSON.stringify({
+        type: 'group',
+        id: JSON.parse(i).id
+    }));
+    
+    location.reload();
+}
+
+renderGroups();
+async function renderGroups() {
+
+    const container = document.querySelector('#groups main');
+
+    const u = JSON.parse(localStorage.getItem('user'));
+
+    try {
+        const res = await fetch(
+            'https://group-server-xlcs.onrender.com/api/groups'
+        );
+
+        if (!res.ok) {
+            throw new Error('Request has not been sent');
+        }
+
+        const data = await res.json();
+
+        const showingData = data.filter(g =>
+            (Array.isArray(g.admin_email)
+                ? g.admin_email
+                : [g.admin_email]
+            ).includes(u.email) ||
+
+            (Array.isArray(g.members_email)
+                ? g.members_email
+                : [g.members_email]
+            ).includes(u.email)
+        );
+        
+        let isAdmin;
+        container.innerHTML = "";
+
+        if (showingData.length === 0) {
+          container.innerHTML = `
+              <div>No Groups</div>
+          `;
+          return;  
+        }
+        
+        
+        showingData.forEach(g => {
+
+        if (g.admin_email.includes(u.email)) {
+            isAdmin = true;
+        }
+        
+        let groupInfo = encodeURIComponent(JSON.stringify(g));
+
+            const page = document.createElement('button');
+            
+            page.onclick = () => onActiveGroup(groupInfo);
+
+            page.style = `
+                padding: 0;
+                margin: 20px 0;
+                border: 1px solid black;
+                border-radius: 20px;
+                height: 100px;
+                position: relative;
+            `;
+
+            page.innerHTML = `
+                <nav class="page-card">
+                    <section>
+                        <img src="${g.avatar}" alt="">
+                    </section>
+                    <label>${g.groupname}</label>
+                </nav>
+                <pre style="
+              display: none;
+              font-size: 20px;
+              padding: 5px;
+              position: absolute;
+              right: 8px;
+              border-radius: 10px;
+              font-weight: bold;
+              background: linear-gradient(135deg, cyan, lightgreen);
+              color: purple;
+                " id="panal${g.id}"> Admin </pre>
+            `;
+
+            container.appendChild(page);
+            
+            if(isAdmin) {
+             document.getElementById(`panal${g.id}`).style.display = 'flex';    
+            }
+            
+        });
+
+    } catch (err) {
+        console.error(err);
+        onalert('Something went wrong');
+         container.innerHTML = `
+              <div>Network error</div>
+          `;
+         return;  
+    }
+}
 
 async function askAi() {
 
@@ -115,6 +354,7 @@ function summery(json) {
 }
 
 async function tr(json, lang, place) {
+
     const post = JSON.parse(decodeURIComponent(json));
     const pad = document.getElementsByName(`textPost${post.id}${place}`)[0];
     const btn = document.getElementById(`trBtn${post.id}${place}`);
@@ -379,7 +619,7 @@ const SPage = ` <br><br>
     Cancel
 </button>
 <button class="submitpost" onclick="sendStory()" 
-    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px; width: fit-content;">
+    style="background:red; padding:20px; border:none; border-radius:10px; color:white; transition:0.3s; margin:20px; font-size:20px; width: fit-content;" id="submit-story">
     Post Story
 </button>
 
@@ -475,10 +715,11 @@ function prepearStory(){
 
 async function sendStory(){
   if(!selectedVideoFile) return onalert("No video selected");
-  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const user = prepearUserForSend('no');
   
-  const btn = document.querySelectorAll('.submitpost');
-  btn.forEach(b => {b.disabled = true});
+  const btn = document.querySelector('#submit-story');
+  btn.disabled = true;
+  btn.style.background = 'gray';
 
   const fd = new FormData();
   fd.append("storyVideo", selectedVideoFile);
@@ -498,7 +739,6 @@ async function sendStory(){
       throw new Error(`Server error: ${response.status}`);
       onalert('something went wrong');
 document.getElementById('stry-ongoing').style.display = 'none';
-  btn.forEach(b => {b.disabled = false});
     }
 
     const data = await response.json();
@@ -509,19 +749,33 @@ document.getElementById('stry-ongoing').style.display = 'none';
     closeStoryPort();
   } catch (error) {
  document.getElementById('stry-ongoing').style.display = 'none';
-  btn.forEach(b => {b.disabled = false});
     console.error("Story upload failed:", error);
  onalert("Upload failed! Please try again.");
-  }
+   } finally {
+  btn.disabled = false;
+  btn.style.background = 'red';
+   }
 }
 
 loadAllStories();
 
 async function loadAllStories() {
+
     let container = document.getElementById('container');
+    
+    let loader =  document.getElementById('stryLoadingDivs');
+    
+    container.innerHTML = "";
+    loader.style.display = 'flex';
+    
   try {
+
     const res = await fetch("https://story-server-9d2k.onrender.com/stories");
+
     const stories = await res.json();
+
+    loader.style.display = 'none';
+
     if (!stories.length) {
       container.innerHTML = `<div class="story" style="margin-left: 10px;">
  <p style="font-size: 26px; text-align: center; color: white;">No story uploaded yet.</p>
@@ -529,7 +783,6 @@ async function loadAllStories() {
       return;
     }
 
-    container.innerHTML = "";
 
     stories.forEach(story => {
       /* ---------- Story Card ---------- */
@@ -619,12 +872,19 @@ async function loadAllStories() {
     }); 
 
   } catch (err) {
+
     console.error(err);
-       container.innerHTML = `<div class="story" style="margin-left: 10px; width: 400px; flex-direction: column;">
- <p style="font-size: 26px; text-align: center; color: gray; font-weight: bold;" class="storyErr">Network error</p>
- <p style="font-size: 18px; text-align: center; color: gray; font-weight: bold;">Couldn't load stories due to internet connection. Please check your internet connection first!</p>
-      </div>`;
-      return;
+
+    loader.style.display = 'none';
+
+    container.innerHTML = `
+       <div class="story" style="margin-left: 10px; width: 400px; flex-direction: column;">
+         <p style="font-size: 26px; text-align: center; color: red; font-weight: bold;" class="storyErr">Network error</p>
+         <p style="font-size: 18px; text-align: center; color: gray; font-weight: bold;">Couldn't load stories due to internet connection. Please check your internet connection first!</p>
+         <button class="vibe-retry-btn" onclick="loadAllStories()">Retry</button>
+         
+       </div>`;
+  
    }
 
   }
@@ -982,19 +1242,18 @@ e.stopPropagation();
 
 let receiver_id ="";
 
-async function connect() {
+async function connect(reqBtn) {
 if(guest) return guestWarn();
 
-const el = document.querySelector("#connectionBtn");
+const el = reqBtn || document.querySelector("#connectionBtn");
 
-const user = localStorage.getItem('user');
-const u = JSON.parse(user);
-const sender_id = u.email;
+const user = JSON.parse(localStorage.getItem('user'));
+const sender_id = user.email;
 
         if(el){
             el.innerText = "On process..";
             el.disabled = true;
-            }
+         }
 
     try {
 
@@ -1034,6 +1293,269 @@ const sender_id = u.email;
 
 }
 
+async function handleFollow(followerEmail, followedId, reqBtn) {
+
+    reqBtn.innerText = 'On process..';
+    reqBtn.disabled = true;
+    
+    try {
+        const response = await fetch('https://page-server-jqce.onrender.com/follow', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                follower: followerEmail,
+                followed: followedId
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('Followed successfully! Updated followers:', result.followers);
+        reqBtn.innerText = 'Unfollow';
+        reqBtn.disabled = false;
+        reqBtn.onclick = () => handleUnfollow(followerEmail, followedId, reqBtn);
+        } else {
+            onalert(result.message);
+        reqBtn.innerText = 'Follow';
+        reqBtn.disabled = false;
+    
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        onalert('Failed to follow');
+        reqBtn.innerText = 'Follow';
+        reqBtn.disabled = false;
+    } 
+}
+
+async function handleUnfollow(followerEmail, followedId, reqBtn) {
+
+    reqBtn.innerText = 'On process..';
+    reqBtn.disabled = true;
+    
+    try {
+        const response = await fetch('https://page-server-jqce.onrender.com/unfollow', {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                follower: followerEmail,
+                followed: followedId
+            })
+        });
+
+        const result = await response.json();
+        
+        if (result.success) {
+            console.log('Unfollowed successfully! Updated followers:', result.followers);
+        reqBtn.innerText = 'Follow';
+        reqBtn.disabled = false;
+        reqBtn.onclick = () => handleFollow(followerEmail, followedId, reqBtn);
+        } else {
+            alert(result.message);
+        reqBtn.innerText = 'Unfollow';
+        reqBtn.disabled = false;
+        }
+    } catch (err) {
+        console.error('Error:', err);
+        reqBtn.innerText = 'Unfollow';
+        reqBtn.disabled = false;
+    }
+    
+}
+
+
+// ==================== JOIN GROUP ====================
+
+async function joinGroup(groupId, btn) {
+
+    btn.innerText = 'On process..';
+    btn.disabled = true;
+
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (!user || !user.email) {
+            onalert('Please sign in first.');
+            return;
+        }
+
+        const res = await fetch(
+            `https://group-server-xlcs.onrender.com/api/groups/${encodeURIComponent(groupId)}/join`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: user.email
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error('Req has not been sent');
+            onalert(data.error || data.message || 'Failed to join group.');
+            return;
+        }
+        
+        btn.innerText = 'Leave';
+        btn.disabled = false;
+        btn.onclick = () => leaveGroup(groupId, btn);
+
+        onalert(data.message || 'Successfully joined the group!');
+
+        console.log('Joined group:', data.group);
+
+        return data.group;
+
+    } catch (err) {
+        console.error('Join group error:', err);
+        onalert('Network error. Please try again.');
+        btn.innerText = 'Join';
+        btn.disabled = false;
+    }
+    
+}
+
+
+// ==================== LEAVE GROUP ====================
+
+async function leaveGroup(groupId, btn) {
+
+    btn.innerText = 'On process..';
+    btn.disabled = true;
+
+    try {
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (!user || !user.email) {
+            onalert('Please sign in first.');
+            return;
+        }
+
+        const res = await fetch(
+            `https://group-server-xlcs.onrender.com/api/groups/${encodeURIComponent(groupId)}/leave`,
+            {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    email: user.email
+                })
+            }
+        );
+
+        const data = await res.json();
+
+        if (!res.ok) {
+            throw new Error('Req has not been sent');
+            onalert(data.error || data.message || 'Failed to leave group.');
+            return;
+        }
+
+        onalert(data.message || 'Successfully left the group.');
+
+        btn.innerText = 'Join';
+        btn.disabled = false;
+        btn.onclick = () => joinGroup(groupId, btn);
+        console.log('Left group:', data.group);
+
+    } catch (err) {
+        btn.innerText = 'Leave';
+        btn.disabled = false;
+        console.error('Leave group error:', err);
+        onalert('Network error. Please try again.');
+    }
+   
+}
+
+async function positionCheck(email, type, btn) {
+
+     const u = JSON.parse(localStorage.getItem('user'));
+    
+    let API;
+    
+    if (type === 'id') {
+      API = `https://connection-server-9bzk.onrender.com/friends/${encodeURIComponent(email)}`;
+    } else if (type === 'page') {
+      API =`https://page-server-jqce.onrender.com/get-followers/${email}`  
+    } else if (type === 'group') {
+       API = `https://group-server-xlcs.onrender.com/api/groups/${email}`    
+    } else {
+        console.error('Type is required');
+        btn.style.display = 'none';
+        return;
+    } 
+    
+    try {
+    
+        const res = await fetch(API);
+        
+        if(!res.ok) {
+            throw new Error('Req has not been sent');
+            btn.style.display = 'none';
+            return;
+        }
+        
+        const data = await res.json();
+        
+        if (type === 'group') {
+
+         const admins = data.admin_email;
+         if(admins.includes(u.email)) {
+            btn.innerText = 'Admin'; 
+            btn.disabled = true;
+            return;
+         } 
+                
+         const members = data.members_email;
+         if(members.includes(u.email)) {
+            btn.innerText = 'Leave'; 
+            btn.onclick = () => console.log();
+            return;
+         } 
+         
+            btn.innerText = 'Join';          
+            btn.onclick = () => joinGroup(email, btn);
+                
+        } else if (type === "page") {
+
+          if(data.followers.includes(u.email)) {
+                btn.innerText = 'Unfollow';          
+                btn.onclick = () =>  handleUnfollow(u.email, email, btn);
+              
+          } else {
+                btn.innerText = 'Follow';          
+                btn.onclick = () => handleFollow(u.email, email, btn);
+              
+          }
+        } else {
+
+          for (const i of data.data) {
+            
+                if (i.sender_id === u.email || i.receiver_id === u.email) {
+                    btn.innerText = 'Connected';          
+                    btn.disabled = true;
+                    return;
+                }
+           }
+          
+           btn.innerText = 'Add Connection';          
+           btn.disabled = false;
+           btn.onclick = () => connect(btn);
+           receiver_id = email;          
+        }
+        
+    } catch(err) {
+        console.error(err);
+        btn.style.display = 'none';
+    }
+        
+}
 
 async function messageWithNexttalk() {
 if(guest) return guestWarn();
@@ -1079,18 +1601,33 @@ function startChatSession(friendEmail) {
   
 }
 
+function showOtherInfo(key, from) {
+
+    if (from === "id") {
+        showOtherProf(key);
+    } else if (from === "page") {
+        showOtherPage(key);        
+    } else if (from === "group") {
+        showOtherGroup(key);        
+    } else {
+        console.error('Type is required');
+        return;
+    }
+}
 
 async function showOtherProf(email) {
     const overlay = document.getElementById("otherProf");
     const upperlay = document.getElementById("othProfInfo");
     const nameEl = document.getElementById("othProfName");
-    const headerName = document.getElementById("headerName");
     const bioEl = document.getElementById("otherProfdiv");
     const picEl = document.getElementById("othProfPic");
     const postsDiv = document.getElementById("otherPosts");
+    const reelsDiv = document.getElementById("otherReels");
     const friendList = document.getElementById("showOnes");
     const postTab = document.getElementById('postTab');
     const clipTab = document.getElementById('clipTab');
+    const reqBtn = document.getElementById('connectionBtn');
+    
 
     overlay.classList.add("show");
 
@@ -1102,16 +1639,20 @@ async function showOtherProf(email) {
     
     postTab.addEventListener('click', () => {
       tabSelectOth(postTab);
+      postsDiv.innerHTML ="";
+      reelsDiv.innerHTML ="";
       loadProfilePosts(email, 'otherPosts');      
     });
     clipTab.addEventListener('click', () => {
       tabSelectOth(clipTab);
       postsDiv.innerHTML ="";
-      clipNovas(email, 'otherPosts');
+      reelsDiv.innerHTML ="";
+      clipNovas(email, 'otherReels');
          
     });
 
     postsDiv.innerHTML = "";
+    reelsDiv.innerHTML ="";
 
     const token = localStorage.getItem("token");
 
@@ -1135,7 +1676,7 @@ async function showOtherProf(email) {
         picEl.addEventListener('click', (e) => {
           disProf(user.avatar);   
         });
-        headerName.innerText = `Profile of "${user.username}"`;
+       
         upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
         
         $('othadd').innerText = user.address;
@@ -1144,13 +1685,212 @@ async function showOtherProf(email) {
         $('othgender').innerText = user.gender;
         $('othlang').innerText = user.language;
         $('othedu').innerText = user.education;
-
-loadConnections(receiver_id, 'showOnes');
-loadProfilePosts(email, 'otherPosts')
+        
+        positionCheck(email, 'id', reqBtn);
+        loadConnections(receiver_id, 'showOnes');
+        loadProfilePosts(email, 'otherPosts')
 
     } catch (err) {
         console.error(err);
-        postsDiv.innerHTML = "<p style='color:red;'>Failed to load posts</p>";
+        loadConnections('netErr', 'showOnes');
+        postsDiv.innerHTML = `
+         <div style="display: flex; justify-content: center; align-items: center; width: auto; min-height: 250px; padding: 20px;">
+        <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(200,200,200,0.2);">
+            <div style="font-size: 45px; margin-bottom: 10px;">⚠️</div>
+            <h2 style="color: #ff4d4d; font-size: 30px; margin-bottom: 8px;">Network Error</h2>
+            <p style="color: gray; font-size: 20px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
+            <button onclick="showOtherProf('${email}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
+                 Retry
+            </button>
+        </div>
+    </div>`;
+    }
+}
+
+function removeOtherGroup() {
+    const overlay = document.getElementById("groupShow");
+    const moreEl = document.getElementById("group-discription");
+    overlay.classList.remove('show');    
+    moreEl.innerHTML = '';
+}
+
+async function showOtherGroup(id) {
+    const overlay = document.getElementById("groupShow");
+    const upperlay = document.getElementById("groupInfo");
+    const nameEl = document.getElementById("groupProfName");
+    const bioEl = document.getElementById("groupProfdiv");
+    const picEl = document.getElementById("groupProfPic");
+    const postsDiv = document.getElementById("groupPosts");
+    const moreEl = document.getElementById("group-discription");
+    const btn = document.getElementById("joinBtn");
+    
+
+    overlay.classList.add("show");
+
+    moreEl.style = `
+         background: rgba(200,200,200,0.1);
+         padding: 20px;
+         margin: 20px;
+         border-radius: 20px;
+     `; 
+
+
+
+    BackManager.register(removeOtherGroup);
+
+    postsDiv.innerHTML = "";
+    
+    const token = "";
+
+    try {
+        const res = await fetch(`https://group-server-xlcs.onrender.com/api/groups/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!res.ok) throw new Error("Profile not found");
+        const user = await res.json();
+
+        nameEl.innerText = user.groupname;
+        bioEl.innerText = user.purpus;
+        picEl.src = user.avatar || "";
+        picEl.addEventListener('click', (e) => {
+          disProf(user.avatar);   
+        });
+        upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
+        
+        adminActiveLoad(user.admin_email, '#oth-group-admins');
+
+        loadActiveMembers(user.members_email, '#showMembers');
+        positionCheck(id, 'group', btn);
+        
+        if(user.purpus) {
+         const div = document.createElement('div');
+         div.style = `
+             font-size: 25px;
+             color: purple;
+             margin: 15px;
+             margin-left: 0;
+         `;
+         div.innerHTML = `<b>Purpus : ${user.purpus}</b>`;
+          moreEl.appendChild(div);
+         }    
+
+        if(user.short_discription) {
+          const div = document.createElement('div');
+         div.style = `
+             font-size: 22px;
+         `;
+         div.innerText = user.short_discription;
+         moreEl.appendChild(div);
+        }    
+
+        
+        loadProfilePosts(id, 'groupPosts')
+
+    } catch (err) {
+        console.error(err);
+        loadConnections('netErr', 'showOnes');
+        postsDiv.innerHTML = `
+         <div style="display: flex; justify-content: center; align-items: center; width: auto; min-height: 250px; padding: 20px;">
+        <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(200,200,200,0.2);">
+            <div style="font-size: 45px; margin-bottom: 10px;">⚠️</div>
+            <h2 style="color: #ff4d4d; font-size: 30px; margin-bottom: 8px;">Network Error</h2>
+            <p style="color: gray; font-size: 20px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
+            <button onclick="showOtherGroup('${id}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
+                 Retry
+            </button>
+        </div>
+    </div>`;
+    }
+}
+
+function removeOtherPage() {
+    const overlay = document.getElementById("pageShow");
+    overlay.classList.remove('show');    
+}
+
+async function showOtherPage(id) {
+    const overlay = document.getElementById("pageShow");
+    const upperlay = document.getElementById("pageInfo");
+    const nameEl = document.getElementById("pageProfName");
+    const picEl = document.getElementById("pageProfPic");
+    const postsDiv = document.getElementById("otherPagePosts");
+    const moreEl = document.getElementById("page-discription");
+    const btn = document.getElementById("followBtn");
+    
+    overlay.classList.add("show");
+
+    BackManager.register(removeOtherPage);
+
+    postsDiv.innerHTML = "";
+    
+    const token = "";
+
+    try {
+        const res = await fetch(`https://page-server-jqce.onrender.com/api/pages/${id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            }
+        );
+
+        if (!res.ok) { 
+            throw new Error("Profile not found");
+            return;
+        }
+        
+        const user = await res.json();
+        
+        nameEl.innerText = user.username;
+        picEl.src = user.avatar || "";
+        picEl.addEventListener('click', (e) => {
+          disProf(user.avatar);   
+        });
+        upperlay.style.backgroundImage = `url('${user.cover_photo}')`;
+        
+        user.websites.forEach(m => {
+            const div = document.createElement('div');
+            div.className = 'page-link-card';
+            div.innerHTML = `
+              <div>
+                <label>${m.title}</label>
+                <a class="site-links" href="${m.url}">VISIT SITE</a>
+              </div>
+
+              <div>
+                 <u>${m.url}</u>
+              </div>
+            `;
+        
+           moreEl.appendChild(div);
+        });
+
+        
+        positionCheck(id, 'page', btn);
+        
+        loadFollowers(id, '#showOtherFollowers');
+                
+        loadProfilePosts(id, 'otherPagePosts')
+
+    } catch (err) {
+        console.error(err);
+        loadConnections('netErr', 'showOnes');
+        postsDiv.innerHTML = `
+         <div style="display: flex; justify-content: center; align-items: center; width: auto; min-height: 250px; padding: 20px;">
+        <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(200,200,200,0.2);">
+            <div style="font-size: 45px; margin-bottom: 10px;">⚠️</div>
+            <h2 style="color: #ff4d4d; font-size: 30px; margin-bottom: 8px;">Network Error</h2>
+            <p style="color: gray; font-size: 20px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
+            <button onclick="showOtherProf('${email}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
+                 Retry
+            </button>
+        </div>
+    </div>`;
     }
 }
 
@@ -1163,23 +1903,18 @@ function remove() {
      const overlay = document.getElementById("otherProf");
     const upperlay = document.getElementById("othProfInfo");
     const nameEl = document.getElementById("othProfName");
-    const headerName = document.getElementById("headerName");
     const bioEl = document.getElementById("otherProfdiv");
     const picEl = document.getElementById("othProfPic");
     const postsDiv = document.getElementById("otherPosts");
     const friendList = document.getElementById("showOnes");
-    const resetbtn = 
-document.getElementById("connectionBtn");
 
     nameEl.innerText ="";
-    headerName.innerText ="";
     bioEl.innerText ="";
     picEl.src ="";
     postsDiv.innerHTML ="";
     friendList.innerHTML ="";
     receiver_id ="";
     overlay.classList.remove("show");
-    resetbtn.innerText = "Add Connection";
     resetbtn.disabled = false;
     BackManager.unregister(remove);
 }
@@ -1190,8 +1925,11 @@ function profile() {
 
 if(guest) return guestWarn();
 
-const u = JSON.parse(localStorage.getItem("user"));
-const s = JSON.parse(styleString);
+    const profileBtn = document.getElementById('profPicture');
+    profileBtn.disabled = true;
+
+    const u = returnUser();
+    const s = JSON.parse(styleString);
 
     const change = document.getElementById('allChange');
     
@@ -1215,64 +1953,13 @@ const s = JSON.parse(styleString);
   </td></tr></table>
       </div>
       
-      
-      <div style="position: relative; width: 100%;">
-       <a href="../pickInfo.html" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 999; position: absolute; right: 30px; display: flex; align-items: center;" id="infoBtn">   
-
-<span> + Add More Info</span>
-
-</a>
-       
-       </div>
+ <div id="moreInfo"></div>     
     
- <div class="Id-information" id="profileMore">
 
-<section>Address</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:map-pin.svg?color=%23475569">
-      <span id="add"></span>
-  </div> 
-  <section>Status</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:briefcase.svg?color=%23475569">
-      <span id="status"></span>
-  </div>
-  <section>Marital Status</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:heart.svg?color=%23475569">
-      <span id="merst"></span>
-  </div> 
-  <section>Gender</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:user.svg?color=%23475569">
-      <span id="gender"></span>
-  </div> 
-  <section>Language</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:languages.svg?color=%23475569">
-      <span id="lang"></span>
-  </div>
-  <section>Education</section>
-  <div>
-      <img src="https://api.iconify.design/lucide:graduation-cap.svg?color=%23475569">
-      <span id="edu"></span>
-  </div>
-     
-  </div> 
-    <br><br><br> 
- 
-  <h1 class="storyErr">Connected Persons</h1><hr>
-  <div id="connectionList">
-<div class="friendShow">
-  <div class="main-loading-focus"></div>
-  <br>
-  <h3>Loading ones...</h3>  
-</div>      
-  </div><hr>
-  <div class="tab-switching">
+  <div class="tab-switching" id="tabs" style="display: none">
       
     <div class="tab-items active" onclick="profile(); loadProfile();">Posts</div>
-    <div class="tab-items" onclick="tabSelect(this); ownerClips('${u.email}', '${u.avatar}')">ClipNovas</div>
+    <div class="tab-items" onclick="tabSelect(this); ownerClips('${u.unique}', '${u.avatar}')">ClipNovas</div>
   </div>
   
  <div id="ownerPosts"></div>
@@ -1280,43 +1967,281 @@ const s = JSON.parse(styleString);
     
     `;
     
-
-    loadConnections(u.email, 'connectionList');
-    darkModeActivate(isDark);
-    loadProfilePosts(u.email, 'ownerPosts');
-    const more = localStorage.getItem('info');
-    
-    if (!more || more === null) {
-     document.getElementById('profileMore').outerHTML = '' ;
-
+    if(u.type === 'page') {
+        moreInfoPage();
+        loadFollowers(u.unique, '#followerList');  
+        $('editbtn').style.display = 'none';      
+    } else if (u.type === 'group') {
+        moreInfoGroup(); 
+        adminActiveLoad(u.admin_email, '#admin-panel div');
+        loadActiveMembers(u.members_email, '#memberList');   
     } else {
-    
-    const m = JSON.parse(more);
-    
-    $('infoBtn').innerHTML = ` <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
-          <span> Edit info</span>` ;
-    
-    $('add').innerText = m.address;
-    $('status').innerText = m.status || m.status_custom;
-    $('merst').innerText = m.marital_status || m.marital_custom;
-    $('gender').innerText = m.gender || m.gender_custom;
-    $('lang').innerText = m.language || m.language_custom;
-    $('edu').innerText = m.education || m.education_custom;
-
+        moreInfoAcc();
+        loadConnections(u.unique, 'connectionList');
+        $('editbtn').style.display = 'flex';      
+        $('tabs').style.display = 'flex';      
     }
+
+        loadProfilePosts(u.unique, 'ownerPosts');    
+
+        darkModeActivate(isDark);
     
 
-document.getElementById('profPic').src =`${u.avatar}`;       
-document.getElementById('userName').innerHTML = `${u.username}`;       
-document.getElementById('profileBio').innerHTML = `${u.bio}`; 
-document.getElementById('profdiv').style.backgroundImage =
+    document.getElementById('profPic').src =`${u.avatar}`;       
+    document.getElementById('userName').innerHTML = `${u.username}`;  
+         
+    if(u.bio) {
+        document.getElementById('profileBio').innerHTML = `${u.bio}`;         
+    } else {
+        document.getElementById('profileBio').style.display = 'none';         
+        
+    }
+    document.getElementById('profdiv').style.backgroundImage =
   `url('${u.cover_photo}')`;
 
     BackManager.register(home);      
-
 }
 
+
+function moreInfoAcc() {
+    const container = document.getElementById('moreInfo');
+    const more = localStorage.getItem('info');
+    const m = JSON.parse(more);
+    
+    container.innerHTML = `
+
+      <div style="position: relative; width: 100%;">
+       <a href="../pickInfo.html" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 900; position: absolute; right: 30px; display: flex; align-items: center;" id="infoBtn">   
+
+ <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
+          <span> Edit info</span>
+
+</a>
+       
+       </div>
+<div class="Id-information" id="profileMore">
+<section>Address</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:map-pin.svg?color=%23475569">
+      <span id="add">${m.address}</span>
+  </div> 
+  <section>Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:briefcase.svg?color=%23475569">
+      <span id="status">${m.status || m.status_custom}</span>
+  </div>
+  <section>Marital Status</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:heart.svg?color=%23475569">
+      <span id="merst">${m.marital_status || m.marital_custom}</span>
+  </div> 
+  <section>Gender</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:user.svg?color=%23475569">
+      <span id="gender">${m.gender || m.gender_custom}</span>
+  </div> 
+  <section>Language</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:languages.svg?color=%23475569">
+      <span id="lang">${m.language || m.language_custom}</span>
+  </div>
+  <section>Education</section>
+  <div>
+      <img src="https://api.iconify.design/lucide:graduation-cap.svg?color=%23475569">
+      <span id="edu">${m.education || m.education_custom}</span>
+  </div>
+     
+  </div> 
+    <br><br><br> 
+ 
+  <h1 class="storyErr">Connected Persons</h1><hr>
+  <div id="connectionList">
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  </div><hr>
+    
+    `;
+    
+    
+}
+
+function moreInfoPage() {
+
+    const container = document.getElementById('moreInfo');
+    const more = returnUser();
+    const m = more.websites || [];
+    
+    container.innerHTML = `
+
+      <div style="position: relative; width: 100%;">
+       <button onclick="location.href = '../pageEdit.html'" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 900; position: absolute; right: 30px; display: flex; align-items: center; border: none;" id="infoBtn">   
+
+ <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
+          <span> Edit page </span>
+
+</button>
+       
+       </div>
+       
+<div id="pageMore">
+    <div style='padding-top: 100px; background: none;'></div>
+</div> 
+
+    <br><br><br> 
+ 
+  <h1 class="storyErr">Followers</h1><hr>
+  <div id="followerList">
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  </div><hr>
+    
+    `;
+
+
+    const urls = document.getElementById('pageMore');
+    m.forEach(m => {
+        const div = document.createElement('div');
+        div.className = 'page-link-card';
+        div.innerHTML = `
+          <div>
+            <label>${m.title}</label>
+            <a class="site-links" href="${m.url}">VISIT SITE</a>
+          </div>
+
+          <div>
+             <u>${m.url}</u>
+          </div>
+        `;
+        
+       urls.appendChild(div);
+    });
+    
+}
+
+function moreInfoGroup() {
+
+    const container = document.getElementById('moreInfo');
+    const more = returnUser();
+    const members = more.members_email || [];
+    const admins = more.admin_email || [];
+    
+    container.innerHTML = `
+
+      <div style="position: relative; width: 100%;">
+       <button onclick="location.href = '../groupEdit.html'" style="margin: 20px; padding: 10px; font-size: 20px; width: auto; box-shadow: 2px 2px 7px lightgray; border-radius: 14px; color: black; text-decoration: none; z-index: 900; position: absolute; right: 30px; display: flex; align-items: center; border: none;" id="infoBtn">   
+
+ <img src="https://i.ibb.co.com/HfyLkxKy/edit.png" alt="" style="width: 20px; margin-right: 10px">
+          <span> Edit group </span>
+
+</button>
+       
+       </div>
+
+    <div>
+    <div style="padding-top: 100px"></div> 
+    <div id="groupMore"></div>
+    </div> 
+
+   <div id="admin-panel">
+       <h1 class="storyErr" style="margin-top: 100px;">Admins</h1>
+       <div>
+           <div class="postLoad"></div>
+       </div>
+   </div>
+
+    <br><br><br> 
+ 
+  <h1 class="storyErr">Members</h1><hr>
+  <div id="memberList">
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+  </div>      
+
+  </div><hr>
+    
+    `;
+
+    const moreEl = document.getElementById('groupMore');
+    moreEl.style = `
+         background: rgba(200,200,200,0.1);
+         padding: 20px;
+         margin: 20px;
+         border-radius: 20px;
+     `; 
+    if(more.purpus) {
+     const div = document.createElement('div');
+     div.style = `
+         font-size: 25px;
+         color: purple;
+         margin: 15px;
+         margin-left: 0;
+     `;
+     div.innerHTML = `<b>Purpus : ${more.purpus}</b>`;
+     moreEl.appendChild(div);
+    }    
+
+    if(more.short_discription) {
+     const div = document.createElement('div');
+     div.style = `
+         font-size: 22px;
+     `;
+     div.innerText = more.short_discription;
+     moreEl.appendChild(div);
+    }    
+}
+
+
 function home() {
+    const profileBtn = document.getElementById('profPicture');
     const change = document.getElementById('allChange');
     const m = localStorage.getItem('dark');
     
@@ -1326,14 +2251,14 @@ function home() {
            location.reload();
        }
      darkModeActivate(m);
+     profileBtn.disabled = false;
 }
 
 function ownerClips(email, avatar) {
     const allChange = document.getElementById('ownerPosts');
     
     allChange.innerHTML = `
-        <div id="showClip"></div> 
-    `;
+        <div id="showClip"></div>`;
     
      document.getElementById('showClip').innerHTML = reelUploadBtn;
    
@@ -1362,7 +2287,7 @@ function loadReels(e) {
     return;
   }
   
-  const u = JSON.parse(localStorage.getItem("user"));
+  const u = returnUser();
 
   selectedReels = file;
   selectedReelSrc = URL.createObjectURL(file);
@@ -1381,8 +2306,29 @@ const reelUploadBtn = `
      <div class="clipUpload" id="clipUpload" onclick="helperForLoad()">
      <input type="file" accept="video/*" onchange="loadReels(event)" id="takeClip" hidden>
       <div class="labal">
-   <img src="https://i.ibb.co.com/F4W5LC2f/video.png" alt="" width="60" border="0">   
-      <div class="labal-text">Create ClipNova</div>
+           <svg width="50" height="50" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Horizontal Line -->
+  <line 
+    x1="8" 
+    y1="32" 
+    x2="56" 
+    y2="32" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+  
+  <!-- Vertical Line -->
+  <line 
+    x1="32" 
+    y1="8" 
+    x2="32" 
+    y2="56" 
+    stroke="white" 
+    stroke-width="3.5" 
+    stroke-linecap="round"
+  />
+    </svg>
       </div>
   </div>
 `;
@@ -1401,7 +2347,7 @@ async function uploadClip() {
     let el = qs('.clip-header button');
 
     try {
-        const u = JSON.parse(localStorage.getItem("user"));
+        const u = prepearUserForSend('not');
         let email = u.email || "";
         let username = u.username || "";
         let avatar = u.avatar || "";
@@ -1471,25 +2417,45 @@ async function uploadClip() {
 }
 
 async function clipNovas(email, place) {
-    let pl = document.getElementById(place);
-    if (!pl) return; // এলিমেন্ট না থাকলে থেমে যাবে
 
-    // লোডার যোগ করা
-    let loaderDiv = document.createElement('div');
-    loaderDiv.className = 'loaderClip';
-    loaderDiv.innerHTML = `<div></div>`;
-    pl.appendChild(loaderDiv);
+    let pl = document.getElementById(place);
+    if (!pl) return; 
+    
+    let el =     document.getElementById(`netErrClip${place}`);
+
+    if(el) el.style.display = 'none';
+        
+    const u = returnUser();
+    
+    let i;
+    if(email === u.unique) {i = 5}
+    else {i = 6}
+
+    for (let j = 1; j <= i; j++) {
+        let loaderDiv = document.createElement('div');
+        loaderDiv.className = 'loaderClip';
+        pl.appendChild(loaderDiv);
+     }
+     
+        const loaders = pl.querySelectorAll('.loaderClip');
 
     try {
         const response = await fetch(`https://reels-server-40uv.onrender.com/api/reels/user?email=${encodeURIComponent(email)}`);
         const data = await response.json();
 
-        // সফলভাবে ডাটা আসলে লোডার রিমুভ করে দেওয়া
-        loaderDiv.remove();
+        loaders.forEach((i) => {i.style.display = 'none'});
 
         if (response.ok) {
+        
+           if(data.length < 1) {
+                pl.innerHTML = `
+             <div>
+                 No clips yet
+             </div>
+            `               
+           }
           
-            data.forEach(item => { // 변수 이름 conflict এড়াতে item দেওয়া হলো
+            data.forEach(item => {
                 const showClip = document.createElement('div');
                 showClip.innerHTML = `
                 <button style="border: none; background: none; animation: divAppear 0.35s ease-in forwards;" id="openBtn${item.id}">
@@ -1506,18 +2472,38 @@ async function clipNovas(email, place) {
 
         } else {
             console.error("Error fetching reels:", data.error);
-            alert(data.error || "Failed to load reels"); // onalert এর বদলে standard alert ব্যবহার করা ভালো
+            onalert(data.error || "Failed to load reels");
         }
 
     } catch (err) {
         console.error("Network or Server error:", err);
-        loaderDiv.remove();
+        loaders.forEach((i) => {i.style.display = 'none'});
         
-        // শুধু নেটওয়ার্ক বা সার্ভার এরর হলেই এই মেসেজ দেখাবে
-        let errMessage = document.createElement('div');
-        errMessage.innerText = 'Network error';
-        errMessage.style = 'color:red; margin: 30px; font-size: 20px; font-weight: bold';
+     pl.innerHTML = '';
+        
+     if(place === 'showClip') {
+     document.getElementById('showClip').innerHTML = reelUploadBtn;
+   
+    const el = document.getElementById('clipUpload');
+            if (el) {
+        el.style.backgroundImage = `url('${u.avatar}')`;
+              }
+            
+     }
+            
+     let errMessage = document.createElement('div');
+        errMessage.className = 'netErrClip';
+        errMessage.id = `netErrClip${place}`;
+        errMessage.innerHTML = `
+       <p style="color: red; font-size: 30px; font-weight: bold; text-shadow: 0 0 3px white; text-align: center;">Network Error</p> 
+       <button onclick="clipNovas('${email}', '${place}')" class="vibe-retry-btn">Retry</button>
+        `;
+        errMessage.style = 'display: flex; flex-direction: column; justify-content: center; align-items: center;';
         pl.appendChild(errMessage);
+        if(el) el.style.display = 'flex';
+
+    } finally {
+        darkModeActivate(isDark);
     }
 }
 
@@ -1535,6 +2521,7 @@ function tabSelectOth(btnEl) {
     btnEl.classList.add('active');
 }
 
+let connectEmail;
 async function loadConnections(email, place) {
 
     const display = document.getElementById(place);
@@ -1542,6 +2529,13 @@ async function loadConnections(email, place) {
      const token = localStorage.getItem('token');
 
     try {
+    
+        if(email === 'netErr') {
+          throw new Error('Network error');
+          return;
+        } else {
+          connectEmail = email;
+        }
 
         const res = await fetch(`https://connection-server-9bzk.onrender.com/friends/${encodeURIComponent(email)}`);
 
@@ -1555,12 +2549,11 @@ async function loadConnections(email, place) {
 
         const friendsArray = friend.data || friend;
 
-if(friendsArray.length == 0) {
-display.innerHTML= `
-<div class="friendShow">
-  <h3>No connected person</h3>  
-</div>      
-`
+        if(friendsArray.length == 0) {
+                display.innerHTML= `
+                    <div class="friendShow">
+                          <h3>No connected person</h3>  
+                    </div>`
     return;
 }
 
@@ -1598,7 +2591,7 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
             const prof = document.createElement('div');
 
             prof.innerHTML = `
-<div class="friendShow" onclick="showOtherProf('${f.profile.email}')">
+<div class="friendShow" onclick="showOtherInfo('${f.profile.email}', 'id')">
    <img src="${f.profile.avatar}" alt="${f.profile.username}">
    <h3>${f.profile.username}</h3>
    <p>${f.profile.email}</p>
@@ -1609,10 +2602,218 @@ oth = f.sender_id == email? f.receiver_id : f.sender_id
         });
 
     } catch (err) {
-        onalert('Something went wrong');
-        console.error(err)
+    
+        console.error(err);
+        
+        display.innerHTML= `
+          <div class="friendShow" style='background: rgba(255,0,0,0.2); border: 1px solid red;'>
+            <h3 style="color: red; font-size: 25px;">Network <br> Error</h3>  
+            <button class="vibe-retry-btn" onclick="loadConnections('${connectEmail}', '${place}')">
+                Retry
+            </button>
+          </div>`;
+            
     }
 }    
+
+
+async function loadFollowers(userId, containerSelector) {
+
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+
+    try {
+        const res = await fetch(`https://page-server-jqce.onrender.com/get-followers/${userId}`);
+        const data = await res.json();
+        
+        if (!res.ok || !data.success || !data.followers || data.followers.length === 0) {
+            container.innerHTML = '<p style="color: #94a3b8; text-align: center;">No followers yet.</p>';
+            return;
+        }
+
+        const emailArray = data.followers;
+
+        const userPromises = emailArray.map(async (email) => {
+            try {
+                const userRes = await fetch(`https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(email)}`);
+                const userData = await userRes.json();
+                return userData; 
+
+            } catch (err) {
+                console.error(`Failed to fetch user data for ${email}:`, err);
+                onalert('Something went wrong');
+                return null;
+            }
+        });
+
+        const users = await Promise.all(userPromises);
+        
+        const validUsers = users.filter(user => user !== null);
+        
+        container.innerHTML = '';
+
+        if (validUsers.length === 0) {
+            container.innerHTML = '<p style="color: #94a3b8; text-align: center;">No followers found.</p>';
+            return;
+        }
+
+        validUsers.forEach(user => {
+            const card = document.createElement('div');
+
+            card.innerHTML = `
+            <div class="friendShow" onclick="showOtherInfo('${user.email}', 'id')">
+   <img src="${user.avatar}" alt="${user.username}">
+   <h3>${user.username}</h3>
+   <p>${user.email}</p>
+</div>
+            `;
+
+            container.appendChild(card);
+        });
+
+    } catch (error) {
+        console.error('Error loading followers:', error);
+        container.innerHTML = `<div class="friendShow" style='background: rgba(255,0,0,0.2); border: 1px solid red;'>
+            <h3 style="color: red; font-size: 25px;">Network <br> Error</h3>  
+            <button class="vibe-retry-btn" onclick="loadFollowers('${userId}', '${containerSelector}')">
+                Retry
+            </button>
+          </div>`;
+    } 
+}
+
+
+async function loadGroupMember(email) {
+
+    let emailArray;
+
+    try {
+        emailArray = Array.isArray(email)
+            ? email
+            : JSON.parse(decodeURIComponent(email));
+    } catch (err) {
+        console.error('Invalid email data:', err);
+
+        return {
+            failed: true,
+            message: 'Invalid email data'
+        };
+    }
+
+    if (!Array.isArray(emailArray)) {
+        return {
+            failed: true,
+            message: 'Email data must be an array'
+        };
+    }
+
+    const userPromises = emailArray.map(async (memberEmail) => {
+        try {
+            const userRes = await fetch(
+                `https://users-server-xyvg.onrender.com/me?email=${encodeURIComponent(memberEmail)}`
+            );
+
+            if (!userRes.ok) {
+                throw new Error(`HTTP Error: ${userRes.status}`);
+            }
+
+            return await userRes.json();
+
+        } catch (err) {
+            console.error(
+                `Failed to fetch user data for ${memberEmail}:`,
+                err
+            );
+
+            return null;
+        }
+    });
+
+    const users = await Promise.all(userPromises);
+
+    const validUsers = users.filter(user => user !== null);
+
+    console.log('users:', validUsers);
+
+    if (validUsers.length > 0) {
+        return validUsers;
+    }
+
+    return {
+        failed: true,
+        message: 'Network Error or no users found'
+    };
+}
+
+
+async function adminActiveLoad(email, place) {
+
+    const container = document.querySelector(place);
+    
+    const admins = await loadGroupMember(email);
+    
+    container.innerHTML = '';
+    
+    if(admins.failed) {
+        container.innerHTML = `
+           <div class="admin-card" style="font-size: 30px; color: red;">
+              NETWORK ERROR 
+           </div>
+        `;
+        return;
+    }
+    
+    admins.forEach(a => {
+    
+        const adminCard = document.createElement('div');
+        adminCard.onclick = () => showOtherInfo(a.email, 'id');
+        adminCard.className = 'admin-card';
+        adminCard.innerHTML = `
+         <img src="${a.avatar}" alt="">
+         <div>
+             <h2>${a.username}</h2>
+             <p>${a.email}</p>
+         </div>`;
+         
+         container.appendChild(adminCard);
+    });
+    
+}
+
+
+async function loadActiveMembers(email, place) {
+
+    const container = document.querySelector(place);
+    
+    const members = await loadGroupMember(email);
+    
+    container.innerHTML = '';
+    if(members.failed) {
+        container.innerHTML = `
+           <div class="admin-card" style="font-size: 30px; color: red;">
+              NETWORK ERROR 
+           </div>
+        `;
+        return;
+    }
+    members.forEach(m => {
+    
+        const memberCard = document.createElement('div');
+        memberCard.innerHTML = `
+            <div class="friendShow" onclick="showOtherProf('${m.email}')">
+               <img src="${m.avatar}" alt="${m.username}">
+               <h3>${m.username}</h3>
+               <p>${m.email}</p>
+            </div>
+`;
+         
+         container.appendChild(memberCard);
+    });
+    
+    
+}
+
+
 
 function disProf(avatar) {
 document.getElementById("displayPic").src = avatar;
@@ -1768,6 +2969,7 @@ const taggedAllBtns = document.querySelectorAll('.editLowerBtns button section')
 }
 
 function removeTag(email) {
+    const user = returnUser();
 
     taggedEmailList = taggedEmailList.filter(
         user => user.email !== email
@@ -1978,7 +3180,6 @@ function closePostBG() {
  const m = document.getElementById("bgPost");
  m.style.opacity = '0';
  m.style.bottom = '-300px';    
-    postOrEdit = "";
 }
 
 function removePostingImg() {
@@ -2083,8 +3284,7 @@ document.getElementById("searchresult").innerHTML = `<div style="color: red; fon
 }
 
 function createpost(id) {
-    const user = localStorage.getItem("user");
-    const u = JSON.parse(user);
+    const u = returnUser();
 
     const nameEl1 = document.getElementById('idName');
     const nameEl2 = document.getElementById('accName');
@@ -2100,16 +3300,23 @@ function createpost(id) {
         document.getElementById(id).classList.add("show");
     }, 10);
     
-
+    if(id === "postpage") {
+        postOrEdit = 'postword';
+    }else if (id === 'IMGpost'){
+        postOrEdit = 'IMGword';        
+    }
     BackManager.register(closePostpage);
 }
+
 
 function closePostpage(){
    const pad1 = document.getElementById("postpage");
    const pad2 = document.getElementById("IMGpost");
+   const btn = document.getElementById('bgDefaultBtn');
             
     pad1.classList.remove("show");
     pad2.classList.remove("show");
+    btn.click();
    
     document.getElementById('location').innerText="___";
     document.getElementById('feeling').innerText ="___";
@@ -2118,14 +3325,11 @@ function closePostpage(){
  }
 
 
-let postOrEdit;
-
 /* =========================
    BACKGROUND + TEXT STYLE
 ========================= */
 function textBG(c1, c2, bg) {
     const i = document.getElementById(postOrEdit);
-    
    
     if (c1 && c2) {
         i.style.background = `linear-gradient(135deg, ${c1}, ${c2})`;
@@ -2137,9 +3341,12 @@ function textBG(c1, c2, bg) {
             
             if(isDark === 'false') {
                 i.style.color = 'rgb(0,0,0)';                
+            } else if(isDark === 'true') {
+                i.style.color = 'rgb(255,255,255)';                                
             } else {
-                i.style.color = 'rgb(255,255,255l';                                
-            }
+                console.warn('Mode is required');
+            
+        }
             
         } else {
             i.style.color = "white";
@@ -2204,7 +3411,6 @@ function closeFontSize() {
     const f = document.getElementById("textFont");
     f.style.transform = "translateY(700px)";
   BackManager.unregister(closeFontSize);
-  postOrEdit = "";    
 }
 
 function changeSize(size) {
@@ -2223,8 +3429,10 @@ function changeSize(size) {
    COLLECT POST DATA
 ========================= */
 function collectPostData() {
+
     const plainText = document.getElementById("postword");
     const imagePost = document.getElementById("Imgword");
+
     let el ="";
     el = plainText;
     if (!plainText || !plainText.value.trim()) {
@@ -2232,10 +3440,16 @@ function collectPostData() {
     }
     
     const cs = window.getComputedStyle(el);
+    
     let textColor = cs.color;
-    if (textColor === 'white' || textColor === 'rgb(255, 255, 255)') {
+    let textBg = cs.background;
+    let targetBg = 'rgba(0, 0, 0, 0) none repeat scroll 0% 0% / auto padding-box border-box';
+    
+
+    if(isDark === 'true' && textBg === targetBg) {
         textColor = 'black';
     }
+
     return {
         text: el.value || el.innerText,
 
@@ -2266,7 +3480,8 @@ function collectPostData() {
 
 /* === 1. POST SUBMIT (CLEAN & PRODUCTION READY) === */
 async function postsubmit() {
-    const user = JSON.parse(localStorage.getItem("user"));
+
+    const user = prepearUserForSend('allowed');
 
     if (!user?.username || !user?.email) {
         onPostAlert("User not found!");
@@ -2282,15 +3497,17 @@ async function postsubmit() {
 
     const loader = document.getElementById("postLoading");
     if (loader) loader.style.display = "flex";
-    closePostpage();
-
     const btn = document.getElementById("postsubmit");
     if (btn) {
         btn.style.background = "gray";
         btn.disabled = true;
     }
+    
 
     try {
+    
+        closePostpage();
+
         const payload = {
             user: {
                 username: user.username,
@@ -2302,11 +3519,12 @@ async function postsubmit() {
                 style: postData.style || {},
                 image: postData.image || ""
             },
+            from: user.from || 'id',
             feelings: postData.feelings || null,
             location: postData.location || null,
             others: Array.isArray(postData.others) ? postData.others : []
         };
-
+        
         const res = await fetch("https://posts-server-kmha.onrender.com/post", {
             method: "POST",
             headers: {
@@ -2319,6 +3537,7 @@ async function postsubmit() {
 
         if (!res.ok) {
             onPostAlert(data?.message || "Server error!");
+            throw new Error(data?.message);
             return;
         }
 
@@ -2600,7 +3819,7 @@ async function comText(postId) {
             return;
         }
 
-        const currentUser = JSON.parse(localStorage.getItem("user")); 
+        const currentUser = returnUser(); 
         const currentEmail = currentUser ? currentUser.email : null;
 
         box.innerHTML = "";
@@ -2700,7 +3919,7 @@ async function storyComPort(postId) {
             return;
         }
 
-        const currentUser = JSON.parse(localStorage.getItem("user")); 
+        const currentUser = returnUser(); 
 
         const currentEmail = currentUser ? currentUser.email : null;
 
@@ -2837,7 +4056,7 @@ async function sendCom(postId) {
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
     if (!user || !user.username || !user.email) {
         onalert("User not found!");
         return;
@@ -2893,7 +4112,7 @@ async function sendStoryCom(postId) {
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
     if (!user || !user.username || !user.email) {
         onalert("User not found!");
         return;
@@ -2944,7 +4163,7 @@ document.querySelectorAll(".appearFlex").forEach(p => {
                 });
 
   try {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
     
 
     if (!user || !user.email || !user.username) {
@@ -2992,9 +4211,8 @@ if(el) el.innerHTML = emoji;
 
 
 function loadProfile() {
-    const user = localStorage.getItem("user");
     if(user) {
-        const u = JSON.parse(user);
+        const u = returnUser();
 document.getElementById("userName").innerHTML = u.username;
 document.getElementById("profileBio").innerHTML = u.bio;
 
@@ -3014,12 +4232,14 @@ async function loadProfilePosts(email, place) {
         return;
     }
         const contentDiv = document.getElementById(place);
+        const user = returnUser();
         
         contentDiv.innerHTML = `
         <div class="postLoad"></div>
         <div class="postLoad"></div>
         <div class="postLoad"></div>
         `;
+         darkModeActivate(isDark);
 
     try {
     
@@ -3051,7 +4271,7 @@ async function loadProfilePosts(email, place) {
         
         contentDiv.innerHTML = '';
         data.forEach(post => {
-
+        
             const safeText = escapeHTML(post.post?.text || "");
             const htmlText = safeText.replace(/\n/g, "<br>");
 
@@ -3072,10 +4292,10 @@ async function loadProfilePosts(email, place) {
  <div style="visibility: hidden" id="postDiv${post.id}${place}"></div>
 
     <div style="display: flex; width: 100%;">
-<img src="${post.avatar}" style="width: 60px; height: 60px; border-radius: 90px; border: 4px solid white; margin:10px;" onclick="showOtherProf('${post.email}')">
+<img src="${post.avatar}" style="width: 60px; height: 60px; border-radius: 90px; border: 4px solid white; margin:10px;" onclick="showOtherInfo('${post.email}', '${post.from}')">
 
 
-<h2 onclick="showOtherProf('${post.email}')">
+<h2 onclick="showOtherInfo('${post.email}', '${post.from}')">
 <button class="profileBtn"
  data-email="${emailSafe}"
  style="background:none;border:none;font-size:25px;font-weight:bold;color:green;">
@@ -3123,6 +4343,9 @@ onclick="editPost('${safePost}'); closealert('menu${post.id}')">Edit</button>
 
 </div>
 
+<button id="connectBtn${post.id}${place}" style="background: none; border: 1px solid blue; font-size: 25px; font-weight: bold; margin: 10px; margin-left: 10%; color: blue; padding: 10px; border-radius: 12px; min-width: 120px; height: 60px; display: flex; align-items: center; justify-content: center;"></button>
+
+
 <div class="othInfo" id="othInfo${post.id}${place}">
 <p class="postInfo" id="feelShow" style="display:${post.feelings ? 'block' : 'none'};"><img src="https://i.ibb.co.com/My4XHcsy/happy.png"> ${post.feelings}</p>
 
@@ -3142,7 +4365,7 @@ onclick="editPost('${safePost}'); closealert('menu${post.id}')">Edit</button>
 <p class="postText" id="textPost${post.id}" name="textPost${post.id}${place}" style="font-size:30px; padding:20px; border-radius:5px;"></p>
 
 ${post.post?.image ? `
-<div id="box${post.id}" style="display: flex; justify-content: center; align-items: center; background: black;">
+<div id="box${post.id}" style="display: flex; justify-content: center; align-items: center; background: none;">
     <img src="${post.post.image}" style="max-width: 100%; border: 1px solid black; border-radius: 6px; cursor:pointer;" onclick="onDisImg('${post.post.image}', '${post.post.text || ''}')">
 </div>` : ''}
 
@@ -3232,7 +4455,13 @@ div.querySelector(".postText").innerHTML = htmlText;
 
                 reactDiv.appendChild(reactBtn);                    
             });
-
+            
+            const reqBtn = document.getElementById(`connectBtn${post.id}${place}`);
+            
+           
+            
+            const profBtn = document.getElementById(`btn${post.id}${place}`);
+            positionCheck(post.email, post.from, reqBtn);
             updateCounts(post.id);
             darkModeActivate(isDark);
             applyPostStyle(div.querySelector(".postText"), post.post?.style);
@@ -3293,13 +4522,13 @@ div.querySelector(".postText").innerHTML = htmlText;
     contentDiv.innerHTML = '';
     contentDiv.innerHTML = `
     
-    <div style="display: flex; justify-content: center; align-items: center; width: 100%; min-height: 250px; padding: 20px;">
+    <div style="display: flex; justify-content: center; align-items: center; width: auto; min-height: 250px; padding: 20px;">
         <div style="text-align: center; background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid rgba(200,200,200,0.2);">
             <div style="font-size: 45px; margin-bottom: 10px;">⚠️</div>
-            <h2 style="color: #ff4d4d; font-size: 20px; margin-bottom: 8px;">Network Error</h2>
-            <p style="color: gray; font-size: 15px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
-            <button onclick="loadProfilePosts('${email || ''}', '${place}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 16px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
-                🔄 Retry
+            <h2 style="color: #ff4d4d; font-size: 30px; margin-bottom: 8px;">Network Error</h2>
+            <p style="color: gray; font-size: 20px; margin-bottom: 20px;">Failed to load posts. Please check your connection.</p>
+            <button onclick="loadProfilePosts('${email || ''}', '${place}')" style="background: linear-gradient(135deg, #ff8008, #ffc837); color: white; padding: 10px 25px; border-radius: 25px; border: none; font-size: 22px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(255,128,8,0.3);">
+                 Retry
             </button>
         </div>
     </div>`;
@@ -3512,7 +4741,7 @@ function collectEditData(id) {
 // 🔹 Save Post (PUT)
 async function savePost(id) {
     const editBtn = document.getElementById(`editBtn${id}`);
-    const user = JSON.parse(localStorage.getItem('user'));
+    const user = returnUser();
     
     editBtn.innerHTML = `
         <div style="border: 3px solid gray; border-top: 3px solid white; height: 80%; aspect-ratio: 1 / 1; border-radius: 50%;  animation: spin 1.5s linear infinite;"></div>`;
@@ -3557,7 +4786,7 @@ function deletePost(id) {
     }
     
 async function DeletePost(id){
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
     const deleteDiv = document.getElementById(`showPost${id}`);
     
     let preserve = deleteDiv.innerHTML;
@@ -3604,7 +4833,7 @@ function editCom(comId, postId, encodedText) {
 
     document.getElementById(`saveBtn${comId}`).onclick = async () => {
 
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
         const newComment = document.getElementById(`editArea${comId}`).value.trim();
         if (!newComment) return onalert("Comment cannot be empty!");
 
@@ -3633,7 +4862,7 @@ function editCom(comId, postId, encodedText) {
 
 // 🔹 Delete comment
 async function deleteCom(commentId, postId) {
-    const user = JSON.parse(localStorage.getItem("user"));
+    const user = returnUser();
     if (!user || !user.email) {
         onalert("User not found!");
         return;
@@ -3764,6 +4993,12 @@ function onconfirm(text, word, btn, func, innB, color) {
   confirmBtn.appendChild(button);
 }
 
+function closeAlert(){
+  document.getElementById("alertOverlay").classList.remove("show");
+  document.getElementById("customAlert").classList.remove("show");
+}
+
+
 function openShareModal() {
     document.getElementById('vibeModal').style.display = 'flex';
   BackManager.register(closeModalDirect);
@@ -3783,7 +5018,7 @@ function closeShareModal(e) {
 async function sendvibe() {
 if(guest) return guestWarn();
 
-    const u = JSON.parse(localStorage.getItem("user")) || {};
+    const u = prepearUserForSend('not');
 
     let e = u?.email;
     let un = u?.username;
@@ -3803,7 +5038,7 @@ if(guest) return guestWarn();
         email: e,
         username: un,
         vibe: t,
-        avatar: av
+        avatar: av,
     };
     
 
@@ -3842,6 +5077,7 @@ async function loadVibes() {
     const vibesContainer = document.querySelector('#vibes-show');  
     if (!vibesContainer) return;
  
+document.getElementById('vibe-error').style.display = 'none';
  document.getElementById('vibe-loader').style.display = 'flex';
 
     try {
@@ -3899,7 +5135,7 @@ document.getElementById('vibe-loader').style.display = 'none';
     } catch (err) {
         console.error('Error fetching vibes:', err);
         document.getElementById('vibe-loader').style.display = 'none';
-document.getElementById('vibe-error').style.display = 'block';
+document.getElementById('vibe-error').style.display = 'flex';
 
     }
 }
@@ -4086,6 +5322,8 @@ function reactPlus() {
     setTimeout(() => {
         overlay.classList.add("show");
     }, 10);
+    
+    BackManager.register(closeReactPlus);
 }
 
 function closeReactPlus() {
@@ -4093,4 +5331,5 @@ function closeReactPlus() {
     if (overlay) {
         overlay.classList.remove("show");
     }
+    BackManager.unregister(closeReactPlus);
 }
