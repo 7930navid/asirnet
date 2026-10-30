@@ -6,9 +6,10 @@
     <meta name="google-site-verification" content="M1DXFU2LNfieXgRpYvEAl0C2fKAO-JJkjeldRbH6UTA" />
     <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
     
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <!-- <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
    
+-->
    <link rel="stylesheet" href="./style.css">
 
      <title>AsirNet</title>
@@ -20,16 +21,18 @@
     
     
 <div id="header">
- <div>
-    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="45px" class="headerBtn" onclick ="menuOpen()">
-
+ <div style="display: flex; align-items: center;">
+    <div style="width: 70px; height: 70px; display: flex; justify-content: center; align-items: center;" onclick ="menuOpen()">
+    <img src="https://i.ibb.co.com/TM577zLY/menu-burger.png" width="45px" class="headerBtn">
+    </div>
+    
     <img src="https://i.ibb.co.com/qZNWM80/Asirnet-adv-logo-png.png" width="200px">
     
 </div>
 <div style="display: flex; align-items: center;">
         <button class="idSearchBtn" onclick="searchpad();"><img src="https://i.ibb.co.com/hxhm3n7y/search-interface-symbol.png" alt="" border="0" width="40" class="headerBtn"></button>
 
-        <h1 id="profPicture" onclick="profile(); loadProfile()"></h1>
+        <button id="profPicture" onclick="profile(); loadProfile()"></button>
 </div>
 </div>
 
@@ -188,7 +191,7 @@ at
   <!-- Default -->
   <p>Default: </p>
 
-<button style="background-image: url('https://i.ibb.co.com/V8jnq8f/20260825-115648.png')" onclick="textBG('none', 'none', '')"></button>
+<button style="background-image: url('https://i.ibb.co.com/V8jnq8f/20260825-115648.png')" onclick="textBG('none', 'none', '')" id="bgDefaultBtn"></button>
  
   <!-- Colors -->
   <p>Colors: </p>
@@ -356,7 +359,7 @@ at
  <h2 style="padding-left:25px;" class="storyErr">Stories</h2><hr>
 
 <div class="story-container">
-    <table> <tr> <td>
+
 <div class="story">
 
   <div class="story-inner" onclick="openStoryPort(); appClsBtn()">
@@ -391,20 +394,20 @@ at
   </div>    
 
 </div>
-</td>
-<td>
-  <div id="container">
-     <div>
-       <table cellpadding="9">
-             <tr>
-        <td><div class="storyLoader">Loading story..</div></td>             
-        <td><div class="storyLoader">Loading story..</div></td>             
-        </tr>
-         </table>
+
+     <div id="stryLoadingDivs">
+         
+        <div class="storyLoader">Loading story..</div>
+        <div class="storyLoader">Loading story..</div>
+        <div class="storyLoader">Loading story..</div>
+        
      </div>
-  </div>
-</td></tr></table>
+       
+      <div id="container"></div>
+
 </div>
+
+ <h2 style="padding-left:25px; padding-top:25px;" class="storyErr">Vibes</h2>
 
 <hr>
 
@@ -417,8 +420,11 @@ at
         </div>
     </div>
     
-    <div class="vibes-div" id="vibe-error"  style="background: rgba(255,0,0,0.2); display: none;">
-       <div style="color: red; font-size: 23px; font-weight: bold; width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; text-align: center;">SOMETHING WENT WRONG</div> 
+    <div class="vibes-div" id="vibe-error"  style="background: rgba(255,0,0,0.2); display: none; width: 350px; flex-direction: column; justify-content: center; align-items: center;">
+       <div style="width: 100%; height: 90%; display: flex; flex-direction: column; justify-content: center; align-items: center; margin: 0; padding: 0; transform: translateY(-20px);">
+           <p style="color: red; font-size: 18px; font-weight: bold;">SOMETHING WENT WRONG</p> 
+       <button class="vibe-retry-btn" onclick="loadVibes()">Retry</button>
+       </div>
         <div class="vibes-footer" style="background: red;">
             <div> — ERR_CONNECTION</div>
         </div>
@@ -588,15 +594,13 @@ at
 </div>
 
 <div id="otherProf">
-    <h2 id="headerName"></h2>
-    <hr style="background: green; height: 2px;">
     <div id="othProfInfo">
     <img id="othProfPic" src="">
     <section><h1 id="othProfName"></h1>
     <h3 id="otherProfdiv"></h3></section>
     </div>
     <div id="connectBTN">
-    <button onclick="connect()" id="connectionBtn">Add Connection</button>
+    <button id="connectionBtn"></button>
     <button onclick="messageWithNexttalk()" id="messageSending">Send Message</button>
     </div>
      <div class="Id-information" id="profileMore">
@@ -635,13 +639,27 @@ at
   </div> 
     <br><br><br> 
 
-    <h1 class="storyErr">Connected ones</h1><hr>
+    <h1 class="storyErr" style="margin-left: 20px;">Connected ones</h1><hr>
     <div id="showOnes">
+
      <div class="friendShow">
   <div class="main-loading-focus"></div>
   <br>
   <h3>Loading ones...</h3>  
-</div>      
+    </div>     
+     
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+    
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+
     </div><hr>
       <div class="tab-switching-oth">
       
@@ -649,7 +667,11 @@ at
     <div class="tab-btns"  id="clipTab">ClipNovas</div>
   </div>
 
-    <div id="otherPosts" style="display:flex; flex-wrap:wrap;"></div>
+  <div style="min-height: 700px;">
+    <div id="otherPosts"></div>
+    <div id="otherReels"></div>
+  </div>
+    
 </div>    
 
 
@@ -846,18 +868,22 @@ at
     
 <nav id="footerOnMenu">
             
-           <div style="width: 25%;">
+           <div style="width: 16.666%;">
                <img id="footerMenuProf">
            </div>
            
            <div style="width: 50%;">
-               <h1 id="footerMenuId" style="color: green; margin: none; padding-left: 0; margin-left: 0; text-shadow: 0 0 2px white; font-weight: bold; text-break: break; font-size: 30px;"></h1>
-           </div>
-        
-           <div style="width: 25%;" onclick="darkM()">
-     <img src="https://i.ibb.co.com/jkwHF52Q/20261024-152231.png" class="modeChange">          
+               <h1 id="footerMenuId" style="color: green; margin: none; padding-left: 0; margin-left: 0; text-shadow: 0 0 2px white; font-weight: bold; text-break: break; font-size: 30px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden;"></h1>
            </div>
  
+           <div style="width: 16.666%;" onclick="menuClose(); switchAccount()">
+     <img src="https://i.ibb.co.com/HfSqkppH/exchange.png" class="modeChange">          
+           </div>
+ 
+           <div style="width: 16.666%;" onclick="darkM()">
+     <img src="https://i.ibb.co.com/jkwHF52Q/20261024-152231.png" class="modeChange">          
+           </div>
+        
 </nav>
 
 
@@ -895,11 +921,17 @@ at
                 <input type="text" id="clip-feeling" placeholder="Feeling / Activity">
             </div>
         </div>
+
         <button onclick="tag()" id="reel-tag-btn" class="down-btn">
+      <label>🏷️</label>
       <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Tag People</div>
+      </button>
+      
        <button onclick="helperForLoad()" class="down-btn">
+      <label>♻️</label>
       <div style="width: 100%; text-align: left; padding-left: 50px; background: none;" class="storyErr">Change video</div>
       </button>
+      
     </div>
 </div>
 
@@ -1084,15 +1116,151 @@ So create an account or log in to AsirNet to enjoy it.</div>
 </div>
 
 
+<div id="accounts-div-container">
+    <div class="accounts-div">
+
+        <button onclick="localStorage.removeItem('active'); location.reload();" id="back-to-account">
+            <div><pre><</pre></div>
+            <p>Back To Account</p>
+        </button>
+
+    <nav>Pages</nav>
+    <div id="pages" class="accounts">
+        <main>
+            <p>No pages</p>
+        </main>
+
+        <button onclick="location.href='../page.html'">
+            <div><pre>+</pre></div>
+            <p>Create New Page</p>
+        </button>
+
+    </div>    
+    <nav>Groups</nav>
+    <div id="groups" class="accounts">
+        <main>
+            <div class="group-load"></div>
+        </main>
+        <button onclick="location.href='../group.html'">
+            <div><pre>+</pre></div>
+            <p>Create New Group</p>
+        </button>
+    </div>    
+</div>
+</div>
+
+
+<div id="groupShow">
+    
+    <div id="groupInfo">
+    <img id="groupProfPic">
+    <section>
+        <h1 id="groupProfName"></h1>
+        <h3 id="groupProfdiv"></h3>
+    </section>
+    </div>
+    
+    <div id="joinBTN">
+    <button id="joinBtn"></button>
+    </div>
+
+    <div id="group-discription" style="background: none; padding: 0; marg8n: 0;"></div>
+
+     <h1 class="storyErr" style="margin: 20px;">Group Admins</h1> 
+    <div id="oth-group-admins">
+        <div class="postLoad"></div>
+    </div>
+    
+    
+    <h1 class="storyErr" style="margin-left: 20px;">Group Members</h1><hr>
+    <div id="showMembers">
+
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>     
+     
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+    
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+
+    </div>
+    <br><hr><br>
+
+
+  <div style="min-height: 700px;">
+    <div id="groupPosts"></div>
+  </div>
+    
+</div>    
+
+
+<div id="pageShow">
+    
+    <div id="pageInfo">
+    <img id="pageProfPic">
+    <section>
+        <h1 id="pageProfName"></h1>
+    </section>
+    </div>
+    
+    <div id="followBTN">
+    <button id="followBtn"></button>
+    </div>
+
+    <div id="page-discription" style="background: none; padding: 0; margin: 0;"></div>
+    
+    <h1 class="storyErr" style="margin-left: 20px;">Followers</h1><hr>
+    <div id="showOtherFollowers">
+
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>     
+     
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+    
+     <div class="friendShow">
+  <div class="main-loading-focus"></div>
+  <br>
+  <h3>Loading ones...</h3>  
+    </div>      
+
+    </div>
+    <br><hr><br>
+
+
+  <div style="min-height: 700px;">
+    <div id="otherPagePosts"></div>
+  </div>
+    
+</div>    
+
+
 
 </div>
 
-    <!------ Javascript functions ------>
+    <!------ Javascript functions ------->
 
+    <script src="./initialize.js"></script>
     <script src="./nexchat.js"></script>
     <script src="./quickBall.js"></script>
-    <script src="./initialize.js"></script>
     <script src="./script.js"></script>
+    <script src="./serverPing.js"></script>
 
 </body>
 </html>
