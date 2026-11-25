@@ -3,21 +3,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
- <meta name="description" content="AsirNet is a modern social networking platform to connect with friends, share photos, 24-hour video stories, short clips, and join communities effortlessly.">
-  <meta name="keywords" content="AsirNet, social media, social network, video stories, short videos, online community, connect with friends">
-  <meta name="author" content="AsirNet">
+<meta name="description" content="AsirNet is a modern social networking platform to connect with friends, share photos, 24-hour video stories, short clips, and join communities effortlessly.">
+<meta name="keywords" content="AsirNet, social media, social network, video stories, short videos, online community, connect with friends">
+<meta name="author" content="AsirNet">
 
-  <!-- Facebook, Messenger & WhatsApp Link Preview (Open Graph) -->
-  <meta property="og:title" content="AsirNet — Connect, Share & Explore">
-  <meta property="og:description" content="Join AsirNet to share posts, 24-hour video stories, short clips, and stay connected with friends and communities.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://7930navid.gihub.io/asirnet/">
-<title>ASIRNET</title>
-<!-- Google Fonts for Professional Typography -->
+<meta property="og:title" content="AsirNet — Connect, Share & Explore">
+<meta property="og:description" content="Join AsirNet to share posts, 24-hour video stories, short clips, and stay connected with friends and communities.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://7930navid.github.io/asirnet/">
+<title>AsirNet — Connect, Share & Explore</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
 <link rel="icon" href="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png">
-
-
 
 <style>
     :root {
@@ -46,7 +43,18 @@
         color: var(--text-main);
     }
 
-    /* Glassmorphism Card Container */
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
     .container {
         background: var(--glass-bg);
         backdrop-filter: blur(12px);
@@ -69,7 +77,6 @@
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* LOGO with Floating Effect */
     .logo-container {
         position: relative;
         margin-bottom: 25px;
@@ -91,7 +98,6 @@
         100% { transform: translateY(0px); }
     }
 
-    /* TYPOGRAPHY */
     .title {
         font-size: 26px;
         font-weight: 700;
@@ -110,13 +116,12 @@
         margin-bottom: 35px;
     }
 
-    /* STATUS TEXT & PULSING DOT */
     .status-wrapper {
         display: flex;
         align-items: center;
         gap: 10px;
         margin-bottom: 12px;
-        height: 20px; 
+        height: 20px;
     }
 
     .dot {
@@ -140,7 +145,6 @@
         letter-spacing: 0.5px;
     }
 
-    /* MODERN PROGRESS BAR */
     .bar-container {
         width: 100%;
         background: #1e293b;
@@ -177,14 +181,19 @@
 
 <body>
 
+<p class="sr-only">AsirNet is a modern social networking platform to connect with friends, share photos, 24-hour video stories, short clips, and join communities effortlessly.</p>
+
+<noscript>
+    <p>AsirNet is a modern social networking platform to connect with friends, share photos, 24-hour video stories, short clips, and join communities effortlessly. <a href="asirnet">Continue to AsirNet</a>.</p>
+</noscript>
+
 <div class="container">
     <div class="logo-container">
-        <!-- 🔥 YOUR LOGO HERE -->
-        <img src="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png" class="logo" alt="ASIR NET Logo">
+        <img src="https://i.ibb.co.com/2mLxg7s/asirnet-just-logo.png" class="logo" alt="AsirNet Logo">
     </div>
 
-    <div class="title">ASIRNET</div>
-    <div class="subtitle">System Initialization</div>
+    <h1 class="title">ASIRNET</h1>
+    <div class="subtitle">Connecting to Workspace</div>
 
     <div class="status-wrapper">
         <div class="dot" id="status-dot"></div>
@@ -197,7 +206,6 @@
 </div>
 
 <script>
-// Target endpoints to hit
 const endpoints = [
     "https://users-server-xyvg.onrender.com/get/users",
     "https://posts-server-kmha.onrender.com/get/posts",
@@ -219,7 +227,7 @@ function updateState(percent, text) {
 }
 
 function handleFailure(errorMsg) {
-    statusDot.style.backgroundColor = "#ef4444"; // Red color
+    statusDot.style.backgroundColor = "#ef4444";
     statusDot.style.animation = "none";
     progressBar.style.background = "#ef4444";
     progressBar.style.boxShadow = "0 0 10px rgba(239, 68, 68, 0.6)";
@@ -228,51 +236,43 @@ function handleFailure(errorMsg) {
 
 async function bootSequence() {
     try {
-        // Step 1: Internet Check
         if (!navigator.onLine) {
-            handleFailure("No Internet Connection ❌");
+            handleFailure("No Internet Connection");
             return;
         }
 
-        updateState(15, "Connecting to ASIR NET servers...");
+        updateState(15, "Connecting to AsirNet servers...");
         await new Promise(r => setTimeout(r, 600));
 
-        // Step 2: Hitting Server Endpoints sequentially/simultaneously 
-        updateState(40, "Fetching secure gateway data...");
-        
-        // Executes all fetch requests at the same time for extreme performance
+        updateState(40, "Fetching gateway data...");
+
         const responses = await Promise.all(
             endpoints.map(url => fetch(url))
         );
 
-        // Verify if all servers responded with HTTP 200 OK
         const allOk = responses.every(res => res.ok);
         if (!allOk) {
-            handleFailure("Server responded with error ❌");
+            handleFailure("Server responded with error");
             return;
         }
 
-        // Step 3: Finalizing Setup
         updateState(85, "Resolving interface assets...");
         await new Promise(r => setTimeout(r, 600));
 
-        // Step 4: Success state
         updateState(100, "Welcome to ASIRNET");
-        statusDot.style.backgroundColor = "#22c55e"; // Green color
+        statusDot.style.backgroundColor = "#22c55e";
         statusDot.style.animation = "none";
 
-        // Step 5: Secure Redirect
         setTimeout(() => {
             window.location.replace("asirnet");
         }, 1200);
 
     } catch (err) {
-        handleFailure("Server Connection Error ❌");
+        handleFailure("Server Connection Error");
         console.error("Boot Critical Error:", err);
     }
 }
 
-// Fire when document is ready
 window.onload = bootSequence;
 </script>
 
